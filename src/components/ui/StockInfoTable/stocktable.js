@@ -8,13 +8,14 @@ import Paper from '@material-ui/core/Paper';
 const styles = (theme) => ({
     ...theme.spreadThis
 });
+
 class CustomizedTables extends React.Component {
     render() {
         const { classes, rows, headerRow } = this.props;
         return (
             <TableContainer component={Paper} maxWidth="sm">
                 <Table className={classes.table} size="small" aria-label="a dense table">
-                    <TableHead>
+                    <TableHead >
                         {headerRow}
                     </TableHead>
                     <TableBody>

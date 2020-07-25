@@ -2,39 +2,23 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Container from '@material-ui/core/Container';
-
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-
-import CustomizedTables from '../../ui/StockInfoTable/stocktable';
+import CustomizedTables from '../../ui/StockInfoTable/stockTable';
 import Paper from '@material-ui/core/Paper';
 import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
 import Grid from '@material-ui/core/Grid';
+import { StyledTableCell, StyledTableRow } from '../../ui/StockInfoTable/tableComponents';
+
 const styles = (theme) => ({
     ...theme.spreadThis
 });
 
-const StyledTableCell = withStyles((theme) => ({
-    head: {
-        backgroundColor: theme.palette.common.black,
-        color: theme.palette.common.white,
-    },
-    body: {
-        fontSize: 14,
-    },
-}))(TableCell);
-const StyledTableRow = withStyles((theme) => ({
-    root: {
-        '&:nth-of-type(odd)': {
-            backgroundColor: theme.palette.action.hover,
-        },
-    },
-}))(TableRow);
 
 const headerRow = (<TableRow>
     <StyledTableCell>Name</StyledTableCell>
-    <StyledTableCell align="right">Price</StyledTableCell>
+    <StyledTableCell align="right">Price
+    </StyledTableCell>
     <StyledTableCell align="right">Shares Owned</StyledTableCell>
     <StyledTableCell align="right">Total Value</StyledTableCell>
     <StyledTableCell align="right">Profit/Loss</StyledTableCell>
@@ -71,19 +55,19 @@ class PortfolioPage extends Component {
                             <Grid item xs={12} sm={7}>
                                 <CustomizedTables rows={stockDisplay} headerRow={headerRow} />
                             </Grid>
-                            
+
                             <Grid item xs={6} sm={2}>
                                 <Paper className={classes.paper}>Balances and Stats</Paper>
                             </Grid>
                             <Grid item xs={6} sm={3}>
                                 <Paper className={classes.paper}>Transaction History</Paper>
                             </Grid>
-                            
+
                             <Grid item xs={12} sm={7}>
                                 <Paper className={classes.paper}>Trading View Chart</Paper>
                             </Grid>
-                            
-                            
+
+
                             <Grid item xs={6} sm={5}>
                                 <Paper className={classes.paper}>Other charts</Paper>
                             </Grid>
