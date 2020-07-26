@@ -113,7 +113,7 @@ const styles = (theme) => ({
   ...theme.spreadThis
 });
 
-class signup extends Component {
+class SignUpForm extends Component {
   constructor() {
     super();
     this.state = {
@@ -244,7 +244,7 @@ class signup extends Component {
   }
 }
 
-signup.propTypes = {
+SignUpForm.propTypes = {
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   ui: PropTypes.object.isRequired,
@@ -259,4 +259,4 @@ const mapStateToProps = (state) => ({
 export default connect(
   mapStateToProps,
   { signUpUser }
-)(withStyles(styles)(signup));
+)(withStyles(styles)(SignUpForm));

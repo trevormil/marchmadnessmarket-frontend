@@ -7,14 +7,15 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import './app.css';
 import themeObject from '../../../constants/theme';
 //imports
-import PortfolioPage from '../Portfolio';
-import Navigation from '../../ui/Navigation';
+import PortfolioPage from '../Portfolio/portfolio';
+import Navigation from '../../ui/Navigation/navigation';
 import SignUpPage from '../SignUp/signuppage';
 import SignInPage from '../SignIn/signinpage';
 import BrowseStocksPage from '../BrowseStocks/browsestocks';
-import HomePage from '../Home';
-import NewsPage from '../News';
-import AccountPage from '../Account';
+import HomePage from '../Home/home';
+import NewsPage from '../News/news';
+import AccountPage from '../Account/account';
+import StocksPage from '../Stock/stockpage';
 import jwtDecode from 'jwt-decode';
 import AuthRoute from '../../../constants/authroute.js';
 import UserRoute from '../../../constants/userroute.js';
@@ -58,6 +59,7 @@ class App extends React.Component {
               <UserRoute exact path={ROUTES.PORTFOLIO} component={PortfolioPage} />
               <UserRoute exact path={ROUTES.BROWSE} component={BrowseStocksPage} />
               <UserRoute exact path={ROUTES.NEWS} component={NewsPage} />
+              <UserRoute exact path="/stocks/:stockId" component={StocksPage} />
             </div>
           </Router >
         </Provider>

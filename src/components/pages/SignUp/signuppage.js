@@ -1,5 +1,5 @@
 import React from 'react';
-import SignUpForm from './index';
+import SignUpForm from './signupform';
 import { withStyles } from '@material-ui/core/styles';
 
 import PropTypes from 'prop-types';

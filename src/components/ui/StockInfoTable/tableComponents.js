@@ -1,9 +1,9 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import TableRow from '@material-ui/core/TableRow';
 import { withStyles } from '@material-ui/core/styles';
-
+import * as ROUTES from '../../../constants/routes';
 import TableCell from '@material-ui/core/TableCell';
 
 export const StyledTableCell = withStyles((theme) => ({
@@ -30,7 +30,7 @@ export function getRows(stocks) {
     return stocks ? (
         stocks.map((row) => <StyledTableRow>
             <StyledTableCell component="th" scope="row">
-                {row.stockName}
+                <Link to={`${ROUTES.STOCKS}/${row.stockId}`}>{row.stockName}</Link>
             </StyledTableCell>
             <StyledTableCell align="right">Buy</StyledTableCell>
             <StyledTableCell align="right">Sell</StyledTableCell>
@@ -43,7 +43,7 @@ export function getRows(stocks) {
             <StyledTableCell align="right">{row.marketCap}</StyledTableCell>
             <StyledTableCell align="right">{row.float}</StyledTableCell>
             <StyledTableCell align="right">{row.dividends}</StyledTableCell>
-        </StyledTableRow>)
+        </StyledTableRow >)
     )
         : (<StyledTableRow key="Loading">
             <StyledTableCell component="th" scope="row">

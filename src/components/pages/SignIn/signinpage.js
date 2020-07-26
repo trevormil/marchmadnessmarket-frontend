@@ -1,6 +1,6 @@
 
 import React from 'react';
-import SignInForm from './index';
+import SignInForm from './signinform';
 import { withStyles } from '@material-ui/core/styles';
 
 import PropTypes from 'prop-types';

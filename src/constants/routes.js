@@ -9,5 +9,6 @@ export const BROWSE = '/browse';
 export const NEWS = '/news';
 export const WATCHLIST = '/watchlist';
 export const ABOUT = '/about';
+export const STOCKS = '/stocks';
 
 
