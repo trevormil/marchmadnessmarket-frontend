@@ -10,12 +10,12 @@ import themeObject from '../../../constants/theme';
 import PortfolioPage from '../Portfolio/portfolio';
 import Navigation from '../../ui/Navigation/navigation';
 import SignUpPage from '../SignUp/signuppage';
-import SignInPage from '../SignIn/signinpage';
+import SignInForm from '../SignIn/signinform';
 import BrowseStocksPage from '../BrowseStocks/browsestocks';
 import HomePage from '../Home/home';
-import NewsPage from '../News/news';
-import AccountPage from '../Account/account';
 import StocksPage from '../Stock/stockpage';
+import RulesPage from '../Rules/rulesPage';
+import LeaderboardPage from '../Leaderboard/leaderboardPage';
 import jwtDecode from 'jwt-decode';
 import AuthRoute from '../../../constants/authroute.js';
 import UserRoute from '../../../constants/userroute.js';
@@ -47,20 +47,20 @@ class App extends React.Component {
       <MuiThemeProvider theme={themeObject}>
         <Provider store={store}>
           <Router >
-            <div>
+            <body>
               <Container maxWidth="lg">
                 <Navigation />
               </Container>
               <hr />
               <Route exact path={ROUTES.HOME} component={HomePage} />
               <AuthRoute exact path={ROUTES.SIGN_UP} component={SignUpPage} />
-              <AuthRoute exact path={ROUTES.SIGN_IN} component={SignInPage} />
-              <UserRoute exact path={ROUTES.ACCOUNT} component={AccountPage} />
+              <AuthRoute exact path={ROUTES.SIGN_IN} component={SignInForm} />
               <UserRoute exact path={ROUTES.PORTFOLIO} component={PortfolioPage} />
               <UserRoute exact path={ROUTES.BROWSE} component={BrowseStocksPage} />
-              <UserRoute exact path={ROUTES.NEWS} component={NewsPage} />
+              <UserRoute exact path={ROUTES.LEADERBOARD} component={LeaderboardPage} />
               <UserRoute exact path="/stocks/:stockId" component={StocksPage} />
-            </div>
+              <Route exact path="/rules" component={RulesPage} />
+            </body>
           </Router >
         </Provider>
       </MuiThemeProvider>

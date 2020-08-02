@@ -1,78 +1,75 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import { getTradesForCurrStock, getStocks } from '../../../redux/actions/dataActions'
+import { updateUserPortfolioData, setOwnedStocks } from '../../../redux/actions/userActions'
 import Container from '@material-ui/core/Container';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import CustomizedTables from '../../ui/StockInfoTable/stockTable';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { createChart } from 'lightweight-charts';
-import { positionsHeaderRow, summaryHeaderRow, getSummaryRows, getStockRows, transactionHistoryHeaderRow, getTransactionRows } from './rows';
+import {
+    getPositionsHeaderRow, getOpenTradeDisplay, openTradeHeaderRow,
+    summaryHeaderRow, getSummaryRows, getStockRows, transactionHistoryHeaderRow, getTransactionRows
+} from './rows';
+import { sort } from '../../ui/StockInfoTable/filterFunctions';
 import axios from 'axios';
+
 const styles = (theme) => ({
     ...theme.spreadThis
 });
 
-const getStatistics = (ownedStocks) => {
-    let totalValue = 0, totalProfit = 0;
-    if (Object.keys(ownedStocks).length > 0) {
-        ownedStocks.forEach(stock => {
-            totalValue += stock.numShares * stock.currPrice;
-            totalProfit += (stock.currPrice - stock.avgBuyPrice) * stock.numShares;
-        })
-    }
-    return {
-        totalValue,
-        totalProfit
-    }
-}
-
-const initalState = {
-
-    transactionHistory: {},
-    accountHistory: []
-}
 
 class PortfolioPage extends Component {
     state = {
-        transactionHistory: {},
-        accountHistory: []
-    }
+        orderBy: "name",
+        direction: "asc",
+    };
     constructor(props) {
         super(props);
-        this.setState(initalState);
-        //gets transaction history
-        axios.get("/transactions").then((res) => {
-            let transactionHistory = res.data;
-            transactionHistory.forEach(transaction => {
-                transaction.dateAndTime = transaction.dateAndTime._seconds * 1000;
-            })
-            this.setState({ transactionHistory })
-        }).catch(err => {
-            console.log(err);
-        });
-        //gets account history
-        axios.get("/accountHistory").then((res) => {
-            let accountHistory = res.data;
-            accountHistory.forEach(data => {
-                data.time = (new Date(data.time._seconds * 1000).toLocaleString())
-            })
-            this.setState({ accountHistory });
-            const tradingViewChartElement = document.getElementById("tradingviewchart");
-            const chart = createChart(tradingViewChartElement, { width: tradingViewChartElement.clientWidth, height: 300 });
+        this.handleClickOnSortLabel = this.handleClickOnSortLabel.bind(this);
+        this.attemptToRemove = this.attemptToRemove.bind(this);
+        this.getChartDisplay = this.getChartDisplay.bind(this);
+        if (!this.props.user.loading) {
+            this.props.updateUserPortfolioData(this.props.user);
+        }
+    }
+    getChartDisplay() {
+        const tradingViewChartElement = document.getElementById("tradingviewchart");
+        if (!this.props.user.loading && tradingViewChartElement !== null) {
+            tradingViewChartElement.innerHTML = null;
+            const chart = createChart(tradingViewChartElement, { width: 500, height: 300 });
             const lineSeries = chart.addLineSeries();
-            lineSeries.setData(this.state.accountHistory);
-        }).catch(err => {
-            console.log(err);
+            lineSeries.setData(this.props.user.accountHistory);
+        }
+    }
+    attemptToRemove(event) {
+        const tradeId = event.currentTarget.getAttribute("id");
+        axios.delete(`/trades/${tradeId}`).then(() => {
+            this.props.getTradesForCurrStock(this.props.data, this.props.data.currStock.stockId);
+            this.props.setOwnedStocks(this.props.user);
         });
+    }
+    //handles when arrow icon on table is clicked
+    handleClickOnSortLabel(event) {
+        const orderByName = event.currentTarget.getAttribute('name');
+        const dir = this.state.direction === "asc" ? "desc" : "asc";
+        this.setState({
+            orderBy: orderByName,
+            direction: dir
+        });
+        sort(this.props.user.ownedStocks, orderByName, dir);
     }
     render() {
         const { classes } = this.props;
-        let stockDisplay = getStockRows(this.props.user.ownedStocks);
-        let statistics = getStatistics(this.props.user.ownedStocks);
-        let summaryDisplay = getSummaryRows(this.props.user.ownedStocks, statistics);
-        let transactionDisplay = getTransactionRows(this.state.transactionHistory);
+        let stockDisplay = getStockRows(this.props.user.ownedStocks, (this.props.user.loading || this.props.data.loading));
+        let summaryDisplay = getSummaryRows(this.props.user.ownedStocks, this.props.user, this.props.data);
+        let transactionDisplay = getTransactionRows(this.props.user.transactions, this.props.user.loading);
+        let openTradeDisplay = getOpenTradeDisplay(this.props.user.openTrades, (this.props.user.loading || this.props.data.loading), this.attemptToRemove);
+        this.getChartDisplay();
 
         return (
             <Container maxWidth="lg">
@@ -81,26 +78,35 @@ class PortfolioPage extends Component {
                         <Typography variant="h2" className={classes.pageTitle} align="center">
                             Portfolio
                         </Typography>
-                    </Grid>
-                    <Grid item xs={12} sm={7}>
-                        <CustomizedTables rows={stockDisplay} headerRow={positionsHeaderRow} />
-                    </Grid>
-                    <Grid item xs={6} sm={5}>
-                        <CustomizedTables headerRow={transactionHistoryHeaderRow} rows={transactionDisplay} />
+                        <hr />
                     </Grid>
                     <Grid item xs={12} sm={7}>
                         <Typography variant="h6" className={classes.pageTitle} align="center">
-                            Account Value:
+                            Current Positions
+                        </Typography>
+                        <CustomizedTables rows={stockDisplay} headerRow={getPositionsHeaderRow(this.state.orderBy, this.state.direction, this.handleClickOnSortLabel)} />
+                        <Typography variant="h6" className={classes.pageTitle} align="center">
+                            Open Sell Orders
+                        </Typography>
+                        <CustomizedTables headerRow={openTradeHeaderRow} rows={openTradeDisplay}></CustomizedTables>
+                        <Typography variant="h6" className={classes.pageTitle} align="center">
+                            Recent Transactions
+                        </Typography>
+                        <CustomizedTables headerRow={transactionHistoryHeaderRow} rows={transactionDisplay} />
+                    </Grid>
+                    <Grid item xs={12} sm={5} >
+                        <Typography variant="h6" className={classes.pageTitle} align="center">
+                            Account Summary
+                        </Typography>
+                        <CustomizedTables rows={summaryDisplay} headerRow={summaryHeaderRow} />
+                        <Typography variant="h6" className={classes.pageTitle} align="center">
+                            Account Value Chart
                         </Typography>
                         <div id="tradingviewchart" align="center">
+                            <CircularProgress size={30} />
                         </div>
                     </Grid>
-                    <Grid item xs={6} sm={3}>
-                        <Paper className={classes.paper}>Other charts and data</Paper>
-                    </Grid>
-                    <Grid item xs={6} sm={2}>
-                        <CustomizedTables rows={summaryDisplay} headerRow={summaryHeaderRow} />
-                    </Grid>
+
                 </Grid>
             </Container>
         )
@@ -110,10 +116,21 @@ class PortfolioPage extends Component {
 PortfolioPage.propTypes = {
     user: PropTypes.object.isRequired,
     ui: PropTypes.object.isRequired,
+    data: PropTypes.object.isRequired,
 }
 const mapStateToProps = (state) => ({
     user: state.user,
-    ui: state.ui
+    ui: state.ui,
+    data: state.data
 });
+const mapActionsToProps = {
+    updateUserPortfolioData,
+    setOwnedStocks,
+    getTradesForCurrStock,
+    getStocks
+}
 
-export default connect(mapStateToProps)(withStyles(styles)(PortfolioPage));
+export default connect(
+    mapStateToProps,
+    mapActionsToProps
+)(withStyles(styles)(PortfolioPage));

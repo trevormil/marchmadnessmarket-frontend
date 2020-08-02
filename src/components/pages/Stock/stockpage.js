@@ -3,66 +3,50 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
+import { getBuyTradeDisplay, getSellTradeDisplay } from './tradeDisplay'
+import CustomizedTables from '../../ui/StockInfoTable/stockTable';
+import { setOwnedStocks } from '../../../redux/actions/userActions';
 
-import { Button, Typography, Paper, Grid, Container } from '@material-ui/core';
+import { getCurrStock, getTradesForCurrStock } from '../../../redux/actions/dataActions';
+import { Button, Typography, Grid, Container, CircularProgress } from '@material-ui/core';
 import { createChart } from 'lightweight-charts';
 import { BootstrapInput } from '../../ui/TextInputs/textInputs';
+import { stockInfoHeaderRow, getInfoRows } from './stockInfoRows';
 
 const styles = (theme) => ({
     ...theme.spreadThis
 });
 
-const initalState = {
-    stockData: {},
+const initialState = {
     stockId: window.location.pathname.split("/").pop(),
-    stockHistory: [],
-    availableTrades: [],
     numToSell: null,
     sellPrice: null
 }
 
-
 class StockPage extends Component {
-    state = {
-        stockData: {},
-        stockId: window.location.pathname.split("/").pop(),
-        stockHistory: [],
-        availableTrades: [],
-        numToSell: null,
-        sellPrice: null
-    }
+    state = initialState
     constructor(props) {
         super(props);
-        this.setState(initalState);
-        axios.get(`/stocks/${this.state.stockId}`).then(res => {
-            this.setState({
-                stockData: res.data
-            })
-
-        });
-        axios.get(`/trades/all/${this.state.stockId}`).then(res => {
-            this.setState({
-                availableTrades: res.data
-            })
-        })
-        axios.get(`/stocks/${this.state.stockId}/stockHistory`).then((res) => {
-            let stockHistory = res.data;
-            stockHistory.forEach(data => {
-                data.time = (new Date(data.time._seconds * 1000).toLocaleString())
-            })
-            this.setState({ stockHistory });
-            const tradingViewChartElement = document.getElementById("tradingviewchart");
-            const chart = createChart(tradingViewChartElement, { width: tradingViewChartElement.clientWidth, height: 300 });
-            const lineSeries = chart.addLineSeries();
-            lineSeries.setData(this.state.stockHistory);
-        });
-
+        this.props.getCurrStock(this.props.data, this.props.data.filters, this.state.stockId);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.getNumSharesOwned = this.getNumSharesOwned.bind(this);
+        this.attemptToBuy = this.attemptToBuy.bind(this);
+        this.attemptToSell = this.attemptToSell.bind(this);
+    }
+    getChartDisplay() {
+        const tradingViewChartElement = document.getElementById("tradingviewchart");
+        if (!this.props.data.loading && tradingViewChartElement !== null) {
+            tradingViewChartElement.innerHTML = null;
+            const chart = createChart(tradingViewChartElement, { width: 500, height: 300 });
+            const candlestickSeries = chart.addCandlestickSeries();
+            candlestickSeries.setData(this.props.data.currStock.stockHistory);
+        }
     }
     getNumSharesOwned() {
-        if (Object.keys(this.props.user.ownedStocks).length === 0) return 0;
+        if (this.props.data.loading
+            || this.props.user.loading) return "Loading..."
         else {
-            const foundStock = this.props.user.ownedStocks.find(stock => stock.stockName === this.state.stockData.stockName);
+            const foundStock = this.props.user.ownedStocks.find(stock => stock.stockName === this.props.data.currStock.stockName);
             if (foundStock) return foundStock.numShares;
             else return 0;
         }
@@ -70,12 +54,19 @@ class StockPage extends Component {
     attemptToBuy = (event) => {
         const tradeId = event.currentTarget.getAttribute('name');
         axios.put(`/trades/${tradeId}`).then(() => {
-            window.location.reload();
-        }).catch((err) => {
-        })
+            this.props.setOwnedStocks(this.props.user);
+            this.props.getTradesForCurrStock(this.props.data, this.state.stockId);
+        });
     }
     handleInputChange = (event) => {
         this.setState({ [event.target.name]: event.target.value })
+    }
+    attemptToRemove = (event) => {
+        const tradeId = event.currentTarget.getAttribute('name');
+        axios.delete(`/trades/${tradeId}`).then(() => {
+            this.props.setOwnedStocks(this.props.user);
+            this.props.getTradesForCurrStock(this.props.data, this.state.stockId);
+        });
     }
     attemptToSell = () => {
         if (!isNaN(this.state.numToSell) && !isNaN(this.state.sellPrice)) {
@@ -88,56 +79,86 @@ class StockPage extends Component {
                     sharesTraded: Number(this.state.numToSell),
                     buy: false
                 }
-            });
+            }).then(() => {
+                this.setState({
+                    numToSell: null,
+                    sellPrice: null
+                });
+                document.getElementById("numToSell").value = null;
+                document.getElementById("sellPrice").value = null;
+                this.props.getTradesForCurrStock(this.props.data, this.state.stockId);
+            })
         }
+
     }
     render() {
         const { classes } = this.props;
-        let buyTradeDisplay = Object.keys(this.state.availableTrades).length === 0 ? <p>None</p>
-            : this.state.availableTrades.map(trade => {
-                if (trade.completed === false) {
-                    return <div display="inline-block">
-                        <p>{trade.stockId}</p>
-                        <Button name={trade.tradeId} onClick={this.attemptToBuy}>Buy</Button>
-                    </div>
-                } else return null;
-            }
-            );
+        let buyTradeDisplay = getBuyTradeDisplay(this.props.data.currStock.trades, this.props.user.userId, this.attemptToBuy, this.props.data.loading || this.props.user.loading);
+
+        let sellTradeDisplay = getSellTradeDisplay(this.props.data.currStock.trades, this.props.user.userId, this.attemptToRemove, this.props.data.loading || this.props.user.loading);
+
+        this.getChartDisplay();
         return < Container maxWidth="lg" >
             <Grid container spacing={3}>
-                <Typography variant="h2" className={classes.pageTitle} align="center">
-                    {this.state.stockData.stockName}
-                </Typography>
-                <Grid item xs={8}>
+                <Grid item xs={12}>
+                    <Typography variant="h2" className={classes.pageTitle} align="center">
+                        {this.props.data.loading || this.props.data.currStock.stockData === null
+                            ? <CircularProgress size={30} /> : this.props.data.currStock.stockData.stockName}
+                    </Typography>
+                    <hr />
+                </Grid>
+
+                <Grid item xs={12} sm={7} align="center">
+                    <Typography variant="h6" className={classes.pageTitle} align="center">
+                        Price Chart
+                    </Typography>
                     <div id="tradingviewchart" align="center">
+                        <CircularProgress size={30} />
                     </div>
-                </Grid>
-                <Grid item xs={4}>
-                    <Paper>
-                        Stats and Add to Watchlist
-                        </Paper>
-                </Grid>
-                <Grid item xs={6}>
-                    <Typography>Available Trades: </Typography>
-                    {buyTradeDisplay}
-                </Grid>
-                <Grid item xs={6}>
-                    <Typography>Current # of Shares Owned: {this.getNumSharesOwned()} </Typography>
+                    <Typography variant="h6" className={classes.pageTitle} align="center">
+                        Shares Owned: {this.getNumSharesOwned()}
+                    </Typography>
                     <BootstrapInput
+                        id="numToSell"
                         name="numToSell"
                         value={this.state.numToSell}
                         onChange={this.handleInputChange}
                         placeholder="# Shares to Sell"
                     ></BootstrapInput>
                     <BootstrapInput
+                        id="sellPrice"
                         name="sellPrice"
                         value={this.state.sellPrice}
                         onChange={this.handleInputChange}
-                        placeholder="Price"
+                        placeholder="Price per Share"
                     ></BootstrapInput>
-                    <Button onClick={this.attemptToSell}>
+                    <Button color="primary" variant="contained" onClick={this.attemptToSell}>
                         Sell
                     </Button>
+                </Grid>
+                <Grid item xs={5}>
+                    <Typography variant="h6" className={classes.pageTitle} align="center">
+                        Statistics and Info
+                    </Typography>
+                    {this.props.data.loading
+                        ? <CircularProgress size={30} />
+                        : <CustomizedTables headerRow={stockInfoHeaderRow} rows={getInfoRows(this.props.data.currStock.stockData)}></CustomizedTables>}
+                </Grid>
+                <Grid item xs={12}>
+                    <hr />
+                </Grid>
+                <Grid item xs={6}>
+
+                    <Typography variant="h6" className={classes.pageTitle} align="center">
+                        Current Sellers
+                    </Typography>
+                    {buyTradeDisplay}
+                </Grid>
+                <Grid item xs={6}>
+                    <Typography variant="h6" className={classes.pageTitle} align="center">
+                        Your Sell Orders
+                    </Typography>
+                    {sellTradeDisplay}
 
                 </Grid>
             </Grid>
@@ -148,11 +169,18 @@ class StockPage extends Component {
 StockPage.propTypes = {
     user: PropTypes.object.isRequired,
     ui: PropTypes.object.isRequired,
-    stockId: PropTypes.string.isRequired
+    stockId: PropTypes.string.isRequired,
+    data: PropTypes.object.isRequired,
 }
 const mapStateToProps = (state) => ({
     user: state.user,
-    ui: state.ui
+    ui: state.ui,
+    data: state.data
 });
+const mapActionsToProps = {
+    setOwnedStocks,
+    getCurrStock,
+    getTradesForCurrStock
+}
 
-export default connect(mapStateToProps)(withStyles(styles)(StockPage));
+export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(StockPage));

@@ -40,10 +40,8 @@ export default function CenteredTabs() {
                 <Tab label="Home" component={Link} to={ROUTES.HOME} />
                 <Tab label="Screener" component={Link} to={ROUTES.BROWSE} />
                 <Tab label="Portfolio" component={Link} to={ROUTES.PORTFOLIO} />
-                <Tab label="Watchlist" component={Link} to={ROUTES.WATCHLIST} />
-                <Tab label="News" component={Link} to={ROUTES.NEWS} />
-                <Tab label="About Us" component={Link} to={ROUTES.ABOUT} />
-                <Tab label="Account" component={Link} to={ROUTES.ACCOUNT} />
+                <Tab label="Leaderboards" component={Link} to={ROUTES.LEADERBOARD} />
+                <Tab label="Rules" component={Link} to={ROUTES.RULES} />
                 <Tab label="Sign Out" onClick={logOut} />
             </Tabs >
         </Paper>

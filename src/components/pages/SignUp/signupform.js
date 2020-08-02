@@ -1,99 +1,3 @@
-/*import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-
-import { withRouter } from 'react-router-dom';
-
-import { connect } from 'react-redux';
-import { signUpUser } from '../../../redux/actions/userActions';
-
-const INITIAL_STATE = {
-  username: '',
-  email: '',
-  passwordOne: '',
-  passwordTwo: '',
-  error: null,
-};
-
-class SignUpForm extends Component {
-  constructor() {
-    super();
-    this.state = { ...INITIAL_STATE };
-  }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.ui.errors) {
-      this.setState({ errors: nextProps.ui.errors });
-    }
-  }
-  onSubmit = event => {
-    event.preventDefault();
-    const userData = {
-      email: this.state.email,
-      password: this.state.passwordOne,
-      confirmPassword: this.state.passwordTwo,
-      userName: this.state.username
-    }
-    this.props.signUpUser(userData, this.props.history);
-  };
-
-  onChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
-
-  render() {
-    //const { classes, ui: { loading } } = this.props;
-    const {
-      username,
-      email,
-      passwordOne,
-      passwordTwo,
-      error,
-    } = this.state;
-
-    const isInvalid =
-      passwordOne !== passwordTwo ||
-      passwordOne === '' ||
-      email === '' ||
-      username === '';
-    return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          name="username"
-          value={username}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Username"
-        />
-        <input
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          name="passwordOne"
-          value={passwordOne}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-        />
-        <input
-          name="passwordTwo"
-          value={passwordTwo}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Confirm Password"
-        />
-        <button disabled={isInvalid} type="submit">
-          Sign Up
-          </button>
-
-        {error && <p>{error.message}</p>}
-      </form>
-    )
-  }
-}*/
-
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
@@ -153,7 +57,7 @@ class SignUpForm extends Component {
       ui: { loading }
     } = this.props;
     const { errors } = this.state;
-
+    const currLoading = loading || this.props.user.loading;
     return (
       <Grid container className={classes.form}>
         <Grid item sm />
@@ -225,10 +129,10 @@ class SignUpForm extends Component {
               variant="contained"
               color="primary"
               className={classes.button}
-              disabled={loading}
+              disabled={currLoading}
             >
               SignUp
-              {loading && (
+              {currLoading && (
                 <CircularProgress size={30} className={classes.progress} />
               )}
             </Button>

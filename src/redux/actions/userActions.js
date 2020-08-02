@@ -1,14 +1,12 @@
-import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED } from '../types';
+import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED, LOADING_USER } from '../types';
 import axios from 'axios';
 
-export const loginUser = (userData, history) => (dispatch) => {
+export const loginUser = (userData) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     axios.post("/login", userData)
         .then(res => {
             setAuthorizationHeader(res.data.token);
             dispatch(getUserData());
-            dispatch({ type: CLEAR_ERRORS });
-            history.push('/');
         }).catch(err => {
             dispatch({
                 type: SET_ERRORS,
@@ -24,6 +22,144 @@ export const getUserData = () => async (dispatch) => {
         payloadData = res.data;
     }).catch(err => console.log(err));
 
+    await axios.get('/userTrades').then((res) => {
+        payloadData.openTrades = res.data;
+    });
+
+    await axios.get("/userStocks")
+        .then(res => {
+            let data = [];
+            if (res) {
+                res.data.forEach((stock) => {
+                    data.push(stock)
+                });
+            }
+            payloadData.ownedStocks = data;
+        });
+    await axios.get("/leaderboard")
+        .then(res => {
+            let data = [];
+            if (res) {
+                res.data.forEach((stock) => data.push(stock));
+            }
+            payloadData.leaderboard = data;
+        });
+    await axios.get("/watchlist")
+        .then(res => {
+            let data = [];
+            if (res) {
+                res.data.forEach((stock) => data.push(stock));
+            }
+            payloadData.watchlist = data;
+        });
+    await axios.get("/transactions").then((res) => {
+        let data = [];
+        if (res) {
+            res.data.forEach((transaction) => data.push(transaction));
+        }
+        payloadData.transactions = data;
+    });
+    //gets account history
+    await axios.get("/accountHistory").then((res) => {
+        let accountHistory = res.data;
+        payloadData.accountHistory = accountHistory;
+    });
+
+    await axios.get("/stocks").then(res => {
+        payloadData.ownedStocks.forEach(ownedStock => {
+            ownedStock.currPrice = res.data.find(stock => stock.stockId === ownedStock.stockId).price;
+            ownedStock.totalValue = (ownedStock.numShares) * ownedStock.currPrice;
+            ownedStock.totalProfit = (ownedStock.currPrice - ownedStock.avgBuyPrice) * (ownedStock.numShares);
+            ownedStock.totalBoughtValue = (ownedStock.numShares) * ownedStock.avgBuyPrice;
+        })
+    }).then(() => {
+        dispatch({
+            type: SET_USER,
+            payload: payloadData
+        })
+        dispatch({ type: CLEAR_ERRORS });
+    }).catch((err) => {
+        console.log(err);
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response
+        })
+    })
+}
+export const updateUserPortfolioData = (currProps) => async (dispatch) => {
+    dispatch({ type: LOADING_USER });
+    let payloadData = currProps;
+    await axios.get("/userStocks")
+        .then(res => {
+            let data = [];
+            if (res) {
+                res.data.forEach((stock) => {
+                    data.push(stock)
+                });
+            }
+            payloadData.ownedStocks = data;
+        });
+    await axios.get("/transactions").then((res) => {
+        let data = [];
+        if (res) {
+            res.data.forEach((transaction) => data.push(transaction));
+        }
+        payloadData.transactions = data;
+    });
+    await axios.get('/userTrades').then((res) => {
+        payloadData.openTrades = res.data;
+    });
+    await axios.get("/stocks").then(res => {
+        payloadData.ownedStocks.forEach(ownedStock => {
+            ownedStock.currPrice = res.data.find(stock => stock.stockId === ownedStock.stockId).price;
+            ownedStock.totalValue = (ownedStock.numShares) * ownedStock.currPrice;
+            ownedStock.totalProfit = (ownedStock.currPrice - ownedStock.avgBuyPrice) * (ownedStock.numShares);
+            ownedStock.totalBoughtValue = (ownedStock.numShares) * ownedStock.avgBuyPrice;
+        })
+    }).then(() => {
+        dispatch({
+            type: SET_USER,
+            payload: payloadData
+        })
+    }).catch((err) => {
+        console.log(err);
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response
+        })
+    })
+}
+
+
+export const setUserWatchlist = (currentProps, stockId, addTo) => async (dispatch) => {
+    dispatch({ type: LOADING_USER });
+    let payloadData = currentProps;
+
+    const promise = addTo ? axios.post(`/watchlist/${stockId}`) : axios.delete(`/watchlist/${stockId}`);
+    await promise;
+    axios.get("/watchlist")
+        .then(res => {
+            let data = [];
+            if (res) {
+                res.data.forEach((stock) => data.push(stock));
+            }
+            payloadData.watchlist = data;
+        }).then(() => {
+            dispatch({
+                type: SET_USER,
+                payload: payloadData
+            })
+        }).catch((err) => {
+            console.log(err);
+            dispatch({
+                type: SET_ERRORS,
+                payload: err.response
+            })
+        })
+}
+
+export const setOwnedStocks = (currentProps) => async (dispatch) => {
+    let payloadData = currentProps;
     await axios.get("/userStocks")
         .then(res => {
             let data = [];
@@ -32,22 +168,31 @@ export const getUserData = () => async (dispatch) => {
             }
             payloadData.ownedStocks = data;
         })
-        .catch((err) => {
-            console.log(err);
+    await axios.get('/userTrades').then((res) => {
+        payloadData.openTrades = res.data;
+    });
+    await axios.get("/stocks").then(res => {
+        payloadData.ownedStocks.forEach(ownedStock => {
+            ownedStock.currPrice = res.data.find(stock => stock.stockId === ownedStock.stockId).price;
+            ownedStock.totalValue = (ownedStock.numShares) * ownedStock.currPrice;
+            ownedStock.totalProfit = (ownedStock.currPrice - ownedStock.avgBuyPrice) * (ownedStock.numShares);
+            ownedStock.totalBoughtValue = (ownedStock.numShares) * ownedStock.avgBuyPrice;
         })
-        .then(() => {
-            dispatch({
-                type: SET_USER,
-                payload: payloadData
-            })
+    }).then(() => {
+        dispatch({
+            type: SET_USER,
+            payload: payloadData
         })
-        .catch((err) => {
-            dispatch({
-                type: SET_ERRORS,
-                payload: err.response
-            })
+    }).catch((err) => {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response
         })
+    })
+
 }
+
+
 
 export const signUpUser = (newUserData, history) => (dispatch) => {
     dispatch({ type: LOADING_UI });
@@ -55,10 +200,7 @@ export const signUpUser = (newUserData, history) => (dispatch) => {
         .then(res => {
             setAuthorizationHeader(res.data.token);
             dispatch(getUserData());
-            dispatch({ type: CLEAR_ERRORS });
-            history.push('/');
         }).catch(err => {
-            console.log(err);
             dispatch({
                 type: SET_ERRORS,
                 payload: err.response

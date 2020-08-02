@@ -3,9 +3,9 @@ import { createMuiTheme } from '@material-ui/core/styles';
 const theme = createMuiTheme({
     palette: {
         primary: {
-            light: '#33c9dc',
-            main: '#00bcd4',
-            dark: '#008394',
+            light: '#3fe0d1',
+            main: '#20c6b6',
+            dark: '#1a9e92',
             contrastText: '#fff'
         },
         secondary: {
@@ -45,7 +45,9 @@ const theme = createMuiTheme({
         progress: {
             position: "absolute"
         },
-        
+        table: {
+            padding: "20px auto 20px auto"
+        }
     }
 });
 

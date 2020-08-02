@@ -30,7 +30,7 @@ export default function CenteredTabsNonAuth() {
                 centered
             >
                 <Tab label="Home" component={Link} to={ROUTES.HOME} />
-                <Tab label="About Us" component={Link} to={ROUTES.ABOUT} />
+                <Tab label="Rules" component={Link} to={ROUTES.RULES} />
                 <Tab label="Sign In" component={Link} to={ROUTES.SIGN_IN} />
             </Tabs >
         </Paper>

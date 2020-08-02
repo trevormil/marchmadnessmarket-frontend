@@ -37,8 +37,7 @@ class SignInForm extends Component {
       email: this.state.email,
       password: this.state.password,
     }
-    console.log(userData);
-    this.props.loginUser(userData, this.props.history);
+    this.props.loginUser(userData);
   };
 
   onChange = event => {
@@ -47,6 +46,7 @@ class SignInForm extends Component {
 
   render() {
     const { classes, ui: { loading } } = this.props;
+    const currLoading = loading || this.props.user.loading;
     const { errors } = this.state;
     return (
       <Grid container className={classes.form}>
@@ -95,10 +95,10 @@ class SignInForm extends Component {
               variant="contained"
               color="primary"
               className={classes.button}
-              disabled={loading}
+              disabled={currLoading}
             >
               Login
-              {loading && (
+              {currLoading && (
                 <CircularProgress size={30} className={classes.progress} />
               )}
             </Button>

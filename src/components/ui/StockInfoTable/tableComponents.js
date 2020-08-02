@@ -1,11 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import TableRow from '@material-ui/core/TableRow';
 import { withStyles } from '@material-ui/core/styles';
 import * as ROUTES from '../../../constants/routes';
-import TableCell from '@material-ui/core/TableCell';
-
+import { TableCell, Button, Checkbox, CircularProgress } from '@material-ui/core';
+import { inWatchlist } from '../StockInfoTable/filterFunctions';
 export const StyledTableCell = withStyles((theme) => ({
     head: {
         backgroundColor: theme.palette.primary.main,
@@ -26,14 +25,26 @@ export const StyledTableRow = withStyles((theme) => ({
     },
 }))(TableRow);
 
-export function getRows(stocks) {
+
+export function getRows(stocks, watchlist, handleClick, classes) {
     return stocks ? (
         stocks.map((row) => <StyledTableRow>
-            <StyledTableCell component="th" scope="row">
-                <Link to={`${ROUTES.STOCKS}/${row.stockId}`}>{row.stockName}</Link>
+            <StyledTableCell component="th" scope="row" align="left">
+                <Button align="center" variant="contained" color="primary" size="medium" href={`${ROUTES.STOCKS}/${row.stockId}`}>
+                    {row.stockName}
+                </Button>
+
             </StyledTableCell>
-            <StyledTableCell align="right">Buy</StyledTableCell>
-            <StyledTableCell align="right">Sell</StyledTableCell>
+            <StyledTableCell align="right" padding="checkbox" size="small">
+                <Checkbox
+                    id={row.stockId}
+                    value={inWatchlist(watchlist, row)}
+                    checked={inWatchlist(watchlist, row) === 1}
+                    onChange={handleClick}
+                    inputProps={{ 'aria-label': 'primary checkbox' }}
+                />
+            </StyledTableCell>
+            <StyledTableCell align="right">{row.activeOrder ? "Yes" : "No"}</StyledTableCell>
             <StyledTableCell align="right">{row.market}</StyledTableCell>
             <StyledTableCell align="right">{row.price}</StyledTableCell>
             <StyledTableCell align="right">{row.volume}</StyledTableCell>
@@ -42,18 +53,13 @@ export function getRows(stocks) {
             <StyledTableCell align="right">{row.low}</StyledTableCell>
             <StyledTableCell align="right">{row.marketCap}</StyledTableCell>
             <StyledTableCell align="right">{row.float}</StyledTableCell>
-            <StyledTableCell align="right">{row.dividends}</StyledTableCell>
         </StyledTableRow >)
     )
-        : (<StyledTableRow key="Loading">
-            <StyledTableCell component="th" scope="row">
-                Loading...
-            </StyledTableCell>
-        </StyledTableRow>);
+        : (<CircularProgress size={30}></CircularProgress>);
 }
 
 
-export function getHeaderRow(orderBy, direction, handleClick) {
+export function getScreenerHeaderRow(orderBy, direction, handleClick) {
     return (
         <TableRow>
             <StyledTableCell>
@@ -65,24 +71,20 @@ export function getHeaderRow(orderBy, direction, handleClick) {
                     Name
         </TableSortLabel>
             </StyledTableCell>
-            <StyledTableCell align="right">
-                <TableSortLabel
-                    name="buy"
-                    direction={direction}
-                    active={orderBy === "buy"}
-                    onClick={handleClick}>
-                    Buy
-        </TableSortLabel>
-            </StyledTableCell>
-            <StyledTableCell align="right">
-                <TableSortLabel
-                    name="sell"
-                    direction={direction}
-                    active={orderBy === "sell"}
-                    onClick={handleClick}>
-                    Sell
-        </TableSortLabel>
-            </StyledTableCell>
+            <StyledTableCell align="right" padding="checkbox" size="small"> <TableSortLabel
+                name="watchlist"
+                direction={direction}
+                active={orderBy === "watchlist"}
+                onClick={handleClick}>
+                Starred
+        </TableSortLabel></StyledTableCell>
+            <StyledTableCell align="right"> <TableSortLabel
+                name="activeOrder"
+                direction={direction}
+                active={orderBy === "activeOrder"}
+                onClick={handleClick}>
+                Current Seller?
+        </TableSortLabel></StyledTableCell>
             <StyledTableCell align="right"> <TableSortLabel
                 name="market"
                 direction={direction}
@@ -142,13 +144,7 @@ export function getHeaderRow(orderBy, direction, handleClick) {
                 onClick={handleClick}>
                 Float
         </TableSortLabel></StyledTableCell>
-            <StyledTableCell align="right"> <TableSortLabel
-                name="dividends"
-                direction={direction}
-                active={orderBy === "dividends"}
-                onClick={handleClick}>
-                Dividends
-        </TableSortLabel></StyledTableCell>
         </TableRow>
     );
 }
+

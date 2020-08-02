@@ -1,18 +1,13 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import { getTextFieldSelect, getCriteriaSelect, getColumnSelect } from './addFilterRowGets'
+import { Grid, Button, withStyles } from '@material-ui/core';
 
-import { BootstrapInput } from '../TextInputs/textInputs';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-
+import { getStocks, setStocks } from '../../../redux/actions/dataActions'
 import { isNumeric } from './filterFunctions';
 const styles = (theme) => ({
     ...theme.spreadThis
 });
-
 const initialState = {
     columnValue: "Select a column",
     criteria: "None selected",
@@ -23,177 +18,102 @@ class AddFilterRow extends React.Component {
     state = initialState;
     constructor(props) {
         super(props);
+        this.handleReset = this.handleReset.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.getCriteriaValues = this.getCriteriaValues.bind(this);
-        this.getTextFieldValues = this.getTextFieldValues.bind(this);
         this.isValid = this.isValid.bind(this);
         this.onClick = this.onClick.bind(this);
+        this.addFilter = this.addFilter.bind(this);
     }
     isValid() {
-        let valid = this.state.columnValue !== "Select a column"
-            && this.state.criteria !== "None selected"
-            && this.state.lowerLimit !== null && this.state.lowerLimit !== "";
-        if (valid && this.state.criteria === "equals") {
-            return true;
-        } else if (valid && this.state.criteria === "between") {
-            return (this.state.upperLimit !== null) && (this.state.upperLimit !== "");
-        } else return false;
+        if (this.state.criteria === "None selected" || this.state.columnValue === "Select a column") {
+            return false;
+        }
+        const lowerLimitNotNull = this.state.lowerLimit !== null && this.state.lowerLimit !== "";
+        const upperLimitNotNull = this.state.upperLimit !== null && this.state.upperLimit !== "";
+        switch (this.state.criteria) {
+            case "equals":
+            case "activeOrderEquals":
+            case "greaterThan":
+                return lowerLimitNotNull;
+            case "lessThan":
+                return upperLimitNotNull;
+            case "between":
+                return upperLimitNotNull && lowerLimitNotNull;
+            default: return false;
+        }
     }
     handleReset() {
-        window.location.reload();
+        this.props.getStocks([]);
+        this.setState(initialState);
+    }
+    addFilter() {
+        let filtersArr = this.props.data.filters;
+        filtersArr.push(this.state);
+        this.props.setStocks(this.props.data, filtersArr);
+        this.setState(initialState);
     }
     onClick() {
-        this.props.addFilter(this.state);
-        this.setState(initialState);
+        if (isNumeric(this.state.columnValue)) {
+            //sets greater and less than bounds to max and min numbers
+            if (this.state.criteria === "greaterThan") {
+                this.setState({
+                    upperLimit: Number.MAX_SAFE_INTEGER
+                }, this.addFilter)
+            } else if (this.state.criteria === "lessThan") {
+                this.setState({
+                    lowerLimit: Number.MIN_SAFE_INTEGER
+                }, this.addFilter)
+            } else this.addFilter();
+        } else this.addFilter();
     }
     handleChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
         })
     };
-    handleInputChange = (event) => {
-        const value = event.target.value;
-        switch (isNumeric(this.state.columnValue)) {
-            case true:
-                const temp = Number(value);
-                if (!isNaN(temp)) {
-                    this.setState({
-                        [[event.target.name]]: temp
-                    })
-                }
-                break;
-            case false:
-                const tempStr = value;
-                if (typeof (tempStr) === "string") {
-                    this.setState({
-                        [event.target.name]: tempStr
-                    })
-                }
-                break;
-            default:
-                break;
-        }
-    }
-    getTextFieldValues = () => {
-        switch (this.state.criteria) {
-            case "between":
-                return <Grid item>
-                    <BootstrapInput
-                        name="lowerLimit"
-                        value={this.state.lowerLimit}
-                        onChange={this.handleInputChange}
-                        placeholder="Lower bound"
-                    ></BootstrapInput>
-                    <BootstrapInput
-                        name="upperLimit"
-                        value={this.state.upperLimit}
-                        onChange={this.handleInputChange}
-                        placeholder="Upper bound"
-                    ></BootstrapInput>
-                </Grid>
-            case "equals":
-                return <BootstrapInput
-                    name="lowerLimit"
-                    onChange={this.handleInputChange}
-                    value={this.state.lowerLimit}></BootstrapInput>
-            default: return (
-                <BootstrapInput disabled="true" placeholder="Select criteria"></BootstrapInput>)
-        }
-    }
-    getCriteriaValues = () => {
-        const { classes } = this.props;
-        switch (this.state.columnValue) {
-            case "Select a column":
-                return <Select
-                    name="criteria"
-                    value={this.state.criteria}
-                    displayEmpty
-                    className={classes.selectEmpty}
-                    inputProps={{ 'aria-label': 'Without label' }}
-                    onChange={this.handleChange}
-                >
-                    <MenuItem value="None selected">
-                        Select a column
-                    </MenuItem>
-                </Select>
-            default: return <Select
-                name="criteria"
-                value={this.state.criteria}
-                className={classes.selectEmpty}
-                inputProps={{ 'aria-label': 'Without label' }}
-                autoWidth={true}
-                onChange={this.handleChange}
-            >
-                <MenuItem value="None selected">
-                    Select condition
-                    </MenuItem>
-                <MenuItem value={"between"}>Between</MenuItem>
-                <MenuItem value={"equals"}>Equals</MenuItem>
-            </Select>
-        }
-    }
     render() {
         const { classes, ui: { loading } } = this.props;
         const errors = this.isValid();
         return (
-            <Grid item xs={12} spacing={3}>
-                <Grid container justify="space-between" alignItems="center">
-                    <Select
-                        name="columnValue"
-                        value={this.state.columnValue}
-                        className={classes.selectEmpty}
-                        inputProps={{ 'aria-label': 'Without label' }}
-                        onChange={this.handleChange}
-                        width="100px"
-                    >
-                        <MenuItem value="Select a column">Select a column</MenuItem>
-                        <MenuItem value={"stockName"}>Name</MenuItem>
-                        <MenuItem value={"buy"}>Buy</MenuItem>
-                        <MenuItem value={"sell"}>Sell</MenuItem>
-                        <MenuItem value={"market"}>Market</MenuItem>
-                        <MenuItem value={"price"}>Price</MenuItem>
-                        <MenuItem value={"volume"}>Volume</MenuItem>
-                        <MenuItem value={"open"}>Open</MenuItem>
-                        <MenuItem value={"high"}>High</MenuItem>
-                        <MenuItem value={"low"}>Low</MenuItem>
-                        <MenuItem value={"close"}>Close</MenuItem>
-                        <MenuItem value={"marketCap"}>Market Cap</MenuItem>
-                        <MenuItem value={"float"}>Float</MenuItem>
-                        <MenuItem value={"dividends"}>Dividends</MenuItem>
-                    </Select>
-
-                    {this.getCriteriaValues()}
-                    {this.getTextFieldValues()}
-
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={this.onClick}
-                        align="right"
-                        disabled={!errors}>
-                        Add Filter
+            <Grid item xs={8} spacing={3}>
+                <Grid container justify="space-around" alignItems="center">
+                    <Grid container spacing={3} justify="space-around" alignItems="center">
+                        {getColumnSelect(classes, this.state, this.handleChange)}
+                        {getCriteriaSelect(this.props, this.state, this.handleChange)}
+                        {getTextFieldSelect(this.props, this.state, this.handleChange)}
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={this.onClick}
+                            align="right"
+                            disabled={!errors}>
+                            Add Filter
                             </Button>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        disabled={loading}
-                        onClick={this.handleReset}>
-                        Reset All
-                    </Button>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            disabled={loading}
+                            onClick={this.handleReset}>
+                            Reset
+                                </Button>
+                    </Grid>
                 </Grid>
 
             </Grid>
+
         )
     }
 }
 
 const mapStateToProps = (state) => ({
     user: state.user,
-    ui: state.ui
+    ui: state.ui,
+    data: state.data
 });
 
 const mapActionsToProps = {
+    getStocks,
+    setStocks
 }
 
 export default connect(

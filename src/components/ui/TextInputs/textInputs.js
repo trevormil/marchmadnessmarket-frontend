@@ -14,9 +14,9 @@ export const BootstrapInput = withStyles((theme) => ({
         backgroundColor: theme.palette.background.paper,
         border: '1px solid #ced4da',
         fontSize: 16,
-        maxWidth: "100px",
+        maxWidth: "130px",
         padding: '10px 10px 10px 12px',
-        margin: '20px',
+        margin: '5px',
         transition: theme.transitions.create(['border-color', 'box-shadow']),
         // Use the system font instead of the default Roboto font.
         fontFamily: [
