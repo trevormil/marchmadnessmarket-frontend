@@ -20,7 +20,9 @@ const styles = (theme) => ({
 const initialState = {
     stockId: window.location.pathname.split("/").pop(),
     numToSell: null,
-    sellPrice: null
+    sellPrice: null,
+    numToBuy: null,
+    numToIPOSell: null
 }
 
 class StockPage extends Component {
@@ -32,21 +34,22 @@ class StockPage extends Component {
         this.getNumSharesOwned = this.getNumSharesOwned.bind(this);
         this.attemptToBuy = this.attemptToBuy.bind(this);
         this.attemptToSell = this.attemptToSell.bind(this);
+        this.attemptToIPOBuy = this.attemptToIPOBuy.bind(this);
     }
     getChartDisplay() {
         const tradingViewChartElement = document.getElementById("tradingviewchart");
         if (!this.props.data.loading && tradingViewChartElement !== null) {
             tradingViewChartElement.innerHTML = null;
             const chart = createChart(tradingViewChartElement, { width: 500, height: 300 });
-            const candlestickSeries = chart.addCandlestickSeries();
-            candlestickSeries.setData(this.props.data.currStock.stockHistory);
+            const areaSeries = chart.addAreaSeries();
+            areaSeries.setData(this.props.data.currStock.stockHistory);
         }
     }
     getNumSharesOwned() {
         if (this.props.data.loading
             || this.props.user.loading) return "Loading..."
         else {
-            const foundStock = this.props.user.ownedStocks.find(stock => stock.stockName === this.props.data.currStock.stockName);
+            const foundStock = this.props.user.ownedStocks.find(stock => stock.stockName === this.props.data.currStock.stockData.stockName);
             if (foundStock) return foundStock.numShares;
             else return 0;
         }
@@ -55,7 +58,39 @@ class StockPage extends Component {
         const tradeId = event.currentTarget.getAttribute('name');
         axios.put(`/trades/${tradeId}`).then(() => {
             this.props.setOwnedStocks(this.props.user);
-            this.props.getTradesForCurrStock(this.props.data, this.state.stockId);
+            this.props.getCurrStock(this.props.data, this.props.data.filters, this.state.stockId);
+        });
+    }
+    attemptToIPOBuy = () => {
+        axios({
+            method: 'put',
+            url: `/stocks/${this.state.stockId}/buyIpo`,
+            data: {
+                numShares: Number(this.state.numToBuy)
+            }
+        }).then(() => {
+            this.setState({
+                numToBuy: null
+            });
+            document.getElementById("numToBuy").value = null;
+            this.props.setOwnedStocks(this.props.user);
+            this.props.getCurrStock(this.props.data, this.props.data.filters, this.state.stockId);
+        });
+    }
+    attemptToIPOSell = () => {
+        axios({
+            method: 'put',
+            url: `/stocks/${this.state.stockId}/sellIpo`,
+            data: {
+                numShares: Number(this.state.numToIPOSell)
+            }
+        }).then(() => {
+            this.setState({
+                numToIPOSell: null
+            });
+            document.getElementById("numToIPOSell").value = null;
+            this.props.setOwnedStocks(this.props.user);
+            this.props.getCurrStock(this.props.data, this.props.data.filters, this.state.stockId);
         });
     }
     handleInputChange = (event) => {
@@ -65,7 +100,7 @@ class StockPage extends Component {
         const tradeId = event.currentTarget.getAttribute('name');
         axios.delete(`/trades/${tradeId}`).then(() => {
             this.props.setOwnedStocks(this.props.user);
-            this.props.getTradesForCurrStock(this.props.data, this.state.stockId);
+            this.props.getCurrStock(this.props.data, this.props.data.filters, this.state.stockId);
         });
     }
     attemptToSell = () => {
@@ -96,7 +131,7 @@ class StockPage extends Component {
         let buyTradeDisplay = getBuyTradeDisplay(this.props.data.currStock.trades, this.props.user.userId, this.attemptToBuy, this.props.data.loading || this.props.user.loading);
 
         let sellTradeDisplay = getSellTradeDisplay(this.props.data.currStock.trades, this.props.user.userId, this.attemptToRemove, this.props.data.loading || this.props.user.loading);
-
+        const numSharesOwned = this.getNumSharesOwned();
         this.getChartDisplay();
         return < Container maxWidth="lg" >
             <Grid container spacing={3}>
@@ -116,25 +151,87 @@ class StockPage extends Component {
                         <CircularProgress size={30} />
                     </div>
                     <Typography variant="h6" className={classes.pageTitle} align="center">
-                        Shares Owned: {this.getNumSharesOwned()}
+                        Shares Owned: {numSharesOwned}
                     </Typography>
-                    <BootstrapInput
-                        id="numToSell"
-                        name="numToSell"
-                        value={this.state.numToSell}
-                        onChange={this.handleInputChange}
-                        placeholder="# Shares to Sell"
-                    ></BootstrapInput>
-                    <BootstrapInput
-                        id="sellPrice"
-                        name="sellPrice"
-                        value={this.state.sellPrice}
-                        onChange={this.handleInputChange}
-                        placeholder="Price per Share"
-                    ></BootstrapInput>
-                    <Button color="primary" variant="contained" onClick={this.attemptToSell}>
-                        Sell
+                    <Typography variant="h6" className={classes.pageTitle} align="center">
+                        Account Balance: {
+                            this.props.user.loading || this.props.data.loading ? "Loading..." :
+                                `$${this.props.user.accountBalance.toFixed(2)}`
+                        }
+                    </Typography>
+
+                    <div>
+
+                        <BootstrapInput
+                            id="numToSell"
+                            name="numToSell"
+                            value={this.state.numToSell}
+                            onChange={this.handleInputChange}
+                            placeholder="# Shares to Sell"
+                            type="number"
+                        ></BootstrapInput>
+                        <BootstrapInput
+                            id="sellPrice"
+                            name="sellPrice"
+                            value={this.state.sellPrice}
+                            onChange={this.handleInputChange}
+                            placeholder="Price per Share"
+                            type="number"
+                        ></BootstrapInput>
+                        <Button color="primary" variant="contained" onClick={this.attemptToSell}
+                            disabled={
+                                this.state.numToSell <= 0 || this.state.sellPrice <= 0 || this.state.numToSell === null || this.state.numToSell > numSharesOwned
+                            }>
+                            Sell
                     </Button>
+
+                    </div>
+                    <hr />
+                    <div>
+                        <BootstrapInput
+                            id="numToBuy"
+                            name="numToBuy"
+                            value={this.state.numToBuy}
+                            onChange={this.handleInputChange}
+                            placeholder="# Shares to Buy"
+                            type="number"
+                        ></BootstrapInput>
+
+                        <Typography display="inline"> at ${
+                            this.props.data.currStock.stockData ? this.props.data.currStock.stockData.ipoPrice.toFixed(2) : <CircularProgress size={10} />
+                        } per share</Typography>
+                        <Button color="primary" variant="contained" onClick={this.attemptToIPOBuy}
+                            disabled={
+                                this.state.numToBuy <= 0 || this.state.numToBuy === null || this.state.numToBuy * this.props.data.currStock.stockData.ipoPrice > this.props.user.accountBalance
+                            }>
+                            Instant Buy
+                        </Button>
+                    </div>
+                    <hr />
+                    <div>
+                        <BootstrapInput
+                            id="numToIPOSell"
+                            name="numToIPOSell"
+                            value={this.state.numToIPOSell}
+                            onChange={this.handleInputChange}
+                            placeholder="# Shares to Sell"
+                        ></BootstrapInput>
+
+                        <Typography display="inline"> at ${
+                            this.props.data.currStock.stockData ? (this.props.data.currStock.stockData.ipoPrice / 2).toFixed(2) : <CircularProgress size={10} />
+                        } per share</Typography>
+                        <Button color="primary"
+                            variant="contained"
+                            onClick={this.attemptToIPOSell}
+                            disabled={
+                                this.state.numToIPOSell <= 0 || this.state.numToIPOSell === null || this.state.numToIPOSell > numSharesOwned
+                            }>
+                            Instant Sell
+                        </Button>
+                    </div>
+
+
+
                 </Grid>
                 <Grid item xs={5}>
                     <Typography variant="h6" className={classes.pageTitle} align="center">

@@ -30,7 +30,8 @@ export const getInfoRows = (stock) => {
         : getAllInfoRows([{
             title: "Name:", data: stock.stockName
         },
-        { title: "Last Price:", data: stock.price.toFixed(2) },
+        { title: "Last Auction:", data: stock.price.toFixed(2) },
+        { title: "BIN Price:", data: stock.ipoPrice.toFixed(2) },
         { title: "Market:", data: stock.market },
         { title: "Bio:", data: stock.bio },
         { title: "High:", data: stock.high.toFixed(2) },
@@ -39,5 +40,6 @@ export const getInfoRows = (stock) => {
         { title: "Volume:", data: stock.volume },
         { title: "Market Cap:", data: stock.marketCap },
         { title: "Float:", data: stock.float },
+        { title: "Dividends:", data: stock.dividends },
         ]);
 }

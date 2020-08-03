@@ -47,19 +47,28 @@ class App extends React.Component {
       <MuiThemeProvider theme={themeObject}>
         <Provider store={store}>
           <Router >
+
             <body>
-              <Container maxWidth="lg">
+
+              <div className="navbar">
                 <Navigation />
+              </div>
+
+              <Container maxWidth="lg">
+                <div class="middle-block">
+                  <div className="page">
+                    <Route exact path={ROUTES.HOME} component={HomePage} />
+                    <AuthRoute exact path={ROUTES.SIGN_UP} component={SignUpPage} />
+                    <AuthRoute exact path={ROUTES.SIGN_IN} component={SignInForm} />
+                    <UserRoute exact path={ROUTES.PORTFOLIO} component={PortfolioPage} />
+                    <UserRoute exact path={ROUTES.BROWSE} component={BrowseStocksPage} />
+                    <UserRoute exact path={ROUTES.LEADERBOARD} component={LeaderboardPage} />
+                    <UserRoute exact path="/stocks/:stockId" component={StocksPage} />
+                    <Route exact path="/rules" component={RulesPage} />
+                  </div>
+                </div>
               </Container>
-              <hr />
-              <Route exact path={ROUTES.HOME} component={HomePage} />
-              <AuthRoute exact path={ROUTES.SIGN_UP} component={SignUpPage} />
-              <AuthRoute exact path={ROUTES.SIGN_IN} component={SignInForm} />
-              <UserRoute exact path={ROUTES.PORTFOLIO} component={PortfolioPage} />
-              <UserRoute exact path={ROUTES.BROWSE} component={BrowseStocksPage} />
-              <UserRoute exact path={ROUTES.LEADERBOARD} component={LeaderboardPage} />
-              <UserRoute exact path="/stocks/:stockId" component={StocksPage} />
-              <Route exact path="/rules" component={RulesPage} />
+
             </body>
           </Router >
         </Provider>

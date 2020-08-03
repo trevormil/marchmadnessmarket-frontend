@@ -18,7 +18,7 @@ export const getPositionsHeaderRow = (orderBy, direction, handleClick) => {
             direction={direction}
             active={orderBy === "currPrice"}
             onClick={handleClick}>
-            Last Price
+            Adjusted Price
             </TableSortLabel></StyledTableCell>
         <StyledTableCell align="right"><TableSortLabel
             name="avgBuyPrice"
@@ -46,7 +46,7 @@ export const getPositionsHeaderRow = (orderBy, direction, handleClick) => {
             direction={direction}
             active={orderBy === "profit"}
             onClick={handleClick}>
-            P/L
+            Profit
             </TableSortLabel></StyledTableCell>
     </TableRow>);
 }
@@ -61,7 +61,7 @@ export const transactionHistoryHeaderRow = (<TableRow>
     <StyledTableCell># Shares</StyledTableCell>
     <StyledTableCell>Price</StyledTableCell>
     <StyledTableCell align="right">Value</StyledTableCell>
-    <StyledTableCell align="right">Date & Time</StyledTableCell>
+    <StyledTableCell align="right">Date</StyledTableCell>
 </TableRow>);
 
 export const openTradeHeaderRow = (<TableRow>
@@ -111,10 +111,10 @@ export const getStockRows = (ownedStocks, loading) => {
     }
     let currTrade = false;
     const display = ownedStocks.map(stock => {
+        if (stock === null || stock === undefined || stock.currPrice === null) return null;
         currTrade = true;
-        if (!stock) return null;
         return <StyledTableRow key={stock.stockId}>
-            <Button align="center" variant="contained" color="primary" size="small" href={`${ROUTES.STOCKS}/${stock.stockId}`}>
+            <Button fullWidth align="center" variant="contained" color="primary" size="small" href={`${ROUTES.STOCKS}/${stock.stockId}`}>
                 {stock.stockName}
             </Button>
             <StyledTableCell align="right">{stock.currPrice.toFixed(2)}</StyledTableCell>
@@ -133,11 +133,8 @@ export const getTransactionRows = (transactionHistory, loading) => {
         return <StyledTableCell><CircularProgress size={30} /></StyledTableCell>
     }
     let currTransactions = false;
-    let count = 0;
     const display = transactionHistory.map(transaction => {
-        if (count > 15) return null;
         currTransactions = true;
-        count++;
         return <StyledTableRow key={transaction.tradeId}>
             <StyledTableCell component="th" scope="row">
                 {transaction.stockName}
@@ -167,10 +164,10 @@ export const getOpenTradeDisplay = (trades, loading, attemptToRemove) => {
             <StyledTableCell align="right">{trade.sharesTraded}</StyledTableCell>
             <StyledTableCell align="right">{trade.sharesPrice.toFixed(2)}</StyledTableCell>
             <StyledTableCell align="right">{trade.sharesTraded * trade.sharesPrice}</StyledTableCell>
-            <StyledTableCell align="right"><Button id={trade.tradeId} onClick={attemptToRemove}>Remove</Button></StyledTableCell>
+            <StyledTableCell align="right"><Button id={trade.tradeId} variant="contained" color="primary" onClick={attemptToRemove}>Remove</Button></StyledTableCell>
         </StyledTableRow>
     })
     if (currTrade) return display;
-    else return <StyledTableCell>No current sell orders.</StyledTableCell>
+    else return <StyledTableCell>No open sell orders.</StyledTableCell>
 }
 

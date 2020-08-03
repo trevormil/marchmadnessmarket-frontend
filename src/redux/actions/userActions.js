@@ -54,8 +54,15 @@ export const getUserData = () => async (dispatch) => {
         });
     await axios.get("/transactions").then((res) => {
         let data = [];
+        let count = 0;
         if (res) {
-            res.data.forEach((transaction) => data.push(transaction));
+
+            res.data.forEach((transaction) => {
+                if (count < 20) {
+                    data.push(transaction);
+                    count++;
+                }
+            });
         }
         payloadData.transactions = data;
     });
@@ -67,7 +74,7 @@ export const getUserData = () => async (dispatch) => {
 
     await axios.get("/stocks").then(res => {
         payloadData.ownedStocks.forEach(ownedStock => {
-            ownedStock.currPrice = res.data.find(stock => stock.stockId === ownedStock.stockId).price;
+            ownedStock.currPrice = res.data.find(stock => stock.stockId === ownedStock.stockId).ipoPrice * (3 / 4);
             ownedStock.totalValue = (ownedStock.numShares) * ownedStock.currPrice;
             ownedStock.totalProfit = (ownedStock.currPrice - ownedStock.avgBuyPrice) * (ownedStock.numShares);
             ownedStock.totalBoughtValue = (ownedStock.numShares) * ownedStock.avgBuyPrice;
@@ -101,8 +108,16 @@ export const updateUserPortfolioData = (currProps) => async (dispatch) => {
         });
     await axios.get("/transactions").then((res) => {
         let data = [];
+        let count = 0;
         if (res) {
-            res.data.forEach((transaction) => data.push(transaction));
+            res.data.forEach((transaction) => {
+
+                if (count < 20) {
+                    data.push(transaction);
+                    count++;
+                }
+
+            });
         }
         payloadData.transactions = data;
     });
@@ -111,7 +126,7 @@ export const updateUserPortfolioData = (currProps) => async (dispatch) => {
     });
     await axios.get("/stocks").then(res => {
         payloadData.ownedStocks.forEach(ownedStock => {
-            ownedStock.currPrice = res.data.find(stock => stock.stockId === ownedStock.stockId).price;
+            ownedStock.currPrice = res.data.find(stock => stock.stockId === ownedStock.stockId).ipoPrice * (3 / 4);
             ownedStock.totalValue = (ownedStock.numShares) * ownedStock.currPrice;
             ownedStock.totalProfit = (ownedStock.currPrice - ownedStock.avgBuyPrice) * (ownedStock.numShares);
             ownedStock.totalBoughtValue = (ownedStock.numShares) * ownedStock.avgBuyPrice;
@@ -159,7 +174,12 @@ export const setUserWatchlist = (currentProps, stockId, addTo) => async (dispatc
 }
 
 export const setOwnedStocks = (currentProps) => async (dispatch) => {
+    dispatch({ type: LOADING_USER });
     let payloadData = currentProps;
+
+    await axios.get('/user').then(res => {
+        payloadData.accountBalance = res.data.accountBalance;
+    });
     await axios.get("/userStocks")
         .then(res => {
             let data = [];
@@ -173,7 +193,7 @@ export const setOwnedStocks = (currentProps) => async (dispatch) => {
     });
     await axios.get("/stocks").then(res => {
         payloadData.ownedStocks.forEach(ownedStock => {
-            ownedStock.currPrice = res.data.find(stock => stock.stockId === ownedStock.stockId).price;
+            ownedStock.currPrice = res.data.find(stock => stock.stockId === ownedStock.stockId).ipoPrice * 3 / 4;
             ownedStock.totalValue = (ownedStock.numShares) * ownedStock.currPrice;
             ownedStock.totalProfit = (ownedStock.currPrice - ownedStock.avgBuyPrice) * (ownedStock.numShares);
             ownedStock.totalBoughtValue = (ownedStock.numShares) * ownedStock.avgBuyPrice;

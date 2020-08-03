@@ -10,7 +10,7 @@ const theme = createMuiTheme({
         },
         secondary: {
             light: '#ff6333',
-            main: '#ff3d00',
+            main: '#000',
             dark: '#b22a00',
             contrastText: '#fff'
         }
@@ -46,6 +46,7 @@ const theme = createMuiTheme({
             position: "absolute"
         },
         table: {
+            maxHeight: "400px",
             padding: "20px auto 20px auto"
         }
     }

@@ -2,9 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { withStyles, } from '@material-ui/core';
 import CenteredTabsAuth from './centeredTabs';
 import CenteredTabsNonAuth from './centeredTabsNonAuth';
-
+const styles = (theme) => ({
+  ...theme.spreadThis
+});
 
 class Navigation extends React.Component {
   render() {
@@ -26,4 +29,6 @@ const mapStateToProps = (state) => (
 Navigation.propTypes = {
   user: PropTypes.object.isRequired
 }
-export default connect(mapStateToProps)(Navigation);
+export default connect(
+  mapStateToProps
+)(withStyles(styles)(Navigation));

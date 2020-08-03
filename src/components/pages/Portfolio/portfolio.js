@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import { getTradesForCurrStock, getStocks } from '../../../redux/actions/dataActions'
 import { updateUserPortfolioData, setOwnedStocks } from '../../../redux/actions/userActions'
-import Container from '@material-ui/core/Container';
 import { withStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import CustomizedTables from '../../ui/StockInfoTable/stockTable';
@@ -42,8 +41,8 @@ class PortfolioPage extends Component {
         if (!this.props.user.loading && tradingViewChartElement !== null) {
             tradingViewChartElement.innerHTML = null;
             const chart = createChart(tradingViewChartElement, { width: 500, height: 300 });
-            const lineSeries = chart.addLineSeries();
-            lineSeries.setData(this.props.user.accountHistory);
+            const areaSeries = chart.addAreaSeries();
+            areaSeries.setData(this.props.user.accountHistory);
         }
     }
     attemptToRemove(event) {
@@ -72,33 +71,37 @@ class PortfolioPage extends Component {
         this.getChartDisplay();
 
         return (
-            <Container maxWidth="lg">
-                <Grid container spacing={3}>
+            <div className={classes.root}>
+                <div className="whiteBG">
                     <Grid item xs={12}>
                         <Typography variant="h2" className={classes.pageTitle} align="center">
                             Portfolio
                         </Typography>
-                        <hr />
                     </Grid>
-                    <Grid item xs={12} sm={7}>
+                </div>
+                <hr />
+                <Grid container spacing={3} justify="space-around">
+                    <Grid item xs={7}>
                         <Typography variant="h6" className={classes.pageTitle} align="center">
                             Current Positions
                         </Typography>
                         <CustomizedTables rows={stockDisplay} headerRow={getPositionsHeaderRow(this.state.orderBy, this.state.direction, this.handleClickOnSortLabel)} />
                         <Typography variant="h6" className={classes.pageTitle} align="center">
-                            Open Sell Orders
-                        </Typography>
-                        <CustomizedTables headerRow={openTradeHeaderRow} rows={openTradeDisplay}></CustomizedTables>
-                        <Typography variant="h6" className={classes.pageTitle} align="center">
                             Recent Transactions
-                        </Typography>
-                        <CustomizedTables headerRow={transactionHistoryHeaderRow} rows={transactionDisplay} />
+                            </Typography><div max-height="30px">
+                            <CustomizedTables headerRow={transactionHistoryHeaderRow} rows={transactionDisplay} />
+                        </div>
                     </Grid>
-                    <Grid item xs={12} sm={5} >
+                    <Grid item xs={5}>
                         <Typography variant="h6" className={classes.pageTitle} align="center">
                             Account Summary
                         </Typography>
                         <CustomizedTables rows={summaryDisplay} headerRow={summaryHeaderRow} />
+                        <Typography variant="h6" className={classes.pageTitle} align="center">
+                            Open Sell Orders
+                        </Typography>
+                        <CustomizedTables headerRow={openTradeHeaderRow} rows={openTradeDisplay}></CustomizedTables>
+
                         <Typography variant="h6" className={classes.pageTitle} align="center">
                             Account Value Chart
                         </Typography>
@@ -106,9 +109,8 @@ class PortfolioPage extends Component {
                             <CircularProgress size={30} />
                         </div>
                     </Grid>
-
                 </Grid>
-            </Container>
+            </div >
         )
     }
 }

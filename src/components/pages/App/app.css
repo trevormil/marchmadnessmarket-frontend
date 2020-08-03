@@ -1,20 +1,51 @@
 html,
 body {
+  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  background-color: rgb(red, rgb(95, 168, 95), blue);
+  background-color: #333333;
+  min-height: 100vh
 }
-.container {
-  margin: 80px auto 0 auto;
-  max-width: 1200px;
+.middle-block {
+  background-color: whitesmoke  ;
+  min-height: 100vh;
 }
-.nav-container {
-  margin: auto;
+.grayBG {
+  background-color:rgb(223, 222, 222);
+  padding: 10px 0px;
+  margin: 15px 0px;
 }
-.nav-container svg {
-  color: #000;
+.whiteBG {
+  background-color:whitesmoke;
+  padding: 10px 0px;
+  margin: 15px 0px;
+}
+.darkgrayBG {
+  background-color:rgb(187, 185, 185);
+  padding: 10px 0px;
+  margin: 15px 0px;
+}
+.navbar {
+  overflow: hidden;
+  position: fixed;
+  height: 50px;
+  top: 0;
+  width: 100%;
+  padding-bottom: 0px;
+  z-index: 8;
+}
+.tradingviewchart{
+  z-index: 1;
+  position: relative;
+}
+.page {
+  margin-top: 48px;
 }
 a {
   text-decoration: none;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }

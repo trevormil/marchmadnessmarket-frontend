@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Chip, CircularProgress } from '@material-ui/core';
+import { Grid, Typography, Chip, CircularProgress } from '@material-ui/core';
 
 export const getFilterDisplay = (data) => {
     let filterDisplay = !data.loading ? (
@@ -53,11 +53,19 @@ export const getFilterDisplay = (data) => {
             } else if (filter.criteria === "lessThan") {
                 displayStr = `${adjustedColumnName} is less than ${filter.upperLimit}`
             }
-            else return <Chip variant="outlined" label="No filters added" margin="5px" />;
-            return <Chip variant="outlined" label={displayStr} />
-        })) : <CircularProgress size={30}></CircularProgress>;
+            else return <Grid item><Chip variant="outlined" label="No filters added" margin="5px" /></Grid>;
+            return <Grid item><Chip variant="outlined" label={displayStr} /></Grid>
+        })) : <Grid item><CircularProgress size={30}></CircularProgress></Grid>;
     if (!data.loading && data.filters.length === 0) {
         return <Typography variant="h6">No filters currently applied</Typography>
     }
-    return <div align="center"><Typography variant="h6">Filters:</Typography>{filterDisplay}</div>;
+    return <div>
+        <Grid container spacing={3} justify="space-between" alignItems="center">
+            <Grid item>
+                <Typography variant="h6" display="inline">Active Filters:</Typography>
+            </Grid>
+
+            {filterDisplay}
+        </Grid>
+    </div>;
 }

@@ -47,37 +47,40 @@ class BrowseStocksPage extends Component {
         let filterDisplay = getFilterDisplay(this.props.data);
         return (
             <div className='screener' >
-                <Container maxWidth="lg">
-                    <div className={classes.root}>
-                        <Typography variant="h2" className={classes.pageTitle} align="center">
-                            Stock Screener
-                         </Typography>
+                <div className={classes.root}>
+                    <div className="whiteBG">
+                        <Grid item xs={12}>
+                            <Typography variant="h2" className={classes.pageTitle} align="center">
+                                Stock Screener
+                                </Typography>
+                        </Grid>
+                    </div>
+                    <hr />
+                    <div className="whiteBG">
                         <Grid container spacing={3} justify="space-around">
                             <AddFilterRow addFilter={this.addFilter} reset={this.handleReset} />
-                            <Grid item xs={8} spacing={3}>
-                                <Grid container spacing={3} justify="space-around" alignItems="center">
-                                    <div className={classes.root}>
-                                        {filterDisplay}
-                                    </div>
-                                </Grid>
-                            </Grid>
-
                         </Grid>
-                        <Grid container spacing={3} justify="space-around">
-                            <Grid item xs={8} spacing={3}>
+                    </div>
+                    
+                    <div className="whiteBG">
+                        <Grid item xs={12} spacing={3}>
+                            <Grid container spacing={3} justify="space-around" alignItems="center">
+                                <div className={classes.root}>
+                                    {filterDisplay}
+                                </div>
                             </Grid>
                         </Grid>
                     </div>
-                </Container>
-                <hr />
-                <Container maxWidth="lg">
-                    <div>
-                        <CustomizedTables
-                            rows={stockDisplay}
-                            headerRow={getScreenerHeaderRow(this.state.orderBy, this.state.direction, this.handleClickOnSortLabel)} />
+                    <hr />
 
+                    <div className="whiteBG">
+                        <Container maxWidth="lg">
+                            <CustomizedTables
+                                rows={stockDisplay}
+                                headerRow={getScreenerHeaderRow(this.state.orderBy, this.state.direction, this.handleClickOnSortLabel)} />
+                        </Container>
                     </div>
-                </Container>
+                </div>
             </div>
         )
     }

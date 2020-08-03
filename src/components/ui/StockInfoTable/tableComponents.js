@@ -3,17 +3,18 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import TableRow from '@material-ui/core/TableRow';
 import { withStyles } from '@material-ui/core/styles';
 import * as ROUTES from '../../../constants/routes';
-import { TableCell, Button, Checkbox, CircularProgress } from '@material-ui/core';
+import { TableCell, Button, Checkbox, CircularProgress, Typography } from '@material-ui/core';
 import { inWatchlist } from '../StockInfoTable/filterFunctions';
 export const StyledTableCell = withStyles((theme) => ({
     head: {
         backgroundColor: theme.palette.primary.main,
         color: theme.palette.common.white,
         fontWeight: "bold",
-        fontSize: 13
+        fontSize: 14
     },
     body: {
-        fontSize: 13,
+        fontSize: 18,
+        fontWeight: "bold"
     },
 }))(TableCell);
 
@@ -27,31 +28,34 @@ export const StyledTableRow = withStyles((theme) => ({
 
 
 export function getRows(stocks, watchlist, handleClick, classes) {
+    if (stocks.length === 0) {
+        return <Typography align="center" variant="h6">No matches</Typography>
+    }
     return stocks ? (
         stocks.map((row) => <StyledTableRow>
             <StyledTableCell component="th" scope="row" align="left">
-                <Button align="center" variant="contained" color="primary" size="medium" href={`${ROUTES.STOCKS}/${row.stockId}`}>
+                <Button fullWidth align="center" variant="contained" color="primary" size="medium" href={`${ROUTES.STOCKS}/${row.stockId}`}>
                     {row.stockName}
                 </Button>
 
             </StyledTableCell>
-            <StyledTableCell align="right" padding="checkbox" size="small">
+            <StyledTableCell align="left" padding="checkbox" size="small">
                 <Checkbox
                     id={row.stockId}
                     value={inWatchlist(watchlist, row)}
                     checked={inWatchlist(watchlist, row) === 1}
                     onChange={handleClick}
                     inputProps={{ 'aria-label': 'primary checkbox' }}
+                    color="primary"
                 />
             </StyledTableCell>
             <StyledTableCell align="right">{row.activeOrder ? "Yes" : "No"}</StyledTableCell>
             <StyledTableCell align="right">{row.market}</StyledTableCell>
-            <StyledTableCell align="right">{row.price}</StyledTableCell>
+            <StyledTableCell align="right">{row.price.toFixed(2)}</StyledTableCell>
+            <StyledTableCell align="right">{row.ipoPrice.toFixed(2)}</StyledTableCell>
             <StyledTableCell align="right">{row.volume}</StyledTableCell>
-            <StyledTableCell align="right">{row.open}</StyledTableCell>
-            <StyledTableCell align="right">{row.high}</StyledTableCell>
-            <StyledTableCell align="right">{row.low}</StyledTableCell>
-            <StyledTableCell align="right">{row.marketCap}</StyledTableCell>
+            <StyledTableCell align="right">{row.high.toFixed(2)}</StyledTableCell>
+            <StyledTableCell align="right">{row.low.toFixed(2)}</StyledTableCell>
             <StyledTableCell align="right">{row.float}</StyledTableCell>
         </StyledTableRow >)
     )
@@ -71,12 +75,12 @@ export function getScreenerHeaderRow(orderBy, direction, handleClick) {
                     Name
         </TableSortLabel>
             </StyledTableCell>
-            <StyledTableCell align="right" padding="checkbox" size="small"> <TableSortLabel
+            <StyledTableCell align="left"> <TableSortLabel
                 name="watchlist"
                 direction={direction}
                 active={orderBy === "watchlist"}
                 onClick={handleClick}>
-                Starred
+                Watchlist
         </TableSortLabel></StyledTableCell>
             <StyledTableCell align="right"> <TableSortLabel
                 name="activeOrder"
@@ -98,7 +102,16 @@ export function getScreenerHeaderRow(orderBy, direction, handleClick) {
                     direction={direction}
                     active={orderBy === "price"}
                     onClick={handleClick}>
-                    Price
+                    Last Auction
+        </TableSortLabel>
+            </StyledTableCell>
+            <StyledTableCell align="right">
+                <TableSortLabel
+                    name="ipoPrice"
+                    direction={direction}
+                    active={orderBy === "ipoPrice"}
+                    onClick={handleClick}>
+                    BIN Price
         </TableSortLabel>
             </StyledTableCell>
 
@@ -108,13 +121,6 @@ export function getScreenerHeaderRow(orderBy, direction, handleClick) {
                 active={orderBy === "volume"}
                 onClick={handleClick}>
                 Volume
-        </TableSortLabel></StyledTableCell>
-            <StyledTableCell align="right"> <TableSortLabel
-                name="open"
-                direction={direction}
-                active={orderBy === "open"}
-                onClick={handleClick}>
-                Open
         </TableSortLabel></StyledTableCell>
             <StyledTableCell align="right"> <TableSortLabel
                 name="high"
@@ -129,13 +135,6 @@ export function getScreenerHeaderRow(orderBy, direction, handleClick) {
                 active={orderBy === "low"}
                 onClick={handleClick}>
                 Low
-        </TableSortLabel></StyledTableCell>
-            <StyledTableCell align="right"> <TableSortLabel
-                name="marketCap"
-                direction={direction}
-                active={orderBy === "marketCap"}
-                onClick={handleClick}>
-                Market Cap
         </TableSortLabel></StyledTableCell>
             <StyledTableCell align="right"> <TableSortLabel
                 name="float"

@@ -14,15 +14,14 @@ export const getColumnSelect = (classes, state, handleChange) => {
         <MenuItem value="Select a column">Select a column</MenuItem>
         <MenuItem value={"stockName"}>Name</MenuItem>
         <MenuItem value={"activeOrder"}>Current Seller</MenuItem>
-        <MenuItem value={"price"}>Price</MenuItem>
         <MenuItem value={"market"}>Market</MenuItem>
+        <MenuItem value={"price"}>Last Auction Price</MenuItem>
+        <MenuItem value={"ipoPrice"}>BIN Price</MenuItem>
         <MenuItem value={"volume"}>Volume</MenuItem>
         <MenuItem value={"open"}>Open</MenuItem>
         <MenuItem value={"high"}>High</MenuItem>
         <MenuItem value={"low"}>Low</MenuItem>
-        <MenuItem value={"marketCap"}>Market Cap</MenuItem>
         <MenuItem value={"float"}>Float</MenuItem>
-        <MenuItem value={"dividends"}>Dividends</MenuItem>
     </Select>
 }
 export function getCriteriaSelect(props, state, handleChange) {
