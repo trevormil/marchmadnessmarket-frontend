@@ -17,24 +17,33 @@ const styles = (theme) => ({
     ...theme.spreadThis
 });
 
-const initialState = {
-    stockId: window.location.pathname.split("/").pop(),
-    numToSell: null,
-    sellPrice: null,
-    numToBuy: null,
-    numToIPOSell: null
+const waitForURLUpdate = () => {
+    while (window.location.pathname.split("/").pop() === "browse") {
+
+    }
+
+    return {
+        stockId: window.location.pathname.split("/").pop(),
+        numToSell: null,
+        sellPrice: null,
+        numToBuy: null,
+        numToIPOSell: null
+    }
 }
 
 class StockPage extends Component {
-    state = initialState
+
+    state = waitForURLUpdate();
     constructor(props) {
         super(props);
         this.props.getCurrStock(this.props.data, this.props.data.filters, this.state.stockId);
+
         this.handleInputChange = this.handleInputChange.bind(this);
         this.getNumSharesOwned = this.getNumSharesOwned.bind(this);
         this.attemptToBuy = this.attemptToBuy.bind(this);
         this.attemptToSell = this.attemptToSell.bind(this);
         this.attemptToIPOBuy = this.attemptToIPOBuy.bind(this);
+
     }
     getChartDisplay() {
         const tradingViewChartElement = document.getElementById("tradingviewchart");
@@ -180,7 +189,7 @@ class StockPage extends Component {
                         ></BootstrapInput>
                         <Button color="primary" variant="contained" onClick={this.attemptToSell}
                             disabled={
-                                this.state.numToSell <= 0 || this.state.sellPrice <= 0 || this.state.numToSell === null || this.state.numToSell > numSharesOwned
+                                this.props.data.currStock.stockData === null || this.state.numToSell <= 0 || this.state.sellPrice <= 0 || this.state.numToSell === null || this.state.numToSell > numSharesOwned
                             }>
                             Sell
                     </Button>
@@ -198,11 +207,11 @@ class StockPage extends Component {
                         ></BootstrapInput>
 
                         <Typography display="inline"> at ${
-                            this.props.data.currStock.stockData ? this.props.data.currStock.stockData.ipoPrice.toFixed(2) : <CircularProgress size={10} />
+                            this.props.data.currStock.stockData && this.props.data.currStock.stockData.ipoPrice ? this.props.data.currStock.stockData.ipoPrice.toFixed(2) : <CircularProgress size={10} />
                         } per share</Typography>
                         <Button color="primary" variant="contained" onClick={this.attemptToIPOBuy}
                             disabled={
-                                this.state.numToBuy <= 0 || this.state.numToBuy === null || this.state.numToBuy * this.props.data.currStock.stockData.ipoPrice > this.props.user.accountBalance
+                                this.props.data.currStock.stockData === null || this.state.numToBuy <= 0 || this.state.numToBuy === null || this.state.numToBuy * this.props.data.currStock.stockData.ipoPrice > this.props.user.accountBalance
                             }>
                             Instant Buy
                         </Button>
@@ -224,7 +233,7 @@ class StockPage extends Component {
                             variant="contained"
                             onClick={this.attemptToIPOSell}
                             disabled={
-                                this.state.numToIPOSell <= 0 || this.state.numToIPOSell === null || this.state.numToIPOSell > numSharesOwned
+                                this.props.data.currStock.stockData === null || this.state.numToIPOSell <= 0 || this.state.numToIPOSell === null || this.state.numToIPOSell > numSharesOwned
                             }>
                             Instant Sell
                         </Button>
@@ -266,7 +275,6 @@ class StockPage extends Component {
 StockPage.propTypes = {
     user: PropTypes.object.isRequired,
     ui: PropTypes.object.isRequired,
-    stockId: PropTypes.string.isRequired,
     data: PropTypes.object.isRequired,
 }
 const mapStateToProps = (state) => ({

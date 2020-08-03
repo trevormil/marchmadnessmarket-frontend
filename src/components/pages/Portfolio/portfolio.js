@@ -86,6 +86,9 @@ class PortfolioPage extends Component {
                             Current Positions
                         </Typography>
                         <CustomizedTables rows={stockDisplay} headerRow={getPositionsHeaderRow(this.state.orderBy, this.state.direction, this.handleClickOnSortLabel)} />
+                        <Typography variant="p" className={classes.pageTitle} align="center">
+                            *Note that adjusted price is based on halfway between the instant buy and instant sell prices.
+                        </Typography>
                         <Typography variant="h6" className={classes.pageTitle} align="center">
                             Recent Transactions
                             </Typography><div max-height="30px">

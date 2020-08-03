@@ -63,7 +63,7 @@ class BrowseStocksPage extends Component {
                     </div>
                     
                     <div className="whiteBG">
-                        <Grid item xs={12} spacing={3}>
+                        <Grid item xs={12}>
                             <Grid container spacing={3} justify="space-around" alignItems="center">
                                 <div className={classes.root}>
                                     {filterDisplay}

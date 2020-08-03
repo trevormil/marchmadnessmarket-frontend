@@ -3,7 +3,6 @@ import React from 'react';
 import { TableSortLabel, TableRow, Button, CircularProgress } from '@material-ui/core';
 import * as ROUTES from '../../../constants/routes';
 import { Link } from 'react-router-dom';
-
 export const getPositionsHeaderRow = (orderBy, direction, handleClick) => {
     return (<TableRow>
         <StyledTableCell><TableSortLabel
@@ -99,7 +98,7 @@ export const getSummaryRows = (ownedStocks, user, data) => {
         totalValue += stock.totalValue;
         //totalProfit += stock.totalProfit;
     });
-    return Object.keys(ownedStocks).length === 0
+    return ownedStocks.length === 0 && user.accountBalance === null
         ? <StyledTableCell></StyledTableCell>
         : getAllSummaryRows([{ title: "Account Balance:", data: user.accountBalance.toFixed(2) },
         { title: "Portfolio Market Value:", data: totalValue.toFixed(2) }])
@@ -111,10 +110,10 @@ export const getStockRows = (ownedStocks, loading) => {
     }
     let currTrade = false;
     const display = ownedStocks.map(stock => {
-        if (stock === null || stock === undefined || stock.currPrice === null) return null;
+        if (stock === null || stock === undefined || !stock || stock.currPrice === null || stock.currPrice === undefined) return null;
         currTrade = true;
         return <StyledTableRow key={stock.stockId}>
-            <Button fullWidth align="center" variant="contained" color="primary" size="small" href={`${ROUTES.STOCKS}/${stock.stockId}`}>
+            <Button fullWidth align="center" variant="contained" color="primary" size="small" component={Link} to={`${ROUTES.STOCKS}/${stock.stockId}`} >
                 {stock.stockName}
             </Button>
             <StyledTableCell align="right">{stock.currPrice.toFixed(2)}</StyledTableCell>

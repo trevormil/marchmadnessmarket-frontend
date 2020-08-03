@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import TableRow from '@material-ui/core/TableRow';
 import { withStyles } from '@material-ui/core/styles';
@@ -34,7 +35,7 @@ export function getRows(stocks, watchlist, handleClick, classes) {
     return stocks ? (
         stocks.map((row) => <StyledTableRow>
             <StyledTableCell component="th" scope="row" align="left">
-                <Button fullWidth align="center" variant="contained" color="primary" size="medium" href={`${ROUTES.STOCKS}/${row.stockId}`}>
+                <Button fullWidth component={Link} to={`${ROUTES.STOCKS}/${row.stockId}`} align="center" variant="contained" color="primary" size="medium" >
                     {row.stockName}
                 </Button>
 
@@ -127,14 +128,14 @@ export function getScreenerHeaderRow(orderBy, direction, handleClick) {
                 direction={direction}
                 active={orderBy === "high"}
                 onClick={handleClick}>
-                High
+                Auction High
         </TableSortLabel></StyledTableCell>
             <StyledTableCell align="right"> <TableSortLabel
                 name="low"
                 direction={direction}
                 active={orderBy === "low"}
                 onClick={handleClick}>
-                Low
+                Auction Low
         </TableSortLabel></StyledTableCell>
             <StyledTableCell align="right"> <TableSortLabel
                 name="float"

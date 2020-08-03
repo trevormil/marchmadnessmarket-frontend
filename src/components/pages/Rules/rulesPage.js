@@ -18,29 +18,67 @@ class RulesPage extends Component {
                         Rules  </Typography>
                     <hr />
                     <Typography align="center">
-                        Everyone is given $500 when they first sign up, and they will be granted 10 shares of each stock bought at $3/share (for portfolio purposes).
+                        Everyone is given $500 when they first sign up.
                     </Typography>
                     <Typography align="center">
-                        The average points per share for a 30 team league is about 2.5-3 points, so that is where the $3 per share came from.
+                        The objective of the game is to get as many points as possible when the season concludes, not highest portfolio value.
                     </Typography>
                     <Typography align="center">
-                        The objective of the game is to get as many points as possible when the season concludes.
+                        Portfolio value will give you a good estimate of how you are performing, but points are determined at the end of the season by a team's position in their league (see below).
+                    </Typography>
+                    <Typography align="center">
+                        Note leaderboards, portfolio charts, and stock charts are updated once daily at 12:00 EST.
+                    </Typography>
+                    <hr />
+                    <Typography align="center">
+                        There are a couple ways that you can buy and sell stocks: </Typography>
+                    <Typography align="center">
+                        1) Every stock has a BIN (buy it now) price that you can instantly purchase any number of shares at.
+                    </Typography>
+                    <Typography align="center">
+                        2) You can also instantly sell any number of shares at half the value of the BIN price.
+                    </Typography>
+                    <Typography align="center">
+                        3) Any stock can be listed for auction by a seller, and once a buyer is found, the shares and balances are updated.
+                    </Typography>
+                    <Typography align="center">
+                        For every transaction that occurs, the BIN price and instant sell price gets updated slightly based on an algorithm.
+                    </Typography>
+                    <Typography align="center">
+                        Example: If a stock is being bought a lot at the BIN price or being sold for a high price on auction, the BIN price will automatically increase. Vice versa for being sold.
+                    </Typography>
+                    <Typography align="center">
+                        For calculations of price for the charts and portfolio market value, it uses the price that is halfway between the BIN price and the instant sell price.
+                    </Typography>
+                    <hr />
+                    <Typography align="center">
+                        Overall, terms to know: </Typography>
+                    <Typography align="center">
+                        BIN Price: "Buy it now" price (sometimes called instant buy price)                     </Typography>
+                    <Typography align="center">
+                        Instant Sell Price: Any amount can be sold instantly at this price (half the BIN Price)
+                    </Typography>
+                    <Typography align="center">
+                        Adjusted Price: Halfway between the BIN price and the instant sell price
+                    </Typography>
+                    <Typography align="center">
+                        Float: Total number of shares of a stock in circulation
                     </Typography>
                     <hr />
                     <Typography align="center">
                         Points per share are awarded as follows:
                         </Typography>
                     <Typography align="center">
-                        0 points - 10 teams with worst regular season record
+                        0 points - Bottom 10 teams in terms of regular season record
                     </Typography>
                     <Typography align="center">
-                        1 point - Every dollar in your account balance is worth one point.
+                        1 point - Every dollar in your account balance at the season end is worth one point.
                     </Typography>
                     <Typography align="center">
                         2 points - Teams that don't make the playoffs but are not in bottom 10
                     </Typography>
                     <Typography align="center">
-                        4 Points - Teams that make the playoffs but lose before the semi finals.
+                        4 Points - Teams that make the playoffs but lose in quarter finals or before.
                     </Typography>
                     <Typography align="center">
                         6 Points - Teams that lose in the semi finals

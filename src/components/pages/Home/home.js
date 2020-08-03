@@ -18,7 +18,7 @@ class HomePage extends Component {
             Welcome!  </Typography>
           <hr />
           <Typography align="center">
-            To access all features, you need to sign in to an account.
+            Note that some features are restricted to those who are signed in. So if you aren't signed in, sign in to gain access to these features!
           </Typography>
           <hr />
           <Typography align="center">

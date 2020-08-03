@@ -18,9 +18,9 @@ export const getColumnSelect = (classes, state, handleChange) => {
         <MenuItem value={"price"}>Last Auction Price</MenuItem>
         <MenuItem value={"ipoPrice"}>BIN Price</MenuItem>
         <MenuItem value={"volume"}>Volume</MenuItem>
-        <MenuItem value={"open"}>Open</MenuItem>
-        <MenuItem value={"high"}>High</MenuItem>
-        <MenuItem value={"low"}>Low</MenuItem>
+        <MenuItem value={"open"}>Auction Open</MenuItem>
+        <MenuItem value={"high"}>Auction High</MenuItem>
+        <MenuItem value={"low"}>Auction Low</MenuItem>
         <MenuItem value={"float"}>Float</MenuItem>
     </Select>
 }

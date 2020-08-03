@@ -131,7 +131,7 @@ class SignUpForm extends Component {
               className={classes.button}
               disabled={currLoading}
             >
-              SignUp
+              Sign Up
               {currLoading && (
                 <CircularProgress size={30} className={classes.progress} />
               )}

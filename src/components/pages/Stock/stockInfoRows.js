@@ -25,7 +25,7 @@ const getAllInfoRows = (dataArr) => {
     return display;
 }
 export const getInfoRows = (stock) => {
-    return stock === undefined || stock === null
+    return stock === undefined || stock === null || stock.price === undefined || stock.price === null
         ? <StyledTableCell></StyledTableCell>
         : getAllInfoRows([{
             title: "Name:", data: stock.stockName
@@ -34,9 +34,9 @@ export const getInfoRows = (stock) => {
         { title: "BIN Price:", data: stock.ipoPrice.toFixed(2) },
         { title: "Market:", data: stock.market },
         { title: "Bio:", data: stock.bio },
-        { title: "High:", data: stock.high.toFixed(2) },
-        { title: "Low:", data: stock.low.toFixed(2) },
-        { title: "Open:", data: stock.open.toFixed(2) },
+        { title: "Auction High:", data: stock.high.toFixed(2) },
+        { title: "Auction Low:", data: stock.low.toFixed(2) },
+        { title: "Auction Open:", data: stock.open.toFixed(2) },
         { title: "Volume:", data: stock.volume },
         { title: "Market Cap:", data: stock.marketCap },
         { title: "Float:", data: stock.float },

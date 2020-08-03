@@ -26,7 +26,6 @@ export default function CenteredTabs() {
 
     const logOut = () => {
         store.dispatch(logOutUser());
-        window.location.href = ROUTES.SIGN_IN;
     }
 
     return (
