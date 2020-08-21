@@ -1,6 +1,6 @@
 import { SET_STOCKS, LOADING_STOCKS } from '../types';
 import axios from 'axios';
-import { sort, filterStocks } from '../../components/ui/StockInfoTable/filterFunctions';
+import { sort, filterStocks } from '../../helpers/filterFunctions';
 
 
 export const getStocks = (filterArr) => (dispatch) => {

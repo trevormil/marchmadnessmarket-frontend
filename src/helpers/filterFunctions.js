@@ -26,7 +26,7 @@ export const isNumeric = (value) => {
         case "currPrice":
         case "totalValue":
         case "profit":
-            case "ipoPrice":
+        case "ipoPrice":
             return true;
         case "stockName":
         case "dividends":

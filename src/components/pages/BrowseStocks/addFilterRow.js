@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getTextFieldSelect, getCriteriaSelect, getColumnSelect } from './addFilterRowGets'
+import { getTextFieldSelect, getCriteriaSelect, getColumnSelect } from './filterSelectMenus'
 import { Grid, Button, withStyles } from '@material-ui/core';
 
 import { getStocks, setStocks } from '../../../redux/actions/dataActions'
-import { isNumeric } from './filterFunctions';
+import { isNumeric } from '../../../helpers/filterFunctions';
 const styles = (theme) => ({
     ...theme.spreadThis
 });

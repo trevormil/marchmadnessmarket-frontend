@@ -13,8 +13,8 @@ import { createChart } from 'lightweight-charts';
 import {
     getPositionsHeaderRow, getOpenTradeDisplay, openTradeHeaderRow,
     summaryHeaderRow, getSummaryRows, getStockRows, transactionHistoryHeaderRow, getTransactionRows
-} from './rows';
-import { sort } from '../../ui/StockInfoTable/filterFunctions';
+} from './portfolioRows';
+import { sort } from '../../../helpers/filterFunctions';
 import axios from 'axios';
 
 const styles = (theme) => ({

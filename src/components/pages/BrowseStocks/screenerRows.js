@@ -1,32 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
-import TableRow from '@material-ui/core/TableRow';
-import { withStyles } from '@material-ui/core/styles';
 import * as ROUTES from '../../../constants/routes';
-import { TableCell, Button, Checkbox, CircularProgress, Typography } from '@material-ui/core';
-import { inWatchlist } from '../StockInfoTable/filterFunctions';
-export const StyledTableCell = withStyles((theme) => ({
-    head: {
-        backgroundColor: theme.palette.primary.main,
-        color: theme.palette.common.white,
-        fontWeight: "bold",
-        fontSize: 14
-    },
-    body: {
-        fontSize: 18,
-        fontWeight: "bold"
-    },
-}))(TableCell);
-
-export const StyledTableRow = withStyles((theme) => ({
-    root: {
-        '&:nth-of-type(odd)': {
-            backgroundColor: theme.palette.action.hover,
-        },
-    },
-}))(TableRow);
-
+import { Button, Checkbox, CircularProgress, Typography, TableRow, TableSortLabel } from '@material-ui/core';
+import { StyledTableCell, StyledTableRow } from '../../ui/StockInfoTable/styledTableComponents'
+import { inWatchlist } from '../../../helpers/filterFunctions';
 
 export function getRows(stocks, watchlist, handleClick, classes) {
     if (stocks.length === 0) {

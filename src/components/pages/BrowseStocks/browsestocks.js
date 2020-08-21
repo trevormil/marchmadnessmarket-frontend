@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import { setUserWatchlist } from '../../../redux/actions/userActions'
 import { getStocks, setStocks, sortCurrStocks } from '../../../redux/actions/dataActions'
 //UI
-import AddFilterRow from '../../ui/StockInfoTable/addFilterRow';
+import AddFilterRow from './addFilterRow';
 import { withStyles, Typography, Grid, Container, CircularProgress } from '@material-ui/core';
 //Table Components
 import CustomizedTables from '../../ui/StockInfoTable/stockTable';
-import { getScreenerHeaderRow, getRows, StyledTableCell } from '../../ui/StockInfoTable/tableComponents';
+import { StyledTableCell } from '../../ui/StockInfoTable/styledTableComponents';
+import { getRows, getScreenerHeaderRow } from './screenerRows'
 import { getFilterDisplay } from './filterDisplay';
 
 const styles = (theme) => ({
@@ -27,7 +28,7 @@ class BrowseStocksPage extends Component {
         this.handleClickOnSortLabel = this.handleClickOnSortLabel.bind(this);
         this.handleClickOnWatchlist = this.handleClickOnWatchlist.bind(this);
     }
-    
+
     handleClickOnSortLabel(event) {
         const orderByName = event.currentTarget.getAttribute('name');
         const dir = this.state.direction === "asc" ? "desc" : "asc";

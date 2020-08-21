@@ -5,6 +5,7 @@ import * as ROUTES from '../../../constants/routes';
 import { logOutUser } from '../../../redux/actions/userActions';
 import store from '../../../redux/stores';
 
+
 class TabBase extends React.Component {
     state = {
         value: `/${window.location.pathname.split("/").pop()}`

@@ -1,7 +1,7 @@
 import React from 'react';
-import { BootstrapInput } from '../TextInputs/textInputs';
+import { BootstrapInput } from '../../ui/TextInputs/textInputs';
 import { Grid, Select, MenuItem } from '@material-ui/core';
-import { isNumeric } from './filterFunctions';
+import { isNumeric } from '../../../helpers/filterFunctions';
 
 export const getColumnSelect = (classes, state, handleChange) => {
     return <Select

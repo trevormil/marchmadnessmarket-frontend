@@ -1,26 +1,6 @@
 import React from 'react';
 import TableRow from '@material-ui/core/TableRow';
-import { withStyles } from '@material-ui/core/styles';
-import { TableCell } from '@material-ui/core';
-export const StyledTableCell = withStyles((theme) => ({
-    head: {
-        backgroundColor: theme.palette.primary.main,
-        color: theme.palette.common.white,
-        fontWeight: "bold",
-        fontSize: 13
-    },
-    body: {
-        fontSize: 13,
-    },
-}))(TableCell);
-
-export const StyledTableRow = withStyles((theme) => ({
-    root: {
-        '&:nth-of-type(odd)': {
-            backgroundColor: theme.palette.action.hover,
-        },
-    },
-}))(TableRow);
+import { StyledTableCell, StyledTableRow } from '../../ui/StockInfoTable/styledTableComponents'
 
 
 export function getRows(leaderboard) {

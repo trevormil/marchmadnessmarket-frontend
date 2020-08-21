@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import { withStyles, Typography, Container } from '@material-ui/core';
 //Table Components
 import CustomizedTables from '../../ui/StockInfoTable/stockTable';
-import { getHeaderRow, StyledTableCell, getRows } from './tableComponents'
+import { getHeaderRow, getRows } from './leaderboardRows'
+import { StyledTableCell } from '../../ui/StockInfoTable/styledTableComponents'
+
 const styles = (theme) => ({
     ...theme.spreadThis
 });

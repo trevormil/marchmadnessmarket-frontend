@@ -1,4 +1,4 @@
-import { StyledTableCell, StyledTableRow } from '../../ui/StockInfoTable/tableComponents';
+import { StyledTableCell, StyledTableRow } from '../../ui/StockInfoTable/styledTableComponents';
 import React from 'react';
 import { TableRow } from '@material-ui/core';
 
