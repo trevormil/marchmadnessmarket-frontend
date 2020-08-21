@@ -15,8 +15,6 @@ import { withStyles } from '@material-ui/core/styles';
 const styles = (theme) => ({
   ...theme.spreadThis
 });
-
-
 class SignInForm extends Component {
   constructor() {
     super();

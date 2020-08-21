@@ -17,27 +17,18 @@ const styles = (theme) => ({
     ...theme.spreadThis
 });
 
-const waitForURLUpdate = () => {
-    while (window.location.pathname.split("/").pop() === "browse") {
+class StockPage extends Component {
 
-    }
-
-    return {
-        stockId: window.location.pathname.split("/").pop(),
+    state = {
+        stockId: null, //waitForURLUpdate("browse"),
         numToSell: null,
         sellPrice: null,
         numToBuy: null,
         numToIPOSell: null
     }
-}
-
-class StockPage extends Component {
-
-    state = waitForURLUpdate();
     constructor(props) {
         super(props);
         this.props.getCurrStock(this.props.data, this.props.data.filters, this.state.stockId);
-
         this.handleInputChange = this.handleInputChange.bind(this);
         this.getNumSharesOwned = this.getNumSharesOwned.bind(this);
         this.attemptToBuy = this.attemptToBuy.bind(this);

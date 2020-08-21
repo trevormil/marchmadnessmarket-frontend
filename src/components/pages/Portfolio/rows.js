@@ -17,7 +17,15 @@ export const getPositionsHeaderRow = (orderBy, direction, handleClick) => {
             direction={direction}
             active={orderBy === "currPrice"}
             onClick={handleClick}>
-            Adjusted Price
+            Last Auction Price
+            </TableSortLabel></StyledTableCell>
+
+        <StyledTableCell align="right"><TableSortLabel
+            name="points"
+            direction={direction}
+            active={orderBy === "points"}
+            onClick={handleClick}>
+            Points per Share
             </TableSortLabel></StyledTableCell>
         <StyledTableCell align="right"><TableSortLabel
             name="avgBuyPrice"
@@ -38,14 +46,7 @@ export const getPositionsHeaderRow = (orderBy, direction, handleClick) => {
             direction={direction}
             active={orderBy === "totalValue"}
             onClick={handleClick}>
-            Total Value
-            </TableSortLabel></StyledTableCell>
-        <StyledTableCell align="right"><TableSortLabel
-            name="profit"
-            direction={direction}
-            active={orderBy === "profit"}
-            onClick={handleClick}>
-            Profit
+            Total Points Value
             </TableSortLabel></StyledTableCell>
     </TableRow>);
 }
@@ -101,7 +102,9 @@ export const getSummaryRows = (ownedStocks, user, data) => {
     return ownedStocks.length === 0 && user.accountBalance === null
         ? <StyledTableCell></StyledTableCell>
         : getAllSummaryRows([{ title: "Account Balance:", data: user.accountBalance.toFixed(2) },
-        { title: "Portfolio Market Value:", data: totalValue.toFixed(2) }])
+        { title: "Portfolio Market Value:", data: totalValue.toFixed(2) },
+        { title: "Portfolio Points:" },
+        { title: "Total Points:" }])
 }
 
 export const getStockRows = (ownedStocks, loading) => {
@@ -117,10 +120,10 @@ export const getStockRows = (ownedStocks, loading) => {
                 {stock.stockName}
             </Button>
             <StyledTableCell align="right">{stock.currPrice.toFixed(2)}</StyledTableCell>
+            <StyledTableCell align="right">PPS</StyledTableCell>
             <StyledTableCell align="right">{stock.avgBuyPrice.toFixed(2)}</StyledTableCell>
             <StyledTableCell align="right">{stock.numShares}</StyledTableCell>
-            <StyledTableCell align="right">{stock.totalValue.toFixed(2)}</StyledTableCell>
-            <StyledTableCell align="right">{stock.totalProfit.toFixed(2)}</StyledTableCell>
+            <StyledTableCell align="right">Total</StyledTableCell>
         </StyledTableRow>
     });
     if (currTrade) return display;

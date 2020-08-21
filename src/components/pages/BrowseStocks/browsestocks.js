@@ -14,6 +14,7 @@ import { getFilterDisplay } from './filterDisplay';
 const styles = (theme) => ({
     ...theme.spreadThis
 });
+
 const initialState = {
     orderBy: "stockName",
     direction: "asc"
@@ -26,6 +27,7 @@ class BrowseStocksPage extends Component {
         this.handleClickOnSortLabel = this.handleClickOnSortLabel.bind(this);
         this.handleClickOnWatchlist = this.handleClickOnWatchlist.bind(this);
     }
+    
     handleClickOnSortLabel(event) {
         const orderByName = event.currentTarget.getAttribute('name');
         const dir = this.state.direction === "asc" ? "desc" : "asc";
@@ -61,7 +63,7 @@ class BrowseStocksPage extends Component {
                             <AddFilterRow addFilter={this.addFilter} reset={this.handleReset} />
                         </Grid>
                     </div>
-                    
+
                     <div className="whiteBG">
                         <Grid item xs={12}>
                             <Grid container spacing={3} justify="space-around" alignItems="center">

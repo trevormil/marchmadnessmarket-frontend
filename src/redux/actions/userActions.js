@@ -74,10 +74,10 @@ export const getUserData = () => async (dispatch) => {
 
     await axios.get("/stocks").then(res => {
         payloadData.ownedStocks.forEach(ownedStock => {
-            ownedStock.currPrice = res.data.find(stock => stock.stockId === ownedStock.stockId).ipoPrice * (3 / 4);
+            const stock = res.data.find(stock => stock.stockId === ownedStock.stockId)
+            ownedStock.currPrice = stock.price;
+            ownedStock.ipoPrice = stock.ipoPrice;
             ownedStock.totalValue = (ownedStock.numShares) * ownedStock.currPrice;
-            ownedStock.totalProfit = (ownedStock.currPrice - ownedStock.avgBuyPrice) * (ownedStock.numShares);
-            ownedStock.totalBoughtValue = (ownedStock.numShares) * ownedStock.avgBuyPrice;
         })
     }).then(() => {
         dispatch({
@@ -126,10 +126,9 @@ export const updateUserPortfolioData = (currProps) => async (dispatch) => {
     });
     await axios.get("/stocks").then(res => {
         payloadData.ownedStocks.forEach(ownedStock => {
-            ownedStock.currPrice = res.data.find(stock => stock.stockId === ownedStock.stockId).ipoPrice * (3 / 4);
-            ownedStock.totalValue = (ownedStock.numShares) * ownedStock.currPrice;
-            ownedStock.totalProfit = (ownedStock.currPrice - ownedStock.avgBuyPrice) * (ownedStock.numShares);
-            ownedStock.totalBoughtValue = (ownedStock.numShares) * ownedStock.avgBuyPrice;
+            const stock = res.data.find(stock => stock.stockId === ownedStock.stockId)
+            ownedStock.currPrice = stock.price;
+            ownedStock.ipoPrice = stock.ipoPrice; ownedStock.totalValue = (ownedStock.numShares) * ownedStock.currPrice;
         })
     }).then(() => {
         dispatch({
@@ -193,10 +192,9 @@ export const setOwnedStocks = (currentProps) => async (dispatch) => {
     });
     await axios.get("/stocks").then(res => {
         payloadData.ownedStocks.forEach(ownedStock => {
-            ownedStock.currPrice = res.data.find(stock => stock.stockId === ownedStock.stockId).ipoPrice * 3 / 4;
-            ownedStock.totalValue = (ownedStock.numShares) * ownedStock.currPrice;
-            ownedStock.totalProfit = (ownedStock.currPrice - ownedStock.avgBuyPrice) * (ownedStock.numShares);
-            ownedStock.totalBoughtValue = (ownedStock.numShares) * ownedStock.avgBuyPrice;
+            const stock = res.data.find(stock => stock.stockId === ownedStock.stockId)
+            ownedStock.currPrice = stock.price;
+            ownedStock.ipoPrice = stock.ipoPrice; ownedStock.totalValue = (ownedStock.numShares) * ownedStock.currPrice;
         })
     }).then(() => {
         dispatch({
