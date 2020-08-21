@@ -75,7 +75,7 @@ class AddFilterRow extends React.Component {
         const { classes, ui: { loading } } = this.props;
         const errors = this.isValid();
         return (
-            <Grid item xs={8} spacing={3}>
+            <Grid item xs={8}>
                 <Grid container justify="space-around" alignItems="center">
                     <Grid container spacing={3} justify="space-around" alignItems="center">
                         {getColumnSelect(classes, this.state, this.handleChange)}

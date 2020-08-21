@@ -17,14 +17,23 @@ const styles = (theme) => ({
     ...theme.spreadThis
 });
 
+const waitForURLUpdate = () => {
+    let splitPathName = window.location.pathname.split("/");
+
+    while (splitPathName[splitPathName.length - 2] !== "stocks") {
+        splitPathName = window.location.pathname.split("/");
+    }
+    return window.location.pathname.split("/").pop();
+}
+
 class StockPage extends Component {
 
     state = {
-        stockId: null, //waitForURLUpdate("browse"),
-        numToSell: null,
-        sellPrice: null,
-        numToBuy: null,
-        numToIPOSell: null
+        stockId: waitForURLUpdate("stocks"),
+        numToSell: 0,
+        sellPrice: "",
+        numToBuy: 0,
+        numToIPOSell: 0
     }
     constructor(props) {
         super(props);
@@ -198,7 +207,7 @@ class StockPage extends Component {
                         ></BootstrapInput>
 
                         <Typography display="inline"> at ${
-                            this.props.data.currStock.stockData && this.props.data.currStock.stockData.ipoPrice ? this.props.data.currStock.stockData.ipoPrice.toFixed(2) : <CircularProgress size={10} />
+                            this.props.data.currStock.stockData && this.props.data.currStock.stockData.ipoPrice ? this.props.data.currStock.stockData.ipoPrice.toFixed(2) : "Loading..."
                         } per share</Typography>
                         <Button color="primary" variant="contained" onClick={this.attemptToIPOBuy}
                             disabled={
@@ -218,7 +227,7 @@ class StockPage extends Component {
                         ></BootstrapInput>
 
                         <Typography display="inline"> at ${
-                            this.props.data.currStock.stockData ? (this.props.data.currStock.stockData.ipoPrice / 2).toFixed(2) : <CircularProgress size={10} />
+                            this.props.data.currStock.stockData ? (this.props.data.currStock.stockData.ipoPrice / 2).toFixed(2) : "Loading..."
                         } per share</Typography>
                         <Button color="primary"
                             variant="contained"

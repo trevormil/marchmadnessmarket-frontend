@@ -89,7 +89,7 @@ const getAllSummaryRows = (dataArr) => {
 }
 export const getSummaryRows = (ownedStocks, user, data) => {
     if (data.loading || user.accountBalance == null) {
-        return <StyledTableCell align="right"><CircularProgress size={30} /></StyledTableCell>;
+        return <StyledTableRow><StyledTableCell align="right"><div><CircularProgress size={30} /></div></StyledTableCell></StyledTableRow>;
     }
     //let totalBoughtValue = 0;
     let totalValue = 0;
@@ -109,16 +109,19 @@ export const getSummaryRows = (ownedStocks, user, data) => {
 
 export const getStockRows = (ownedStocks, loading) => {
     if (loading) {
-        return <StyledTableCell><CircularProgress size={30} /></StyledTableCell>
+        return <StyledTableRow><StyledTableCell><CircularProgress size={30} /></StyledTableCell></StyledTableRow>
     }
     let currTrade = false;
     const display = ownedStocks.map(stock => {
         if (stock === null || stock === undefined || !stock || stock.currPrice === null || stock.currPrice === undefined) return null;
         currTrade = true;
-        return <StyledTableRow key={stock.stockId}>
+        return <StyledTableRow key={stock.stockId}><StyledTableCell>
+
+
             <Button fullWidth align="center" variant="contained" color="primary" size="small" component={Link} to={`${ROUTES.STOCKS}/${stock.stockId}`} >
                 {stock.stockName}
             </Button>
+        </StyledTableCell>
             <StyledTableCell align="right">{stock.currPrice.toFixed(2)}</StyledTableCell>
             <StyledTableCell align="right">PPS</StyledTableCell>
             <StyledTableCell align="right">{stock.avgBuyPrice.toFixed(2)}</StyledTableCell>
@@ -127,12 +130,12 @@ export const getStockRows = (ownedStocks, loading) => {
         </StyledTableRow>
     });
     if (currTrade) return display;
-    else return <StyledTableCell>No positions.</StyledTableCell>
+    else return <StyledTableRow><StyledTableCell>No positions.</StyledTableCell></StyledTableRow>
 }
 
 export const getTransactionRows = (transactionHistory, loading) => {
     if (loading) {
-        return <StyledTableCell><CircularProgress size={30} /></StyledTableCell>
+        return <StyledTableRow><StyledTableCell><CircularProgress size={30} /></StyledTableCell></StyledTableRow>
     }
     let currTransactions = false;
     const display = transactionHistory.map(transaction => {
@@ -154,7 +157,7 @@ export const getTransactionRows = (transactionHistory, loading) => {
 
 export const getOpenTradeDisplay = (trades, loading, attemptToRemove) => {
     if (loading) {
-        return <StyledTableCell><CircularProgress size={30} /></StyledTableCell>
+        return <StyledTableRow><StyledTableCell><CircularProgress size={30} /></StyledTableCell></StyledTableRow>
     }
     let currTrade = false;
     const display = trades.map(trade => {
@@ -170,6 +173,6 @@ export const getOpenTradeDisplay = (trades, loading, attemptToRemove) => {
         </StyledTableRow>
     })
     if (currTrade) return display;
-    else return <StyledTableCell>No open sell orders.</StyledTableCell>
+    else return <StyledTableRow><StyledTableCell>No open sell orders.</StyledTableCell></StyledTableRow>
 }
 

@@ -5,10 +5,15 @@ import * as ROUTES from '../../../constants/routes';
 import { logOutUser } from '../../../redux/actions/userActions';
 import store from '../../../redux/stores';
 
-
+const getInitialState = () => {
+    const pathName = window.location.pathname.split("/");
+    if (pathName[pathName.length - 2] === "stocks") {
+        return ROUTES.BROWSE;
+    } else return `/${pathName.pop()}`;
+}
 class TabBase extends React.Component {
     state = {
-        value: `/${window.location.pathname.split("/").pop()}`
+        value: getInitialState()
     }
 
     constructor(props) {
@@ -46,14 +51,14 @@ class TabBase extends React.Component {
                 (
                     authenticatedTabs.map(tab => {
                         if (tab.buttonOnClick)
-                            return <Tab label={tab.label} value={tab.linkTo} onClick={this.logOut} /> //hard coded for sign out tab currently
-                        else return <Tab label={tab.label} value={tab.linkTo} component={Link} to={tab.linkTo} />
+                            return <Tab key={tab.label} label={tab.label} value={tab.linkTo} onClick={this.logOut} /> //hard coded for sign out tab currently
+                        else return <Tab key={tab.label} label={tab.label} value={tab.linkTo} component={Link} to={tab.linkTo} />
                     })
                 ) :
                 (
                     nonAuthenticatedTabs.map(tab => {
-                        if (tab.buttonOnClick) return <Tab label={tab.linkTo} value={tab.label} onClick={this.logOut} />
-                        else return <Tab label={tab.label} value={tab.linkTo} component={Link} to={tab.linkTo} />
+                        if (tab.buttonOnClick) return <Tab key={tab.label} label={tab.linkTo} value={tab.label} onClick={this.logOut} />
+                        else return <Tab key={tab.label} label={tab.label} value={tab.linkTo} component={Link} to={tab.linkTo} />
                     })
                 )
             }

@@ -13,7 +13,7 @@ class CustomizedTables extends React.Component {
     render() {
         const { classes, rows, headerRow } = this.props;
         return (
-            <TableContainer component={Paper} maxWidth="sm">
+            <TableContainer component={Paper}>
                 <Table className={classes.table} size="small" aria-label="a dense table">
                     <TableHead >
                         {headerRow}

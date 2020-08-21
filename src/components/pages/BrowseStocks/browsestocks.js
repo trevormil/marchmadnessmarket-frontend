@@ -8,7 +8,7 @@ import AddFilterRow from './addFilterRow';
 import { withStyles, Typography, Grid, Container, CircularProgress } from '@material-ui/core';
 //Table Components
 import CustomizedTables from '../../ui/StockInfoTable/stockTable';
-import { StyledTableCell } from '../../ui/StockInfoTable/styledTableComponents';
+import { StyledTableCell, StyledTableRow } from '../../ui/StockInfoTable/styledTableComponents';
 import { getRows, getScreenerHeaderRow } from './screenerRows'
 import { getFilterDisplay } from './filterDisplay';
 
@@ -46,7 +46,7 @@ class BrowseStocksPage extends Component {
     render() {
         const { classes } = this.props;
         let stockDisplay = !this.props.data.loading
-            ? getRows(this.props.data.stocks, this.props.user.watchlist, this.handleClickOnWatchlist, classes) : <StyledTableCell><CircularProgress size={30} /></StyledTableCell>;
+            ? getRows(this.props.data.stocks, this.props.user.watchlist, this.handleClickOnWatchlist, classes) : <StyledTableRow><StyledTableCell><CircularProgress size={30} /></StyledTableCell></StyledTableRow>;
         let filterDisplay = getFilterDisplay(this.props.data);
         return (
             <div className='screener' >

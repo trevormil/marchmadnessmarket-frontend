@@ -10,7 +10,7 @@ export const stockInfoHeaderRow = (<TableRow>
 
 
 const getInfoRow = (title, data) => {
-    return <StyledTableRow>
+    return <StyledTableRow key={title}>
         <StyledTableCell>
             {title}
         </StyledTableCell>
@@ -26,7 +26,7 @@ const getAllInfoRows = (dataArr) => {
 }
 export const getInfoRows = (stock) => {
     return stock === undefined || stock === null || stock.price === undefined || stock.price === null
-        ? <StyledTableCell></StyledTableCell>
+        ? <StyledTableRow><StyledTableCell></StyledTableCell></StyledTableRow>
         : getAllInfoRows([{
             title: "Name:", data: stock.stockName
         },

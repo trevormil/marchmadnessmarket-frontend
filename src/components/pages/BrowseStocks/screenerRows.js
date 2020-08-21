@@ -7,10 +7,10 @@ import { inWatchlist } from '../../../helpers/filterFunctions';
 
 export function getRows(stocks, watchlist, handleClick, classes) {
     if (stocks.length === 0) {
-        return <Typography align="center" variant="h6">No matches</Typography>
+        return <StyledTableRow><StyledTableCell><Typography align="center" variant="h6">No matches</Typography></StyledTableCell></StyledTableRow>
     }
     return stocks ? (
-        stocks.map((row) => <StyledTableRow>
+        stocks.map((row) => <StyledTableRow key={row.stockId}>
             <StyledTableCell component="th" scope="row" align="left">
                 <Button fullWidth component={Link} to={`${ROUTES.STOCKS}/${row.stockId}`} align="center" variant="contained" color="primary" size="medium" >
                     {row.stockName}

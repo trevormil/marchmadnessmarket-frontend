@@ -154,6 +154,6 @@ export function getTextFieldSelect(props, state, handleChange) {
                 </MenuItem>
             </Select>
         default: return (
-            <BootstrapInput type={type} disabled="true" placeholder="Select criteria"></BootstrapInput>)
+            <BootstrapInput type={type} disabled={true} placeholder="Select criteria"></BootstrapInput>)
     }
 }

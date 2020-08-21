@@ -13,7 +13,7 @@ export const getFilterDisplay = (data) => {
                     adjustedColumnName = "Current seller"
                     break;
                 case "price":
-                    adjustedColumnName = "Price"
+                    adjustedColumnName = "Last price"
                     break;
                 case "market":
                     adjustedColumnName = "Market"
@@ -38,6 +38,9 @@ export const getFilterDisplay = (data) => {
                     break;
                 case "dividends":
                     adjustedColumnName = "Dividends"
+                    break;
+                case "ipoPrice":
+                    adjustedColumnName = "BIN Price"
                     break;
                 default:
                     adjustedColumnName = filter.columnValue;
