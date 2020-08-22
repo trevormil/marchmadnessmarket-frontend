@@ -21,6 +21,9 @@ export const getFilterDisplay = (data) => {
                 case "volume":
                     adjustedColumnName = "Volume"
                     break;
+                case "currPoints":
+                    adjustedColumnName = "Current points"
+                    break;
                 case "open":
                     adjustedColumnName = "Open"
                     break;

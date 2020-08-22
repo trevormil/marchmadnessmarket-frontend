@@ -93,18 +93,20 @@ export const getSummaryRows = (ownedStocks, user, data) => {
     }
     //let totalBoughtValue = 0;
     let totalValue = 0;
+    let totalPortfolioPoints = 0;
     // let totalProfit = 0;
     ownedStocks.forEach(stock => {
         //totalBoughtValue += stock.totalBoughtValue;
         totalValue += stock.totalValue;
+        totalPortfolioPoints += stock.currPoints * stock.numShares;
         //totalProfit += stock.totalProfit;
     });
     return ownedStocks.length === 0 && user.accountBalance === null
         ? <StyledTableCell></StyledTableCell>
         : getAllSummaryRows([{ title: "Account Balance:", data: user.accountBalance.toFixed(2) },
         { title: "Portfolio Market Value:", data: totalValue.toFixed(2) },
-        { title: "Portfolio Points:" },
-        { title: "Total Points:" }])
+        { title: "Portfolio Points:", data: totalPortfolioPoints },
+        { title: "Total Points:", data: (totalPortfolioPoints + user.accountBalance).toFixed(2) }])
 }
 
 export const getStockRows = (ownedStocks, loading) => {
@@ -123,10 +125,10 @@ export const getStockRows = (ownedStocks, loading) => {
             </Button>
         </StyledTableCell>
             <StyledTableCell align="right">{stock.currPrice.toFixed(2)}</StyledTableCell>
-            <StyledTableCell align="right">PPS</StyledTableCell>
+            <StyledTableCell align="right">{stock.currPoints}</StyledTableCell>
             <StyledTableCell align="right">{stock.avgBuyPrice.toFixed(2)}</StyledTableCell>
             <StyledTableCell align="right">{stock.numShares}</StyledTableCell>
-            <StyledTableCell align="right">Total</StyledTableCell>
+            <StyledTableCell align="right">{stock.currPoints * stock.numShares}</StyledTableCell>
         </StyledTableRow>
     });
     if (currTrade) return display;

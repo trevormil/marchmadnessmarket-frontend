@@ -29,11 +29,10 @@ export function getRows(stocks, watchlist, handleClick, classes) {
             </StyledTableCell>
             <StyledTableCell align="right">{row.activeOrder ? "Yes" : "No"}</StyledTableCell>
             <StyledTableCell align="right">{row.market}</StyledTableCell>
+            <StyledTableCell align="right">{row.currPoints}</StyledTableCell>
             <StyledTableCell align="right">{row.price.toFixed(2)}</StyledTableCell>
             <StyledTableCell align="right">{row.ipoPrice.toFixed(2)}</StyledTableCell>
             <StyledTableCell align="right">{row.volume}</StyledTableCell>
-            <StyledTableCell align="right">{row.high.toFixed(2)}</StyledTableCell>
-            <StyledTableCell align="right">{row.low.toFixed(2)}</StyledTableCell>
             <StyledTableCell align="right">{row.float}</StyledTableCell>
         </StyledTableRow >)
     )
@@ -74,6 +73,13 @@ export function getScreenerHeaderRow(orderBy, direction, handleClick) {
                 onClick={handleClick}>
                 Market
         </TableSortLabel></StyledTableCell>
+            <StyledTableCell align="right"> <TableSortLabel
+                name="currPoints"
+                direction={direction}
+                active={orderBy === "currPoints"}
+                onClick={handleClick}>
+                Current Points
+        </TableSortLabel></StyledTableCell>
             <StyledTableCell align="right">
                 <TableSortLabel
                     name="price"
@@ -100,20 +106,7 @@ export function getScreenerHeaderRow(orderBy, direction, handleClick) {
                 onClick={handleClick}>
                 Volume
         </TableSortLabel></StyledTableCell>
-            <StyledTableCell align="right"> <TableSortLabel
-                name="high"
-                direction={direction}
-                active={orderBy === "high"}
-                onClick={handleClick}>
-                Auction High
-        </TableSortLabel></StyledTableCell>
-            <StyledTableCell align="right"> <TableSortLabel
-                name="low"
-                direction={direction}
-                active={orderBy === "low"}
-                onClick={handleClick}>
-                Auction Low
-        </TableSortLabel></StyledTableCell>
+            
             <StyledTableCell align="right"> <TableSortLabel
                 name="float"
                 direction={direction}

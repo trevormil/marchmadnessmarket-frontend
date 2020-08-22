@@ -76,6 +76,8 @@ export const getUserData = () => async (dispatch) => {
         payloadData.ownedStocks.forEach(ownedStock => {
             const stock = res.data.find(stock => stock.stockId === ownedStock.stockId)
             ownedStock.currPrice = stock.price;
+
+            ownedStock.currPoints = stock.currPoints;
             ownedStock.ipoPrice = stock.ipoPrice;
             ownedStock.totalValue = (ownedStock.numShares) * ownedStock.currPrice;
         })
@@ -128,6 +130,7 @@ export const updateUserPortfolioData = (currProps) => async (dispatch) => {
         payloadData.ownedStocks.forEach(ownedStock => {
             const stock = res.data.find(stock => stock.stockId === ownedStock.stockId)
             ownedStock.currPrice = stock.price;
+            ownedStock.currPoints = stock.currPoints;
             ownedStock.ipoPrice = stock.ipoPrice; ownedStock.totalValue = (ownedStock.numShares) * ownedStock.currPrice;
         })
     }).then(() => {
@@ -194,6 +197,7 @@ export const setOwnedStocks = (currentProps) => async (dispatch) => {
         payloadData.ownedStocks.forEach(ownedStock => {
             const stock = res.data.find(stock => stock.stockId === ownedStock.stockId)
             ownedStock.currPrice = stock.price;
+            ownedStock.currPoints = stock.currPoints;
             ownedStock.ipoPrice = stock.ipoPrice; ownedStock.totalValue = (ownedStock.numShares) * ownedStock.currPrice;
         })
     }).then(() => {

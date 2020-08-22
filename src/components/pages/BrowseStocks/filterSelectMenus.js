@@ -15,6 +15,7 @@ export const getColumnSelect = (classes, state, handleChange) => {
         <MenuItem value={"stockName"}>Name</MenuItem>
         <MenuItem value={"activeOrder"}>Current Seller</MenuItem>
         <MenuItem value={"market"}>Market</MenuItem>
+        <MenuItem value={"currPoints"}>Current Points</MenuItem>
         <MenuItem value={"price"}>Last Auction Price</MenuItem>
         <MenuItem value={"ipoPrice"}>BIN Price</MenuItem>
         <MenuItem value={"volume"}>Volume</MenuItem>
