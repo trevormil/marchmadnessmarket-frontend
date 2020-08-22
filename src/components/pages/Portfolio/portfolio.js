@@ -41,8 +41,22 @@ class PortfolioPage extends Component {
         if (!this.props.user.loading && tradingViewChartElement !== null) {
             tradingViewChartElement.innerHTML = null;
             const chart = createChart(tradingViewChartElement, { width: 500, height: 300 });
-            const areaSeries = chart.addAreaSeries();
-            areaSeries.setData(this.props.user.accountHistory);
+            const lineSeries = chart.addLineSeries();
+            chart.applyOptions({
+                priceScale: {
+                    autoScale: true,
+                },
+                timeScale: {
+                    barSpacing: 20,
+                    fixLeftEdge: true,
+                    rightBarStaysOnScroll: true,
+                    visible: true,
+                },
+            });
+            if (this.props.user.accountHistory !== null) {
+                lineSeries.setData(this.props.user.accountHistory);
+            }
+
         }
     }
     attemptToRemove(event) {
@@ -86,7 +100,7 @@ class PortfolioPage extends Component {
                             Current Positions
                         </Typography>
                         <CustomizedTables rows={stockDisplay} headerRow={getPositionsHeaderRow(this.state.orderBy, this.state.direction, this.handleClickOnSortLabel)} />
-                        
+
                         <Typography variant="h6" className={classes.pageTitle} align="center">
                             Recent Transactions
                             </Typography><div max-height="30px">

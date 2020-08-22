@@ -32,6 +32,7 @@ export const getInfoRows = (stock) => {
         },
         { title: "Last Auction:", data: stock.price.toFixed(2) },
         { title: "BIN Price:", data: stock.ipoPrice.toFixed(2) },
+        { title: "Current Points:", data: stock.currPoints },
         { title: "Market:", data: stock.market },
         { title: "Bio:", data: stock.bio },
         { title: "Auction High:", data: stock.high.toFixed(2) },

@@ -50,8 +50,8 @@ class StockPage extends Component {
         if (!this.props.data.loading && tradingViewChartElement !== null) {
             tradingViewChartElement.innerHTML = null;
             const chart = createChart(tradingViewChartElement, { width: 500, height: 300 });
-            const areaSeries = chart.addAreaSeries();
-            areaSeries.setData(this.props.data.currStock.stockHistory);
+            const lineSeries = chart.addLineSeries();
+            lineSeries.setData(this.props.data.currStock.stockHistory);
         }
     }
     getNumSharesOwned() {
