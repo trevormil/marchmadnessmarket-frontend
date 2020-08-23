@@ -106,7 +106,7 @@ export const getSummaryRows = (ownedStocks, user, data) => {
         : getAllSummaryRows([{ title: "Account Balance:", data: user.accountBalance.toFixed(2) },
         { title: "Portfolio Market Value:", data: totalValue.toFixed(2) },
         { title: "Portfolio Points:", data: totalPortfolioPoints },
-        { title: "Total Points:", data: (totalPortfolioPoints + user.accountBalance).toFixed(2) }])
+        { title: "Total Points:", data: (totalPortfolioPoints + user.accountBalance).toFixed(0) }])
 }
 
 export const getStockRows = (ownedStocks, loading) => {
@@ -132,7 +132,7 @@ export const getStockRows = (ownedStocks, loading) => {
         </StyledTableRow>
     });
     if (currTrade) return display;
-    else return <StyledTableRow><StyledTableCell>No positions.</StyledTableCell></StyledTableRow>
+    else return <StyledTableRow><StyledTableCell>No positions.</StyledTableCell><StyledTableCell /><StyledTableCell /><StyledTableCell /><StyledTableCell /><StyledTableCell /></StyledTableRow>
 }
 
 export const getTransactionRows = (transactionHistory, loading) => {
@@ -175,6 +175,6 @@ export const getOpenTradeDisplay = (trades, loading, attemptToRemove) => {
         </StyledTableRow>
     })
     if (currTrade) return display;
-    else return <StyledTableRow><StyledTableCell>No open sell orders.</StyledTableCell></StyledTableRow>
+    else return <StyledTableRow><StyledTableCell>No open sell orders.</StyledTableCell><StyledTableCell /><StyledTableCell /><StyledTableCell /></StyledTableRow>
 }
 

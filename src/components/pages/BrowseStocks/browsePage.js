@@ -20,6 +20,7 @@ const initialState = {
     orderBy: "stockName",
     direction: "asc"
 };
+
 class BrowseStocksPage extends Component {
     state = initialState;
     constructor(props) {
@@ -38,11 +39,13 @@ class BrowseStocksPage extends Component {
         });
         this.props.sortCurrStocks(this.props.data, orderByName, dir, this.props.user.watchlist);
     }
+
     handleClickOnWatchlist(event) {
         const currValue = event.currentTarget.getAttribute('value');
         const stockId = event.currentTarget.getAttribute('id');
         this.props.setUserWatchlist(this.props.user, stockId, Number(currValue) === -1);
     }
+    
     render() {
         const { classes } = this.props;
         let stockDisplay = !this.props.data.loading

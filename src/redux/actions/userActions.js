@@ -74,9 +74,8 @@ export const getUserData = () => async (dispatch) => {
 
     await axios.get("/stocks").then(res => {
         payloadData.ownedStocks.forEach(ownedStock => {
-            const stock = res.data.find(stock => stock.stockId === ownedStock.stockId)
+            const stock = res.data.find(stock => stock.stockId === ownedStock.stockId);
             ownedStock.currPrice = stock.price;
-
             ownedStock.currPoints = stock.currPoints;
             ownedStock.ipoPrice = stock.ipoPrice;
             ownedStock.totalValue = (ownedStock.numShares) * ownedStock.currPrice;

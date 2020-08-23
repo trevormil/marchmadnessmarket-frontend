@@ -30,10 +30,10 @@ class StockPage extends Component {
 
     state = {
         stockId: waitForURLUpdate("stocks"),
-        numToSell: 0,
+        numToSell: "",
         sellPrice: "",
-        numToBuy: 0,
-        numToIPOSell: 0
+        numToBuy: "",
+        numToIPOSell: ""
     }
     constructor(props) {
         super(props);
@@ -227,7 +227,7 @@ class StockPage extends Component {
                         ></BootstrapInput>
 
                         <Typography display="inline"> at ${
-                            this.props.data.currStock.stockData ? (this.props.data.currStock.stockData.ipoPrice / 2).toFixed(2) : "Loading..."
+                            this.props.data.currStock.stockData.ipoPrice ? (this.props.data.currStock.stockData.ipoPrice / 2).toFixed(2) : "Loading..."
                         } per share</Typography>
                         <Button color="primary"
                             variant="contained"

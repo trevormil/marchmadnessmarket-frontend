@@ -11,7 +11,7 @@ import PortfolioPage from './components/pages/Portfolio/portfolio';
 import Navigation from './components/ui/Navigation/navigation';
 import SignUpPage from './components/pages/SignUp/signuppage';
 import SignInForm from './components/pages/SignIn/signinform';
-import BrowseStocksPage from './components/pages/BrowseStocks/browsestocks';
+import BrowseStocksPage from './components/pages/BrowseStocks/browsePage';
 import HomePage from './components/pages/Home/home';
 import StocksPage from './components/pages/Stock/stockpage';
 import RulesPage from './components/pages/Rules/rulesPage';

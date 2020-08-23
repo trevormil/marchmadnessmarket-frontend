@@ -70,7 +70,6 @@ export const getFilterDisplay = (data) => {
             <Grid item>
                 <Typography variant="h6" display="inline">Active Filters:</Typography>
             </Grid>
-
             {filterDisplay}
         </Grid>
     </div>;
