@@ -15,14 +15,14 @@ class HomePage extends Component {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Typography variant="h2" className={classes.pageTitle} align="center">
-            Welcome!  </Typography>
+            Welcome to the Fantasy Stock Market!</Typography>
           <hr />
           <Typography align="center">
             Note that some features are restricted to those who are signed in. So if you aren't signed in, sign in to gain access to these features!
           </Typography>
           <hr />
           <Typography align="center">
-            Different Pages:
+            Overview of Different Pages:
                         </Typography>
           <Typography align="center">
             Screener: Browse all stocks to find your next purchase!
@@ -31,10 +31,13 @@ class HomePage extends Component {
             Portfolio: See your current account balance, stocks owned, recent transactions, and more!
                     </Typography>
           <Typography align="center">
-            Leaderboards: View where your rank compared to everyone else!
+            Leaderboards: View where you rank compared to everyone else!
                     </Typography>
           <Typography align="center">
             Rules: Check out the rules to learn how to play the game!
+                    </Typography>
+          <Typography align="center">
+            To navigate, use the bar on the top of the page.
                     </Typography>
           <hr />
           <Typography align="center">

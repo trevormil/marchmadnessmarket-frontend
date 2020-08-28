@@ -7,8 +7,10 @@ const initialState = {
     filters: [],
     currStock: {
         trades: [],
-        stockHistory: [],
-        stockData: null
+        stockHistory: null,
+        stockData: {
+            ipoPrice: null
+        }
     }
 };
 

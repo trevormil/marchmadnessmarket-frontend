@@ -21,13 +21,13 @@ class RulesPage extends Component {
                         Everyone is given $500 when they first sign up.
                     </Typography>
                     <Typography align="center">
-                        The objective of the game is to get as many points as possible when the season concludes, not highest portfolio value.
+                        The objective of the game is to get as many points as possible when the season concludes, not highest portfolio market value.
                     </Typography>
                     <Typography align="center">
-                        Portfolio value will give you a good estimate of how you are performing, but points are determined at the end of the season by a team's position in their league (see below).
+                        Portfolio market value will give you a good estimate of how you are performing, but points are determined at the end of the season by a team's position in their league (see below).
                     </Typography>
                     <Typography align="center">
-                        Note leaderboards, portfolio charts, and stock charts are updated once daily at 12:00 EST.
+                        Note leaderboards, portfolio charts, and stock charts are updated once daily at 12:00 EST. Point values will be updated weekly.
                     </Typography>
                     <hr />
                     <Typography align="center">
@@ -52,14 +52,11 @@ class RulesPage extends Component {
                     </Typography>
                     <hr />
                     <Typography align="center">
-                        Overall, terms to know: </Typography>
+                        Terms to know: </Typography>
                     <Typography align="center">
-                        BIN Price: "Buy it now" price (sometimes called instant buy price)                     </Typography>
+                        BIN ("Buy It Now") Price: Any amount can be bought instantly at this price          </Typography>
                     <Typography align="center">
                         Instant Sell Price: Any amount can be sold instantly at this price (half the BIN Price)
-                    </Typography>
-                    <Typography align="center">
-                        Adjusted Price: Halfway between the BIN price and the instant sell price
                     </Typography>
                     <Typography align="center">
                         Float: Total number of shares of a stock in circulation

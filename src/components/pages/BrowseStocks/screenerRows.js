@@ -7,7 +7,7 @@ import { inWatchlist } from '../../../helpers/filterFunctions';
 
 export function getRows(stocks, watchlist, handleClick, classes) {
     if (stocks.length === 0) {
-        return <StyledTableRow><StyledTableCell /><StyledTableCell /><StyledTableCell /><StyledTableCell /><StyledTableCell /><StyledTableCell /><StyledTableCell /><StyledTableCell /><StyledTableCell><Typography align="center" variant="h6">No matches</Typography></StyledTableCell></StyledTableRow>
+        return <StyledTableRow><StyledTableCell><Typography align="center" variant="h6">No matches</Typography></StyledTableCell><StyledTableCell /><StyledTableCell /><StyledTableCell /><StyledTableCell /><StyledTableCell /><StyledTableCell /><StyledTableCell /><StyledTableCell /></StyledTableRow>
     }
     return stocks ? (
         stocks.map((row) => <StyledTableRow key={row.stockId}>
@@ -106,7 +106,7 @@ export function getScreenerHeaderRow(orderBy, direction, handleClick) {
                 onClick={handleClick}>
                 Volume
         </TableSortLabel></StyledTableCell>
-            
+
             <StyledTableCell align="right"> <TableSortLabel
                 name="float"
                 direction={direction}

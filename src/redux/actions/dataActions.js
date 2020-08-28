@@ -54,16 +54,10 @@ export const getCurrStock = (currProps, filterArr, stockId) => async (dispatch) 
 
     await axios.get(`/stocks/${stockId}/stockHistory`).then((res) => {
         payloadData.currStock.stockHistory = res.data;
-    }).then(() => {
-        dispatch({
-            type: SET_STOCKS,
-            payload: payloadData
-        });
-    }).catch((err) => {
-        dispatch({
-            type: SET_STOCKS,
-            payload: []
-        });
+    });
+    dispatch({
+        type: SET_STOCKS,
+        payload: payloadData
     });
 }
 

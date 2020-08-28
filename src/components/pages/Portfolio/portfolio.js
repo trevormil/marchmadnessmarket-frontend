@@ -26,37 +26,31 @@ class PortfolioPage extends Component {
     state = {
         orderBy: "name",
         direction: "asc",
+        chart: null
     };
     constructor(props) {
         super(props);
         this.handleClickOnSortLabel = this.handleClickOnSortLabel.bind(this);
         this.attemptToRemove = this.attemptToRemove.bind(this);
         this.getChartDisplay = this.getChartDisplay.bind(this);
+        
+        this.componentDidUpdate = this.componentDidUpdate.bind(this);
         if (!this.props.user.loading) {
             this.props.updateUserPortfolioData(this.props.user);
         }
     }
     getChartDisplay() {
         const tradingViewChartElement = document.getElementById("tradingviewchart");
-        if (!this.props.user.loading && tradingViewChartElement !== null) {
+        if (this.state.chart === null && !this.props.user.loading && tradingViewChartElement !== null) {
             tradingViewChartElement.innerHTML = null;
             const chart = createChart(tradingViewChartElement, { width: 500, height: 300 });
             const lineSeries = chart.addLineSeries();
-            chart.applyOptions({
-                priceScale: {
-                    autoScale: true,
-                },
-                timeScale: {
-                    barSpacing: 20,
-                    fixLeftEdge: true,
-                    rightBarStaysOnScroll: true,
-                    visible: true,
-                },
-            });
             if (this.props.user.accountHistory !== null) {
                 lineSeries.setData(this.props.user.accountHistory);
             }
-
+            this.setState({
+                chart: chart
+            });
         }
     }
     attemptToRemove(event) {
@@ -76,13 +70,15 @@ class PortfolioPage extends Component {
         });
         sort(this.props.user.ownedStocks, orderByName, dir);
     }
+    componentDidUpdate() {
+        this.getChartDisplay();
+    }
     render() {
         const { classes } = this.props;
         let stockDisplay = getStockRows(this.props.user.ownedStocks, (this.props.user.loading || this.props.data.loading));
         let summaryDisplay = getSummaryRows(this.props.user.ownedStocks, this.props.user, this.props.data);
         let transactionDisplay = getTransactionRows(this.props.user.transactions, this.props.user.loading);
         let openTradeDisplay = getOpenTradeDisplay(this.props.user.openTrades, (this.props.user.loading || this.props.data.loading), this.attemptToRemove);
-        this.getChartDisplay();
 
         return (
             <div className={classes.root}>

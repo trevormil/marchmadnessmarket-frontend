@@ -27,13 +27,13 @@ const waitForURLUpdate = () => {
 }
 
 class StockPage extends Component {
-
     state = {
         stockId: waitForURLUpdate("stocks"),
         numToSell: "",
         sellPrice: "",
         numToBuy: "",
-        numToIPOSell: ""
+        numToIPOSell: "",
+        chart: null
     }
     constructor(props) {
         super(props);
@@ -47,11 +47,16 @@ class StockPage extends Component {
     }
     getChartDisplay() {
         const tradingViewChartElement = document.getElementById("tradingviewchart");
-        if (!this.props.data.loading && tradingViewChartElement !== null) {
+        if (this.state.chart === null && !this.props.data.loading && tradingViewChartElement !== null) {
             tradingViewChartElement.innerHTML = null;
             const chart = createChart(tradingViewChartElement, { width: 500, height: 300 });
             const lineSeries = chart.addLineSeries();
-            lineSeries.setData(this.props.data.currStock.stockHistory);
+            if (this.props.data.currStock.stockHistory !== null) {
+                lineSeries.setData(this.props.data.currStock.stockHistory);
+            }
+            this.setState({
+                chart: chart
+            });
         }
     }
     getNumSharesOwned() {
@@ -135,13 +140,16 @@ class StockPage extends Component {
         }
 
     }
+    componentDidUpdate() {
+        this.getChartDisplay();
+    }
     render() {
         const { classes } = this.props;
         let buyTradeDisplay = getBuyTradeDisplay(this.props.data.currStock.trades, this.props.user.userId, this.attemptToBuy, this.props.data.loading || this.props.user.loading);
 
         let sellTradeDisplay = getSellTradeDisplay(this.props.data.currStock.trades, this.props.user.userId, this.attemptToRemove, this.props.data.loading || this.props.user.loading);
         const numSharesOwned = this.getNumSharesOwned();
-        this.getChartDisplay();
+
         return < Container maxWidth="lg" >
             <Grid container spacing={3}>
                 <Grid item xs={12}>

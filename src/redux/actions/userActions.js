@@ -56,7 +56,6 @@ export const getUserData = () => async (dispatch) => {
         let data = [];
         let count = 0;
         if (res) {
-
             res.data.forEach((transaction) => {
                 if (count < 20) {
                     data.push(transaction);
@@ -69,6 +68,21 @@ export const getUserData = () => async (dispatch) => {
     //gets account history
     await axios.get("/accountHistory").then((res) => {
         let accountHistory = res.data;
+        accountHistory.sort((a, b) => {
+            const dateArrA = a.time.split("/");
+            const dateArrB = b.time.split("/");
+            if (Number(dateArrA[2]) < Number(dateArrB[2])) return -1;
+            else if (Number(dateArrA[2]) > Number(dateArrB[2])) return 1;
+            else {
+                if (Number(dateArrA[0]) < Number(dateArrB[0])) return -1;
+                else if (Number(dateArrB[0]) > Number(dateArrA[0])) return 1;
+                else {
+                    if (Number(dateArrA[1]) < Number(dateArrB[1])) return -1;
+                    else if (Number(dateArrB[1]) > Number(dateArrA[1])) return 1;
+                }
+            }
+            return 0;
+        })
         payloadData.accountHistory = accountHistory;
     });
 
