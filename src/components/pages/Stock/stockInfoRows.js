@@ -2,6 +2,7 @@ import { StyledTableCell, StyledTableRow } from '../../ui/StockInfoTable/styledT
 import React from 'react';
 import { TableRow } from '@material-ui/core';
 
+//all following functions help to create the stock info table on right side of stock page
 
 export const stockInfoHeaderRow = (<TableRow>
     <StyledTableCell>Name</StyledTableCell>

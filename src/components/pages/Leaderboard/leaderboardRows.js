@@ -2,7 +2,7 @@ import React from 'react';
 import TableRow from '@material-ui/core/TableRow';
 import { StyledTableCell, StyledTableRow } from '../../ui/StockInfoTable/styledTableComponents'
 
-
+//gets all rows for all users and account values
 export function getRows(leaderboard) {
     let count = 0;
     return leaderboard ? (
@@ -18,7 +18,7 @@ export function getRows(leaderboard) {
         : (<StyledTableCell>No users found.</StyledTableCell>);
 }
 
-
+//gets the leaderboard header row
 export function getHeaderRow() {
     return (
         <TableRow>

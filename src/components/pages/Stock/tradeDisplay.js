@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, ListItem, List, Divider, Typography, ListItemIcon, CircularProgress } from '@material-ui/core';
 
+//gets current open trades others have listd
 export const getBuyTradeDisplay = (trades, userId, attemptToBuy, loading) => {
     if (loading) {
         return <List><Divider /><ListItem><CircularProgress size={30}></CircularProgress>
@@ -26,6 +27,8 @@ export const getBuyTradeDisplay = (trades, userId, attemptToBuy, loading) => {
     </ListItem><Divider /></List>
 }
 
+
+//gets current open trades that user is selling
 export const getSellTradeDisplay = (trades, userId, attemptToRemove, loading) => {
     if (loading) {
         return <List><Divider /><ListItem><CircularProgress size={30}></CircularProgress>

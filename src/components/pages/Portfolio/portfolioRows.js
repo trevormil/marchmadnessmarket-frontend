@@ -3,6 +3,9 @@ import React from 'react';
 import { TableSortLabel, TableRow, Button, CircularProgress } from '@material-ui/core';
 import * as ROUTES from '../../../constants/routes';
 import { Link } from 'react-router-dom';
+
+//following four functions get the header rows for their respective tables on portfolio page
+
 export const getPositionsHeaderRow = (orderBy, direction, handleClick) => {
     return (<TableRow>
         <StyledTableCell><TableSortLabel
@@ -72,6 +75,8 @@ export const openTradeHeaderRow = (<TableRow>
     <StyledTableCell align="right"></StyledTableCell>
 </TableRow>);
 
+//following three functions work to get account summary rows
+
 const getSummaryRow = (title, data) => {
     return <StyledTableRow>
         <StyledTableCell>
@@ -87,6 +92,7 @@ const getAllSummaryRows = (dataArr) => {
     });
     return display;
 }
+
 export const getSummaryRows = (ownedStocks, user, data) => {
     if (data.loading || user.accountBalance == null) {
         return <StyledTableRow><StyledTableCell align="right"><div><CircularProgress size={30} /></div></StyledTableCell></StyledTableRow>;
@@ -109,6 +115,7 @@ export const getSummaryRows = (ownedStocks, user, data) => {
         { title: "Total Points:", data: (totalPortfolioPoints + user.accountBalance).toFixed(0) }])
 }
 
+//gets the rows for all stocks that are owned
 export const getStockRows = (ownedStocks, loading) => {
     if (loading) {
         return <StyledTableRow><StyledTableCell><CircularProgress size={30} /></StyledTableCell></StyledTableRow>
@@ -135,6 +142,7 @@ export const getStockRows = (ownedStocks, loading) => {
     else return <StyledTableRow><StyledTableCell>No positions.</StyledTableCell><StyledTableCell /><StyledTableCell /><StyledTableCell /><StyledTableCell /><StyledTableCell /></StyledTableRow>
 }
 
+//gets table rows for recent transactions
 export const getTransactionRows = (transactionHistory, loading) => {
     if (loading) {
         return <StyledTableRow><StyledTableCell><CircularProgress size={30} /></StyledTableCell></StyledTableRow>
@@ -156,7 +164,7 @@ export const getTransactionRows = (transactionHistory, loading) => {
     else return <StyledTableCell>Couldn't get any transactions.</StyledTableCell>
 }
 
-
+//gets rows for user's open trades 
 export const getOpenTradeDisplay = (trades, loading, attemptToRemove) => {
     if (loading) {
         return <StyledTableRow><StyledTableCell><CircularProgress size={30} /></StyledTableCell></StyledTableRow>
@@ -175,6 +183,6 @@ export const getOpenTradeDisplay = (trades, loading, attemptToRemove) => {
         </StyledTableRow>
     })
     if (currTrade) return display;
-    else return <StyledTableRow><StyledTableCell>No open sell orders.</StyledTableCell><StyledTableCell /><StyledTableCell /><StyledTableCell /></StyledTableRow>
+    else return <StyledTableRow><StyledTableCell>No open sell orders.</StyledTableCell><StyledTableCell /><StyledTableCell /><StyledTableCell /><StyledTableCell /></StyledTableRow>
 }
 

@@ -1,3 +1,4 @@
+//helper function to help sort if in watchlist
 export const inWatchlist = (watchlist, stockObj) => {
     let inWatchlist = false;
     if (watchlist) {

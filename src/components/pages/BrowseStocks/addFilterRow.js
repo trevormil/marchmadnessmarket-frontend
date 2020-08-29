@@ -14,6 +14,8 @@ const initialState = {
     lowerLimit: null,
     upperLimit: null
 }
+
+//creates the row where you can add and remove filters for the screener
 class AddFilterRow extends React.Component {
     state = initialState;
     constructor(props) {

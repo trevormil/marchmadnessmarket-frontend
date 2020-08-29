@@ -2,7 +2,7 @@ import { SET_STOCKS, LOADING_STOCKS } from '../types';
 import axios from 'axios';
 import { sort, filterStocks } from '../../helpers/filterFunctions';
 
-
+//gets all stocks and updates  data
 export const getStocks = (filterArr) => (dispatch) => {
     dispatch({ type: LOADING_STOCKS });
     let payloadData = {};
@@ -32,6 +32,7 @@ export const getStocks = (filterArr) => (dispatch) => {
         });
 }
 
+//gets single stock info and stores it in currStock
 export const getCurrStock = (currProps, filterArr, stockId) => async (dispatch) => {
     dispatch({ type: LOADING_STOCKS });
     let payloadData = currProps;
@@ -61,6 +62,7 @@ export const getCurrStock = (currProps, filterArr, stockId) => async (dispatch) 
     });
 }
 
+//gets all open trades for current stock
 export const getTradesForCurrStock = (currProps, stockId) => async (dispatch) => {
     dispatch({ type: LOADING_STOCKS });
     let payloadData = currProps;
@@ -86,6 +88,7 @@ export const getTradesForCurrStock = (currProps, stockId) => async (dispatch) =>
     });
 }
 
+//sets stocks with updated filters
 export const setStocks = (currProps, filterArr) => (dispatch) => {
     dispatch({ type: LOADING_STOCKS });
     let payloadData = currProps;
@@ -97,6 +100,7 @@ export const setStocks = (currProps, filterArr) => (dispatch) => {
     });
 }
 
+//sorts and updates all stocks
 export const sortCurrStocks = (currProps, orderBy, dir, watchlist) => (dispatch) => {
     dispatch({ type: LOADING_STOCKS });
     let payloadData = currProps;

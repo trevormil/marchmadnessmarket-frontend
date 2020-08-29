@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, Typography, Chip, CircularProgress } from '@material-ui/core';
 
+//displays the currently active filters
 export const getFilterDisplay = (data) => {
     let filterDisplay = !data.loading ? (
         data.filters.map(filter => {

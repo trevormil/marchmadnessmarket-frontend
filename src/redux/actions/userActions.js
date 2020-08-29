@@ -1,6 +1,7 @@
 import { SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED, LOADING_USER } from '../types';
 import axios from 'axios';
 
+//logs in the user
 export const loginUser = (userData) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     axios.post("/login", userData)
@@ -15,6 +16,7 @@ export const loginUser = (userData) => (dispatch) => {
         });
 }
 
+//gets all user data for Redux
 export const getUserData = () => async (dispatch) => {
     let payloadData = {};
 
@@ -108,6 +110,8 @@ export const getUserData = () => async (dispatch) => {
         })
     })
 }
+
+//updates user portfolio data
 export const updateUserPortfolioData = (currProps) => async (dispatch) => {
     dispatch({ type: LOADING_USER });
     let payloadData = currProps;
@@ -160,7 +164,7 @@ export const updateUserPortfolioData = (currProps) => async (dispatch) => {
     })
 }
 
-
+//updates the user's watchlist
 export const setUserWatchlist = (currentProps, stockId, addTo) => async (dispatch) => {
     dispatch({ type: LOADING_USER });
     let payloadData = currentProps;
@@ -188,6 +192,7 @@ export const setUserWatchlist = (currentProps, stockId, addTo) => async (dispatc
         })
 }
 
+//updates the owned stocks
 export const setOwnedStocks = (currentProps) => async (dispatch) => {
     dispatch({ type: LOADING_USER });
     let payloadData = currentProps;
@@ -228,7 +233,7 @@ export const setOwnedStocks = (currentProps) => async (dispatch) => {
 }
 
 
-
+//signs up a user
 export const signUpUser = (newUserData, history) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     axios.post("/signup", newUserData)
@@ -242,13 +247,14 @@ export const signUpUser = (newUserData, history) => (dispatch) => {
             })
         });
 }
-
+//logs out a user
 export const logOutUser = () => (dispatch) => {
     localStorage.removeItem('FBIdToken');
     delete axios.defaults.headers.common['Authorization'];
     dispatch({ type: SET_UNAUTHENTICATED });
 }
 
+//sets the authorization header for axios as current token
 const setAuthorizationHeader = (token) => {
     const FBIdToken = `Bearer ${token}`
     localStorage.setItem('FBIdToken', FBIdToken);

@@ -3,6 +3,7 @@ import { BootstrapInput } from '../../ui/TextInputs/textInputs';
 import { Grid, Select, MenuItem } from '@material-ui/core';
 import { isNumeric } from '../../../helpers/filterFunctions';
 
+//gets the drop down menu for columns
 export const getColumnSelect = (classes, state, handleChange) => {
     return <Select
         name="columnValue"
@@ -24,6 +25,8 @@ export const getColumnSelect = (classes, state, handleChange) => {
         <MenuItem value={"float"}>Float</MenuItem>
     </Select>
 }
+
+//gets the drop down menu for the criteria
 export function getCriteriaSelect(props, state, handleChange) {
     const { classes } = props;
     if (state.columnValue === "Select a column") {
@@ -101,6 +104,7 @@ export function getCriteriaSelect(props, state, handleChange) {
     }
 }
 
+//gets the input for the text fields and true/false
 export function getTextFieldSelect(props, state, handleChange) {
     const type = isNumeric(state.columnValue) ? "number" : "string";
     switch (state.criteria) {

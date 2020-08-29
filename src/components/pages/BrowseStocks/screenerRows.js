@@ -5,6 +5,7 @@ import { Button, Checkbox, CircularProgress, Typography, TableRow, TableSortLabe
 import { StyledTableCell, StyledTableRow } from '../../ui/StockInfoTable/styledTableComponents'
 import { inWatchlist } from '../../../helpers/filterFunctions';
 
+//gets all rows for table for all stocks that match current filters
 export function getRows(stocks, watchlist, handleClick, classes) {
     if (stocks.length === 0) {
         return <StyledTableRow><StyledTableCell><Typography align="center" variant="h6">No matches</Typography></StyledTableCell><StyledTableCell /><StyledTableCell /><StyledTableCell /><StyledTableCell /><StyledTableCell /><StyledTableCell /><StyledTableCell /><StyledTableCell /></StyledTableRow>
@@ -39,7 +40,7 @@ export function getRows(stocks, watchlist, handleClick, classes) {
         : (<CircularProgress size={30}></CircularProgress>);
 }
 
-
+//gets the header row
 export function getScreenerHeaderRow(orderBy, direction, handleClick) {
     return (
         <TableRow>
