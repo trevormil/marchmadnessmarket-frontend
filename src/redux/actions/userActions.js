@@ -77,10 +77,10 @@ export const getUserData = () => async (dispatch) => {
             else if (Number(dateArrA[2]) > Number(dateArrB[2])) return 1;
             else {
                 if (Number(dateArrA[0]) < Number(dateArrB[0])) return -1;
-                else if (Number(dateArrB[0]) > Number(dateArrA[0])) return 1;
+                else if (Number(dateArrA[0]) > Number(dateArrB[0])) return 1;
                 else {
                     if (Number(dateArrA[1]) < Number(dateArrB[1])) return -1;
-                    else if (Number(dateArrB[1]) > Number(dateArrA[1])) return 1;
+                    else if (Number(dateArrA[1]) > Number(dateArrB[1])) return 1;
                 }
             }
             return 0;

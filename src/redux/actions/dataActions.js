@@ -56,6 +56,7 @@ export const getCurrStock = (currProps, filterArr, stockId) => async (dispatch) 
     await axios.get(`/stocks/${stockId}/stockHistory`).then((res) => {
         payloadData.currStock.stockHistory = res.data;
     });
+    
     dispatch({
         type: SET_STOCKS,
         payload: payloadData
