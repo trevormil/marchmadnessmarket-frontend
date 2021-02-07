@@ -1,13 +1,25 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-
+import { getStocks } from "../../../redux/actions/dataActions";
 import { connect } from "react-redux";
-import { Grid, Typography, Container } from "@material-ui/core";
+import {
+  Grid,
+  Typography,
+  Container,
+  CircularProgress,
+} from "@material-ui/core";
+import { infoHeaderRow, getInfoRows } from "./homerows";
+import CustomizedTables from "../../ui/StockInfoTable/stockTable";
+
 const styles = (theme) => ({
   ...theme.spreadThis,
 });
 
 class HomePage extends Component {
+  constructor(props) {
+    super(props);
+    this.props.getStocks([]);
+  }
   render() {
     const { classes } = this.props;
     return (
@@ -52,6 +64,23 @@ class HomePage extends Component {
               To navigate, use the bar on the top of the page.
             </Typography>
             <hr />
+            <Typography variant="h4" align="center">
+              Current Stats:
+            </Typography>
+
+            <Typography align="center">
+              For more in depth stats, go to Screener.
+            </Typography>
+            {this.props.data.loading ? (
+              <CircularProgress size={30} align="center" />
+            ) : (
+              <CustomizedTables
+                headerRow={infoHeaderRow}
+                rows={getInfoRows(this.props.data.stocks)}
+              ></CustomizedTables>
+            )}
+
+            <hr />
             <Typography align="center">Note the following:</Typography>
             <Typography align="center">
               This app uses Google's account authentication, and it will sign
@@ -60,8 +89,6 @@ class HomePage extends Component {
           </Grid>
 
           <Grid item xs={12} sm={12} align="center"></Grid>
-
-          
         </Grid>
       </Container>
     );
@@ -73,8 +100,9 @@ const mapStateToProps = (state) => ({
   ui: state.ui,
   data: state.data,
 });
-const mapActionsToProps = {};
-
+const mapActionsToProps = {
+  getStocks,
+};
 export default connect(
   mapStateToProps,
   mapActionsToProps

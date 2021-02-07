@@ -1,0 +1,9 @@
+[
+  {
+    "origin": [
+      "https://us-central1-tm-market.cloudfunctions.net/api/userTrades"
+    ],
+    "method": ["GET"],
+    "maxAgeSeconds": 3600
+  }
+]

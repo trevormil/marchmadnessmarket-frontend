@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import * as ROUTES from "../../../constants/routes";
+import { getLogoName } from "../../../constants/logos";
+
 import {
   Button,
   Checkbox,
@@ -55,6 +57,7 @@ export function getRows(stocks, watchlist, handleClick, classes) {
       </StyledTableRow>
     );
   }
+
   return stocks ? (
     stocks.map((row) => (
       <StyledTableRow key={row.stockId}>
@@ -70,6 +73,16 @@ export function getRows(stocks, watchlist, handleClick, classes) {
           >
             {row.stockName}
           </Button>
+        </StyledTableCell>
+        <StyledTableCell component="th" scope="row" align="left">
+          <a href={`${ROUTES.STOCKS}/${row.stockId}`}>
+            <img
+              width="50px"
+              height="50px"
+              src={"./logos/" + getLogoName(row.stockName)}
+              alt="Team Logo"
+            />
+          </a>
         </StyledTableCell>
         <StyledTableCell align="left" padding="checkbox" size="small">
           <Checkbox
@@ -111,6 +124,16 @@ export function getScreenerHeaderRow(orderBy, direction, handleClick) {
           onClick={handleClick}
         >
           Name
+        </TableSortLabel>
+      </StyledTableCell>
+      <StyledTableCell align="left">
+        <TableSortLabel
+          name="stockName"
+          direction={direction}
+          active={orderBy === "stockName"}
+          onClick={handleClick}
+        >
+          Logo
         </TableSortLabel>
       </StyledTableCell>
       <StyledTableCell align="left">
