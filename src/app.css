@@ -17,7 +17,7 @@ body {
   margin: 15px 0px;
 }
 .whiteBG {
-  background-color: white;
+  background-color: whitesmoke;
   padding: 10px 0px;
   margin: 15px 0px;
 }
@@ -39,6 +39,7 @@ body {
 .tradingviewchart {
   z-index: 1;
   position: relative;
+  padding: 5px;
 }
 .page {
   margin-top: 48px;
@@ -64,4 +65,16 @@ code {
 }
 .card section {
   background-color: #20c6b6;
+}
+
+.portfolio-card {
+  background-color: #20c6b6;
+  border: 5px solid black;
+  border-radius: 3%;
+  margin: 10px;
+}
+
+.screenercard {
+  background-color: #20c6b6;
+  border: 5px solid black;
 }

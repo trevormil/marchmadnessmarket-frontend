@@ -32,7 +32,7 @@ class LeaderboardPage extends Component {
                 </Container>
 
                 <Container maxWidth="sm">
-                    <div>
+                    <div className="card">
                         <CustomizedTables
                             rows={stockDisplay}
                             headerRow={getHeaderRow()} />

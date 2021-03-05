@@ -61,8 +61,8 @@ export const summaryHeaderRow = (<TableRow>
 
 export const transactionHistoryHeaderRow = (<TableRow>
     <StyledTableCell>Stock Name</StyledTableCell>
-    <StyledTableCell># Shares</StyledTableCell>
-    <StyledTableCell>Price</StyledTableCell>
+    <StyledTableCell align="right"># Shares</StyledTableCell>
+    <StyledTableCell align="right">Price</StyledTableCell>
     <StyledTableCell align="right">Value</StyledTableCell>
     <StyledTableCell align="right">Date</StyledTableCell>
 </TableRow>);
