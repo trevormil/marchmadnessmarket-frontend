@@ -279,6 +279,7 @@ class StockPage extends Component {
                   variant="contained"
                   onClick={this.attemptToSell}
                   disabled={
+                    
                     this.props.data.currStock.stockData === null ||
                     this.state.numToSell <= 0 ||
                     this.state.sellPrice <= 0 ||

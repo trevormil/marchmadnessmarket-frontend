@@ -97,7 +97,7 @@ export function getRows(stocks, watchlist, handleClick, classes) {
         <StyledTableCell align="right">
           {row.activeOrder ? "Yes" : "No"}
         </StyledTableCell>
-        <StyledTableCell align="right">{row.market}</StyledTableCell>
+        <StyledTableCell align="right">{row.seed}</StyledTableCell>
         <StyledTableCell align="right">{row.currPoints}</StyledTableCell>
         <StyledTableCell align="right">{row.price.toFixed(2)}</StyledTableCell>
         <StyledTableCell align="right">
@@ -161,12 +161,12 @@ export function getScreenerHeaderRow(orderBy, direction, handleClick) {
       <StyledTableCell align="right">
         {" "}
         <TableSortLabel
-          name="market"
+          name="seed"
           direction={direction}
-          active={orderBy === "market"}
+          active={orderBy === "seed"}
           onClick={handleClick}
         >
-          Market
+          Seed
         </TableSortLabel>
       </StyledTableCell>
       <StyledTableCell align="right">
@@ -177,7 +177,7 @@ export function getScreenerHeaderRow(orderBy, direction, handleClick) {
           active={orderBy === "currPoints"}
           onClick={handleClick}
         >
-          Current Points
+          Total Points
         </TableSortLabel>
       </StyledTableCell>
       <StyledTableCell align="right">
