@@ -3,7 +3,7 @@ import {
   StyledTableRow,
 } from "../../ui/StockInfoTable/styledTableComponents";
 import React from "react";
-import { TableRow } from "@material-ui/core";
+import { TableRow, Button } from "@material-ui/core";
 import { getLogoName } from "../../../constants/logos";
 
 //all following functions help to create the stock info table on right side of stock page
@@ -13,8 +13,8 @@ export const infoHeaderRow = (
     <StyledTableCell align="center">Logo</StyledTableCell>
     <StyledTableCell align="center">Name</StyledTableCell>
 
-    <StyledTableCell align="center">Price</StyledTableCell>
-    <StyledTableCell align="center">Points</StyledTableCell>
+    <StyledTableCell align="center">Current Price</StyledTableCell>
+    <StyledTableCell align="center">Current Points</StyledTableCell>
   </TableRow>
 );
 
@@ -29,9 +29,21 @@ export const getInfoRows = (stocks) => {
       return (
         <StyledTableRow key={stock.stockName}>
           <StyledTableCell align="center">
-            <img height="50px" width="50px" alt="Team Logo" src={file} />
+            <a href={`./stocks/${stock.stockId}`}>
+              <img height="50px" width="50px" alt="Team Logo" src={file} />
+            </a>
           </StyledTableCell>
-          <StyledTableCell align="center">{stock.stockName}</StyledTableCell>
+          <StyledTableCell align="center">
+            <Button
+              variant="contained"
+              color="primary"
+              href={`./stocks/${stock.stockId}`}
+              align="center"
+              fullWidth
+            >
+              {stock.stockName}
+            </Button>
+          </StyledTableCell>
           <StyledTableCell align="center">{stock.price}</StyledTableCell>
           <StyledTableCell align="center">{stock.currPoints}</StyledTableCell>
         </StyledTableRow>
