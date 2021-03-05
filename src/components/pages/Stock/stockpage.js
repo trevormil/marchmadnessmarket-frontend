@@ -37,7 +37,7 @@ const waitForURLUpdate = () => {
 
 class StockPage extends Component {
   state = {
-    stockId: waitForURLUpdate("stocks"),
+    stockId: waitForURLUpdate(),
     numToSell: "",
     sellPrice: "",
     numToBuy: "",
@@ -66,7 +66,7 @@ class StockPage extends Component {
     ) {
       tradingViewChartElement.innerHTML = null;
       const chart = createChart(tradingViewChartElement, {
-        width: 500,
+        width: 600,
         height: 300,
       });
       const lineSeries = chart.addLineSeries();
@@ -232,176 +232,178 @@ class StockPage extends Component {
           </Grid>
 
           <Grid item xs={12} sm={7} align="center">
-            <Typography
-              variant="h6"
-              className={classes.pageTitle}
-              align="center"
-            >
-              Price Chart
-            </Typography>
-            <div id="tradingviewchart" align="center">
-              <CircularProgress size={30} />
-            </div>
-            <Typography
-              variant="h6"
-              className={classes.pageTitle}
-              align="center"
-            >
-              Shares Owned: {numSharesOwned}
-            </Typography>
-            <Typography
-              variant="h6"
-              className={classes.pageTitle}
-              align="center"
-            >
-              Account Balance:{" "}
-              {this.props.user.loading || this.props.data.loading
-                ? "Loading..."
-                : `$${this.props.user.accountBalance.toFixed(2)}`}
-            </Typography>
-
-            <div>
-              <BootstrapInput
-                id="numToSell"
-                name="numToSell"
-                value={this.state.numToSell}
-                onChange={this.handleInputChange}
-                placeholder="# Shares to Sell"
-                type="number"
-              ></BootstrapInput>
-              <BootstrapInput
-                id="sellPrice"
-                name="sellPrice"
-                value={this.state.sellPrice}
-                onChange={this.handleInputChange}
-                placeholder="Price per Share"
-                type="number"
-              ></BootstrapInput>
-              <Button
-                color="primary"
-                variant="contained"
-                onClick={this.attemptToSell}
-                disabled={
-                  this.props.data.currStock.stockData === null ||
-                  this.state.numToSell <= 0 ||
-                  this.state.sellPrice <= 0 ||
-                  this.state.numToSell === null ||
-                  this.state.numToSell > numSharesOwned
-                }
+            <div className="portfolio-card">
+              <Typography
+                variant="h4"
+                className={classes.pageTitle}
+                align="center"
               >
-                Sell
-              </Button>
-            </div>
-            <hr />
-            <div>
-              <BootstrapInput
-                id="numToBuy"
-                name="numToBuy"
-                value={this.state.numToBuy}
-                onChange={this.handleInputChange}
-                placeholder="# Shares to Buy"
-                type="number"
-              ></BootstrapInput>
-
-              <Typography display="inline">
-                {" "}
-                at $
-                {this.props.data.currStock.stockData &&
-                this.props.data.currStock.stockData.ipoPrice
-                  ? this.props.data.currStock.stockData.ipoPrice.toFixed(2)
-                  : "Loading..."}{" "}
-                per share
+                Price Chart
               </Typography>
-              <Button
-                color="primary"
-                variant="contained"
-                onClick={this.attemptToIPOBuy}
-                disabled={
-                  this.props.data.currStock.stockData === null ||
-                  this.state.numToBuy <= 0 ||
-                  this.state.numToBuy === null ||
-                  this.state.numToBuy *
-                    this.props.data.currStock.stockData.ipoPrice >
-                    this.props.user.accountBalance
-                }
-              >
-                Instant Buy
-              </Button>
+              <div id="tradingviewchart" align="center">
+                <CircularProgress size={30} />
+              </div>
             </div>
-            <hr />
-            <div>
-              <BootstrapInput
-                id="numToIPOSell"
-                name="numToIPOSell"
-                value={this.state.numToIPOSell}
-                onChange={this.handleInputChange}
-                placeholder="# Shares to Sell"
-              ></BootstrapInput>
+            <div className="card">
+              <section>
+                <Typography variant="h4" align="center">
+                  Shares Owned: {numSharesOwned}
+                </Typography>
+                <Typography variant="h4" align="center">
+                  Account Balance:{" "}
+                  {this.props.user.loading || this.props.data.loading
+                    ? "Loading..."
+                    : `$${this.props.user.accountBalance.toFixed(2)}`}
+                </Typography>
+              </section>
 
-              <Typography display="inline">
-                {" "}
-                at $
-                {this.props.data.currStock.stockData.ipoPrice
-                  ? (this.props.data.currStock.stockData.ipoPrice / 2).toFixed(
-                      2
-                    )
-                  : "Loading..."}{" "}
-                per share
-              </Typography>
-              <Button
-                color="primary"
-                variant="contained"
-                onClick={this.attemptToIPOSell}
-                disabled={
-                  this.props.data.currStock.stockData === null ||
-                  this.state.numToIPOSell <= 0 ||
-                  this.state.numToIPOSell === null ||
-                  this.state.numToIPOSell > numSharesOwned
-                }
-              >
-                Instant Sell
-              </Button>
+              <div>
+                <BootstrapInput
+                  id="numToSell"
+                  name="numToSell"
+                  value={this.state.numToSell}
+                  onChange={this.handleInputChange}
+                  placeholder="# Shares to Sell"
+                  type="number"
+                ></BootstrapInput>
+                <BootstrapInput
+                  id="sellPrice"
+                  name="sellPrice"
+                  value={this.state.sellPrice}
+                  onChange={this.handleInputChange}
+                  placeholder="Price per Share"
+                  type="number"
+                ></BootstrapInput>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={this.attemptToSell}
+                  disabled={
+                    this.props.data.currStock.stockData === null ||
+                    this.state.numToSell <= 0 ||
+                    this.state.sellPrice <= 0 ||
+                    this.state.numToSell === null ||
+                    this.state.numToSell > numSharesOwned
+                  }
+                >
+                  Sell
+                </Button>
+              </div>
+              <hr />
+              <div>
+                <BootstrapInput
+                  id="numToBuy"
+                  name="numToBuy"
+                  value={this.state.numToBuy}
+                  onChange={this.handleInputChange}
+                  placeholder="# Shares to Buy"
+                  type="number"
+                ></BootstrapInput>
+
+                <Typography display="inline">
+                  {" "}
+                  at $
+                  {this.props.data.currStock.stockData &&
+                  this.props.data.currStock.stockData.ipoPrice
+                    ? this.props.data.currStock.stockData.ipoPrice.toFixed(2)
+                    : "Loading..."}{" "}
+                  per share
+                </Typography>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={this.attemptToIPOBuy}
+                  disabled={
+                    this.props.data.currStock.stockData === null ||
+                    this.state.numToBuy <= 0 ||
+                    this.state.numToBuy === null ||
+                    this.state.numToBuy *
+                      this.props.data.currStock.stockData.ipoPrice >
+                      this.props.user.accountBalance
+                  }
+                >
+                  Instant Buy
+                </Button>
+              </div>
+              <hr />
+              <div>
+                <BootstrapInput
+                  id="numToIPOSell"
+                  name="numToIPOSell"
+                  value={this.state.numToIPOSell}
+                  onChange={this.handleInputChange}
+                  placeholder="# Shares to Sell"
+                ></BootstrapInput>
+
+                <Typography display="inline">
+                  {" "}
+                  at $
+                  {this.props.data.currStock.stockData.ipoPrice
+                    ? (
+                        this.props.data.currStock.stockData.ipoPrice / 2
+                      ).toFixed(2)
+                    : "Loading..."}{" "}
+                  per share
+                </Typography>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={this.attemptToIPOSell}
+                  disabled={
+                    this.props.data.currStock.stockData === null ||
+                    this.state.numToIPOSell <= 0 ||
+                    this.state.numToIPOSell === null ||
+                    this.state.numToIPOSell > numSharesOwned
+                  }
+                >
+                  Instant Sell
+                </Button>
+              </div>
             </div>
           </Grid>
           <Grid item xs={5}>
-            <Typography
-              variant="h6"
-              className={classes.pageTitle}
-              align="center"
-            >
-              Statistics and Info
-            </Typography>
-            {this.props.data.loading ? (
-              <CircularProgress size={30} />
-            ) : (
-              <CustomizedTables
-                headerRow={stockInfoHeaderRow}
-                rows={getInfoRows(this.props.data.currStock.stockData)}
-              ></CustomizedTables>
-            )}
+            <div className="portfolio-card">
+              <Typography
+                variant="h4"
+                className={classes.pageTitle}
+                align="center"
+              >
+                Statistics and Info
+              </Typography>
+              {this.props.data.loading ? (
+                <CircularProgress size={30} />
+              ) : (
+                <CustomizedTables
+                  headerRow={stockInfoHeaderRow}
+                  rows={getInfoRows(this.props.data.currStock.stockData)}
+                ></CustomizedTables>
+              )}
+            </div>
           </Grid>
+
           <Grid item xs={12}>
             <hr />
           </Grid>
           <Grid item xs={6}>
-            <Typography
-              variant="h6"
-              className={classes.pageTitle}
-              align="center"
-            >
-              Current Sellers
-            </Typography>
-            {buyTradeDisplay}
+            <div className="card">
+              <section>
+                <Typography variant="h4" align="center">
+                  Current Sellers
+                </Typography>
+              </section>
+
+              {buyTradeDisplay}
+            </div>
           </Grid>
           <Grid item xs={6}>
-            <Typography
-              variant="h6"
-              className={classes.pageTitle}
-              align="center"
-            >
-              Your Sell Orders
-            </Typography>
-            {sellTradeDisplay}
+            <div className="card">
+              <section>
+                <Typography variant="h4" align="center">
+                  Your Sell Orders
+                </Typography>
+              </section>
+              {sellTradeDisplay}
+            </div>
           </Grid>
         </Grid>
       </Container>

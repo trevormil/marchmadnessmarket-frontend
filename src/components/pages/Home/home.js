@@ -85,12 +85,16 @@ class HomePage extends Component {
                 </Typography>
               </section>
               <Typography align="center">
-                <b>Franchise & Transition Tag Deadline</b> March 9, 2021
+                <b>NFL Season 1 Ends: </b> March 16, 2021
                 <br />
-                <b>League Year Begins and Free Agency:</b> March 17, 2021
+                <b>March Madness Season 1 Begins: </b> March 17, 2021
                 <br></br>
-                <b>NFL Draft:</b> April 29, 2021 to May 1, 2021<br></br>
-                <b>Season Start:</b> September 9, 2021
+                <b>March Madness Season 1 Ends: </b> April 5, 2021<br></br>
+                <b>EURO 2021 Season 1 Begins: </b> June 10, 2021
+                <br></br>
+                <b>EURO 2021 Season 1 Ends: </b> July 12, 2021<br></br>
+                <b>NFL Season 2 Begins: </b> September 8, 2021
+                <br></br>
               </Typography>
             </div>
             <hr />
@@ -130,6 +134,16 @@ class HomePage extends Component {
           </Grid>
 
           <Grid item xs={12} sm={12} align="center">
+            <hr />
+            <Typography align="center">
+              Please use the following link to give feedback on issues,
+              suggestions, or advice. All feedback is appreciated!
+            </Typography>
+            <Typography align="center">
+              <a href="https://docs.google.com/document/d/1X8OCk9LHit_Dyey43wTqn5K2yMt5vWl9U590cqHQWJw/edit?usp=sharing">
+                https://docs.google.com/document/d/1X8OCk9LHit_Dyey43wTqn5K2yMt5vWl9U590cqHQWJw/edit?usp=sharing
+              </a>
+            </Typography>
             <hr />
             <Typography align="center">Note the following:</Typography>
             <Typography align="center">
