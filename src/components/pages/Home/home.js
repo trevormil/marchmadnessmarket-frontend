@@ -25,7 +25,20 @@ class HomePage extends Component {
   render() {
     const { classes } = this.props;
     const marketOverviewStyle = {
-      height: !this.props.scoreData[0] ? "1000px" : "700px",
+      height:
+        !this.props.scoreData ||
+        this.props.scoreData.loading ||
+        !this.props.scoreData.scores[0]
+          ? "820px"
+          : "1070px",
+    };
+    const liveFeedStyle = {
+      height:
+        !this.props.scoreData ||
+        this.props.scoreData.loading ||
+        !this.props.scoreData.scores[0]
+          ? "50px"
+          : "300px",
     };
     return (
       <Container>
@@ -85,14 +98,17 @@ class HomePage extends Component {
             <div className="card">
               <section>
                 <Typography variant="h4" align="center">
-                  Live Scores:
+                  Scores:
                 </Typography>
               </section>
-              <div id="livescorefeed">
+              <div id="livescorefeed" style={liveFeedStyle}>
                 {this.props.scoreData.loading ? (
                   <CircularProgress size={30} align="center" />
-                ) : !this.props.scoreData.scores[0] ? (
-                  <p>No Current Games</p>
+                ) : !this.props.scoreData.scores ||
+                  !this.props.scoreData.scores[0] ? (
+                  <Typography variant="h5" align="center">
+                    No Current Games
+                  </Typography>
                 ) : (
                   this.props.scoreData.scores.map((game) => {
                     return (
@@ -104,14 +120,14 @@ class HomePage extends Component {
                             height="50px"
                             width="50px"
                             margin="30px"
-                            src={game.score[0].logo}
+                            src={game.score[1].logo}
                             alt="Team Logo"
                           />
-                          {game.score[0].score} - {game.score[1].score}
+                          {game.score[1].score} - {game.score[0].score}
                           <img
                             height="50px"
                             width="50px"
-                            src={game.score[1].logo}
+                            src={game.score[0].logo}
                             alt="Team Logo"
                           />
                         </h1>

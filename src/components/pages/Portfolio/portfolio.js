@@ -65,7 +65,6 @@ class PortfolioPage extends Component {
       const lineSeries = chart.addLineSeries();
       if (this.props.user.accountHistory !== null) {
         lineSeries.setData(this.props.user.accountHistory);
-        console.log(this.props.user.accountHistory);
       }
       this.setState({
         chart: chart,

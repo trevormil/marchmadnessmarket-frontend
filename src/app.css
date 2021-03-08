@@ -57,7 +57,6 @@ code {
 }
 
 #livescorefeed {
-  height: 300px;
   overflow: scroll;
 }
 .fw-iframe {

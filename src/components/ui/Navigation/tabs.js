@@ -142,6 +142,10 @@ const nonAuthenticatedTabs = [
     linkTo: ROUTES.BRACKET,
   },
   {
+    label: "Schedule",
+    linkTo: ROUTES.SCHEDULE,
+  },
+  {
     label: "Rules",
     linkTo: ROUTES.RULES,
   },

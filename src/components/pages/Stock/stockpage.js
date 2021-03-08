@@ -22,6 +22,7 @@ import { createChart } from "lightweight-charts";
 import { BootstrapInput } from "../../ui/TextInputs/textInputs";
 import { stockInfoHeaderRow, getInfoRows } from "./stockInfoRows";
 
+import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 const styles = (theme) => ({
   ...theme.spreadThis,
 });
@@ -238,10 +239,10 @@ class StockPage extends Component {
                   Shares Owned: {numSharesOwned}
                 </Typography>
                 <Typography variant="h4" align="center">
-                  Account Balance:{" "}
+                  Account Balance: <MonetizationOnIcon />
                   {this.props.user.loading || this.props.data.loading
                     ? "Loading..."
-                    : `$${this.props.user.accountBalance.toFixed(2)}`}
+                    : `${this.props.user.accountBalance.toFixed(2)}`}
                 </Typography>
               </section>
 

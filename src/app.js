@@ -73,11 +73,7 @@ class App extends React.Component {
                     path={ROUTES.PORTFOLIO}
                     component={PortfolioPage}
                   />
-                  <UserRoute
-                    exact
-                    path={ROUTES.SCHEDULE}
-                    component={ScoresPage}
-                  />
+                  <Route exact path={ROUTES.SCHEDULE} component={ScoresPage} />
                   <UserRoute
                     exact
                     path={ROUTES.BROWSE}

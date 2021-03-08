@@ -7,7 +7,6 @@ import {
   LOADING_USER,
 } from "../types";
 import axios from "axios";
-
 //logs in the user
 export const loginUser = (userData) => (dispatch) => {
   dispatch({ type: LOADING_UI });

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import * as ROUTES from "../../../constants/routes";
 import { getLogoName } from "../../../constants/logos";
 
+import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import {
   Button,
   Checkbox,
@@ -99,8 +100,12 @@ export function getRows(stocks, watchlist, handleClick, classes) {
         </StyledTableCell>
         <StyledTableCell align="right">{row.seed}</StyledTableCell>
         <StyledTableCell align="right">{row.currPoints}</StyledTableCell>
-        <StyledTableCell align="right">{row.price.toFixed(2)}</StyledTableCell>
         <StyledTableCell align="right">
+          <MonetizationOnIcon />
+          {row.price.toFixed(2)}
+        </StyledTableCell>
+        <StyledTableCell align="right">
+          <MonetizationOnIcon />
           {row.ipoPrice.toFixed(2)}
         </StyledTableCell>
         <StyledTableCell align="right">{row.volume}</StyledTableCell>

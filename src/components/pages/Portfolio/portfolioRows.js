@@ -12,6 +12,8 @@ import {
 import * as ROUTES from "../../../constants/routes";
 import { Link } from "react-router-dom";
 
+import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
+
 //following four functions get the header rows for their respective tables on portfolio page
 
 export const getPositionsHeaderRow = (orderBy, direction, handleClick) => {
@@ -115,7 +117,14 @@ const getSummaryRow = (title, data) => {
   return (
     <StyledTableRow>
       <StyledTableCell>{title}</StyledTableCell>
-      <StyledTableCell align="right">{data}</StyledTableCell>
+      <StyledTableCell align="right">
+        {title === "Portfolio Points:" || title === "Total Points:" ? (
+          <p></p>
+        ) : (
+          <MonetizationOnIcon />
+        )}
+        {data}
+      </StyledTableCell>
     </StyledTableRow>
   );
 };
@@ -124,6 +133,7 @@ const getAllSummaryRows = (dataArr) => {
   let display = dataArr.map((dataObj) => {
     return getSummaryRow(dataObj.title, dataObj.data);
   });
+
   return display;
 };
 
@@ -202,14 +212,20 @@ export const getStockRows = (ownedStocks, loading) => {
           </Button>
         </StyledTableCell>
         <StyledTableCell align="right">
+          <MonetizationOnIcon />
           {stock.currPrice.toFixed(2)}
         </StyledTableCell>
         <StyledTableCell align="right">{stock.currPoints}</StyledTableCell>
         <StyledTableCell align="right">
+          <MonetizationOnIcon />
           {stock.avgBuyPrice.toFixed(2)}
         </StyledTableCell>
-        <StyledTableCell align="right">{stock.numShares}</StyledTableCell>
         <StyledTableCell align="right">
+          <MonetizationOnIcon />
+          {stock.numShares}
+        </StyledTableCell>
+        <StyledTableCell align="right">
+          <MonetizationOnIcon />
           {stock.currPoints * stock.numShares}
         </StyledTableCell>
       </StyledTableRow>
@@ -252,9 +268,11 @@ export const getTransactionRows = (transactionHistory, loading) => {
           {transaction.sharesTraded}
         </StyledTableCell>
         <StyledTableCell align="right">
+          <MonetizationOnIcon />
           {transaction.sharesPrice.toFixed(2)}
         </StyledTableCell>
         <StyledTableCell align="right">
+          <MonetizationOnIcon />
           {transaction.transactionValue.toFixed(2)}
         </StyledTableCell>
         <StyledTableCell align="right">
@@ -298,9 +316,11 @@ export const getOpenTradeDisplay = (trades, loading, attemptToRemove) => {
         </StyledTableCell>
         <StyledTableCell align="right">{trade.sharesTraded}</StyledTableCell>
         <StyledTableCell align="right">
+          <MonetizationOnIcon />
           {trade.sharesPrice.toFixed(2)}
         </StyledTableCell>
         <StyledTableCell align="right">
+          <MonetizationOnIcon />
           {trade.sharesTraded * trade.sharesPrice}
         </StyledTableCell>
         <StyledTableCell align="right">

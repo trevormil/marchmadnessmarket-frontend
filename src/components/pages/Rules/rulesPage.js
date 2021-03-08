@@ -26,6 +26,10 @@ class RulesPage extends Component {
               Everyone is given 500 coins when they first sign up.
             </Typography>
             <Typography align="center">
+              In addition, every week 100 coins will be added to everyone's
+              account
+            </Typography>
+            <Typography align="center">
               The objective of the game is to get as many points as possible
               when the season concludes, not highest portfolio market value.
             </Typography>
