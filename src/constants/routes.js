@@ -12,6 +12,7 @@ export const ABOUT = '/about';
 export const STOCKS = '/stocks';
 export const RULES = '/rules';
 export const LEADERBOARD = '/leaderboard';
-
+export const SCHEDULE = '/schedule';
+export const BRACKET = '/bracket';
 
 

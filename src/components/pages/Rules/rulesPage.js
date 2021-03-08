@@ -23,7 +23,7 @@ class RulesPage extends Component {
             </Typography>
             <hr />
             <Typography align="center">
-              Everyone is given $500 when they first sign up.
+              Everyone is given 500 coins when they first sign up.
             </Typography>
             <Typography align="center">
               The objective of the game is to get as many points as possible
@@ -76,15 +76,18 @@ class RulesPage extends Component {
               For every game that a team wins, they are awarded the number of
               points determined by their seed value.
             </Typography>
-            <Typography align="center">
-              For example, if a #5 seed wins a game, they are awarded 5 points.
-            </Typography>
-            <Typography align="center">
-              If a #10 seed wins a game, they are awarded 10 points.
-            </Typography>
+            <Typography align="center">5 point bonus for champions.</Typography>
             <Typography align="center">
               No points are given for a loss.
             </Typography>
+            <Typography align="center">
+              For example, if a #5 seed wins a game, they are awarded 5 points.
+            </Typography>
+
+            <Typography align="center">
+              If a #10 seed wins a game, they are awarded 10 points.
+            </Typography>
+
             <hr />
             <Typography align="center">Terms to know: </Typography>
             <Typography align="center">

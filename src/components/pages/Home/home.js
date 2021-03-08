@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { getStocks } from "../../../redux/actions/dataActions";
+import { getStocks, getScores } from "../../../redux/actions/dataActions";
 import { connect } from "react-redux";
 import {
   Grid,
@@ -20,9 +20,13 @@ class HomePage extends Component {
   constructor(props) {
     super(props);
     this.props.getStocks([]);
+    this.props.getScores([]);
   }
   render() {
     const { classes } = this.props;
+    const marketOverviewStyle = {
+      height: !this.props.scoreData[0] ? "1000px" : "700px",
+    };
     return (
       <Container>
         <Grid container spacing={3}>
@@ -81,9 +85,52 @@ class HomePage extends Component {
             <div className="card">
               <section>
                 <Typography variant="h4" align="center">
+                  Live Scores:
+                </Typography>
+              </section>
+              <div id="livescorefeed">
+                {this.props.scoreData.loading ? (
+                  <CircularProgress size={30} align="center" />
+                ) : !this.props.scoreData.scores[0] ? (
+                  <p>No Current Games</p>
+                ) : (
+                  this.props.scoreData.scores.map((game) => {
+                    return (
+                      <div display="flexbox" key={game.name}>
+                        <h3 align="center">{game.name}</h3>
+
+                        <h1 align="center">
+                          <img
+                            height="50px"
+                            width="50px"
+                            margin="30px"
+                            src={game.score[0].logo}
+                            alt="Team Logo"
+                          />
+                          {game.score[0].score} - {game.score[1].score}
+                          <img
+                            height="50px"
+                            width="50px"
+                            src={game.score[1].logo}
+                            alt="Team Logo"
+                          />
+                        </h1>
+
+                        <hr />
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+            </div>
+            <hr />
+            <div className="card">
+              <section>
+                <Typography variant="h4" align="center">
                   Upcoming Events:
                 </Typography>
               </section>
+              {/*
               <Typography align="center">
                 <b>NFL Season 1 Ends: </b> March 16, 2021
                 <br />
@@ -95,17 +142,32 @@ class HomePage extends Component {
                 <b>EURO 2021 Season 1 Ends: </b> July 12, 2021<br></br>
                 <b>NFL Season 2 Begins: </b> September 8, 2021
                 <br></br>
+              </Typography>*/}
+              <Typography align="center">
+                <b>Selection Sunday</b> — Sunday, March 14
+                <br />
+                <b>First Four</b> — Thursday, March 18 <br />
+                <b>First round</b> — Friday, March 19 to Saturday, March 20
+                <br />
+                <b>Second round</b>— Sunday, March 21 to Monday, March 22
+                <br />
+                <b>Sweet 16</b> — Saturday, March 27 to Sunday, March 28
+                <br /> <b>Elite Eight</b> — Monday, March 29, to Tuesday, March
+                30
+                <br /> <b>Final Four</b> — Saturday, April 3
+                <br />
+                <b> NCAA championship game</b> — Monday, April 5
               </Typography>
             </div>
             <hr />
             <iframe
-              title="newsfeed"
-              src="https://feed.mikle.com/widget/v2/143757/?preloader-text=Loading"
-              height="364px"
+              src="https://feed.mikle.com/widget/v2/143829/?preloader-text=Loading"
+              height="299px"
               width="100%"
               className="fw-iframe"
               scrolling="no"
               frameBorder="0"
+              title="newsfeed"
             ></iframe>
           </Grid>
           <Grid item xs={6}>
@@ -120,7 +182,7 @@ class HomePage extends Component {
                 </Typography>
               </section>
 
-              <div id="market-overview">
+              <div id="market-overview" style={marketOverviewStyle}>
                 {this.props.data.loading ? (
                   <CircularProgress size={30} align="center" />
                 ) : (
@@ -141,7 +203,7 @@ class HomePage extends Component {
             </Typography>
             <Typography align="center">
               <a href="https://docs.google.com/document/d/1X8OCk9LHit_Dyey43wTqn5K2yMt5vWl9U590cqHQWJw/edit?usp=sharing">
-                https://docs.google.com/document/d/1X8OCk9LHit_Dyey43wTqn5K2yMt5vWl9U590cqHQWJw/edit?usp=sharing
+                https://github.com/trevormil/Fantasy-Sports-Stock-Market/issues
               </a>
             </Typography>
             <hr />
@@ -161,9 +223,11 @@ const mapStateToProps = (state) => ({
   user: state.user,
   ui: state.ui,
   data: state.data,
+  scoreData: state.scoreData,
 });
 const mapActionsToProps = {
   getStocks,
+  getScores,
 };
 export default connect(
   mapStateToProps,

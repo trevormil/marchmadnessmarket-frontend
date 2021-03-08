@@ -103,6 +103,14 @@ const authenticatedTabs = [
     linkTo: ROUTES.HOME,
   },
   {
+    label: "Bracket",
+    linkTo: ROUTES.BRACKET,
+  },
+  {
+    label: "SCHEDULE",
+    linkTo: ROUTES.SCHEDULE,
+  },
+  {
     label: "Screener",
     linkTo: ROUTES.BROWSE,
   },
@@ -128,6 +136,10 @@ const nonAuthenticatedTabs = [
   {
     label: "Home",
     linkTo: ROUTES.HOME,
+  },
+  {
+    label: "Bracket",
+    linkTo: ROUTES.BRACKET,
   },
   {
     label: "Rules",

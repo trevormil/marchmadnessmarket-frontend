@@ -232,18 +232,6 @@ class StockPage extends Component {
           </Grid>
 
           <Grid item xs={12} sm={7} align="center">
-            <div className="portfolio-card">
-              <Typography
-                variant="h4"
-                className={classes.pageTitle}
-                align="center"
-              >
-                Price Chart
-              </Typography>
-              <div id="tradingviewchart" align="center">
-                <CircularProgress size={30} />
-              </div>
-            </div>
             <div className="card">
               <section>
                 <Typography variant="h4" align="center">
@@ -257,40 +245,6 @@ class StockPage extends Component {
                 </Typography>
               </section>
 
-              <div>
-                <BootstrapInput
-                  id="numToSell"
-                  name="numToSell"
-                  value={this.state.numToSell}
-                  onChange={this.handleInputChange}
-                  placeholder="# Shares to Sell"
-                  type="number"
-                ></BootstrapInput>
-                <BootstrapInput
-                  id="sellPrice"
-                  name="sellPrice"
-                  value={this.state.sellPrice}
-                  onChange={this.handleInputChange}
-                  placeholder="Price per Share"
-                  type="number"
-                ></BootstrapInput>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={this.attemptToSell}
-                  disabled={
-                    
-                    this.props.data.currStock.stockData === null ||
-                    this.state.numToSell <= 0 ||
-                    this.state.sellPrice <= 0 ||
-                    this.state.numToSell === null ||
-                    this.state.numToSell > numSharesOwned
-                  }
-                >
-                  Sell
-                </Button>
-              </div>
-              <hr />
               <div>
                 <BootstrapInput
                   id="numToBuy"
@@ -323,9 +277,43 @@ class StockPage extends Component {
                       this.props.user.accountBalance
                   }
                 >
-                  Instant Buy
+                  Buy
                 </Button>
               </div>
+              <hr />
+              <div>
+                <BootstrapInput
+                  id="numToSell"
+                  name="numToSell"
+                  value={this.state.numToSell}
+                  onChange={this.handleInputChange}
+                  placeholder="# Shares to Sell"
+                  type="number"
+                ></BootstrapInput>
+                <BootstrapInput
+                  id="sellPrice"
+                  name="sellPrice"
+                  value={this.state.sellPrice}
+                  onChange={this.handleInputChange}
+                  placeholder="Price per Share"
+                  type="number"
+                ></BootstrapInput>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={this.attemptToSell}
+                  disabled={
+                    this.props.data.currStock.stockData === null ||
+                    this.state.numToSell <= 0 ||
+                    this.state.sellPrice <= 0 ||
+                    this.state.numToSell === null ||
+                    this.state.numToSell > numSharesOwned
+                  }
+                >
+                  Sell
+                </Button>
+              </div>
+              {/*
               <hr />
               <div>
                 <BootstrapInput
@@ -335,7 +323,9 @@ class StockPage extends Component {
                   onChange={this.handleInputChange}
                   placeholder="# Shares to Sell"
                 ></BootstrapInput>
+                
 
+                
                 <Typography display="inline">
                   {" "}
                   at $
@@ -359,6 +349,19 @@ class StockPage extends Component {
                 >
                   Instant Sell
                 </Button>
+              </div>
+              */}
+            </div>
+            <div className="portfolio-card">
+              <Typography
+                variant="h4"
+                className={classes.pageTitle}
+                align="center"
+              >
+                Price Chart
+              </Typography>
+              <div id="tradingviewchart" align="center">
+                <CircularProgress size={30} color="secondary" />
               </div>
             </div>
           </Grid>

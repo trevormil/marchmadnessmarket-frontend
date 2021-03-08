@@ -141,7 +141,7 @@ class PortfolioPage extends Component {
                 Account Value Chart
               </Typography>
               <div id="tradingviewchart" align="center">
-                <CircularProgress size={30} />
+                <CircularProgress size={30} color="secondary" />
               </div>
             </div>
           </Grid>
