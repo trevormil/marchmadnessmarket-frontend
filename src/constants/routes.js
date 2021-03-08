@@ -14,5 +14,6 @@ export const RULES = '/rules';
 export const LEADERBOARD = '/leaderboard';
 export const SCHEDULE = '/schedule';
 export const BRACKET = '/bracket';
+export const MARKET = '/market';
 
 

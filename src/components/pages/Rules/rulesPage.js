@@ -23,6 +23,14 @@ class RulesPage extends Component {
             </Typography>
             <hr />
             <Typography align="center">
+              Note: This is a very new app, and it will have bugs. If you find a
+              way to cheat or exploit bugs, please don't. Report them here at:{" "}
+              <a href="https://github.com/trevormil/Fantasy-Sports-Stock-Market/issues">
+                https://github.com/trevormil/Fantasy-Sports-Stock-Market/issues
+              </a>
+            </Typography>
+            <hr />
+            <Typography align="center">
               Everyone is given 500 coins when they first sign up.
             </Typography>
             <Typography align="center">
@@ -43,6 +51,9 @@ class RulesPage extends Component {
               once daily at 12:00 EST. Point values will be updated weekly.
             </Typography>
             <hr />
+            <Typography align="center">
+              You can not buy stocks on gamedays to keep it fair.
+            </Typography>
             <Typography align="center">
               There are a couple ways that you can buy and sell stocks:{" "}
             </Typography>

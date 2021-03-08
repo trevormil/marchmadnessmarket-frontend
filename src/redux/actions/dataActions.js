@@ -28,6 +28,7 @@ export const getStocks = (filterArr) => (dispatch) => {
           price: null,
         },
       };
+      payloadData.trades = [];
       dispatch({
         type: SET_STOCKS,
         payload: payloadData,
@@ -61,7 +62,9 @@ export const getScores = (filterArr) => (dispatch) => {
     .catch((err) => {
       dispatch({
         type: SET_SCORES,
-        payload: [],
+        payload: {
+          scores: [],
+        },
       });
     });
 };
@@ -95,6 +98,35 @@ export const getCurrStock = (currProps, filterArr, stockId) => async (
     type: SET_STOCKS,
     payload: payloadData,
   });
+};
+//gets all open trades for current stock
+export const getAllTrades = (currProps) => async (dispatch) => {
+  dispatch({ type: LOADING_STOCKS });
+  let payloadData = currProps;
+
+  await axios
+    .get(`/trades`)
+    .then((res) => {
+      let allTrades = [];
+      res.data.forEach((trade) => {
+        if (trade.completed === false) {
+          allTrades.push(trade);
+        }
+      });
+      payloadData.trades = allTrades;
+    })
+    .then(() => {
+      dispatch({
+        type: SET_STOCKS,
+        payload: payloadData,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: SET_STOCKS,
+        payload: [],
+      });
+    });
 };
 
 //gets all open trades for current stock

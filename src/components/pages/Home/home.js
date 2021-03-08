@@ -104,7 +104,7 @@ class HomePage extends Component {
               <div id="livescorefeed" style={liveFeedStyle}>
                 {this.props.scoreData.loading ? (
                   <CircularProgress size={30} align="center" />
-                ) : !this.props.scoreData.scores ||
+                ) : this.props.scoreData.scores === "undefined" ||
                   !this.props.scoreData.scores[0] ? (
                   <Typography variant="h5" align="center">
                     No Current Games
@@ -218,7 +218,7 @@ class HomePage extends Component {
               suggestions, or advice. All feedback is appreciated!
             </Typography>
             <Typography align="center">
-              <a href="https://docs.google.com/document/d/1X8OCk9LHit_Dyey43wTqn5K2yMt5vWl9U590cqHQWJw/edit?usp=sharing">
+              <a href="https://github.com/trevormil/Fantasy-Sports-Stock-Market/issues">
                 https://github.com/trevormil/Fantasy-Sports-Stock-Market/issues
               </a>
             </Typography>

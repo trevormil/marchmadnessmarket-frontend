@@ -17,6 +17,7 @@ import StocksPage from "./components/pages/Stock/stockpage";
 import RulesPage from "./components/pages/Rules/rulesPage";
 import ScoresPage from "./components/pages/Schedule/schedule";
 import BracketPage from "./components/pages/Bracket/bracket";
+import MarketPage from "./components/pages/Market/market";
 import LeaderboardPage from "./components/pages/Leaderboard/leaderboardPage";
 import jwtDecode from "jwt-decode";
 import AuthRoute from "./constants/authroute.js";
@@ -78,6 +79,11 @@ class App extends React.Component {
                     exact
                     path={ROUTES.BROWSE}
                     component={BrowseStocksPage}
+                  />
+                  <UserRoute
+                    exact
+                    path={ROUTES.MARKET}
+                    component={MarketPage}
                   />
                   <UserRoute
                     exact

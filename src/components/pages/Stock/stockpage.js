@@ -22,6 +22,8 @@ import { createChart } from "lightweight-charts";
 import { BootstrapInput } from "../../ui/TextInputs/textInputs";
 import { stockInfoHeaderRow, getInfoRows } from "./stockInfoRows";
 
+import { isInvalidDate } from "../../../helpers/validDates";
+
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 const styles = (theme) => ({
   ...theme.spreadThis,
@@ -270,6 +272,7 @@ class StockPage extends Component {
                   variant="contained"
                   onClick={this.attemptToIPOBuy}
                   disabled={
+                    isInvalidDate() ||
                     this.props.data.currStock.stockData === null ||
                     this.state.numToBuy <= 0 ||
                     this.state.numToBuy === null ||

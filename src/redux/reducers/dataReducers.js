@@ -12,6 +12,7 @@ const initialState = {
       ipoPrice: null,
     },
   },
+  trades: [],
 };
 
 export default function (state = initialState, action) {

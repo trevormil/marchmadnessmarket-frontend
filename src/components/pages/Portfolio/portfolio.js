@@ -143,6 +143,9 @@ class PortfolioPage extends Component {
                 <CircularProgress size={30} color="secondary" />
               </div>
             </div>
+            <p align="center">
+              Note: Account value charts are updated once daily at 12:00 AM EST.
+            </p>
           </Grid>
           <Grid item xs={5}>
             <div className="portfolio-card">

@@ -115,6 +115,10 @@ const authenticatedTabs = [
     linkTo: ROUTES.BROWSE,
   },
   {
+    label: "Market",
+    linkTo: ROUTES.MARKET,
+  },
+  {
     label: "Portfolio",
     linkTo: ROUTES.PORTFOLIO,
   },
