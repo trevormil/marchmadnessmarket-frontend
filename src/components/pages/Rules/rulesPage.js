@@ -35,7 +35,7 @@ class RulesPage extends Component {
             </Typography>
             <Typography align="center">
               In addition, every week 100 coins will be added to everyone's
-              account
+              account on Tuesday at midnight.
             </Typography>
             <Typography align="center">
               The objective of the game is to get as many points as possible
@@ -52,27 +52,33 @@ class RulesPage extends Component {
             </Typography>
             <hr />
             <Typography align="center">
-              You can not buy stocks on gamedays to keep it fair.
+              You can not buy stocks on gamedays plus one day to keep it fair.
+            </Typography>
+            <Typography align="center">
+              Every team's price is $1 at the start of the season. Each week,
+              the price will update to the number of points they have
+              accumulated.
             </Typography>
             <Typography align="center">
               There are a couple ways that you can buy and sell stocks:{" "}
             </Typography>
             <Typography align="center">
               1) Every stock has a BIN (buy it now) price that you can instantly
-              purchase any number of shares at.
+              purchase any number of shares at. Think of this like buying it
+              straight from the bank.
             </Typography>
+
             <Typography align="center">
-              2) You can also instantly sell any number of shares at half the
-              value of the BIN price.
-            </Typography>
-            <Typography align="center">
-              3) Any stock can be listed for auction by a seller, and once a
+              2) Any stock can be listed for auction by a seller, and once a
               buyer is found, the shares and balances are updated.
             </Typography>
-            <Typography align="center">
+            {/*<Typography align="center">
+              3) You can also instantly sell any number of shares at half the
+              value of the BIN price.
+            </Typography><Typography align="center">
               For every transaction that occurs, the BIN price and instant sell
               price gets updated slightly based on an algorithm.
-            </Typography>
+    </Typography>
             <Typography align="center">
               Example: If a stock is being bought a lot at the BIN price or
               being sold for a high price on auction, the BIN price will
@@ -82,7 +88,7 @@ class RulesPage extends Component {
               For calculations of price for the charts and portfolio market
               value, it uses the price that is halfway between the BIN price and
               the instant sell price.
-            </Typography>
+            </Typography>*/}
             <hr />
             <Typography align="center">
               Points per share are awarded as follows:
@@ -91,7 +97,9 @@ class RulesPage extends Component {
               For every game that a team wins, they are awarded the number of
               points determined by their seed value.
             </Typography>
-            <Typography align="center">5 point bonus for champions.</Typography>
+            <Typography align="center">
+              There will be a 5 point bonus for the champions.
+            </Typography>
             <Typography align="center">
               No points are given for a loss.
             </Typography>
@@ -109,10 +117,11 @@ class RulesPage extends Component {
               BIN ("Buy It Now") Price: Any amount can be bought instantly at
               this price{" "}
             </Typography>
+            {/*
             <Typography align="center">
               Instant Sell Price: Any amount can be sold instantly at this price
               (half the BIN Price)
-            </Typography>
+            </Typography>*/}
             <Typography align="center">
               Float: Total number of shares of a stock in circulation
             </Typography>
@@ -142,6 +151,11 @@ class RulesPage extends Component {
               <Typography align="center">
                 10 Points - Team that wins the championship.
               </Typography>*/}
+            <hr />
+            <Typography align="center">
+              If you have any questions, please reach out to me via
+              <a href="mailto:trevormil@comcast.net"> trevormil@comcast.net</a>
+            </Typography>
             <hr />
             <Typography align="center">Note the following:</Typography>
             <Typography align="center">

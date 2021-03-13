@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import * as ROUTES from "../../../constants/routes";
-import { getLogoName } from "../../../constants/logos";
+//import { getLogoName } from "../../../constants/logos";
 
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import {
@@ -80,8 +80,8 @@ export function getRows(stocks, watchlist, handleClick, classes) {
             <img
               width="50px"
               height="50px"
-              src={"./logos/" + getLogoName(row.stockName)}
-              alt="Team Logo"
+              src={row.imageUrl}
+              alt={`${row.stockName} Team Logo`}
             />
           </a>
         </StyledTableCell>
@@ -102,11 +102,11 @@ export function getRows(stocks, watchlist, handleClick, classes) {
         <StyledTableCell align="right">{row.currPoints}</StyledTableCell>
         <StyledTableCell align="right">
           <MonetizationOnIcon />
-          {row.price.toFixed(2)}
+          {row.price ? row.price.toFixed(2) : ""}
         </StyledTableCell>
         <StyledTableCell align="right">
           <MonetizationOnIcon />
-          {row.ipoPrice.toFixed(2)}
+          {row.ipoPrice ? row.ipoPrice.toFixed(2) : ""}
         </StyledTableCell>
         <StyledTableCell align="right">{row.volume}</StyledTableCell>
         <StyledTableCell align="right">{row.float}</StyledTableCell>

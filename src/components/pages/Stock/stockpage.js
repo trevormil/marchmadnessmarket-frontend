@@ -6,7 +6,6 @@ import axios from "axios";
 import { getBuyTradeDisplay, getSellTradeDisplay } from "./tradeDisplay";
 import CustomizedTables from "../../ui/StockInfoTable/stockTable";
 import { setOwnedStocks } from "../../../redux/actions/userActions";
-import { getLogoName } from "../../../constants/logos";
 import {
   getCurrStock,
   getTradesForCurrStock,
@@ -198,8 +197,7 @@ class StockPage extends Component {
       this.props.data.loading || this.props.user.loading
     );
     const numSharesOwned = this.getNumSharesOwned();
-    const filename =
-      "../logos/" + getLogoName(this.props.data.currStock.stockData.stockName);
+    const filename = this.props.data.currStock.stockData.imageUrl;
     return (
       <Container maxWidth="lg">
         <Grid container spacing={3}>

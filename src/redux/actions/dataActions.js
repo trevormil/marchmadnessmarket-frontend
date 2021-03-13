@@ -124,7 +124,7 @@ export const getAllTrades = (currProps) => async (dispatch) => {
     .catch((err) => {
       dispatch({
         type: SET_STOCKS,
-        payload: [],
+        payload: payloadData,
       });
     });
 };

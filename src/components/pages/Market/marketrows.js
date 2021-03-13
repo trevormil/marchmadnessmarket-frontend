@@ -3,16 +3,11 @@ import {
   StyledTableRow,
 } from "../../ui/StockInfoTable/styledTableComponents";
 import React from "react";
-import {
-  TableSortLabel,
-  TableRow,
-  Button,
-  CircularProgress,
-} from "@material-ui/core";
+import { TableRow, Button, CircularProgress } from "@material-ui/core";
 import * as ROUTES from "../../../constants/routes";
 import { Link } from "react-router-dom";
 
-import { getLogoName } from "../../../constants/logos";
+//import { getLogoName } from "../../../constants/logos";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import { isInvalidDate } from "../../../helpers/validDates";
 //following four functions get the header rows for their respective tables on portfolio page
@@ -69,7 +64,7 @@ export const getOpenTradeDisplay = (
             <img
               width="50px"
               height="50px"
-              src={"./logos/" + getLogoName(trade.stockName)}
+              src={trade.imageUrl}
               alt="Team Logo"
             />
           </a>
@@ -87,6 +82,7 @@ export const getOpenTradeDisplay = (
           <MonetizationOnIcon />
           {trade.sharesTraded * trade.sharesPrice}
         </StyledTableCell>
+        {console.log(isInvalidDate())}
         <StyledTableCell align="center">
           <Button
             id={trade.tradeId}

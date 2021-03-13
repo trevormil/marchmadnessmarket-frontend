@@ -1,12 +1,11 @@
 export function isInvalidDate() {
-  let dateFrom = ["03/19/2021", "03/27/2021", "04/03/2021"];
-  let dateTo = ["03/22/2021", "03/30/2021", "04/20/2021"];
+  let dateFrom = ["19/03/2021", "27/03/2021", "03/04/2021"];
+  let dateTo = ["23/03/2021", "31/03/2021", "20/04/2021"];
   let currDate = new Date();
   let dateCheck =
-    currDate.getMonth() +
-    1 +
-    "/" +
     currDate.getDate() +
+    "/" +
+    (currDate.getMonth() + 1) +
     "/" +
     currDate.getFullYear();
 
@@ -22,9 +21,11 @@ export function isInvalidDate() {
     let check = new Date(c[2], parseInt(c[1]) - 1, c[0]);
 
     if (check >= from && check <= to) {
+      console.log(from + " " + to);
       invalidDate = true;
     }
     i++;
   });
+
   return invalidDate;
 }

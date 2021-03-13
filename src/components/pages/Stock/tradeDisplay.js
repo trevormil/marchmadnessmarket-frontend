@@ -9,6 +9,7 @@ import {
   CircularProgress,
 } from "@material-ui/core";
 
+import { isInvalidDate } from "../../../helpers/validDates";
 //gets current open trades others have listd
 export const getBuyTradeDisplay = (trades, userId, attemptToBuy, loading) => {
   if (loading) {
@@ -36,6 +37,9 @@ export const getBuyTradeDisplay = (trades, userId, attemptToBuy, loading) => {
                 variant="contained"
                 name={trade.tradeId}
                 onClick={attemptToBuy}
+                disabled={
+                  isInvalidDate()
+                }
               >
                 Buy
               </Button>

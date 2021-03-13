@@ -80,6 +80,9 @@ class HomePage extends Component {
                 <b>Screener:</b> Browse all stocks to find your next purchase!
               </Typography>
               <Typography align="center">
+                <b>Market:</b> Browse all the current stocks up for sale!
+              </Typography>
+              <Typography align="center">
                 <b>Portfolio:</b> See your current account balance, stocks
                 owned, recent transactions, and more!
               </Typography>

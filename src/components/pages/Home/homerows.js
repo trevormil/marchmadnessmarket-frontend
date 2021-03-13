@@ -4,7 +4,7 @@ import {
 } from "../../ui/StockInfoTable/styledTableComponents";
 import React from "react";
 import { TableRow, Button } from "@material-ui/core";
-import { getLogoName } from "../../../constants/logos";
+//import { getLogoName } from "../../../constants/logos";
 
 //all following functions help to create the stock info table on right side of stock page
 
@@ -25,7 +25,7 @@ export const getInfoRows = (stocks) => {
     </StyledTableRow>
   ) : (
     stocks.map((stock) => {
-      let file = "./logos/" + getLogoName(stock.stockName);
+      let file = stock.imageUrl;
       return (
         <StyledTableRow key={stock.stockName}>
           <StyledTableCell align="center">
