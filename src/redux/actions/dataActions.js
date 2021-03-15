@@ -17,7 +17,7 @@ export const getStocks = (filterArr) => (dispatch) => {
     .then((res) => {
       payloadData.stocks = sort(
         filterStocks(res.data, filterArr),
-        "stockName",
+        "seed",
         "asc"
       );
       payloadData.filters = filterArr;

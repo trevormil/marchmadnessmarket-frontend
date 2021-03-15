@@ -55,6 +55,10 @@ export const getInfoRows = (stock) => {
         title: "Name:",
         data: stock.stockName,
       },
+      {
+        title: "Seed:",
+        data: stock.seed,
+      },
       { title: "Last Auction:", data: stock.price.toFixed(2) },
       { title: "BIN Price:", data: stock.ipoPrice.toFixed(2) },
       { title: "Current Points:", data: stock.currPoints },

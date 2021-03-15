@@ -29,17 +29,17 @@ export const getPositionsHeaderRow = (orderBy, direction, handleClick) => {
           Name
         </TableSortLabel>
       </StyledTableCell>
+
       <StyledTableCell align="right">
         <TableSortLabel
-          name="currPrice"
+          name="numShares"
           direction={direction}
-          active={orderBy === "currPrice"}
+          active={orderBy === "numShares"}
           onClick={handleClick}
         >
-          Last Auction Price
+          Shares Owned
         </TableSortLabel>
       </StyledTableCell>
-
       <StyledTableCell align="right">
         <TableSortLabel
           name="points"
@@ -52,6 +52,16 @@ export const getPositionsHeaderRow = (orderBy, direction, handleClick) => {
       </StyledTableCell>
       <StyledTableCell align="right">
         <TableSortLabel
+          name="currPrice"
+          direction={direction}
+          active={orderBy === "currPrice"}
+          onClick={handleClick}
+        >
+          Last Auction Price
+        </TableSortLabel>
+      </StyledTableCell>
+      <StyledTableCell align="right">
+        <TableSortLabel
           name="avgBuyPrice"
           direction={direction}
           active={orderBy === "avgBuyPrice"}
@@ -60,16 +70,7 @@ export const getPositionsHeaderRow = (orderBy, direction, handleClick) => {
           Avg Buy Price
         </TableSortLabel>
       </StyledTableCell>
-      <StyledTableCell align="right">
-        <TableSortLabel
-          name="numShares"
-          direction={direction}
-          active={orderBy === "numShares"}
-          onClick={handleClick}
-        >
-          Shares Owned
-        </TableSortLabel>
-      </StyledTableCell>
+
       <StyledTableCell align="right">
         <TableSortLabel
           name="totalValue"
@@ -211,21 +212,18 @@ export const getStockRows = (ownedStocks, loading) => {
             {stock.stockName}
           </Button>
         </StyledTableCell>
-        <StyledTableCell align="right">
-          <MonetizationOnIcon />
-          {stock.currPrice.toFixed(2)}
-        </StyledTableCell>
+        <StyledTableCell align="right">{stock.numShares}</StyledTableCell>
         <StyledTableCell align="right">{stock.currPoints}</StyledTableCell>
         <StyledTableCell align="right">
           <MonetizationOnIcon />
           {stock.avgBuyPrice.toFixed(2)}
         </StyledTableCell>
+
         <StyledTableCell align="right">
           <MonetizationOnIcon />
-          {stock.numShares}
+          {stock.currPrice.toFixed(2)}
         </StyledTableCell>
         <StyledTableCell align="right">
-          <MonetizationOnIcon />
           {stock.currPoints * stock.numShares}
         </StyledTableCell>
       </StyledTableRow>

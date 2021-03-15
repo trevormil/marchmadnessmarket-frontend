@@ -15,7 +15,6 @@ import { isInvalidDate } from "../../../helpers/validDates";
 export const openTradeHeaderRow = (
   <TableRow>
     <StyledTableCell>Stock Name</StyledTableCell>
-    <StyledTableCell>Logo</StyledTableCell>
     <StyledTableCell align="center">Seller</StyledTableCell>
     <StyledTableCell align="center">Date Posted</StyledTableCell>
     <StyledTableCell align="center"># Shares</StyledTableCell>
@@ -59,16 +58,6 @@ export const getOpenTradeDisplay = (
             {trade.stockName}
           </Button>
         </StyledTableCell>
-        <StyledTableCell component="th" scope="row" align="left">
-          <a href={`${ROUTES.STOCKS}/${trade.stockId}`}>
-            <img
-              width="50px"
-              height="50px"
-              src={trade.imageUrl}
-              alt="Team Logo"
-            />
-          </a>
-        </StyledTableCell>
         <StyledTableCell align="center">
           {trade.sellingUserName}
         </StyledTableCell>
@@ -105,7 +94,6 @@ export const getOpenTradeDisplay = (
     return (
       <StyledTableRow>
         <StyledTableCell>No open orders. Check back later.</StyledTableCell>
-        <StyledTableCell />
         <StyledTableCell />
         <StyledTableCell />
         <StyledTableCell />

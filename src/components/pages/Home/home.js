@@ -91,7 +91,8 @@ class HomePage extends Component {
                 else!
               </Typography>
               <Typography align="center">
-                <b>Rules:</b> Check out the rules to learn how to play the game!
+                <b>Rules:</b> New? Check out the rules to learn how to play the
+                game!
               </Typography>
               <Typography align="center">
                 To navigate, use the bar on the top of the page.

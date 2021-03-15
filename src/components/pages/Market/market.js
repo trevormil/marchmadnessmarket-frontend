@@ -22,7 +22,6 @@ class MarketPage extends Component {
   constructor(props) {
     super(props);
     this.props.getAllTrades(this.props.data);
-
     this.attemptToBuy = this.attemptToBuy.bind(this);
   }
   attemptToBuy(event) {
