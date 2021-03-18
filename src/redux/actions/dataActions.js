@@ -3,6 +3,8 @@ import {
   LOADING_STOCKS,
   LOADING_SCORES,
   SET_SCORES,
+  LOADING_OTHER_USER_STOCKS,
+  SET_OTHER_USER_STOCKS,
 } from "../types";
 import axios from "axios";
 import { sort, filterStocks } from "../../helpers/filterFunctions";
@@ -62,6 +64,33 @@ export const getScores = (filterArr) => (dispatch) => {
     .catch((err) => {
       dispatch({
         type: SET_SCORES,
+        payload: {
+          scores: [],
+        },
+      });
+    });
+};
+
+//gets all stocks and updates  data
+export const getOtherUserStocks = (userId) => (dispatch) => {
+  dispatch({ type: LOADING_OTHER_USER_STOCKS });
+  let payloadData = {};
+
+  axios
+    .get(`/userStocks/${userId}`)
+    .then((res) => {
+      console.log(res.data);
+
+      payloadData.stocks = res.data;
+
+      dispatch({
+        type: SET_OTHER_USER_STOCKS,
+        payload: payloadData,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: SET_OTHER_USER_STOCKS,
         payload: {
           scores: [],
         },

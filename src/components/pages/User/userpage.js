@@ -3,20 +3,40 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 //UI
 import { withStyles, Typography, Container } from "@material-ui/core";
-//Table Components
-import CustomizedTables from "../../ui/StockInfoTable/stockTable";
-import { getHeaderRow, getRows } from "./leaderboardRows";
-import { StyledTableCell } from "../../ui/StockInfoTable/styledTableComponents";
 
+import CustomizedTables from "../../ui/StockInfoTable/stockTable";
+import { getHeaderRow, getRows } from "./userrows";
+import { StyledTableCell } from "../../ui/StockInfoTable/styledTableComponents";
+import { getOtherUserStocks } from "../../../redux/actions/dataActions";
+//Table Components
 const styles = (theme) => ({
   ...theme.spreadThis,
 });
 
-class LeaderboardPage extends Component {
+const waitForURLUpdate = () => {
+  let splitPathName = window.location.pathname.split("/");
+
+  while (splitPathName[splitPathName.length - 2] !== "users") {
+    splitPathName = window.location.pathname.split("/");
+  }
+  let str = window.location.pathname.split("/").pop();
+  str = str.replace("%20", " ");
+  return str;
+};
+
+class UserPage extends Component {
+  state = {
+    userId: waitForURLUpdate(),
+  };
+  constructor(props) {
+    super(props);
+    this.props.getOtherUserStocks(this.state.userId);
+  }
   render() {
     const { classes } = this.props;
-    let stockDisplay = !this.props.user.loading ? (
-      getRows(this.props.user.leaderboard, classes)
+    console.log(this.props.otherUserStocks.stocks);
+    let stockDisplay = !this.props.otherUserStocks.loading ? (
+      getRows(this.props.otherUserStocks.stocks)
     ) : (
       <StyledTableCell>Loading.....</StyledTableCell>
     );
@@ -29,14 +49,7 @@ class LeaderboardPage extends Component {
               className={classes.pageTitle}
               align="center"
             >
-              Leaderboards
-            </Typography>
-            <Typography
-              variant="h6"
-              className={classes.pageTitle}
-              align="center"
-            >
-              Note: Leaderboards are updated once daily at 12:00 AM EST.
+              {this.state.userId ? this.state.userId : "Loading...."}
             </Typography>
             <hr />
           </div>
@@ -55,11 +68,14 @@ const mapStateToProps = (state) => ({
   user: state.user,
   ui: state.ui,
   data: state.data,
+  otherUserStocks: state.otherUserStocks,
 });
 
-const mapActionsToProps = {};
+const mapActionsToProps = {
+  getOtherUserStocks,
+};
 
 export default connect(
   mapStateToProps,
   mapActionsToProps
-)(withStyles(styles)(LeaderboardPage));
+)(withStyles(styles)(UserPage));

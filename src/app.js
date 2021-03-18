@@ -16,6 +16,8 @@ import HomePage from "./components/pages/Home/home";
 import StocksPage from "./components/pages/Stock/stockpage";
 import RulesPage from "./components/pages/Rules/rulesPage";
 import ScoresPage from "./components/pages/Schedule/schedule";
+
+import UserPage from "./components/pages/User/userpage";
 import BracketPage from "./components/pages/Bracket/bracket";
 import MarketPage from "./components/pages/Market/market";
 import LeaderboardPage from "./components/pages/Leaderboard/leaderboardPage";
@@ -90,6 +92,7 @@ class App extends React.Component {
                     path={ROUTES.LEADERBOARD}
                     component={LeaderboardPage}
                   />
+                  <UserRoute exact path="/users/:userId" component={UserPage} />
                   <UserRoute
                     exact
                     path="/stocks/:stockId"
