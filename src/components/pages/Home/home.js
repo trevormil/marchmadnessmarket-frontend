@@ -51,6 +51,13 @@ class HomePage extends Component {
             >
               Welcome to the Fantasy Stock Market!
             </Typography>
+            <Typography align="center">
+              <b>
+                <a href="https://docs.google.com/document/d/1X8OCk9LHit_Dyey43wTqn5K2yMt5vWl9U590cqHQWJw/edit?usp=sharing">
+                  https://docs.google.com/document/d/1X8OCk9LHit_Dyey43wTqn5K2yMt5vWl9U590cqHQWJw/edit?usp=sharing
+                </a>
+              </b>
+            </Typography>
             <hr />
             {!this.props.user.authenticated && (
               <div>
