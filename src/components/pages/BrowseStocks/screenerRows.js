@@ -102,14 +102,10 @@ export function getRows(stocks, watchlist, handleClick, classes) {
         <StyledTableCell align="right">{row.currPoints}</StyledTableCell>
         <StyledTableCell align="right">
           <MonetizationOnIcon />
-          {row.price ? row.price.toFixed(2) : ""}
-        </StyledTableCell>
-        <StyledTableCell align="right">
-          <MonetizationOnIcon />
           {row.ipoPrice ? row.ipoPrice.toFixed(2) : ""}
         </StyledTableCell>
         <StyledTableCell align="right">{row.volume}</StyledTableCell>
-        <StyledTableCell align="right">{row.float}</StyledTableCell>
+        <StyledTableCell align="right">{row.float.toFixed(1)}</StyledTableCell>
       </StyledTableRow>
     ))
   ) : (
@@ -187,22 +183,12 @@ export function getScreenerHeaderRow(orderBy, direction, handleClick) {
       </StyledTableCell>
       <StyledTableCell align="right">
         <TableSortLabel
-          name="price"
-          direction={direction}
-          active={orderBy === "price"}
-          onClick={handleClick}
-        >
-          Last Auction
-        </TableSortLabel>
-      </StyledTableCell>
-      <StyledTableCell align="right">
-        <TableSortLabel
           name="ipoPrice"
           direction={direction}
           active={orderBy === "ipoPrice"}
           onClick={handleClick}
         >
-          BIN Price
+          Instant BIN Price
         </TableSortLabel>
       </StyledTableCell>
 

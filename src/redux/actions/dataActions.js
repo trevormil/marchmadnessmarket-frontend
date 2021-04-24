@@ -80,9 +80,7 @@ export const getOtherUserStocks = (userId) => (dispatch) => {
     .get(`/userStocks/${userId}`)
     .then((res) => {
       console.log(res.data);
-
       payloadData.stocks = res.data;
-
       dispatch({
         type: SET_OTHER_USER_STOCKS,
         payload: payloadData,

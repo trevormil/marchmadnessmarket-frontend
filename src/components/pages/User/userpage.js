@@ -34,7 +34,9 @@ class UserPage extends Component {
   }
   render() {
     const { classes } = this.props;
-    console.log(this.props.otherUserStocks.stocks);
+    const userJSON = this.props.user.leaderboard.filter(
+      (element) => element.userName == this.state.userId
+    );
     let stockDisplay = !this.props.otherUserStocks.loading ? (
       getRows(this.props.otherUserStocks.stocks)
     ) : (
@@ -51,11 +53,31 @@ class UserPage extends Component {
             >
               {this.state.userId ? this.state.userId : "Loading...."}
             </Typography>
+            <Typography
+              variant="h5"
+              className={classes.pageTitle}
+              align="center"
+            >
+              Total Account Value:{" "}
+              {userJSON[0] ? userJSON[0]["totalAccountValue"] : "Loading..."}
+            </Typography>
+
+            <Typography
+              variant="h5"
+              className={classes.pageTitle}
+              align="center"
+            >
+              Remaining Cash:{" "}
+              {userJSON[0] ? userJSON[0]["accountBalance"] : "Loading..."}
+            </Typography>
             <hr />
           </div>
         </Container>
 
         <Container maxWidth="sm">
+          <Typography variant="h2" className={classes.pageTitle} align="center">
+            {}
+          </Typography>
           <div className="card">
             <CustomizedTables rows={stockDisplay} headerRow={getHeaderRow()} />
           </div>

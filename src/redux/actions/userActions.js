@@ -53,6 +53,7 @@ export const getUserData = () => async (dispatch) => {
     if (res) {
       res.data.forEach((stock) => data.push(stock));
     }
+    console.log(data);
     payloadData.leaderboard = data;
   });
   await axios.get("/watchlist").then((res) => {

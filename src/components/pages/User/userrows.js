@@ -19,6 +19,12 @@ export function getRows(stocks) {
           <StyledTableCell align="right">
             {row.avgBuyPrice.toFixed(2)}
           </StyledTableCell>
+          <StyledTableCell align="right">
+            {row.currPoints}
+          </StyledTableCell>
+          <StyledTableCell align="right">
+            {(row.numShares * row.currPoints)}
+          </StyledTableCell>
         </StyledTableRow>
       );
     })
@@ -34,6 +40,8 @@ export function getHeaderRow() {
       <StyledTableCell align="left">Stock Name</StyledTableCell>
       <StyledTableCell align="right"># Shares Owned</StyledTableCell>
       <StyledTableCell align="left">Avg. Buy Price</StyledTableCell>
+      <StyledTableCell align="left">Points Per Share</StyledTableCell>
+      <StyledTableCell align="left">Total Points</StyledTableCell>
     </TableRow>
   );
 }

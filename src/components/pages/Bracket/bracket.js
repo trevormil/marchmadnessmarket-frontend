@@ -21,7 +21,14 @@ class BracketPage extends Component {
             >
               Bracket
             </Typography>
-            <img width="100%" src={"./brackettemp.webp"} alt="Team Logo" />
+            <Typography
+              variant="h4"
+              className={classes.pageTitle}
+              align="center"
+            >
+              <b>TBD</b>
+            </Typography>
+            {/*<img width="100%" src={"./brackettemp.webp"} alt="Team Logo" />*/}
             <hr />
           </Grid>
 

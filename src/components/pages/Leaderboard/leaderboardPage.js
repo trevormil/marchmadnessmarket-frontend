@@ -15,6 +15,7 @@ const styles = (theme) => ({
 class LeaderboardPage extends Component {
   render() {
     const { classes } = this.props;
+    console.log(this.props.user.leaderboard);
     let stockDisplay = !this.props.user.loading ? (
       getRows(this.props.user.leaderboard, classes)
     ) : (

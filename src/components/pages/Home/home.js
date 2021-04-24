@@ -51,13 +51,13 @@ class HomePage extends Component {
             >
               Welcome to the Fantasy Stock Market!
             </Typography>
-            <Typography align="center">
+            {/*<Typography align="center">
               <b>
                 <a href="https://docs.google.com/document/d/1X8OCk9LHit_Dyey43wTqn5K2yMt5vWl9U590cqHQWJw/edit?usp=sharing">
                   https://docs.google.com/document/d/1X8OCk9LHit_Dyey43wTqn5K2yMt5vWl9U590cqHQWJw/edit?usp=sharing
                 </a>
               </b>
-            </Typography>
+            </Typography>*/}
             <hr />
             {!this.props.user.authenticated && (
               <div>
@@ -171,19 +171,17 @@ class HomePage extends Component {
                 <br></br>
               </Typography>*/}
               <Typography align="center">
-                <b>Selection Sunday</b> — Sunday, March 14
+                <b>Play In Tournament</b> — May 18 to May 21
                 <br />
-                <b>First Four</b> — Thursday, March 18 <br />
-                <b>First round</b> — Friday, March 19 to Saturday, March 20
+                <b>NBA Playoffs Begin</b> — May 22 <br />
+                <b>NBA Draft Combine</b>— June 21 - June 27
                 <br />
-                <b>Second round</b>— Sunday, March 21 to Monday, March 22
+                <b>NBA Draft Lottery</b> — June 22
                 <br />
-                <b>Sweet 16</b> — Saturday, March 27 to Sunday, March 28
-                <br /> <b>Elite Eight</b> — Monday, March 29, to Tuesday, March
-                30
-                <br /> <b>Final Four</b> — Saturday, April 3
+                <b>NBA Playoffs End</b> — July 22
                 <br />
-                <b> NCAA championship game</b> — Monday, April 5
+                <b>NBA Draft</b> — July 29
+                <br />
               </Typography>
             </div>
             <hr />
@@ -191,9 +189,9 @@ class HomePage extends Component {
               src="https://feed.mikle.com/widget/v2/143829/?preloader-text=Loading"
               height="299px"
               width="100%"
-              className="fw-iframe"
+              class="fw-iframe"
               scrolling="no"
-              frameBorder="0"
+              frameborder="0"
               title="newsfeed"
             ></iframe>
           </Grid>

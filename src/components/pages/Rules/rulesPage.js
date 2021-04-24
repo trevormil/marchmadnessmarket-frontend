@@ -42,6 +42,11 @@ class RulesPage extends Component {
               stocks will get more expensive and scarcer as season goes along.
             </Typography>
             <Typography align="center">
+              Play in games don't count towards points. However, if you buy a
+              play-in team and they lose in the play-in game, those shares will
+              automatically get transferred to be shares of the play-in game winner.
+            </Typography>
+            <Typography align="center">
               The objective of the game is to get as many <u>points</u> as
               possible when the season concludes,{" "}
               <u>not highest portfolio market value.</u>
@@ -54,7 +59,12 @@ class RulesPage extends Component {
               For example, if a #5 seed wins a game, they are awarded 5 points.
             </Typography>
             <Typography align="center">
-              There also will be a 5 point bonus for the champions.
+              There also will be a 5 point bonus per share for the champions.
+            </Typography>
+            <Typography align="center">
+              So, if a 1 seed wins the championship, they get 16 points for
+              winning 16 games and 5 points for winning championship. So, they
+              would get 21 points per share.
             </Typography>
             <Typography align="center"></Typography>
             <Typography align="center">
@@ -67,7 +77,8 @@ class RulesPage extends Component {
             </Typography>
             <hr />
             <Typography align="center">
-              You can not buy stocks from Friday to Tuesday to keep it fair.
+              You can not buy stocks after the start of the playoffs to keep it
+              fair. (No buying from 5/22 - 7/22)
             </Typography>
             <Typography align="center">
               Every team's price is $1 at the start of the season. Each week,
