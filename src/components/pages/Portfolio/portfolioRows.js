@@ -50,37 +50,6 @@ export const getPositionsHeaderRow = (orderBy, direction, handleClick) => {
           Points per Share
         </TableSortLabel>
       </StyledTableCell>
-      <StyledTableCell align="right">
-        <TableSortLabel
-          name="currPrice"
-          direction={direction}
-          active={orderBy === "currPrice"}
-          onClick={handleClick}
-        >
-          Last Auction Price
-        </TableSortLabel>
-      </StyledTableCell>
-      <StyledTableCell align="right">
-        <TableSortLabel
-          name="avgBuyPrice"
-          direction={direction}
-          active={orderBy === "avgBuyPrice"}
-          onClick={handleClick}
-        >
-          Avg Buy Price
-        </TableSortLabel>
-      </StyledTableCell>
-
-      <StyledTableCell align="right">
-        <TableSortLabel
-          name="totalValue"
-          direction={direction}
-          active={orderBy === "totalValue"}
-          onClick={handleClick}
-        >
-          Total Points Value
-        </TableSortLabel>
-      </StyledTableCell>
     </TableRow>
   );
 };
@@ -139,7 +108,7 @@ const getAllSummaryRows = (dataArr) => {
 };
 
 export const getSummaryRows = (ownedStocks, user, data) => {
-  if (data.loading || user.accountBalance == null) {
+  if (data.loading || user.daiTokenBalance == null) {
     return (
       <StyledTableRow>
         <StyledTableCell align="right">
@@ -150,26 +119,16 @@ export const getSummaryRows = (ownedStocks, user, data) => {
       </StyledTableRow>
     );
   }
-  //let totalBoughtValue = 0;
-  let totalValue = 0;
-  let totalPortfolioPoints = 0;
-  // let totalProfit = 0;
-  ownedStocks.forEach((stock) => {
-    //totalBoughtValue += stock.totalBoughtValue;
-    totalValue += stock.totalValue;
-    totalPortfolioPoints += stock.currPoints * stock.numShares;
-    //totalProfit += stock.totalProfit;
-  });
+
   return ownedStocks.length === 0 && user.accountBalance === null ? (
     <StyledTableCell></StyledTableCell>
   ) : (
     getAllSummaryRows([
-      { title: "Account Balance:", data: user.accountBalance.toFixed(2) },
-      { title: "Portfolio Market Value:", data: totalValue.toFixed(2) },
-      { title: "Portfolio Points:", data: totalPortfolioPoints },
+      { title: "Dai Token Balance:", data: user.daiTokenBalance },
+      { title: "Dai Token Staked:", data: user.stakingBalance },
       {
-        title: "Total Points:",
-        data: (totalPortfolioPoints + user.accountBalance).toFixed(0),
+        title: "Dapp Token Balance: ",
+        data: user.dappTokenBalance,
       },
     ])
   );
@@ -188,14 +147,7 @@ export const getStockRows = (ownedStocks, loading) => {
   }
   let currTrade = false;
   const display = ownedStocks.map((stock) => {
-    if (
-      stock === null ||
-      stock === undefined ||
-      !stock ||
-      stock.currPrice === null ||
-      stock.currPrice === undefined
-    )
-      return null;
+    if (stock === null || stock === undefined || !stock) return null;
     currTrade = true;
     return (
       <StyledTableRow key={stock.stockId}>
@@ -207,25 +159,13 @@ export const getStockRows = (ownedStocks, loading) => {
             color="primary"
             size="small"
             component={Link}
-            to={`${ROUTES.STOCKS}/${stock.stockId}`}
+            to={`${ROUTES.STOCKS}/${stock.stockName}`}
           >
             {stock.stockName}
           </Button>
         </StyledTableCell>
         <StyledTableCell align="right">{stock.numShares}</StyledTableCell>
         <StyledTableCell align="right">{stock.currPoints}</StyledTableCell>
-        <StyledTableCell align="right">
-          <MonetizationOnIcon />
-          {stock.avgBuyPrice.toFixed(2)}
-        </StyledTableCell>
-
-        <StyledTableCell align="right">
-          <MonetizationOnIcon />
-          {stock.currPrice.toFixed(2)}
-        </StyledTableCell>
-        <StyledTableCell align="right">
-          {stock.currPoints * stock.numShares}
-        </StyledTableCell>
       </StyledTableRow>
     );
   });
@@ -245,7 +185,7 @@ export const getStockRows = (ownedStocks, loading) => {
 
 //gets table rows for recent transactions
 export const getTransactionRows = (transactionHistory, loading) => {
-  if (loading) {
+  if (loading || !transactionHistory) {
     return (
       <StyledTableRow>
         <StyledTableCell>
@@ -267,11 +207,11 @@ export const getTransactionRows = (transactionHistory, loading) => {
         </StyledTableCell>
         <StyledTableCell align="right">
           <MonetizationOnIcon />
-          {transaction.sharesPrice.toFixed(2)}
+          {transaction.sharesPrice}
         </StyledTableCell>
         <StyledTableCell align="right">
           <MonetizationOnIcon />
-          {transaction.transactionValue.toFixed(2)}
+          {transaction.transactionValue}
         </StyledTableCell>
         <StyledTableCell align="right">
           {transaction.dateAndTime}
@@ -315,7 +255,7 @@ export const getOpenTradeDisplay = (trades, loading, attemptToRemove) => {
         <StyledTableCell align="right">{trade.sharesTraded}</StyledTableCell>
         <StyledTableCell align="right">
           <MonetizationOnIcon />
-          {trade.sharesPrice.toFixed(2)}
+          {trade.sharesPrice}
         </StyledTableCell>
         <StyledTableCell align="right">
           <MonetizationOnIcon />

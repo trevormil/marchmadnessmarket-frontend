@@ -10,6 +10,7 @@ import {
   getCurrStock,
   getTradesForCurrStock,
 } from "../../../redux/actions/dataActions";
+import { getUserData } from "../../../redux/actions/userActions";
 import {
   Button,
   Typography,
@@ -24,6 +25,12 @@ import { stockInfoHeaderRow, getInfoRows } from "./stockInfoRows";
 import { isInvalidDate } from "../../../helpers/validDates";
 
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
+
+import DaiToken from "../../../abis/DaiToken.json";
+import DappToken from "../../../abis/DappToken.json";
+import TokenFarm from "../../../abis/TokenFarm.json";
+
+const fetch = require('node-fetch');
 const styles = (theme) => ({
   ...theme.spreadThis,
 });
@@ -45,7 +52,12 @@ class StockPage extends Component {
     numToBuy: "",
     numToIPOSell: "",
     chart: null,
+    daiToken: {},
+    dappToken: {},
+    tokenFarm: {},
+    loading: true,
   };
+
   constructor(props) {
     super(props);
     this.props.getCurrStock(
@@ -53,12 +65,61 @@ class StockPage extends Component {
       this.props.data.filters,
       this.state.stockId
     );
+
     this.handleInputChange = this.handleInputChange.bind(this);
     this.getNumSharesOwned = this.getNumSharesOwned.bind(this);
     this.attemptToBuy = this.attemptToBuy.bind(this);
     this.attemptToSell = this.attemptToSell.bind(this);
     this.attemptToIPOBuy = this.attemptToIPOBuy.bind(this);
   }
+
+  async componentWillMount() {
+    await this.loadBlockchainData();
+    await this.props.getUserData();
+  }
+  async loadBlockchainData() {
+    const web3 = window.web3;
+
+    const networkId = await web3.eth.net.getId();
+
+    // Load DaiToken
+    const daiTokenData = DaiToken.networks[networkId];
+    if (daiTokenData) {
+      const daiToken = new web3.eth.Contract(
+        DaiToken.abi,
+        daiTokenData.address
+      );
+      this.setState({ daiToken });
+    } else {
+      window.alert("DaiToken contract not deployed to detected network.");
+    }
+
+    // Load DappToken
+    const dappTokenData = DappToken.networks[networkId];
+    if (dappTokenData) {
+      const dappToken = new web3.eth.Contract(
+        DappToken.abi,
+        dappTokenData.address
+      );
+      this.setState({ dappToken });
+    } else {
+      window.alert("DappToken contract not deployed to detected network.");
+    }
+
+    // Load TokenFarm
+    const tokenFarmData = TokenFarm.networks[networkId];
+    if (tokenFarmData) {
+      const tokenFarm = new web3.eth.Contract(
+        TokenFarm.abi,
+        tokenFarmData.address
+      );
+      this.setState({ tokenFarm });
+    } else {
+      window.alert("TokenFarm contract not deployed to detected network.");
+    }
+    this.setState({ loading: false });
+  }
+
   getChartDisplay() {
     const tradingViewChartElement = document.getElementById("tradingviewchart");
     if (
@@ -87,6 +148,7 @@ class StockPage extends Component {
         (stock) =>
           stock.stockName === this.props.data.currStock.stockData.stockName
       );
+      console.log(this.props.user.ownedStocks);
       if (foundStock) return foundStock.numShares;
       else return 0;
     }
@@ -178,6 +240,31 @@ class StockPage extends Component {
       });
     }
   };
+
+  stakeTokens = () => {
+    this.setState({ loading: true });
+    this.state.daiToken.methods
+      .approve(this.state.tokenFarm._address, this.state.numToBuy)
+      .send({ from: this.props.user.address })
+      .on("transactionHash", (hash) => {
+        this.state.tokenFarm.methods
+          .stakeTokens(this.state.numToBuy, this.state.stockId)
+          .send({ from: this.props.user.address })
+          .on("transactionHash", (hash) => {
+            this.setState({ loading: false });
+          });
+      });
+  };
+
+  unstakeTokens = () => {
+    this.setState({ loading: true });
+    this.state.tokenFarm.methods
+      .unstakeTokens(this.state.numToSell, this.state.stockId)
+      .send({ from: this.props.user.address })
+      .on("transactionHash", (hash) => {
+        this.setState({ loading: false });
+      });
+  };
   componentDidUpdate() {
     this.getChartDisplay();
   }
@@ -198,6 +285,16 @@ class StockPage extends Component {
     );
     const numSharesOwned = this.getNumSharesOwned();
     const filename = this.props.data.currStock.stockData.imageUrl;
+
+    
+
+const url = 'https://api.opensea.io/api/v1/assets?order_direction=desc&offset=0&limit=20&collection=kryptokits';
+const options = {method: 'GET'};
+
+fetch(url, options)
+  .then(res => res.json())
+  .then(json => console.log(json))
+  .catch(err => console.error('error:' + err));
     return (
       <Container maxWidth="lg">
         <Grid container spacing={3}>
@@ -239,13 +336,12 @@ class StockPage extends Component {
                   Shares Owned: {numSharesOwned}
                 </Typography>
                 <Typography variant="h4" align="center">
-                  Account Balance: <MonetizationOnIcon />
+                  Dai Token Balance: <MonetizationOnIcon />
                   {this.props.user.loading || this.props.data.loading
                     ? "Loading..."
-                    : `${this.props.user.accountBalance.toFixed(2)}`}
+                    : `${this.props.user.daiTokenBalance}`}
                 </Typography>
               </section>
-
               <div>
                 <BootstrapInput
                   id="numToBuy"
@@ -255,31 +351,19 @@ class StockPage extends Component {
                   placeholder="# Shares to Buy"
                   type="number"
                 ></BootstrapInput>
-
-                <Typography display="inline">
-                  {" "}
-                  at $
-                  {this.props.data.currStock.stockData &&
-                  this.props.data.currStock.stockData.ipoPrice
-                    ? this.props.data.currStock.stockData.ipoPrice.toFixed(2)
-                    : "Loading..."}{" "}
-                  per share
-                </Typography>
                 <Button
                   color="primary"
                   variant="contained"
-                  onClick={this.attemptToIPOBuy}
+                  onClick={this.stakeTokens}
                   disabled={
                     isInvalidDate() ||
                     this.props.data.currStock.stockData === null ||
                     this.state.numToBuy <= 0 ||
                     this.state.numToBuy === null ||
-                    this.state.numToBuy *
-                      this.props.data.currStock.stockData.ipoPrice >
-                      this.props.user.accountBalance
+                    Number(this.state.numToBuy) > Number(this.props.user.daiTokenBalance)
                   }
                 >
-                  Buy
+                  Deposit
                 </Button>
               </div>
               <hr />
@@ -292,27 +376,18 @@ class StockPage extends Component {
                   placeholder="# Shares to Sell"
                   type="number"
                 ></BootstrapInput>
-                <BootstrapInput
-                  id="sellPrice"
-                  name="sellPrice"
-                  value={this.state.sellPrice}
-                  onChange={this.handleInputChange}
-                  placeholder="Price per Share"
-                  type="number"
-                ></BootstrapInput>
                 <Button
                   color="primary"
                   variant="contained"
-                  onClick={this.attemptToSell}
+                  onClick={this.unstakeTokens}
                   disabled={
                     this.props.data.currStock.stockData === null ||
                     this.state.numToSell <= 0 ||
-                    this.state.sellPrice <= 0 ||
                     this.state.numToSell === null ||
-                    this.state.numToSell > numSharesOwned
+                    Number(this.state.numToSell) > numSharesOwned
                   }
                 >
-                  Sell
+                  Withdraw
                 </Button>
               </div>
               {/*
@@ -354,6 +429,7 @@ class StockPage extends Component {
               </div>
               */}
             </div>
+            {/* 
             <div className="portfolio-card">
               <Typography
                 variant="h4"
@@ -366,6 +442,7 @@ class StockPage extends Component {
                 <CircularProgress size={30} color="secondary" />
               </div>
             </div>
+            */}
           </Grid>
           <Grid item xs={5}>
             <div className="portfolio-card">
@@ -386,7 +463,7 @@ class StockPage extends Component {
               )}
             </div>
           </Grid>
-
+          {/*
           <Grid item xs={12}>
             <hr />
           </Grid>
@@ -411,6 +488,7 @@ class StockPage extends Component {
               {sellTradeDisplay}
             </div>
           </Grid>
+           */}
         </Grid>
       </Container>
     );
@@ -431,6 +509,7 @@ const mapActionsToProps = {
   setOwnedStocks,
   getCurrStock,
   getTradesForCurrStock,
+  getUserData,
 };
 
 export default connect(

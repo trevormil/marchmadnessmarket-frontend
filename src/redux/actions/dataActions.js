@@ -8,40 +8,59 @@ import {
 } from "../types";
 import axios from "axios";
 import { sort, filterStocks } from "../../helpers/filterFunctions";
-
+import Web3 from "web3";
+import DaiToken from "../../abis/DaiToken.json";
+import DappToken from "../../abis/DappToken.json";
+import TokenFarm from "../../abis/TokenFarm.json";
 //gets all stocks and updates  data
-export const getStocks = (filterArr) => (dispatch) => {
+export const getStocks = (filterArr) => async (dispatch) => {
   dispatch({ type: LOADING_STOCKS });
-  let payloadData = {};
+  const web3 = window.web3;
 
-  axios
-    .get("/stocks")
-    .then((res) => {
-      payloadData.stocks = sort(
-        filterStocks(res.data, filterArr),
-        "seed",
-        "asc"
-      );
-      payloadData.filters = filterArr;
-      payloadData.currStock = {
-        trades: [],
-        stockHistory: [],
-        stockData: {
-          price: null,
-        },
-      };
-      payloadData.trades = [];
-      dispatch({
-        type: SET_STOCKS,
-        payload: payloadData,
+  const networkId = await web3.eth.net.getId();
+  let payloadData = {};
+  const tokenFarmData = TokenFarm.networks[networkId];
+  if (tokenFarmData) {
+    const tokenFarm = new web3.eth.Contract(
+      TokenFarm.abi,
+      tokenFarmData.address
+    );
+    let numStocks = await tokenFarm.methods.stockCount().call();
+    let stocks = [];
+    for (let i = 0; i < numStocks; i++) {
+      let currStock = await tokenFarm.methods.stocks(i).call();
+      stocks.push({
+        stockName: currStock.stockName,
+        imageUrl: currStock.imageUrl,
+        seed: currStock.seed,
+        bio: currStock.bio,
+        currPoints: currStock.currPoints,
+        dividends: currStock.dividends,
+        float: currStock.float,
+        market: currStock.market,
       });
-    })
-    .catch((err) => {
-      dispatch({
-        type: SET_STOCKS,
-        payload: [],
-      });
+    }
+    payloadData.stocks = sort(
+      filterStocks(stocks, filterArr),
+      "currPoints",
+      "asc"
+    );
+    payloadData.filters = filterArr;
+    payloadData.currStock = {
+      trades: [],
+      stockHistory: [],
+      stockData: {
+        price: null,
+      },
+    };
+    payloadData.trades = [];
+    dispatch({
+      type: SET_STOCKS,
+      payload: payloadData,
     });
+  } else {
+    window.alert("TokenFarm contract not deployed to detected network.");
+  }
 };
 
 //gets all stocks and updates  data
@@ -53,9 +72,7 @@ export const getScores = (filterArr) => (dispatch) => {
     .get("/scores")
     .then((res) => {
       console.log(res.data);
-
       payloadData.scores = res.data;
-
       dispatch({
         type: SET_SCORES,
         payload: payloadData,
@@ -101,31 +118,38 @@ export const getCurrStock = (currProps, filterArr, stockId) => async (
   dispatch
 ) => {
   dispatch({ type: LOADING_STOCKS });
+  const web3 = window.web3;
+  const networkId = await web3.eth.net.getId();
   let payloadData = currProps;
-
-  await axios.get(`/stocks/${stockId}`).then((res) => {
-    payloadData.currStock.stockData = res.data;
-  });
-
-  await axios.get(`/trades/all/${stockId}`).then((res) => {
-    let allTrades = [];
-    res.data.forEach((trade) => {
-      if (trade.completed === false) {
-        allTrades.push(trade);
-      }
+  const tokenFarmData = TokenFarm.networks[networkId];
+  if (tokenFarmData) {
+    const tokenFarm = new web3.eth.Contract(
+      TokenFarm.abi,
+      tokenFarmData.address
+    );
+    let currStockIdx = await tokenFarm.methods.stockNames(stockId).call();
+    let currStock = await tokenFarm.methods.stocks(currStockIdx).call();
+    let formCurrStock = {
+      stockName: currStock.stockName,
+      imageUrl: currStock.imageUrl,
+      seed: currStock.seed,
+      bio: currStock.bio,
+      currPoints: currStock.currPoints,
+      dividends: currStock.dividends,
+      float: currStock.float,
+      market: currStock.market,
+    };
+    payloadData.currStock.stockData = formCurrStock;
+    console.log(formCurrStock);
+    dispatch({
+      type: SET_STOCKS,
+      payload: payloadData,
     });
-    payloadData.currStock.trades = allTrades;
-  });
-
-  await axios.get(`/stocks/${stockId}/stockHistory`).then((res) => {
-    payloadData.currStock.stockHistory = res.data;
-  });
-
-  dispatch({
-    type: SET_STOCKS,
-    payload: payloadData,
-  });
+  } else {
+    window.alert("TokenFarm contract not deployed to detected network.");
+  }
 };
+
 //gets all open trades for current stock
 export const getAllTrades = (currProps) => async (dispatch) => {
   dispatch({ type: LOADING_STOCKS });

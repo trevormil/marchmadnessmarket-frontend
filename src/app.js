@@ -9,45 +9,48 @@ import themeObject from "./constants/theme";
 //imports
 import PortfolioPage from "./components/pages/Portfolio/portfolio";
 import Navigation from "./components/ui/Navigation/navigation";
-import SignUpPage from "./components/pages/SignUp/signuppage";
-import SignInForm from "./components/pages/SignIn/signinform";
 import BrowseStocksPage from "./components/pages/BrowseStocks/browsePage";
 import HomePage from "./components/pages/Home/home";
 import StocksPage from "./components/pages/Stock/stockpage";
 import RulesPage from "./components/pages/Rules/rulesPage";
 import ScoresPage from "./components/pages/Schedule/schedule";
-
 import UserPage from "./components/pages/User/userpage";
 import BracketPage from "./components/pages/Bracket/bracket";
 import MarketPage from "./components/pages/Market/market";
 import LeaderboardPage from "./components/pages/Leaderboard/leaderboardPage";
-import jwtDecode from "jwt-decode";
-import AuthRoute from "./constants/authroute.js";
-import UserRoute from "./constants/userroute.js";
 import * as ROUTES from "./constants/routes";
 //redux
 import { Provider } from "react-redux";
 import store from "./redux/stores";
-import { SET_AUTHENTICATED } from "./redux/types";
-import { logOutUser, getUserData } from "./redux/actions/userActions";
-//axios
-import axios from "axios";
-axios.defaults.baseURL = "https://us-central1-tm-market.cloudfunctions.net/api";
 
-const token = localStorage.FBIdToken;
-if (token) {
-  const decodedToken = jwtDecode(token);
-  if (decodedToken.exp * 1000 < Date.now()) {
-    window.location.href = ROUTES.SIGN_IN;
-    store.dispatch(logOutUser());
-  } else {
-    store.dispatch({ type: SET_AUTHENTICATED });
-    axios.defaults.headers.common["Authorization"] = token;
-    store.dispatch(getUserData());
-  }
-}
+import Web3 from "web3";
+import PointToken from "./abis/PointToken.json";
+import SportToken from "./abis/SportToken.json";
 
+import DaiToken from "./abis/DaiToken.json";
+import DappToken from "./abis/DappToken.json";
+import TokenFarm from "./abis/TokenFarm.json";
+
+import Main from "./Main";
 class App extends React.Component {
+  async componentWillMount() {
+    await this.loadWeb3();
+  }
+
+
+  async loadWeb3() {
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum);
+      await window.ethereum.enable();
+    } else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider);
+    } else {
+      window.alert(
+        "Non-Ethereum browser detected. You should consider trying MetaMask!"
+      );
+    }
+  }
+
   render() {
     return (
       <MuiThemeProvider theme={themeObject}>
@@ -61,43 +64,25 @@ class App extends React.Component {
                 <div className="page">
                   <Route exact path={ROUTES.HOME} component={HomePage} />
                   <Route exact path={ROUTES.BRACKET} component={BracketPage} />
-                  <AuthRoute
-                    exact
-                    path={ROUTES.SIGN_UP}
-                    component={SignUpPage}
-                  />
-                  <AuthRoute
-                    exact
-                    path={ROUTES.SIGN_IN}
-                    component={SignInForm}
-                  />
-                  <UserRoute
+                  <Route
                     exact
                     path={ROUTES.PORTFOLIO}
                     component={PortfolioPage}
                   />
                   <Route exact path={ROUTES.SCHEDULE} component={ScoresPage} />
-                  <UserRoute
+                  <Route
                     exact
                     path={ROUTES.BROWSE}
                     component={BrowseStocksPage}
                   />
-                  <UserRoute
-                    exact
-                    path={ROUTES.MARKET}
-                    component={MarketPage}
-                  />
-                  <UserRoute
+                  <Route exact path={ROUTES.MARKET} component={MarketPage} />
+                  <Route
                     exact
                     path={ROUTES.LEADERBOARD}
                     component={LeaderboardPage}
                   />
-                  <UserRoute exact path="/users/:userId" component={UserPage} />
-                  <UserRoute
-                    exact
-                    path="/stocks/:stockId"
-                    component={StocksPage}
-                  />
+                  <Route exact path="/users/:userId" component={UserPage} />
+                  <Route exact path="/stocks/:stockId" component={StocksPage} />
                   <Route exact path="/rules" component={RulesPage} />
                 </div>
               </div>

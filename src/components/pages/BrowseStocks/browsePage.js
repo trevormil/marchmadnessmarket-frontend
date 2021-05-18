@@ -149,7 +149,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapActionsToProps = {
-  setUserWatchlist,
   setStocks,
   sortCurrStocks,
   getStocks,

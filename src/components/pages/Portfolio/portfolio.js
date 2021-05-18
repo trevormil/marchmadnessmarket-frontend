@@ -9,6 +9,7 @@ import {
 import {
   updateUserPortfolioData,
   setOwnedStocks,
+  getUserData,
 } from "../../../redux/actions/userActions";
 import { withStyles } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
@@ -47,7 +48,8 @@ class PortfolioPage extends Component {
 
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
     if (!this.props.user.loading) {
-      this.props.updateUserPortfolioData(this.props.user);
+      this.props.getUserData();
+      //this.props.updateUserPortfolioData(this.props.user);
     }
   }
   getChartDisplay() {
@@ -105,7 +107,7 @@ class PortfolioPage extends Component {
       this.props.user,
       this.props.data
     );
-    let transactionDisplay = getTransactionRows(
+    /*let transactionDisplay = getTransactionRows(
       this.props.user.transactions,
       this.props.user.loading
     );
@@ -113,7 +115,7 @@ class PortfolioPage extends Component {
       this.props.user.openTrades,
       this.props.user.loading || this.props.data.loading,
       this.attemptToRemove
-    );
+    );*/
 
     return (
       <div className={classes.root}>
@@ -129,8 +131,9 @@ class PortfolioPage extends Component {
           </Grid>
         </div>
         <hr />
+
         <Grid container spacing={3} justify="space-around">
-          <Grid item xs={7}>
+          {/** <Grid item xs={7}>
             <div className="portfolio-card">
               <Typography
                 variant="h4"
@@ -147,6 +150,7 @@ class PortfolioPage extends Component {
               Note: Account value charts are updated once daily at 12:00 AM EST.
             </p>
           </Grid>
+          */}
           <Grid item xs={5}>
             <div className="portfolio-card">
               <Typography
@@ -161,6 +165,7 @@ class PortfolioPage extends Component {
                 headerRow={summaryHeaderRow}
               />
             </div>
+            {/*
             <div className="portfolio-card">
               <Typography
                 variant="h4"
@@ -173,9 +178,10 @@ class PortfolioPage extends Component {
                 headerRow={openTradeHeaderRow}
                 rows={openTradeDisplay}
               ></CustomizedTables>
-            </div>
+            </div>*/}
           </Grid>
           <Grid item xs={12}>
+          
             <div className="portfolio-card">
               <Typography
                 variant="h4"
@@ -193,7 +199,9 @@ class PortfolioPage extends Component {
                 )}
               />
             </div>
+            
             <div className="portfolio-card">
+              {/*
               <Typography
                 variant="h4"
                 className={classes.pageTitle}
@@ -207,6 +215,7 @@ class PortfolioPage extends Component {
                   rows={transactionDisplay}
                 />
               </div>
+             */}
             </div>
           </Grid>
         </Grid>
@@ -230,6 +239,7 @@ const mapActionsToProps = {
   setOwnedStocks,
   getTradesForCurrStock,
   getStocks,
+  getUserData,
 };
 
 export default connect(

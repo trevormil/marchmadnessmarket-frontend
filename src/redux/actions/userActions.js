@@ -7,38 +7,84 @@ import {
   LOADING_USER,
 } from "../types";
 import axios from "axios";
-//logs in the user
-export const loginUser = (userData) => (dispatch) => {
-  dispatch({ type: LOADING_UI });
-  axios
-    .post("/login", userData)
-    .then((res) => {
-      setAuthorizationHeader(res.data.token);
-      dispatch(getUserData());
-    })
-    .catch((err) => {
-      dispatch({
-        type: SET_ERRORS,
-        payload: err.response,
-      });
-    });
-};
+import Web3 from "web3";
+import DaiToken from "../../abis/DaiToken.json";
+import DappToken from "../../abis/DappToken.json";
+import TokenFarm from "../../abis/TokenFarm.json";
 
 //gets all user data for Redux
 export const getUserData = () => async (dispatch) => {
+  dispatch({ type: LOADING_USER });
+
+  const web3 = window.web3;
   let payloadData = {};
+  const accounts = await web3.eth.getAccounts();
+  const userAccount = accounts[0];
+  payloadData.address = userAccount;
+  const networkId = await web3.eth.net.getId();
+  // Load DaiToken
+  const daiTokenData = DaiToken.networks[networkId];
+  if (daiTokenData) {
+    const daiToken = new web3.eth.Contract(DaiToken.abi, daiTokenData.address);
+    let daiTokenBalance = await daiToken.methods.balanceOf(userAccount).call();
+    payloadData.daiTokenBalance = daiTokenBalance;
+  } else {
+    window.alert("DaiToken contract not deployed to detected network.");
+  }
+  console.log("2");
+  // Load DappToken
+  const dappTokenData = DappToken.networks[networkId];
+  if (dappTokenData) {
+    const dappToken = new web3.eth.Contract(
+      DappToken.abi,
+      dappTokenData.address
+    );
+    let dappTokenBalance = await dappToken.methods
+      .balanceOf(userAccount)
+      .call();
+    payloadData.dappTokenBalance = dappTokenBalance;
+  } else {
+    window.alert("DappToken contract not deployed to detected network.");
+  }
+  payloadData.ownedStocks = [];
 
-  await axios
-    .get("/user")
-    .then((res) => {
-      payloadData = res.data;
-    })
-    .catch((err) => console.log(err));
+  const tokenFarmData = TokenFarm.networks[networkId];
+  if (tokenFarmData) {
+    const tokenFarm = new web3.eth.Contract(
+      TokenFarm.abi,
+      tokenFarmData.address
+    );
+    let stakingBalance = await tokenFarm.methods
+      .stakingBalance(userAccount)
+      .call();
+    console.log(stakingBalance);
+    payloadData.stakingBalance = stakingBalance;
+    let numStocks = await tokenFarm.methods.numStakes(userAccount).call();
+    let userStakes = [];
+    for (let i = 0; i < numStocks; i++) {
+      const stockName = await tokenFarm.methods
+        .stakeNames(userAccount, i)
+        .call();
 
-  await axios.get("/userTrades").then((res) => {
-    payloadData.openTrades = res.data;
+      const stakeAmt = await tokenFarm.methods
+        .stakes(userAccount, stockName)
+        .call();
+      userStakes.push({
+        stockName,
+        numShares: stakeAmt,
+      });
+    }
+    payloadData.ownedStocks = userStakes;
+  } else {
+    window.alert("TokenFarm contract not deployed to detected network.");
+  }
+  console.log(payloadData);
+  dispatch({
+    type: SET_USER,
+    payload: payloadData,
   });
 
+  /*
   await axios.get("/userStocks").then((res) => {
     let data = [];
     if (res) {
@@ -48,6 +94,8 @@ export const getUserData = () => async (dispatch) => {
     }
     payloadData.ownedStocks = data;
   });
+  */
+  /*
   await axios.get("/leaderboard").then((res) => {
     let data = [];
     if (res) {
@@ -55,14 +103,8 @@ export const getUserData = () => async (dispatch) => {
     }
     console.log(data);
     payloadData.leaderboard = data;
-  });
-  await axios.get("/watchlist").then((res) => {
-    let data = [];
-    if (res) {
-      res.data.forEach((stock) => data.push(stock));
-    }
-    payloadData.watchlist = data;
-  });
+  });*/
+  /*
   await axios.get("/transactions").then((res) => {
     let data = [];
     let count = 0;
@@ -95,8 +137,8 @@ export const getUserData = () => async (dispatch) => {
       return 0;
     });
     payloadData.accountHistory = accountHistory;
-  });
-
+  });*/
+  /*
   await axios
     .get("/stocks")
     .then((res) => {
@@ -123,11 +165,14 @@ export const getUserData = () => async (dispatch) => {
         type: SET_ERRORS,
         payload: err.response,
       });
-    });
+    });*/
 };
 
 //updates user portfolio data
 export const updateUserPortfolioData = (currProps) => async (dispatch) => {
+  console.log("Afuahk");
+  dispatch({ type: SET_USER, payload: currProps });
+  /*
   dispatch({ type: LOADING_USER });
   let payloadData = currProps;
   await axios.get("/userStocks").then((res) => {
@@ -180,46 +225,14 @@ export const updateUserPortfolioData = (currProps) => async (dispatch) => {
         type: SET_ERRORS,
         payload: err.response,
       });
-    });
-};
-
-//updates the user's watchlist
-export const setUserWatchlist = (currentProps, stockId, addTo) => async (
-  dispatch
-) => {
-  dispatch({ type: LOADING_USER });
-  let payloadData = currentProps;
-
-  const promise = addTo
-    ? axios.post(`/watchlist/${stockId}`)
-    : axios.delete(`/watchlist/${stockId}`);
-  await promise;
-  axios
-    .get("/watchlist")
-    .then((res) => {
-      let data = [];
-      if (res) {
-        res.data.forEach((stock) => data.push(stock));
-      }
-      payloadData.watchlist = data;
-    })
-    .then(() => {
-      dispatch({
-        type: SET_USER,
-        payload: payloadData,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      dispatch({
-        type: SET_ERRORS,
-        payload: err.response,
-      });
-    });
+    });*/
 };
 
 //updates the owned stocks
 export const setOwnedStocks = (currentProps) => async (dispatch) => {
+  console.log("ASFJH");
+  dispatch({ type: SET_USER, payload: currentProps });
+  /*
   dispatch({ type: LOADING_USER });
   let payloadData = currentProps;
 
@@ -260,35 +273,5 @@ export const setOwnedStocks = (currentProps) => async (dispatch) => {
         type: SET_ERRORS,
         payload: err.response,
       });
-    });
-};
-
-//signs up a user
-export const signUpUser = (newUserData, history) => (dispatch) => {
-  dispatch({ type: LOADING_UI });
-  axios
-    .post("/signup", newUserData)
-    .then((res) => {
-      setAuthorizationHeader(res.data.token);
-      dispatch(getUserData());
-    })
-    .catch((err) => {
-      dispatch({
-        type: SET_ERRORS,
-        payload: err.response,
-      });
-    });
-};
-//logs out a user
-export const logOutUser = () => (dispatch) => {
-  localStorage.removeItem("FBIdToken");
-  delete axios.defaults.headers.common["Authorization"];
-  dispatch({ type: SET_UNAUTHENTICATED });
-};
-
-//sets the authorization header for axios as current token
-const setAuthorizationHeader = (token) => {
-  const FBIdToken = `Bearer ${token}`;
-  localStorage.setItem("FBIdToken", FBIdToken);
-  axios.defaults.headers.common["Authorization"] = FBIdToken;
+    });*/
 };

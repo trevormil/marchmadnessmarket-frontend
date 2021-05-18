@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { getStocks, getScores } from "../../../redux/actions/dataActions";
+import { getUserData } from "../../../redux/actions/userActions";
 import { connect } from "react-redux";
 import {
   Grid,
   Typography,
   Container,
   CircularProgress,
-  Button,
 } from "@material-ui/core";
 import { infoHeaderRow, getInfoRows } from "./homerows";
 import CustomizedTables from "../../ui/StockInfoTable/stockTable";
@@ -22,6 +22,11 @@ class HomePage extends Component {
     this.props.getStocks([]);
     this.props.getScores([]);
   }
+
+  async componentWillMount() {
+    await this.props.getUserData();
+    console.log(this.props);
+  }
   render() {
     const { classes } = this.props;
     const marketOverviewStyle = {
@@ -29,8 +34,8 @@ class HomePage extends Component {
         !this.props.scoreData ||
         this.props.scoreData.loading ||
         !this.props.scoreData.scores[0]
-          ? "820px"
-          : "1070px",
+          ? "650px"
+          : "900px",
     };
     const liveFeedStyle = {
       height:
@@ -59,21 +64,6 @@ class HomePage extends Component {
               </b>
             </Typography>*/}
             <hr />
-            {!this.props.user.authenticated && (
-              <div>
-                <Typography align="center">
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    href="./signin"
-                    align="right"
-                  >
-                    Sign in here to gain access to all features!
-                  </Button>
-                </Typography>
-                <hr />
-              </div>
-            )}
           </Grid>
           <Grid item xs={6}>
             <div className="card">
@@ -199,6 +189,26 @@ class HomePage extends Component {
             <div className="card">
               <section>
                 <Typography variant="h4" align="center">
+                  Account Details
+                </Typography>
+              </section>
+              <div>
+                <Typography align="center">
+                  <b>Account Address</b> — {this.props.user.address}
+                  <br />
+                  <b>Dai Token Balance</b> — {this.props.user.daiTokenBalance}{" "}
+                  <br />
+                  <b>Dai Token Staked</b> — {this.props.user.stakingBalance}{" "}
+                  <br />
+                  <b>Dapp Token Balance</b>— {this.props.user.dappTokenBalance}{" "}
+                  <br />
+                </Typography>
+              </div>
+            </div>
+            <hr />
+            <div className="card">
+              <section>
+                <Typography variant="h4" align="center">
                   Market Overview
                 </Typography>
                 <Typography variant="h6" align="center">
@@ -253,6 +263,7 @@ const mapStateToProps = (state) => ({
 const mapActionsToProps = {
   getStocks,
   getScores,
+  getUserData,
 };
 export default connect(
   mapStateToProps,

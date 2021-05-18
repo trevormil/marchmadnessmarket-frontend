@@ -66,7 +66,7 @@ export function getRows(stocks, watchlist, handleClick, classes) {
           <Button
             fullWidth
             component={Link}
-            to={`${ROUTES.STOCKS}/${row.stockId}`}
+            to={`${ROUTES.STOCKS}/${row.stockName}`}
             align="center"
             variant="contained"
             color="primary"
@@ -75,8 +75,8 @@ export function getRows(stocks, watchlist, handleClick, classes) {
             {row.stockName}
           </Button>
         </StyledTableCell>
-        <StyledTableCell component="th" scope="row" align="left">
-          <a href={`${ROUTES.STOCKS}/${row.stockId}`}>
+        <StyledTableCell component="th" scope="row" align="center">
+          <a href={`${ROUTES.STOCKS}/${row.stockName}`}>
             <img
               width="50px"
               height="50px"
@@ -85,27 +85,10 @@ export function getRows(stocks, watchlist, handleClick, classes) {
             />
           </a>
         </StyledTableCell>
-        <StyledTableCell align="left" padding="checkbox" size="small">
-          <Checkbox
-            id={row.stockId}
-            value={inWatchlist(watchlist, row)}
-            checked={inWatchlist(watchlist, row) === 1}
-            onChange={handleClick}
-            inputProps={{ "aria-label": "primary checkbox" }}
-            color="primary"
-          />
-        </StyledTableCell>
-        <StyledTableCell align="right">
-          {row.activeOrder ? "Yes" : "No"}
-        </StyledTableCell>
+        <StyledTableCell align="right">{row.market}</StyledTableCell>
         <StyledTableCell align="right">{row.seed}</StyledTableCell>
         <StyledTableCell align="right">{row.currPoints}</StyledTableCell>
-        <StyledTableCell align="right">
-          <MonetizationOnIcon />
-          {row.ipoPrice ? row.ipoPrice.toFixed(2) : ""}
-        </StyledTableCell>
-        <StyledTableCell align="right">{row.volume}</StyledTableCell>
-        <StyledTableCell align="right">{row.float.toFixed(1)}</StyledTableCell>
+        <StyledTableCell align="right">{row.float}</StyledTableCell>
       </StyledTableRow>
     ))
   ) : (
@@ -127,7 +110,7 @@ export function getScreenerHeaderRow(orderBy, direction, handleClick) {
           Name
         </TableSortLabel>
       </StyledTableCell>
-      <StyledTableCell align="left">
+      <StyledTableCell align="center">
         <TableSortLabel
           name="stockName"
           direction={direction}
@@ -137,26 +120,15 @@ export function getScreenerHeaderRow(orderBy, direction, handleClick) {
           Logo
         </TableSortLabel>
       </StyledTableCell>
-      <StyledTableCell align="left">
-        {" "}
-        <TableSortLabel
-          name="watchlist"
-          direction={direction}
-          active={orderBy === "watchlist"}
-          onClick={handleClick}
-        >
-          Watchlist
-        </TableSortLabel>
-      </StyledTableCell>
       <StyledTableCell align="right">
         {" "}
         <TableSortLabel
-          name="activeOrder"
+          name="market"
           direction={direction}
-          active={orderBy === "activeOrder"}
+          active={orderBy === "market"}
           onClick={handleClick}
         >
-          Current Seller?
+          Market
         </TableSortLabel>
       </StyledTableCell>
       <StyledTableCell align="right">
@@ -182,29 +154,6 @@ export function getScreenerHeaderRow(orderBy, direction, handleClick) {
         </TableSortLabel>
       </StyledTableCell>
       <StyledTableCell align="right">
-        <TableSortLabel
-          name="ipoPrice"
-          direction={direction}
-          active={orderBy === "ipoPrice"}
-          onClick={handleClick}
-        >
-          Instant BIN Price
-        </TableSortLabel>
-      </StyledTableCell>
-
-      <StyledTableCell align="right">
-        {" "}
-        <TableSortLabel
-          name="volume"
-          direction={direction}
-          active={orderBy === "volume"}
-          onClick={handleClick}
-        >
-          Volume
-        </TableSortLabel>
-      </StyledTableCell>
-
-      <StyledTableCell align="right">
         {" "}
         <TableSortLabel
           name="float"
@@ -212,7 +161,7 @@ export function getScreenerHeaderRow(orderBy, direction, handleClick) {
           active={orderBy === "float"}
           onClick={handleClick}
         >
-          Float
+          Total Float
         </TableSortLabel>
       </StyledTableCell>
     </TableRow>

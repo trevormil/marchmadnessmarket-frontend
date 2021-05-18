@@ -3,15 +3,12 @@ import { SET_USER, /*SET_ERRORS, CLEAR_ERRORS, LOADING_UI, */SET_AUTHENTICATED, 
 const initialState = {
     loading: false,
     authenticated: false,
-    email: "",
-    watchlist: [],
     ownedStocks: [],
     transactions: [],
     accountHistory: [],
     openTrades: [],
     leaderboard: [],
-    accountBalance: null,
-    startPlusDeposits: null
+    accountBalance: null
 }
 
 export default function (state = initialState, action) {

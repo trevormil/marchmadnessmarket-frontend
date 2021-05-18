@@ -35,7 +35,7 @@ class UserPage extends Component {
   render() {
     const { classes } = this.props;
     const userJSON = this.props.user.leaderboard.filter(
-      (element) => element.userName == this.state.userId
+      (element) => element.userName === this.state.userId
     );
     let stockDisplay = !this.props.otherUserStocks.loading ? (
       getRows(this.props.otherUserStocks.stocks)

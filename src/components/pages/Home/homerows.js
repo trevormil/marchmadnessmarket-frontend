@@ -12,8 +12,6 @@ export const infoHeaderRow = (
   <TableRow>
     <StyledTableCell align="center">Logo</StyledTableCell>
     <StyledTableCell align="center">Name</StyledTableCell>
-
-    <StyledTableCell align="center">Current Price</StyledTableCell>
     <StyledTableCell align="center">Current Points</StyledTableCell>
   </TableRow>
 );
@@ -29,7 +27,7 @@ export const getInfoRows = (stocks) => {
       return (
         <StyledTableRow key={stock.stockName}>
           <StyledTableCell align="center">
-            <a href={`./stocks/${stock.stockId}`}>
+            <a href={`./stocks/${stock.stockName}`}>
               <img height="50px" width="50px" alt="Team Logo" src={file} />
             </a>
           </StyledTableCell>
@@ -37,14 +35,13 @@ export const getInfoRows = (stocks) => {
             <Button
               variant="contained"
               color="primary"
-              href={`./stocks/${stock.stockId}`}
+              href={`./stocks/${stock.stockName}`}
               align="center"
               fullWidth
             >
               {stock.stockName}
             </Button>
           </StyledTableCell>
-          <StyledTableCell align="center">{stock.price}</StyledTableCell>
           <StyledTableCell align="center">{stock.currPoints}</StyledTableCell>
         </StyledTableRow>
       );
