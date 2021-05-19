@@ -25,7 +25,7 @@ class NFTMarketPage extends Component {
     return (
       <Container maxWidth="lg">
         <iframe
-          src="https://testnets.opensea.io/collection/kryptokits-zsdmlblxnd?embed=true"
+          src="https://testnets.opensea.io/collection/kryptokits-3xxddbgjgs?embed=true"
           height="900px"
           width="100%"
           frameborder="0"

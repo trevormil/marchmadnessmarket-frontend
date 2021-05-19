@@ -5327,7 +5327,7 @@
                 }
               ]
             },
-            "name": "abi_decode_tuple_t_contract$_OwnableDelegateProxy_$371_fromMemory",
+            "name": "abi_decode_tuple_t_contract$_OwnableDelegateProxy_$426_fromMemory",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -14473,7 +14473,7 @@
           }
         ]
       },
-      "contents": "{\n    { }\n    function abi_decode_bytes(offset, end) -> array\n    {\n        if iszero(slt(add(offset, 0x1f), end)) { revert(array, array) }\n        let _1 := calldataload(offset)\n        let _2 := 0xffffffffffffffff\n        if gt(_1, _2) { panic_error_0x41() }\n        let _3 := not(31)\n        let memPtr := mload(64)\n        let newFreePtr := add(memPtr, and(add(and(add(_1, 0x1f), _3), 63), _3))\n        if or(gt(newFreePtr, _2), lt(newFreePtr, memPtr)) { panic_error_0x41() }\n        mstore(64, newFreePtr)\n        mstore(memPtr, _1)\n        if gt(add(add(offset, _1), 0x20), end) { revert(array, array) }\n        calldatacopy(add(memPtr, 0x20), add(offset, 0x20), _1)\n        mstore(add(add(memPtr, _1), 0x20), array)\n        array := memPtr\n    }\n    function abi_decode_tuple_t_address(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_addresst_address(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(value1, value1) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n        let value_1 := calldataload(add(headStart, 32))\n        validator_revert_address(value_1)\n        value1 := value_1\n    }\n    function abi_decode_tuple_t_addresst_addresst_uint256(headStart, dataEnd) -> value0, value1, value2\n    {\n        if slt(sub(dataEnd, headStart), 96) { revert(value2, value2) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n        let value_1 := calldataload(add(headStart, 32))\n        validator_revert_address(value_1)\n        value1 := value_1\n        value2 := calldataload(add(headStart, 64))\n    }\n    function abi_decode_tuple_t_addresst_addresst_uint256t_bytes_memory_ptr(headStart, dataEnd) -> value0, value1, value2, value3\n    {\n        if slt(sub(dataEnd, headStart), 128) { revert(value3, value3) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n        let value_1 := calldataload(add(headStart, 32))\n        validator_revert_address(value_1)\n        value1 := value_1\n        value2 := calldataload(add(headStart, 64))\n        let offset := calldataload(add(headStart, 96))\n        if gt(offset, 0xffffffffffffffff) { revert(value3, value3) }\n        value3 := abi_decode_bytes(add(headStart, offset), dataEnd)\n    }\n    function abi_decode_tuple_t_addresst_bool(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(value0, value0) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n        let value_1 := calldataload(add(headStart, 32))\n        if iszero(eq(value_1, iszero(iszero(value_1)))) { revert(value1, value1) }\n        value1 := value_1\n    }\n    function abi_decode_tuple_t_addresst_bytes_memory_ptrt_bytes32t_bytes32t_uint8(headStart, dataEnd) -> value0, value1, value2, value3, value4\n    {\n        if slt(sub(dataEnd, headStart), 160) { revert(value4, value4) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n        let offset := calldataload(add(headStart, 32))\n        if gt(offset, 0xffffffffffffffff) { revert(value4, value4) }\n        value1 := abi_decode_bytes(add(headStart, offset), dataEnd)\n        value2 := calldataload(add(headStart, 64))\n        value3 := calldataload(add(headStart, 96))\n        let value_1 := calldataload(add(headStart, 128))\n        if iszero(eq(value_1, and(value_1, 0xff))) { revert(value4, value4) }\n        value4 := value_1\n    }\n    function abi_decode_tuple_t_addresst_uint256(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(value0, value0) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n        value1 := calldataload(add(headStart, 32))\n    }\n    function abi_decode_tuple_t_bytes4(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := calldataload(headStart)\n        validator_revert_bytes4(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_bytes4_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := mload(headStart)\n        validator_revert_bytes4(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_contract$_OwnableDelegateProxy_$371_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := mload(headStart)\n        validator_revert_address(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_uint256(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        value0 := calldataload(headStart)\n    }\n    function abi_encode_bytes(value, pos) -> end\n    {\n        let length := mload(value)\n        mstore(pos, length)\n        copy_memory_to_memory(add(value, 0x20), add(pos, 0x20), length)\n        end := add(add(pos, and(add(length, 31), not(31))), 0x20)\n    }\n    function abi_encode_tuple_packed_t_bytes_memory_ptr__to_t_bytes_memory_ptr__nonPadded_inplace_fromStack_reversed(pos, value0) -> end\n    {\n        let length := mload(value0)\n        copy_memory_to_memory(add(value0, 0x20), pos, length)\n        end := add(pos, length)\n    }\n    function abi_encode_tuple_packed_t_bytes_memory_ptr_t_address__to_t_bytes_memory_ptr_t_address__nonPadded_inplace_fromStack_reversed(pos, value1, value0) -> end\n    {\n        let length := mload(value0)\n        copy_memory_to_memory(add(value0, 0x20), pos, length)\n        let end_1 := add(pos, length)\n        mstore(end_1, and(shl(96, value1), not(sub(shl(96, 1), 1))))\n        end := add(end_1, 20)\n    }\n    function abi_encode_tuple_packed_t_string_memory_ptr_t_string_memory_ptr__to_t_string_memory_ptr_t_string_memory_ptr__nonPadded_inplace_fromStack_reversed(pos, value1, value0) -> end\n    {\n        let length := mload(value0)\n        copy_memory_to_memory(add(value0, 0x20), pos, length)\n        let end_1 := add(pos, length)\n        let length_1 := mload(value1)\n        copy_memory_to_memory(add(value1, 0x20), end_1, length_1)\n        end := add(end_1, length_1)\n    }\n    function abi_encode_tuple_packed_t_stringliteral_301a50b291d33ce1e8e9064e3f6a6c51d902ec22892b50d58abf6357c6a45541_t_bytes32_t_bytes32__to_t_string_memory_ptr_t_bytes32_t_bytes32__nonPadded_inplace_fromStack_reversed(pos, value1, value0) -> end\n    {\n        mstore(pos, shl(240, 6401))\n        mstore(add(pos, 2), value0)\n        mstore(add(pos, 34), value1)\n        end := add(pos, 66)\n    }\n    function abi_encode_tuple_t_address__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_address_t_address_payable_t_bytes_memory_ptr__to_t_address_t_address_payable_t_bytes_memory_ptr__fromStack_reversed(headStart, value2, value1, value0) -> tail\n    {\n        let _1 := sub(shl(160, 1), 1)\n        mstore(headStart, and(value0, _1))\n        mstore(add(headStart, 32), and(value1, _1))\n        mstore(add(headStart, 64), 96)\n        tail := abi_encode_bytes(value2, add(headStart, 96))\n    }\n    function abi_encode_tuple_t_address_t_address_t_uint256_t_bytes_memory_ptr__to_t_address_t_address_t_uint256_t_bytes_memory_ptr__fromStack_reversed(headStart, value3, value2, value1, value0) -> tail\n    {\n        let _1 := sub(shl(160, 1), 1)\n        mstore(headStart, and(value0, _1))\n        mstore(add(headStart, 32), and(value1, _1))\n        mstore(add(headStart, 64), value2)\n        mstore(add(headStart, 96), 128)\n        tail := abi_encode_bytes(value3, add(headStart, 128))\n    }\n    function abi_encode_tuple_t_bool__to_t_bool__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, iszero(iszero(value0)))\n    }\n    function abi_encode_tuple_t_bytes32__to_t_bytes32__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_encode_tuple_t_bytes32_t_uint256_t_address_t_bytes32__to_t_bytes32_t_uint256_t_address_t_bytes32__fromStack_reversed(headStart, value3, value2, value1, value0) -> tail\n    {\n        tail := add(headStart, 128)\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), value1)\n        mstore(add(headStart, 64), and(value2, sub(shl(160, 1), 1)))\n        mstore(add(headStart, 96), value3)\n    }\n    function abi_encode_tuple_t_bytes32_t_uint8_t_bytes32_t_bytes32__to_t_bytes32_t_uint8_t_bytes32_t_bytes32__fromStack_reversed(headStart, value3, value2, value1, value0) -> tail\n    {\n        tail := add(headStart, 128)\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), and(value1, 0xff))\n        mstore(add(headStart, 64), value2)\n        mstore(add(headStart, 96), value3)\n    }\n    function abi_encode_tuple_t_bytes_memory_ptr__to_t_bytes_memory_ptr__fromStack_reversed(headStart, value0) -> tail\n    {\n        mstore(headStart, 32)\n        tail := abi_encode_bytes(value0, add(headStart, 32))\n    }\n    function abi_encode_tuple_t_string_memory_ptr__to_t_string_memory_ptr__fromStack_reversed(headStart, value0) -> tail\n    {\n        mstore(headStart, 32)\n        tail := abi_encode_bytes(value0, add(headStart, 32))\n    }\n    function abi_encode_tuple_t_stringliteral_1d7f5dcf03a65f41ee49b0ab593e3851cfbe3fd7da53b6cf4eddd83c7df5734c__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 43)\n        mstore(add(headStart, 64), \"ERC721Enumerable: owner index ou\")\n        mstore(add(headStart, 96), \"t of bounds\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_1e766a06da43a53d0f4c380e06e5a342e14d5af1bf8501996c844905530ca84e__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 50)\n        mstore(add(headStart, 64), \"ERC721: transfer to non ERC721Re\")\n        mstore(add(headStart, 96), \"ceiver implementer\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_245f15ff17f551913a7a18385165551503906a406f905ac1c2437281a7cd0cfe__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 38)\n        mstore(add(headStart, 64), \"Ownable: new owner is the zero a\")\n        mstore(add(headStart, 96), \"ddress\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_252c5ced876035ca494247886f306ca28e657c00a8dddfa582879b480dd9feb3__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 28)\n        mstore(add(headStart, 64), \"Function call not successful\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_2a63ce106ef95058ed21fd07c42a10f11dc5c32ac13a4e847923f7759f635d57__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 28)\n        mstore(add(headStart, 64), \"ERC721: token already minted\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_455fea98ea03c32d7dd1a6f1426917d80529bf47b3ccbde74e7206e889e709f4__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 36)\n        mstore(add(headStart, 64), \"ERC721: transfer to the zero add\")\n        mstore(add(headStart, 96), \"ress\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_45fe4329685be5ecd250fd0e6a25aea0ea4d0e30fb6a73c118b95749e6d70d05__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 25)\n        mstore(add(headStart, 64), \"ERC721: approve to caller\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_5797d1ccb08b83980dd0c07ea40d8f6a64d35fff736a19bdd17522954cb0899c__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 44)\n        mstore(add(headStart, 64), \"ERC721: operator query for nonex\")\n        mstore(add(headStart, 96), \"istent token\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_677c3aff34a7c44a5c4470b26f7bc0d31cbb2b3473b145bc518ea22bfc186273__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 37)\n        mstore(add(headStart, 64), \"NativeMetaTransaction: INVALID_S\")\n        mstore(add(headStart, 96), \"IGNER\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_6d83cef3e0cb19b8320a9c5feb26b56bbb08f152a8e61b12eca3302d8d68b23d__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 56)\n        mstore(add(headStart, 64), \"ERC721: approve caller is not ow\")\n        mstore(add(headStart, 96), \"ner nor approved for all\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_7395d4d3901c50cdfcab223d072f9aa36241df5d883e62cbf147ee1b05a9e6ba__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 42)\n        mstore(add(headStart, 64), \"ERC721: balance query for the ze\")\n        mstore(add(headStart, 96), \"ro address\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_7481f3df2a424c0755a1ad2356614e9a5a358d461ea2eae1f89cb21cbad00397__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 41)\n        mstore(add(headStart, 64), \"ERC721: owner query for nonexist\")\n        mstore(add(headStart, 96), \"ent token\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_8a66f4bb6512ffbfcc3db9b42318eb65f26ac15163eaa9a1e5cfa7bee9d1c7c6__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 32)\n        mstore(add(headStart, 64), \"ERC721: mint to the zero address\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_9291e0f44949204f2e9b40e6be090924979d6047b2365868f4e9f027722eb89d__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 44)\n        mstore(add(headStart, 64), \"ERC721: approved query for nonex\")\n        mstore(add(headStart, 96), \"istent token\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_9924ebdf1add33d25d4ef888e16131f0a5687b0580a36c21b5c301a6c462effe__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 32)\n        mstore(add(headStart, 64), \"Ownable: caller is not the owner\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_a01073130a885d6c1c1af6ac75fc3b1c4f9403c235362962bbf528e2bd87d950__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 41)\n        mstore(add(headStart, 64), \"ERC721: transfer of token that i\")\n        mstore(add(headStart, 96), \"s not own\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_a1a5cd4826a8c5c8495a3bcd7f31593c1559fab8207afc024ed2a3f3fa2bbbda__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 33)\n        mstore(add(headStart, 64), \"Signer and signature do not matc\")\n        mstore(add(headStart, 96), \"h\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_b51b4875eede07862961e8f9365c6749f5fe55c6ee5d7a9e42b6912ad0b15942__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 33)\n        mstore(add(headStart, 64), \"ERC721: approval to current owne\")\n        mstore(add(headStart, 96), \"r\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_c8682f3ad98807db59a6ec6bb812b72fed0a66e3150fa8239699ee83885247f2__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 49)\n        mstore(add(headStart, 64), \"ERC721: transfer caller is not o\")\n        mstore(add(headStart, 96), \"wner nor approved\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_d269a4e9f5820dcdb69ea21f528512eb9b927c8d846d48aa51c9219f461d4dcc__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 44)\n        mstore(add(headStart, 64), \"ERC721Enumerable: global index o\")\n        mstore(add(headStart, 96), \"ut of bounds\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_uint256__to_t_uint256__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function checked_add_t_uint256(x, y) -> sum\n    {\n        if gt(x, not(y)) { panic_error_0x11() }\n        sum := add(x, y)\n    }\n    function checked_div_t_uint256(x, y) -> r\n    {\n        if iszero(y) { panic_error_0x12() }\n        r := div(x, y)\n    }\n    function checked_sub_t_uint256(x, y) -> diff\n    {\n        if lt(x, y) { panic_error_0x11() }\n        diff := sub(x, y)\n    }\n    function copy_memory_to_memory(src, dst, length)\n    {\n        let i := 0\n        for { } lt(i, length) { i := add(i, 32) }\n        {\n            mstore(add(dst, i), mload(add(src, i)))\n        }\n        if gt(i, length) { mstore(add(dst, length), 0) }\n    }\n    function extract_byte_array_length(data) -> length\n    {\n        length := shr(1, data)\n        let outOfPlaceEncoding := and(data, 1)\n        if iszero(outOfPlaceEncoding) { length := and(length, 0x7f) }\n        if eq(outOfPlaceEncoding, lt(length, 32))\n        {\n            mstore(0, shl(224, 0x4e487b71))\n            mstore(4, 0x22)\n            revert(0, 0x24)\n        }\n    }\n    function increment_t_uint256(value) -> ret\n    {\n        if eq(value, not(0)) { panic_error_0x11() }\n        ret := add(value, 1)\n    }\n    function mod_t_uint256(x, y) -> r\n    {\n        if iszero(y) { panic_error_0x12() }\n        r := mod(x, y)\n    }\n    function panic_error_0x11()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x11)\n        revert(0, 0x24)\n    }\n    function panic_error_0x12()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x12)\n        revert(0, 0x24)\n    }\n    function panic_error_0x41()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x41)\n        revert(0, 0x24)\n    }\n    function validator_revert_address(value)\n    {\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(0, 0) }\n    }\n    function validator_revert_bytes4(value)\n    {\n        if iszero(eq(value, and(value, shl(224, 0xffffffff)))) { revert(0, 0) }\n    }\n}",
+      "contents": "{\n    { }\n    function abi_decode_bytes(offset, end) -> array\n    {\n        if iszero(slt(add(offset, 0x1f), end)) { revert(array, array) }\n        let _1 := calldataload(offset)\n        let _2 := 0xffffffffffffffff\n        if gt(_1, _2) { panic_error_0x41() }\n        let _3 := not(31)\n        let memPtr := mload(64)\n        let newFreePtr := add(memPtr, and(add(and(add(_1, 0x1f), _3), 63), _3))\n        if or(gt(newFreePtr, _2), lt(newFreePtr, memPtr)) { panic_error_0x41() }\n        mstore(64, newFreePtr)\n        mstore(memPtr, _1)\n        if gt(add(add(offset, _1), 0x20), end) { revert(array, array) }\n        calldatacopy(add(memPtr, 0x20), add(offset, 0x20), _1)\n        mstore(add(add(memPtr, _1), 0x20), array)\n        array := memPtr\n    }\n    function abi_decode_tuple_t_address(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_addresst_address(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(value1, value1) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n        let value_1 := calldataload(add(headStart, 32))\n        validator_revert_address(value_1)\n        value1 := value_1\n    }\n    function abi_decode_tuple_t_addresst_addresst_uint256(headStart, dataEnd) -> value0, value1, value2\n    {\n        if slt(sub(dataEnd, headStart), 96) { revert(value2, value2) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n        let value_1 := calldataload(add(headStart, 32))\n        validator_revert_address(value_1)\n        value1 := value_1\n        value2 := calldataload(add(headStart, 64))\n    }\n    function abi_decode_tuple_t_addresst_addresst_uint256t_bytes_memory_ptr(headStart, dataEnd) -> value0, value1, value2, value3\n    {\n        if slt(sub(dataEnd, headStart), 128) { revert(value3, value3) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n        let value_1 := calldataload(add(headStart, 32))\n        validator_revert_address(value_1)\n        value1 := value_1\n        value2 := calldataload(add(headStart, 64))\n        let offset := calldataload(add(headStart, 96))\n        if gt(offset, 0xffffffffffffffff) { revert(value3, value3) }\n        value3 := abi_decode_bytes(add(headStart, offset), dataEnd)\n    }\n    function abi_decode_tuple_t_addresst_bool(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(value0, value0) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n        let value_1 := calldataload(add(headStart, 32))\n        if iszero(eq(value_1, iszero(iszero(value_1)))) { revert(value1, value1) }\n        value1 := value_1\n    }\n    function abi_decode_tuple_t_addresst_bytes_memory_ptrt_bytes32t_bytes32t_uint8(headStart, dataEnd) -> value0, value1, value2, value3, value4\n    {\n        if slt(sub(dataEnd, headStart), 160) { revert(value4, value4) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n        let offset := calldataload(add(headStart, 32))\n        if gt(offset, 0xffffffffffffffff) { revert(value4, value4) }\n        value1 := abi_decode_bytes(add(headStart, offset), dataEnd)\n        value2 := calldataload(add(headStart, 64))\n        value3 := calldataload(add(headStart, 96))\n        let value_1 := calldataload(add(headStart, 128))\n        if iszero(eq(value_1, and(value_1, 0xff))) { revert(value4, value4) }\n        value4 := value_1\n    }\n    function abi_decode_tuple_t_addresst_uint256(headStart, dataEnd) -> value0, value1\n    {\n        if slt(sub(dataEnd, headStart), 64) { revert(value0, value0) }\n        let value := calldataload(headStart)\n        validator_revert_address(value)\n        value0 := value\n        value1 := calldataload(add(headStart, 32))\n    }\n    function abi_decode_tuple_t_bytes4(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := calldataload(headStart)\n        validator_revert_bytes4(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_bytes4_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := mload(headStart)\n        validator_revert_bytes4(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_contract$_OwnableDelegateProxy_$426_fromMemory(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        let value := mload(headStart)\n        validator_revert_address(value)\n        value0 := value\n    }\n    function abi_decode_tuple_t_uint256(headStart, dataEnd) -> value0\n    {\n        if slt(sub(dataEnd, headStart), 32) { revert(value0, value0) }\n        value0 := calldataload(headStart)\n    }\n    function abi_encode_bytes(value, pos) -> end\n    {\n        let length := mload(value)\n        mstore(pos, length)\n        copy_memory_to_memory(add(value, 0x20), add(pos, 0x20), length)\n        end := add(add(pos, and(add(length, 31), not(31))), 0x20)\n    }\n    function abi_encode_tuple_packed_t_bytes_memory_ptr__to_t_bytes_memory_ptr__nonPadded_inplace_fromStack_reversed(pos, value0) -> end\n    {\n        let length := mload(value0)\n        copy_memory_to_memory(add(value0, 0x20), pos, length)\n        end := add(pos, length)\n    }\n    function abi_encode_tuple_packed_t_bytes_memory_ptr_t_address__to_t_bytes_memory_ptr_t_address__nonPadded_inplace_fromStack_reversed(pos, value1, value0) -> end\n    {\n        let length := mload(value0)\n        copy_memory_to_memory(add(value0, 0x20), pos, length)\n        let end_1 := add(pos, length)\n        mstore(end_1, and(shl(96, value1), not(sub(shl(96, 1), 1))))\n        end := add(end_1, 20)\n    }\n    function abi_encode_tuple_packed_t_string_memory_ptr_t_string_memory_ptr__to_t_string_memory_ptr_t_string_memory_ptr__nonPadded_inplace_fromStack_reversed(pos, value1, value0) -> end\n    {\n        let length := mload(value0)\n        copy_memory_to_memory(add(value0, 0x20), pos, length)\n        let end_1 := add(pos, length)\n        let length_1 := mload(value1)\n        copy_memory_to_memory(add(value1, 0x20), end_1, length_1)\n        end := add(end_1, length_1)\n    }\n    function abi_encode_tuple_packed_t_stringliteral_301a50b291d33ce1e8e9064e3f6a6c51d902ec22892b50d58abf6357c6a45541_t_bytes32_t_bytes32__to_t_string_memory_ptr_t_bytes32_t_bytes32__nonPadded_inplace_fromStack_reversed(pos, value1, value0) -> end\n    {\n        mstore(pos, shl(240, 6401))\n        mstore(add(pos, 2), value0)\n        mstore(add(pos, 34), value1)\n        end := add(pos, 66)\n    }\n    function abi_encode_tuple_t_address__to_t_address__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, and(value0, sub(shl(160, 1), 1)))\n    }\n    function abi_encode_tuple_t_address_t_address_payable_t_bytes_memory_ptr__to_t_address_t_address_payable_t_bytes_memory_ptr__fromStack_reversed(headStart, value2, value1, value0) -> tail\n    {\n        let _1 := sub(shl(160, 1), 1)\n        mstore(headStart, and(value0, _1))\n        mstore(add(headStart, 32), and(value1, _1))\n        mstore(add(headStart, 64), 96)\n        tail := abi_encode_bytes(value2, add(headStart, 96))\n    }\n    function abi_encode_tuple_t_address_t_address_t_uint256_t_bytes_memory_ptr__to_t_address_t_address_t_uint256_t_bytes_memory_ptr__fromStack_reversed(headStart, value3, value2, value1, value0) -> tail\n    {\n        let _1 := sub(shl(160, 1), 1)\n        mstore(headStart, and(value0, _1))\n        mstore(add(headStart, 32), and(value1, _1))\n        mstore(add(headStart, 64), value2)\n        mstore(add(headStart, 96), 128)\n        tail := abi_encode_bytes(value3, add(headStart, 128))\n    }\n    function abi_encode_tuple_t_bool__to_t_bool__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, iszero(iszero(value0)))\n    }\n    function abi_encode_tuple_t_bytes32__to_t_bytes32__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function abi_encode_tuple_t_bytes32_t_uint256_t_address_t_bytes32__to_t_bytes32_t_uint256_t_address_t_bytes32__fromStack_reversed(headStart, value3, value2, value1, value0) -> tail\n    {\n        tail := add(headStart, 128)\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), value1)\n        mstore(add(headStart, 64), and(value2, sub(shl(160, 1), 1)))\n        mstore(add(headStart, 96), value3)\n    }\n    function abi_encode_tuple_t_bytes32_t_uint8_t_bytes32_t_bytes32__to_t_bytes32_t_uint8_t_bytes32_t_bytes32__fromStack_reversed(headStart, value3, value2, value1, value0) -> tail\n    {\n        tail := add(headStart, 128)\n        mstore(headStart, value0)\n        mstore(add(headStart, 32), and(value1, 0xff))\n        mstore(add(headStart, 64), value2)\n        mstore(add(headStart, 96), value3)\n    }\n    function abi_encode_tuple_t_bytes_memory_ptr__to_t_bytes_memory_ptr__fromStack_reversed(headStart, value0) -> tail\n    {\n        mstore(headStart, 32)\n        tail := abi_encode_bytes(value0, add(headStart, 32))\n    }\n    function abi_encode_tuple_t_string_memory_ptr__to_t_string_memory_ptr__fromStack_reversed(headStart, value0) -> tail\n    {\n        mstore(headStart, 32)\n        tail := abi_encode_bytes(value0, add(headStart, 32))\n    }\n    function abi_encode_tuple_t_stringliteral_1d7f5dcf03a65f41ee49b0ab593e3851cfbe3fd7da53b6cf4eddd83c7df5734c__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 43)\n        mstore(add(headStart, 64), \"ERC721Enumerable: owner index ou\")\n        mstore(add(headStart, 96), \"t of bounds\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_1e766a06da43a53d0f4c380e06e5a342e14d5af1bf8501996c844905530ca84e__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 50)\n        mstore(add(headStart, 64), \"ERC721: transfer to non ERC721Re\")\n        mstore(add(headStart, 96), \"ceiver implementer\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_245f15ff17f551913a7a18385165551503906a406f905ac1c2437281a7cd0cfe__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 38)\n        mstore(add(headStart, 64), \"Ownable: new owner is the zero a\")\n        mstore(add(headStart, 96), \"ddress\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_252c5ced876035ca494247886f306ca28e657c00a8dddfa582879b480dd9feb3__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 28)\n        mstore(add(headStart, 64), \"Function call not successful\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_2a63ce106ef95058ed21fd07c42a10f11dc5c32ac13a4e847923f7759f635d57__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 28)\n        mstore(add(headStart, 64), \"ERC721: token already minted\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_455fea98ea03c32d7dd1a6f1426917d80529bf47b3ccbde74e7206e889e709f4__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 36)\n        mstore(add(headStart, 64), \"ERC721: transfer to the zero add\")\n        mstore(add(headStart, 96), \"ress\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_45fe4329685be5ecd250fd0e6a25aea0ea4d0e30fb6a73c118b95749e6d70d05__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 25)\n        mstore(add(headStart, 64), \"ERC721: approve to caller\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_5797d1ccb08b83980dd0c07ea40d8f6a64d35fff736a19bdd17522954cb0899c__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 44)\n        mstore(add(headStart, 64), \"ERC721: operator query for nonex\")\n        mstore(add(headStart, 96), \"istent token\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_677c3aff34a7c44a5c4470b26f7bc0d31cbb2b3473b145bc518ea22bfc186273__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 37)\n        mstore(add(headStart, 64), \"NativeMetaTransaction: INVALID_S\")\n        mstore(add(headStart, 96), \"IGNER\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_6d83cef3e0cb19b8320a9c5feb26b56bbb08f152a8e61b12eca3302d8d68b23d__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 56)\n        mstore(add(headStart, 64), \"ERC721: approve caller is not ow\")\n        mstore(add(headStart, 96), \"ner nor approved for all\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_7395d4d3901c50cdfcab223d072f9aa36241df5d883e62cbf147ee1b05a9e6ba__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 42)\n        mstore(add(headStart, 64), \"ERC721: balance query for the ze\")\n        mstore(add(headStart, 96), \"ro address\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_7481f3df2a424c0755a1ad2356614e9a5a358d461ea2eae1f89cb21cbad00397__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 41)\n        mstore(add(headStart, 64), \"ERC721: owner query for nonexist\")\n        mstore(add(headStart, 96), \"ent token\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_8a66f4bb6512ffbfcc3db9b42318eb65f26ac15163eaa9a1e5cfa7bee9d1c7c6__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 32)\n        mstore(add(headStart, 64), \"ERC721: mint to the zero address\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_9291e0f44949204f2e9b40e6be090924979d6047b2365868f4e9f027722eb89d__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 44)\n        mstore(add(headStart, 64), \"ERC721: approved query for nonex\")\n        mstore(add(headStart, 96), \"istent token\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_9924ebdf1add33d25d4ef888e16131f0a5687b0580a36c21b5c301a6c462effe__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 32)\n        mstore(add(headStart, 64), \"Ownable: caller is not the owner\")\n        tail := add(headStart, 96)\n    }\n    function abi_encode_tuple_t_stringliteral_a01073130a885d6c1c1af6ac75fc3b1c4f9403c235362962bbf528e2bd87d950__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 41)\n        mstore(add(headStart, 64), \"ERC721: transfer of token that i\")\n        mstore(add(headStart, 96), \"s not own\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_a1a5cd4826a8c5c8495a3bcd7f31593c1559fab8207afc024ed2a3f3fa2bbbda__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 33)\n        mstore(add(headStart, 64), \"Signer and signature do not matc\")\n        mstore(add(headStart, 96), \"h\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_b51b4875eede07862961e8f9365c6749f5fe55c6ee5d7a9e42b6912ad0b15942__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 33)\n        mstore(add(headStart, 64), \"ERC721: approval to current owne\")\n        mstore(add(headStart, 96), \"r\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_c8682f3ad98807db59a6ec6bb812b72fed0a66e3150fa8239699ee83885247f2__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 49)\n        mstore(add(headStart, 64), \"ERC721: transfer caller is not o\")\n        mstore(add(headStart, 96), \"wner nor approved\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_stringliteral_d269a4e9f5820dcdb69ea21f528512eb9b927c8d846d48aa51c9219f461d4dcc__to_t_string_memory_ptr__fromStack_reversed(headStart) -> tail\n    {\n        mstore(headStart, 32)\n        mstore(add(headStart, 32), 44)\n        mstore(add(headStart, 64), \"ERC721Enumerable: global index o\")\n        mstore(add(headStart, 96), \"ut of bounds\")\n        tail := add(headStart, 128)\n    }\n    function abi_encode_tuple_t_uint256__to_t_uint256__fromStack_reversed(headStart, value0) -> tail\n    {\n        tail := add(headStart, 32)\n        mstore(headStart, value0)\n    }\n    function checked_add_t_uint256(x, y) -> sum\n    {\n        if gt(x, not(y)) { panic_error_0x11() }\n        sum := add(x, y)\n    }\n    function checked_div_t_uint256(x, y) -> r\n    {\n        if iszero(y) { panic_error_0x12() }\n        r := div(x, y)\n    }\n    function checked_sub_t_uint256(x, y) -> diff\n    {\n        if lt(x, y) { panic_error_0x11() }\n        diff := sub(x, y)\n    }\n    function copy_memory_to_memory(src, dst, length)\n    {\n        let i := 0\n        for { } lt(i, length) { i := add(i, 32) }\n        {\n            mstore(add(dst, i), mload(add(src, i)))\n        }\n        if gt(i, length) { mstore(add(dst, length), 0) }\n    }\n    function extract_byte_array_length(data) -> length\n    {\n        length := shr(1, data)\n        let outOfPlaceEncoding := and(data, 1)\n        if iszero(outOfPlaceEncoding) { length := and(length, 0x7f) }\n        if eq(outOfPlaceEncoding, lt(length, 32))\n        {\n            mstore(0, shl(224, 0x4e487b71))\n            mstore(4, 0x22)\n            revert(0, 0x24)\n        }\n    }\n    function increment_t_uint256(value) -> ret\n    {\n        if eq(value, not(0)) { panic_error_0x11() }\n        ret := add(value, 1)\n    }\n    function mod_t_uint256(x, y) -> r\n    {\n        if iszero(y) { panic_error_0x12() }\n        r := mod(x, y)\n    }\n    function panic_error_0x11()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x11)\n        revert(0, 0x24)\n    }\n    function panic_error_0x12()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x12)\n        revert(0, 0x24)\n    }\n    function panic_error_0x41()\n    {\n        mstore(0, shl(224, 0x4e487b71))\n        mstore(4, 0x41)\n        revert(0, 0x24)\n    }\n    function validator_revert_address(value)\n    {\n        if iszero(eq(value, and(value, sub(shl(160, 1), 1)))) { revert(0, 0) }\n    }\n    function validator_revert_bytes4(value)\n    {\n        if iszero(eq(value, and(value, shl(224, 0xffffffff)))) { revert(0, 0) }\n    }\n}",
       "id": 27,
       "language": "Yul",
       "name": "#utility.yul"
@@ -14487,72 +14487,72 @@
     "absolutePath": "/C/Users/trevo/OneDrive/Desktop/Comp Sci/projects/fantasystockmarket/src/contracts/Kit.sol",
     "exportedSymbols": {
       "Address": [
-        3487
+        3542
       ],
       "Context": [
-        3510
+        3565
       ],
       "ContextMixin": [
-        1265
+        1320
       ],
       "EIP712Base": [
-        1381
+        1436
       ],
       "ERC165": [
-        3737
+        3792
       ],
       "ERC721": [
-        2661
+        2716
       ],
       "ERC721Enumerable": [
-        3133
+        3188
       ],
       "ERC721Tradable": [
-        536
+        591
       ],
       "IERC165": [
-        3749
+        3804
       ],
       "IERC721": [
-        2777
+        2832
       ],
       "IERC721Enumerable": [
-        3164
+        3219
       ],
       "IERC721Metadata": [
-        3191
+        3246
       ],
       "IERC721Receiver": [
-        2795
+        2850
       ],
       "Kit": [
-        696
+        751
       ],
       "NativeMetaTransaction": [
-        1600
+        1655
       ],
       "Ownable": [
-        1843
+        1898
       ],
       "OwnableDelegateProxy": [
-        371
+        426
       ],
       "ProxyRegistry": [
-        377
+        432
       ],
       "SafeMath": [
-        4061
+        4116
       ],
       "Strings": [
-        3713
+        3768
       ]
     },
-    "id": 697,
+    "id": 752,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 663,
+        "id": 718,
         "literals": [
           "solidity",
           "^",
@@ -14565,11 +14565,11 @@
       {
         "absolutePath": "/C/Users/trevo/OneDrive/Desktop/Comp Sci/projects/fantasystockmarket/src/contracts/ERC721Tradable.sol",
         "file": "./ERC721Tradable.sol",
-        "id": 664,
+        "id": 719,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 697,
-        "sourceUnit": 537,
+        "scope": 752,
+        "sourceUnit": 592,
         "src": "58:30:5",
         "symbolAliases": [],
         "unitAlias": ""
@@ -14579,13 +14579,13 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 666,
+              "id": 721,
               "name": "ERC721Tradable",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 536,
+              "referencedDeclaration": 591,
               "src": "174:14:5"
             },
-            "id": 667,
+            "id": 722,
             "nodeType": "InheritanceSpecifier",
             "src": "174:14:5"
           }
@@ -14593,29 +14593,29 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "documentation": {
-          "id": 665,
+          "id": 720,
           "nodeType": "StructuredDocumentation",
           "src": "90:67:5",
           "text": " @title Kit\n Kit - a contract for my non-fungible Kits."
         },
         "fullyImplemented": true,
-        "id": 696,
+        "id": 751,
         "linearizedBaseContracts": [
-          696,
-          536,
-          1843,
-          1600,
-          1381,
-          1401,
-          3133,
-          3164,
-          2661,
-          3191,
-          2777,
-          3737,
-          3749,
-          3510,
-          1265
+          751,
+          591,
+          1898,
+          1655,
+          1436,
+          1456,
+          3188,
+          3219,
+          2716,
+          3246,
+          2832,
+          3792,
+          3804,
+          3565,
+          1320
         ],
         "name": "Kit",
         "nameLocation": "167:3:5",
@@ -14623,12 +14623,12 @@
         "nodes": [
           {
             "body": {
-              "id": 677,
+              "id": 732,
               "nodeType": "Block",
               "src": "309:2:5",
               "statements": []
             },
-            "id": 678,
+            "id": 733,
             "implemented": true,
             "kind": "constructor",
             "modifiers": [
@@ -14636,7 +14636,7 @@
                 "arguments": [
                   {
                     "hexValue": "4b727970746f4b697473",
-                    "id": 672,
+                    "id": 727,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -14652,7 +14652,7 @@
                   },
                   {
                     "hexValue": "4b4954",
-                    "id": 673,
+                    "id": 728,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -14667,11 +14667,11 @@
                     "value": "KIT"
                   },
                   {
-                    "id": 674,
+                    "id": 729,
                     "name": "_proxyRegistryAddress",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 669,
+                    "referencedDeclaration": 724,
                     "src": "282:21:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -14679,13 +14679,13 @@
                     }
                   }
                 ],
-                "id": 675,
+                "id": 730,
                 "kind": "baseConstructorSpecifier",
                 "modifierName": {
-                  "id": 671,
+                  "id": 726,
                   "name": "ERC721Tradable",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 536,
+                  "referencedDeclaration": 591,
                   "src": "246:14:5"
                 },
                 "nodeType": "ModifierInvocation",
@@ -14696,17 +14696,17 @@
             "nameLocation": "-1:-1:-1",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 670,
+              "id": 725,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 669,
+                  "id": 724,
                   "mutability": "mutable",
                   "name": "_proxyRegistryAddress",
                   "nameLocation": "215:21:5",
                   "nodeType": "VariableDeclaration",
-                  "scope": 678,
+                  "scope": 733,
                   "src": "207:29:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -14715,7 +14715,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 668,
+                    "id": 723,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "207:7:5",
@@ -14731,12 +14731,12 @@
               "src": "206:31:5"
             },
             "returnParameters": {
-              "id": 676,
+              "id": 731,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "309:0:5"
             },
-            "scope": 696,
+            "scope": 751,
             "src": "195:116:5",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -14744,17 +14744,17 @@
           },
           {
             "baseFunctions": [
-              463
+              518
             ],
             "body": {
-              "id": 686,
+              "id": 741,
               "nodeType": "Block",
               "src": "386:80:5",
               "statements": [
                 {
                   "expression": {
                     "hexValue": "68747470733a2f2f75732d63656e7472616c312d746d2d6d61726b65742e636c6f756466756e6374696f6e732e6e65742f6b6974732f",
-                    "id": 684,
+                    "id": 739,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -14768,15 +14768,15 @@
                     },
                     "value": "https://us-central1-tm-market.cloudfunctions.net/kits/"
                   },
-                  "functionReturnParameters": 683,
-                  "id": 685,
+                  "functionReturnParameters": 738,
+                  "id": 740,
                   "nodeType": "Return",
                   "src": "396:63:5"
                 }
               ]
             },
             "functionSelector": "d547cfb7",
-            "id": 687,
+            "id": 742,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -14784,29 +14784,29 @@
             "nameLocation": "326:12:5",
             "nodeType": "FunctionDefinition",
             "overrides": {
-              "id": 680,
+              "id": 735,
               "nodeType": "OverrideSpecifier",
               "overrides": [],
               "src": "341:8:5"
             },
             "parameters": {
-              "id": 679,
+              "id": 734,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "338:2:5"
             },
             "returnParameters": {
-              "id": 683,
+              "id": 738,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 682,
+                  "id": 737,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 687,
+                  "scope": 742,
                   "src": "371:13:5",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -14815,7 +14815,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 681,
+                    "id": 736,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "371:6:5",
@@ -14829,7 +14829,7 @@
               ],
               "src": "370:15:5"
             },
-            "scope": 696,
+            "scope": 751,
             "src": "317:149:5",
             "stateMutability": "pure",
             "virtual": false,
@@ -14837,14 +14837,14 @@
           },
           {
             "body": {
-              "id": 694,
+              "id": 749,
               "nodeType": "Block",
               "src": "531:89:5",
               "statements": [
                 {
                   "expression": {
                     "hexValue": "68747470733a2f2f75732d63656e7472616c312d746d2d6d61726b65742e636c6f756466756e6374696f6e732e6e65742f6b6974732f636f6e74726163742f",
-                    "id": 692,
+                    "id": 747,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -14858,15 +14858,15 @@
                     },
                     "value": "https://us-central1-tm-market.cloudfunctions.net/kits/contract/"
                   },
-                  "functionReturnParameters": 691,
-                  "id": 693,
+                  "functionReturnParameters": 746,
+                  "id": 748,
                   "nodeType": "Return",
                   "src": "541:72:5"
                 }
               ]
             },
             "functionSelector": "e8a3d485",
-            "id": 695,
+            "id": 750,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -14874,23 +14874,23 @@
             "nameLocation": "481:11:5",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 688,
+              "id": 743,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "492:2:5"
             },
             "returnParameters": {
-              "id": 691,
+              "id": 746,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 690,
+                  "id": 745,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 695,
+                  "scope": 750,
                   "src": "516:13:5",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -14899,7 +14899,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 689,
+                    "id": 744,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "516:6:5",
@@ -14913,14 +14913,14 @@
               ],
               "src": "515:15:5"
             },
-            "scope": 696,
+            "scope": 751,
             "src": "472:148:5",
             "stateMutability": "pure",
             "virtual": false,
             "visibility": "public"
           }
         ],
-        "scope": 697,
+        "scope": 752,
         "src": "158:464:5",
         "usedErrors": []
       }
@@ -14931,72 +14931,72 @@
     "absolutePath": "/C/Users/trevo/OneDrive/Desktop/Comp Sci/projects/fantasystockmarket/src/contracts/Kit.sol",
     "exportedSymbols": {
       "Address": [
-        3487
+        3542
       ],
       "Context": [
-        3510
+        3565
       ],
       "ContextMixin": [
-        1265
+        1320
       ],
       "EIP712Base": [
-        1381
+        1436
       ],
       "ERC165": [
-        3737
+        3792
       ],
       "ERC721": [
-        2661
+        2716
       ],
       "ERC721Enumerable": [
-        3133
+        3188
       ],
       "ERC721Tradable": [
-        536
+        591
       ],
       "IERC165": [
-        3749
+        3804
       ],
       "IERC721": [
-        2777
+        2832
       ],
       "IERC721Enumerable": [
-        3164
+        3219
       ],
       "IERC721Metadata": [
-        3191
+        3246
       ],
       "IERC721Receiver": [
-        2795
+        2850
       ],
       "Kit": [
-        696
+        751
       ],
       "NativeMetaTransaction": [
-        1600
+        1655
       ],
       "Ownable": [
-        1843
+        1898
       ],
       "OwnableDelegateProxy": [
-        371
+        426
       ],
       "ProxyRegistry": [
-        377
+        432
       ],
       "SafeMath": [
-        4061
+        4116
       ],
       "Strings": [
-        3713
+        3768
       ]
     },
-    "id": 697,
+    "id": 752,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 663,
+        "id": 718,
         "literals": [
           "solidity",
           "^",
@@ -15009,11 +15009,11 @@
       {
         "absolutePath": "/C/Users/trevo/OneDrive/Desktop/Comp Sci/projects/fantasystockmarket/src/contracts/ERC721Tradable.sol",
         "file": "./ERC721Tradable.sol",
-        "id": 664,
+        "id": 719,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 697,
-        "sourceUnit": 537,
+        "scope": 752,
+        "sourceUnit": 592,
         "src": "58:30:5",
         "symbolAliases": [],
         "unitAlias": ""
@@ -15023,13 +15023,13 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 666,
+              "id": 721,
               "name": "ERC721Tradable",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 536,
+              "referencedDeclaration": 591,
               "src": "174:14:5"
             },
-            "id": 667,
+            "id": 722,
             "nodeType": "InheritanceSpecifier",
             "src": "174:14:5"
           }
@@ -15037,29 +15037,29 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "documentation": {
-          "id": 665,
+          "id": 720,
           "nodeType": "StructuredDocumentation",
           "src": "90:67:5",
           "text": " @title Kit\n Kit - a contract for my non-fungible Kits."
         },
         "fullyImplemented": true,
-        "id": 696,
+        "id": 751,
         "linearizedBaseContracts": [
-          696,
-          536,
-          1843,
-          1600,
-          1381,
-          1401,
-          3133,
-          3164,
-          2661,
-          3191,
-          2777,
-          3737,
-          3749,
-          3510,
-          1265
+          751,
+          591,
+          1898,
+          1655,
+          1436,
+          1456,
+          3188,
+          3219,
+          2716,
+          3246,
+          2832,
+          3792,
+          3804,
+          3565,
+          1320
         ],
         "name": "Kit",
         "nameLocation": "167:3:5",
@@ -15067,12 +15067,12 @@
         "nodes": [
           {
             "body": {
-              "id": 677,
+              "id": 732,
               "nodeType": "Block",
               "src": "309:2:5",
               "statements": []
             },
-            "id": 678,
+            "id": 733,
             "implemented": true,
             "kind": "constructor",
             "modifiers": [
@@ -15080,7 +15080,7 @@
                 "arguments": [
                   {
                     "hexValue": "4b727970746f4b697473",
-                    "id": 672,
+                    "id": 727,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -15096,7 +15096,7 @@
                   },
                   {
                     "hexValue": "4b4954",
-                    "id": 673,
+                    "id": 728,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -15111,11 +15111,11 @@
                     "value": "KIT"
                   },
                   {
-                    "id": 674,
+                    "id": 729,
                     "name": "_proxyRegistryAddress",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 669,
+                    "referencedDeclaration": 724,
                     "src": "282:21:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -15123,13 +15123,13 @@
                     }
                   }
                 ],
-                "id": 675,
+                "id": 730,
                 "kind": "baseConstructorSpecifier",
                 "modifierName": {
-                  "id": 671,
+                  "id": 726,
                   "name": "ERC721Tradable",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 536,
+                  "referencedDeclaration": 591,
                   "src": "246:14:5"
                 },
                 "nodeType": "ModifierInvocation",
@@ -15140,17 +15140,17 @@
             "nameLocation": "-1:-1:-1",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 670,
+              "id": 725,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 669,
+                  "id": 724,
                   "mutability": "mutable",
                   "name": "_proxyRegistryAddress",
                   "nameLocation": "215:21:5",
                   "nodeType": "VariableDeclaration",
-                  "scope": 678,
+                  "scope": 733,
                   "src": "207:29:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -15159,7 +15159,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 668,
+                    "id": 723,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "207:7:5",
@@ -15175,12 +15175,12 @@
               "src": "206:31:5"
             },
             "returnParameters": {
-              "id": 676,
+              "id": 731,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "309:0:5"
             },
-            "scope": 696,
+            "scope": 751,
             "src": "195:116:5",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -15188,17 +15188,17 @@
           },
           {
             "baseFunctions": [
-              463
+              518
             ],
             "body": {
-              "id": 686,
+              "id": 741,
               "nodeType": "Block",
               "src": "386:80:5",
               "statements": [
                 {
                   "expression": {
                     "hexValue": "68747470733a2f2f75732d63656e7472616c312d746d2d6d61726b65742e636c6f756466756e6374696f6e732e6e65742f6b6974732f",
-                    "id": 684,
+                    "id": 739,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -15212,15 +15212,15 @@
                     },
                     "value": "https://us-central1-tm-market.cloudfunctions.net/kits/"
                   },
-                  "functionReturnParameters": 683,
-                  "id": 685,
+                  "functionReturnParameters": 738,
+                  "id": 740,
                   "nodeType": "Return",
                   "src": "396:63:5"
                 }
               ]
             },
             "functionSelector": "d547cfb7",
-            "id": 687,
+            "id": 742,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -15228,29 +15228,29 @@
             "nameLocation": "326:12:5",
             "nodeType": "FunctionDefinition",
             "overrides": {
-              "id": 680,
+              "id": 735,
               "nodeType": "OverrideSpecifier",
               "overrides": [],
               "src": "341:8:5"
             },
             "parameters": {
-              "id": 679,
+              "id": 734,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "338:2:5"
             },
             "returnParameters": {
-              "id": 683,
+              "id": 738,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 682,
+                  "id": 737,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 687,
+                  "scope": 742,
                   "src": "371:13:5",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -15259,7 +15259,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 681,
+                    "id": 736,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "371:6:5",
@@ -15273,7 +15273,7 @@
               ],
               "src": "370:15:5"
             },
-            "scope": 696,
+            "scope": 751,
             "src": "317:149:5",
             "stateMutability": "pure",
             "virtual": false,
@@ -15281,14 +15281,14 @@
           },
           {
             "body": {
-              "id": 694,
+              "id": 749,
               "nodeType": "Block",
               "src": "531:89:5",
               "statements": [
                 {
                   "expression": {
                     "hexValue": "68747470733a2f2f75732d63656e7472616c312d746d2d6d61726b65742e636c6f756466756e6374696f6e732e6e65742f6b6974732f636f6e74726163742f",
-                    "id": 692,
+                    "id": 747,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -15302,15 +15302,15 @@
                     },
                     "value": "https://us-central1-tm-market.cloudfunctions.net/kits/contract/"
                   },
-                  "functionReturnParameters": 691,
-                  "id": 693,
+                  "functionReturnParameters": 746,
+                  "id": 748,
                   "nodeType": "Return",
                   "src": "541:72:5"
                 }
               ]
             },
             "functionSelector": "e8a3d485",
-            "id": 695,
+            "id": 750,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -15318,23 +15318,23 @@
             "nameLocation": "481:11:5",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 688,
+              "id": 743,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "492:2:5"
             },
             "returnParameters": {
-              "id": 691,
+              "id": 746,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 690,
+                  "id": 745,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 695,
+                  "scope": 750,
                   "src": "516:13:5",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -15343,7 +15343,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 689,
+                    "id": 744,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "516:6:5",
@@ -15357,14 +15357,14 @@
               ],
               "src": "515:15:5"
             },
-            "scope": 696,
+            "scope": 751,
             "src": "472:148:5",
             "stateMutability": "pure",
             "virtual": false,
             "visibility": "public"
           }
         ],
-        "scope": 697,
+        "scope": 752,
         "src": "158:464:5",
         "usedErrors": []
       }
@@ -15379,12 +15379,12 @@
     "4": {
       "events": {},
       "links": {},
-      "address": "0x140f44a1963B7Fae0Da67Ff1f596C3882ca12833",
-      "transactionHash": "0x63960ea9df1c393c2d4f781bb59f5587f85d506e4733fa4c7da4b50db925ea5b"
+      "address": "0x74bf4f3Cc44aAC8aB66E4Cdf330872e7120E0b6D",
+      "transactionHash": "0xd80957ffed74cbd3b48e48e01b69d1846138e5e513420b7cf3b8ec3f30d692e5"
     }
   },
   "schemaVersion": "3.4.1",
-  "updatedAt": "2021-05-18T23:48:46.222Z",
+  "updatedAt": "2021-05-19T17:26:39.153Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

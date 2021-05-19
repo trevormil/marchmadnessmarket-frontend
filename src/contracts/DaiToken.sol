@@ -5,7 +5,8 @@ contract DaiToken {
     string  public symbol = "mDAI";
     uint256 public totalSupply = 1000000000000; // 1 trillion tokens
     uint8   public decimals = 0;
-
+    mapping(address => uint) public claimedAccounts; 
+    address public owner;
     event Transfer(
         address indexed _from,
         address indexed _to,
@@ -22,6 +23,7 @@ contract DaiToken {
     mapping(address => mapping(address => uint256)) public allowance;
 
     constructor() public {
+        owner = msg.sender;
         balanceOf[msg.sender] = totalSupply;
     }
 
@@ -46,6 +48,15 @@ contract DaiToken {
         balanceOf[_to] += _value;
         allowance[_from][msg.sender] -= _value;
         emit Transfer(_from, _to, _value);
+        return true;
+    }
+
+    function claimDaiTokens() public returns (bool success) {
+        require(claimedAccounts[msg.sender] == 0);
+        claimedAccounts[msg.sender] = 1;
+        balanceOf[owner] -= 100;
+        balanceOf[msg.sender] += 100;
+        emit Transfer(owner, msg.sender, 100);
         return true;
     }
 }

@@ -27,11 +27,19 @@ export const getUserData = () => async (dispatch) => {
   if (daiTokenData) {
     const daiToken = new web3.eth.Contract(DaiToken.abi, daiTokenData.address);
     let daiTokenBalance = await daiToken.methods.balanceOf(userAccount).call();
+
+    let claimed = await daiToken.methods.claimedAccounts(userAccount).call();
+    console.log(claimed);
+    if (claimed == 0) {
+      claimed = false;
+    } else {
+      claimed = true;
+    }
+    payloadData.claimed = claimed;
     payloadData.daiTokenBalance = daiTokenBalance;
   } else {
     window.alert("DaiToken contract not deployed to detected network.");
   }
-  console.log("2");
   // Load DappToken
   const dappTokenData = DappToken.networks[networkId];
   if (dappTokenData) {

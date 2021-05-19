@@ -8,10 +8,12 @@ import {
   Typography,
   Container,
   CircularProgress,
+  Button,
 } from "@material-ui/core";
 import { infoHeaderRow, getInfoRows } from "./homerows";
 import CustomizedTables from "../../ui/StockInfoTable/stockTable";
 
+import DaiToken from "../../../abis/DaiToken.json";
 const styles = (theme) => ({
   ...theme.spreadThis,
 });
@@ -24,9 +26,35 @@ class HomePage extends Component {
   }
 
   async componentWillMount() {
+    await this.loadBlockchainData();
     await this.props.getUserData();
-    console.log(this.props);
   }
+  async loadBlockchainData() {
+    const web3 = window.web3;
+
+    const networkId = await web3.eth.net.getId();
+
+    // Load DaiToken
+    const daiTokenData = DaiToken.networks[networkId];
+    if (daiTokenData) {
+      const daiToken = new web3.eth.Contract(
+        DaiToken.abi,
+        daiTokenData.address
+      );
+      this.setState({ daiToken });
+    } else {
+      window.alert("DaiToken contract not deployed to detected network.");
+    }
+
+    this.setState({ loading: false });
+  }
+
+  claimTokens = () => {
+    this.state.daiToken.methods
+      .claimDaiTokens()
+      .send({ from: this.props.user.address });
+  };
+
   render() {
     const { classes } = this.props;
     const marketOverviewStyle = {
@@ -56,15 +84,33 @@ class HomePage extends Component {
             >
               Welcome to the Fantasy Stock Market!
             </Typography>
-            {/*<Typography align="center">
+          </Grid>
+          <Grid item xs={12}>
+            {this.props.user.claimed ? (
+              <></>
+            ) : (
+              <>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  align="center"
+                  fullWidth
+                  onClick={this.claimTokens}
+                >
+                  It sems you haven't claimed your tokens yet. Claim Here
+                </Button>
+              </>
+            )}
+
+            <hr />
+          </Grid>
+          {/*<Typography align="center">
               <b>
                 <a href="https://docs.google.com/document/d/1X8OCk9LHit_Dyey43wTqn5K2yMt5vWl9U590cqHQWJw/edit?usp=sharing">
                   https://docs.google.com/document/d/1X8OCk9LHit_Dyey43wTqn5K2yMt5vWl9U590cqHQWJw/edit?usp=sharing
                 </a>
               </b>
             </Typography>*/}
-            <hr />
-          </Grid>
           <Grid item xs={6}>
             <div className="card">
               <section>

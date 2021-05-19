@@ -13,24 +13,35 @@ exports.getKitMetadata = async (req, res) => {
   let stockName = obj[adjId];
   let base = "";
   let rarity = "";
+  let imagePath = "";
   let imageArr = [];
   if ((id - 1) % 16 < 10) {
     base = "Gold";
     rarity = ((id - 1) % 16) + 1 + "/10";
     imageArr.push("./images/goldbasejersey.png");
+    imagePath = "https://kryptokits.s3.amazonaws.com/kits/goldbasejersey.png";
   } else if ((id - 1) % 16 < 15) {
     base = "Blue";
     rarity = ((id - 1) % 16) + 1 - 10 + "/5";
     imageArr.push("./images/bluebasejersey.png");
+    imagePath = "https://kryptokits.s3.amazonaws.com/kits/bluebasejersey.png";
   } else {
     base = "Pink";
     rarity = "1/1";
     imageArr.push("./images/pinkbasejersey.png");
+    imagePath = "https://kryptokits.s3.amazonaws.com/kits/pinkbasejersey.png";
   }
 
   let name = `${stockName} ${base} Kit #${rarity}`;
   let description = `${base} kit for ${stockName}, and this kit is numbered ${rarity}`;
   let external_url = `https://tm-market.web.app/stocks/${stockName}`;
+  return res.json({
+    name,
+    description,
+    external_url,
+    image: imagePath,
+  });
+  /*
   let image = "";
 
   mergeImages(imageArr, {
@@ -43,7 +54,7 @@ exports.getKitMetadata = async (req, res) => {
       external_url,
       image: b64,
     });
-  });
+  });*/
 };
 
 exports.getContractMetadata = async (req, res) => {

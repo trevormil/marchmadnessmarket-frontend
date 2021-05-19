@@ -180,7 +180,7 @@ class PortfolioPage extends Component {
               ></CustomizedTables>
             </div>*/}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={7}>
             <div className="portfolio-card">
               <Typography
                 variant="h4"
@@ -198,17 +198,25 @@ class PortfolioPage extends Component {
                 )}
               />
             </div>
+          </Grid>
+          <Grid item xs={12}>
             <hr />
-            <Typography variant="h2" align="center">
-              Your NFTs
+            <Typography
+              variant="h4"
+              align="center"
+              className={classes.pageTitle}
+            >
+              Your NFT Portfolio
             </Typography>
-            <iframe
-              src="https://testnets.opensea.io/account?embed=true"
-              height="900px"
-              width="100%"
-              frameborder="0"
-              allowfullscreen
-            ></iframe>
+            <p align="center">
+              <iframe
+                src="https://testnets.opensea.io/account?embed=true"
+                height="900px"
+                width="95%"
+                frameborder="20"
+                display="block"
+              ></iframe>
+            </p>
             {/*<div className="portfolio-card">
               
               <Typography

@@ -249,7 +249,7 @@ class StockPage extends Component {
       nftElement: (
         <>
           <nft-card
-            contractAddress="0x140f44a1963b7fae0da67ff1f596c3882ca12833"
+            contractAddress="0x74bf4f3Cc44aAC8aB66E4Cdf330872e7120E0b6D"
             tokenId={this.state.value}
             network="rinkeby"
           ></nft-card>
@@ -457,6 +457,37 @@ class StockPage extends Component {
               </div>
             </div>
             */}
+            <hr />
+            <div className="card">
+              <section>
+                <Typography variant="h4">View NFTs</Typography>
+              </section>
+              {this.props.data.loading ||
+              this.props.data.currStock.stockData === null ? (
+                <CircularProgress size={30} />
+              ) : (
+                <div>
+                  <label>
+                    Enter Number 1-16:
+                    <input
+                      type="number"
+                      name="value"
+                      value={this.state.value}
+                      onChange={this.handleInputChange}
+                    />
+                  </label>
+                  <button onClick={this.handleSubmit}>Submit</button>
+                  {this.state.nftElement ? (
+                    this.state.nftElement
+                  ) : (
+                    <p>
+                      Numbers 1-10 are for Gold Kits, 11-15 for Blue Kits, and
+                      16 for Pink Kit
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
           </Grid>
           <Grid item xs={5}>
             <div className="portfolio-card">
@@ -478,25 +509,6 @@ class StockPage extends Component {
             </div>
           </Grid>
           <Grid item xs={12} sm={12} align="center">
-            <Typography variant="h4">NFTs</Typography>
-            {this.props.data.loading ||
-            this.props.data.currStock.stockData === null ? (
-              <CircularProgress size={30} />
-            ) : (
-              <div>
-                <label>
-                  Enter Number 1-16:
-                  <input
-                    type="number"
-                    name="value"
-                    value={this.state.value}
-                    onChange={this.handleInputChange}
-                  />
-                </label>
-                <button onClick={this.handleSubmit}>Submit</button>
-                {this.state.nftElement}
-              </div>
-            )}
             <hr />
           </Grid>
 
