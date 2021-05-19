@@ -67,16 +67,37 @@ export const getStocks = (filterArr) => async (dispatch) => {
 //gets all stocks and updates  data
 export const getScores = (filterArr) => (dispatch) => {
   dispatch({ type: LOADING_SCORES });
-  let payloadData = {};
 
-  axios
-    .get("/scores")
-    .then((res) => {
-      console.log(res.data);
-      payloadData.scores = res.data;
-      dispatch({
-        type: SET_SCORES,
-        payload: payloadData,
+  let payloadData = {};
+  const url =
+    "http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard";
+  fetch(url, {
+    method: "get",
+  })
+    .then((data) => data.json())
+    .then((response) => {
+      let scores = [];
+
+      response["events"].forEach((element) => {
+        let gameInfo = {};
+        gameInfo.name = element["name"];
+        gameInfo.shortName = element["shortName"];
+        gameInfo.score = [];
+
+        element["competitions"].forEach((elem) => {
+          elem["competitors"].forEach((e) => {
+            gameInfo.score.push({
+              score: e["score"],
+              logo: e["team"]["logo"],
+            });
+          });
+        });
+        scores.push(gameInfo);
+        payloadData.scores = scores;
+        dispatch({
+          type: SET_SCORES,
+          payload: payloadData,
+        });
       });
     })
     .catch((err) => {

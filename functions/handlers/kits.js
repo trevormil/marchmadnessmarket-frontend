@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+
 const mergeImages = require("merge-images");
 const { Canvas, Image } = require("canvas");
 

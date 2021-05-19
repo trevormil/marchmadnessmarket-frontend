@@ -35,6 +35,7 @@
     "identicon.js": "^2.3.3",
     "jwt-decode": "^2.2.0",
     "lightweight-charts": "^3.1.3",
+    "node-fetch": "^2.6.1",
     "opensea-js": "^1.1.5",
     "openzeppelin-solidity": "~4.1.0",
     "path": "^0.12.7",
@@ -87,6 +88,5 @@
     "eslint": "^5.6.0",
     "truffle-plugin-verify": "^0.5.8"
   },
-  "proxy": "https://us-central1-tm-market.cloudfunctions.net/api",
-  "homepage": "trevor-miller.web.app"
+  "proxy": "https://us-central1-tm-market-crypto.cloudfunctions.net/kits"
 }

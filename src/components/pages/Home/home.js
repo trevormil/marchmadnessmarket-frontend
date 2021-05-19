@@ -147,6 +147,7 @@ class HomePage extends Component {
                 </Typography>
               </section>
               <div id="livescorefeed" style={liveFeedStyle}>
+                {console.log(this.props.scoreData)}
                 {this.props.scoreData.loading ? (
                   <CircularProgress size={30} align="center" />
                 ) : this.props.scoreData.scores === "undefined" ||
