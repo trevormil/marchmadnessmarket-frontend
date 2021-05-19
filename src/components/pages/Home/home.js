@@ -97,7 +97,7 @@ class HomePage extends Component {
                   fullWidth
                   onClick={this.claimTokens}
                 >
-                  It sems you haven't claimed your tokens yet. Claim Here
+                  It seems you haven't claimed your tokens yet. Claim Here
                 </Button>
               </>
             )}
