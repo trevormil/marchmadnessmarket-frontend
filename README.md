@@ -1,4 +1,4 @@
-URL: https://tm-market.firebaseapp.com/
+URL: https://tm-market-crypto.web.app
 
 Fantasy sports and making money are both very popular in the United States, so in this app, we combined them! This hybrid of fantasy sports with a stock market allows users to buy and sell their favorite teams like stocks using cryptocurrency. Everyone starts off with 100 in game tokens that can be put into the "team banks". If the team does well in real life while you have your tokens staked in the bank, you will receive PointTokens as a reward. Another way to earn PointTokens is to buy NFTs of teams and get rewarded based on their performances in real life (the rarer the NFT, the more PointTokens). At the end of the season, points are tallied up based on how well your assets perform throughout the season, and the user with the most PointTokens win!
 
