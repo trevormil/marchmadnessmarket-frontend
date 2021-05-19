@@ -8,3 +8,12 @@ Setup Notes:
 You will need a Metamask account connected to the Rinkeby test network to use this app. For more info, head over to the MetaMask website.
 
 Feedback and tips would be greatly appreciated!
+
+
+![image](./homepage.PNG)
+
+![image](./stockpage.PNG)
+
+![image](./marketplace.PNG)
+
+![image](./portfolio.PNG)
