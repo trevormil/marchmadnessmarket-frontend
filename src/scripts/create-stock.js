@@ -1,4 +1,7 @@
 const TokenFarm = artifacts.require("TokenFarm");
+const StockObj = require("../../functions/stocks.json");
+const fs = require("fs");
+const path = require("path");
 
 module.exports = async function(callback) {
   let stockName = "Michigan";
@@ -10,7 +13,7 @@ module.exports = async function(callback) {
   let float = 0;
   let market = "NCAA";
   let tokenFarm = await TokenFarm.deployed();
-  let stockNum = await tokenFarm.createStock(
+  await tokenFarm.createStock(
     stockName,
     logoUrl,
     seed,
@@ -20,9 +23,21 @@ module.exports = async function(callback) {
     float,
     market
   );
-
-  
-  // Code goes here...
+  console.log("test");
+  console.log(path.join(process.cwd(), "/functions/stocks.json"));
+  const filepath = path.join(process.cwd(), "/functions/stocks.json");
+  let rawData = fs.readFileSync(filepath);
+  console.log(rawData);
+  let obj = JSON.parse(rawData);
+  console.log(obj);
+  let stockNum = await tokenFarm.stockCount();
+  stockNum = stockNum.toNumber();
+  obj[stockNum] = stockName;
+  console.log(stockNum);
+  console.log(obj);
+  fs.writeFileSync(filepath, JSON.stringify(obj));
   console.log("Stock created!");
+  
+  
   callback();
 };

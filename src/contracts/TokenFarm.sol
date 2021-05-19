@@ -1,4 +1,4 @@
-pragma solidity ^0.8.0;
+pragma solidity >=0.4.21;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./DappToken.sol";

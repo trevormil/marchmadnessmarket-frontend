@@ -13,8 +13,10 @@
   },
   "main": "index.js",
   "dependencies": {
+    "canvas": "^2.8.0",
     "firebase-admin": "^9.2.0",
-    "firebase-functions": "^3.11.0"
+    "firebase-functions": "^3.11.0",
+    "merge-images": "^2.0.0"
   },
   "devDependencies": {
     "firebase-functions-test": "^0.2.0"

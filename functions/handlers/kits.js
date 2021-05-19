@@ -1,19 +1,57 @@
 const fs = require("fs");
+const path = require("path");
+const mergeImages = require("merge-images");
+const { Canvas, Image } = require("canvas");
 
-exports.getKitMetadata = async (req, res) => {  
-  let jsonData = JSON.parse(fs.readFileSync("../../src/abis/TokenFarm.json", "utf-8"));
-  let id = req.params.id;
-  /*
-  const web3 = window.web3;
+exports.getKitMetadata = async (req, res) => {
+  let filepath = "stocks.json";
+  let id = Number(req.params.id);
+  let rawData = fs.readFileSync(filepath);
+  console.log(rawData);
+  let obj = JSON.parse(rawData);
+  let adjId = Math.floor((id - 1) / 16) + 1;
+  let stockName = obj[adjId];
+  let base = "";
+  let rarity = "";
+  let imageArr = [];
+  if ((id - 1) % 16 < 10) {
+    base = "Gold";
+    rarity = ((id - 1) % 16) + 1 + "/10";
+    imageArr.push("./images/goldbasejersey.png");
+  } else if ((id - 1) % 16 < 15) {
+    base = "Blue";
+    rarity = ((id - 1) % 16) + 1 - 10 + "/5";
+    imageArr.push("./images/bluebasejersey.png");
+  } else {
+    base = "Pink";
+    rarity = "1/1";
+    imageArr.push("./images/pinkbasejersey.png");
+  }
 
-  const networkId = await web3.eth.net.getId();
-  const tokenFarmData = TokenFarm.networks[networkId];
-  if (tokenFarmData) {
-    const tokenFarm = new web3.eth.Contract(
-      TokenFarm.abi,
-      tokenFarmData.address
-    );
-    let numStocks = await tokenFarm.methods.stockCount().call();
-  }*/
-  return res.send(jsonData);
+  let name = `${stockName} ${base} Kit #${rarity}`;
+  let description = `${base} kit for ${stockName}, and this kit is numbered ${rarity}`;
+  let external_url = `https://tm-market.web.app/stocks/${stockName}`;
+  let image = "";
+
+  mergeImages(imageArr, {
+    Canvas: Canvas,
+    Image: Image,
+  }).then((b64) => {
+    return res.json({
+      name,
+      description,
+      external_url,
+      image: b64,
+    });
+  });
+};
+
+exports.getContractMetadata = async (req, res) => {
+  return res.json({
+    description: "Kits.",
+    external_link: "https://tm-market.web.app",
+    image:
+      "https://www.pinclipart.com/picdir/middle/369-3693352_poorly-drawn-city-jerseys-clipart.png",
+    name: "KryptoKits",
+  });
 };
