@@ -124,10 +124,10 @@ export const getSummaryRows = (ownedStocks, user, data) => {
     <StyledTableCell></StyledTableCell>
   ) : (
     getAllSummaryRows([
-      { title: "Dai Token Balance:", data: user.daiTokenBalance },
-      { title: "Dai Token Staked:", data: user.stakingBalance },
+      { title: "Initial Token Balance:", data: user.daiTokenBalance },
+      { title: "Initial Token Staked:", data: user.stakingBalance },
       {
-        title: "Dapp Token Balance: ",
+        title: "Point Token Balance: ",
         data: user.dappTokenBalance,
       },
     ])

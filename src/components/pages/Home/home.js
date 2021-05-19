@@ -118,20 +118,18 @@ class HomePage extends Component {
                   Overview of Pages:
                 </Typography>
               </section>
-
+              <Typography align="center">
+                <b>Bracket/Schedule:</b> Upcoming events in the world of sports
+              </Typography>
               <Typography align="center">
                 <b>Screener:</b> Browse all stocks to find your next purchase!
               </Typography>
               <Typography align="center">
-                <b>Market:</b> Browse all the current stocks up for sale!
+                <b>NFT Market:</b> Browse all the current NFTs up for sale!
               </Typography>
               <Typography align="center">
                 <b>Portfolio:</b> See your current account balance, stocks
                 owned, recent transactions, and more!
-              </Typography>
-              <Typography align="center">
-                <b>Leaderboards</b>: View where you rank compared to everyone
-                else!
               </Typography>
               <Typography align="center">
                 <b>Rules:</b> New? Check out the rules to learn how to play the
@@ -242,11 +240,11 @@ class HomePage extends Component {
                 <Typography align="center">
                   <b>Account Address</b> — {this.props.user.address}
                   <br />
-                  <b>Dai Token Balance</b> — {this.props.user.daiTokenBalance}{" "}
-                  <br />
-                  <b>Dai Token Staked</b> — {this.props.user.stakingBalance}{" "}
-                  <br />
-                  <b>Dapp Token Balance</b>— {this.props.user.dappTokenBalance}{" "}
+                  <b>Initial Tokens Balance</b> —{" "}
+                  {this.props.user.daiTokenBalance} <br />
+                  <b>Initial Tokens Staked</b> —{" "}
+                  {this.props.user.stakingBalance} <br />
+                  <b>Point Token Balance</b>— {this.props.user.dappTokenBalance}{" "}
                   <br />
                 </Typography>
               </div>

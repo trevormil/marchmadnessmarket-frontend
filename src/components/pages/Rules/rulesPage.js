@@ -31,123 +31,32 @@ class RulesPage extends Component {
             </Typography>
             <hr />
             <Typography align="center">
-              Everyone is given 500 coins when they first sign up.
+              Everyone is given 100 tokens when they first sign up.
             </Typography>
             <Typography align="center">
-              These are the only 500 coins you will be given, so spend them
-              wisely.
+              These are the only 100 coins you will be given, so take care of
+              them.
             </Typography>
             <Typography align="center">
-              You don't have to spend all coins before the first week, but
-              stocks will get more expensive and scarcer as season goes along.
+              The goal of the game is to get as many PointTokens as possible.
             </Typography>
             <Typography align="center">
-              Play in games don't count towards points. However, if you buy a
-              play-in team and they lose in the play-in game, those shares will
-              automatically get transferred to be shares of the play-in game winner.
+              There are two ways to get PointTokens:
             </Typography>
             <Typography align="center">
-              The objective of the game is to get as many <u>points</u> as
-              possible when the season concludes,{" "}
-              <u>not highest portfolio market value.</u>
+              1) Stake your 100 initial tokens into the "team banks" and get
+              rewarded in PointTokens when they do well
             </Typography>
             <Typography align="center">
-              Winning games is the only way a team can get points. The amount of
-              points given is their seed number. 0 points are given for losses.
+              2) Purchase NFTs and get rewarded with PointTokens when the team
+              does well (Rarer the NFT, the more PointTokens you will receive)
             </Typography>
             <Typography align="center">
-              For example, if a #5 seed wins a game, they are awarded 5 points.
+              Official point tallies to be announced soon
             </Typography>
-            <Typography align="center">
-              There also will be a 5 point bonus per share for the champions.
-            </Typography>
-            <Typography align="center">
-              So, if a 1 seed wins the championship, they get 16 points for
-              winning 16 games and 5 points for winning championship. So, they
-              would get 21 points per share.
-            </Typography>
-            <Typography align="center"></Typography>
-            <Typography align="center">
-              Portfolio market value will give you an estimate of the current
-              market price, but{" "}
-              <u>
-                the objective of the game is not portfolio market value, it is
-                points.
-              </u>
-            </Typography>
-            <hr />
-            <Typography align="center">
-              You can not buy stocks after the start of the playoffs to keep it
-              fair. (No buying from 5/22 - 7/22)
-            </Typography>
-            <Typography align="center">
-              Every team's price is $1 at the start of the season. Each week,
-              the price will update to double the number of points they have
-              accumulated.
-            </Typography>
-            <Typography align="center">
-              There are a couple ways that you can buy and sell stocks:{" "}
-            </Typography>
-            <Typography align="center">
-              1) Every stock has a BIN (buy it now) price that you can instantly
-              purchase any number of shares at. Think of this like buying it
-              straight from the bank.
-            </Typography>
-
-            <Typography align="center">
-              2) Any stock can be listed for auction by a seller, and once a
-              buyer is found, the shares and balances are updated.
-            </Typography>
-            <Typography align="center">
-              <b>
-                Important note: If you sell a stock, you lose all points
-                associated with that stock.
-              </b>
-            </Typography>
-
-            <Typography align="center">
-              <b>
-                Similarly, if you buy a stock, you gain all points associated
-                with that stock.
-              </b>
-            </Typography>
-            <Typography align="center">
-              <b>
-                So if a team has 12 points per share, do not sell under $12 per
-                share.
-              </b>
-            </Typography>
-            <Typography align="center">
-              <b>
-                In other words, the owner of the stock at the end of the season
-                gets all the points and any intermediate owners get no points at
-                all.
-              </b>
-            </Typography>
-            {/*<Typography align="center">
-              3) You can also instantly sell any number of shares at half the
-              value of the BIN price.
-            </Typography><Typography align="center">
-              For every transaction that occurs, the BIN price and instant sell
-              price gets updated slightly based on an algorithm.
-    </Typography>
-            <Typography align="center">
-              Example: If a stock is being bought a lot at the BIN price or
-              being sold for a high price on auction, the BIN price will
-              automatically increase. Vice versa for being sold.
-            </Typography>
-            <Typography align="center">
-              For calculations of price for the charts and portfolio market
-              value, it uses the price that is halfway between the BIN price and
-              the instant sell price.
-            </Typography>*/}
 
             <hr />
             <Typography align="center">Terms to know: </Typography>
-            <Typography align="center">
-              BIN ("Buy It Now") Price: Any amount can be bought instantly at
-              this price{" "}
-            </Typography>
             {/*
             <Typography align="center">
               Instant Sell Price: Any amount can be sold instantly at this price
@@ -181,12 +90,12 @@ class RulesPage extends Component {
               </Typography>
               <Typography align="center">
                 10 Points - Team that wins the championship.
-              </Typography>*/}
+              </Typography>
             <hr />
             <Typography align="center">
               Note leaderboards, portfolio charts, and stock charts are updated
               once daily at 12:00 EST. Point values will be updated weekly.
-            </Typography>
+            </Typography>*/}
             <hr />
             <Typography align="center">
               If you have any questions, please reach out to me via
