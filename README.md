@@ -10,10 +10,10 @@ You will need a Metamask account connected to the Rinkeby test network to use th
 Feedback and tips would be greatly appreciated!
 
 
-![image](./homepage.PNG)
+![image](./homepage.png)
 
-![image](./stockpage.PNG)
+![image](./stockpage.png)
 
-![image](./marketplace.PNG)
+![image](./marketplace.png)
 
-![image](./portfolio.PNG)
+![image](./portfolio.png)
