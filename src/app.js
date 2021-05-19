@@ -17,6 +17,8 @@ import ScoresPage from "./components/pages/Schedule/schedule";
 import UserPage from "./components/pages/User/userpage";
 import BracketPage from "./components/pages/Bracket/bracket";
 import MarketPage from "./components/pages/Market/market";
+
+import NFTMarketPage from "./components/pages/NFTMarket/nftmarket";
 import LeaderboardPage from "./components/pages/Leaderboard/leaderboardPage";
 import * as ROUTES from "./constants/routes";
 //redux
@@ -24,8 +26,6 @@ import { Provider } from "react-redux";
 import store from "./redux/stores";
 
 import Web3 from "web3";
-import PointToken from "./abis/PointToken.json";
-import SportToken from "./abis/SportToken.json";
 
 import DaiToken from "./abis/DaiToken.json";
 import DappToken from "./abis/DappToken.json";
@@ -36,7 +36,6 @@ class App extends React.Component {
   async componentWillMount() {
     await this.loadWeb3();
   }
-
 
   async loadWeb3() {
     if (window.ethereum) {
@@ -76,6 +75,12 @@ class App extends React.Component {
                     component={BrowseStocksPage}
                   />
                   <Route exact path={ROUTES.MARKET} component={MarketPage} />
+
+                  <Route
+                    exact
+                    path={ROUTES.NFTMARKET}
+                    component={NFTMarketPage}
+                  />
                   <Route
                     exact
                     path={ROUTES.LEADERBOARD}

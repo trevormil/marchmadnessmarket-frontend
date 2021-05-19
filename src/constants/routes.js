@@ -15,4 +15,5 @@ export const LEADERBOARD = "/leaderboard";
 export const SCHEDULE = "/schedule";
 export const BRACKET = "/bracket";
 export const MARKET = "/market";
+export const NFTMARKET = "/nftmarket";
 export const USERS = "/users";

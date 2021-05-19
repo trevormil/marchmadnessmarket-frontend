@@ -176,9 +176,6 @@ export const getStockRows = (ownedStocks, loading) => {
         <StyledTableCell>No positions.</StyledTableCell>
         <StyledTableCell />
         <StyledTableCell />
-        <StyledTableCell />
-        <StyledTableCell />
-        <StyledTableCell />
       </StyledTableRow>
     );
 };

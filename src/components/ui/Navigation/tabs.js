@@ -36,28 +36,27 @@ class TabBase extends React.Component {
         centered
       >
         {authenticatedTabs.map((tab) => {
-              if (tab.buttonOnClick)
-                return (
-                  <Tab
-                    key={tab.label}
-                    label={tab.label}
-                    value={tab.linkTo}
-                    onClick={this.logOut}
-                  />
-                );
-              //hard coded for sign out tab currently
-              else
-                return (
-                  <Tab
-                    key={tab.label}
-                    label={tab.label}
-                    value={tab.linkTo}
-                    component={Link}
-                    to={tab.linkTo}
-                  />
-                );
-            })
-          }
+          if (tab.buttonOnClick)
+            return (
+              <Tab
+                key={tab.label}
+                label={tab.label}
+                value={tab.linkTo}
+                onClick={this.logOut}
+              />
+            );
+          //hard coded for sign out tab currently
+          else
+            return (
+              <Tab
+                key={tab.label}
+                label={tab.label}
+                value={tab.linkTo}
+                component={Link}
+                to={tab.linkTo}
+              />
+            );
+        })}
       </Tabs>
     );
   }
@@ -78,23 +77,27 @@ const authenticatedTabs = [
   {
     label: "Screener",
     linkTo: ROUTES.BROWSE,
-  },/*
+  } /*
   {
     label: "Market",
     linkTo: ROUTES.MARKET,
-  },*/
+  },*/,
+  {
+    label: "NFT Market",
+    linkTo: ROUTES.NFTMARKET,
+  },
   {
     label: "Portfolio",
     linkTo: ROUTES.PORTFOLIO,
-  },/*
+  } /*
   {
     label: "Leaderboards",
     linkTo: ROUTES.LEADERBOARD,
-  },*/
+  },*/,
   {
     label: "Rules",
     linkTo: ROUTES.RULES,
-  }
+  },
 ];
 
 export default TabBase;

@@ -181,7 +181,6 @@ class PortfolioPage extends Component {
             </div>*/}
           </Grid>
           <Grid item xs={12}>
-          
             <div className="portfolio-card">
               <Typography
                 variant="h4"
@@ -199,9 +198,19 @@ class PortfolioPage extends Component {
                 )}
               />
             </div>
-            
-            <div className="portfolio-card">
-              {/*
+            <hr />
+            <Typography variant="h2" align="center">
+              Your NFTs
+            </Typography>
+            <iframe
+              src="https://testnets.opensea.io/account?embed=true"
+              height="900px"
+              width="100%"
+              frameborder="0"
+              allowfullscreen
+            ></iframe>
+            {/*<div className="portfolio-card">
+              
               <Typography
                 variant="h4"
                 className={classes.pageTitle}
@@ -215,8 +224,8 @@ class PortfolioPage extends Component {
                   rows={transactionDisplay}
                 />
               </div>
-             */}
-            </div>
+             
+            </div>*/}
           </Grid>
         </Grid>
       </div>

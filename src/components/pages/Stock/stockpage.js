@@ -30,7 +30,7 @@ import DaiToken from "../../../abis/DaiToken.json";
 import DappToken from "../../../abis/DappToken.json";
 import TokenFarm from "../../../abis/TokenFarm.json";
 
-const fetch = require('node-fetch');
+const fetch = require("node-fetch");
 const styles = (theme) => ({
   ...theme.spreadThis,
 });
@@ -56,6 +56,8 @@ class StockPage extends Component {
     dappToken: {},
     tokenFarm: {},
     loading: true,
+    value: 1,
+    nftElement: null,
   };
 
   constructor(props) {
@@ -65,12 +67,13 @@ class StockPage extends Component {
       this.props.data.filters,
       this.state.stockId
     );
-
     this.handleInputChange = this.handleInputChange.bind(this);
     this.getNumSharesOwned = this.getNumSharesOwned.bind(this);
     this.attemptToBuy = this.attemptToBuy.bind(this);
     this.attemptToSell = this.attemptToSell.bind(this);
     this.attemptToIPOBuy = this.attemptToIPOBuy.bind(this);
+
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   async componentWillMount() {
@@ -240,6 +243,24 @@ class StockPage extends Component {
       });
     }
   };
+  handleSubmit(event) {
+    console.log(this.state.value);
+    this.setState({
+      nftElement: (
+        <>
+          <nft-card
+            contractAddress="0x140f44a1963b7fae0da67ff1f596c3882ca12833"
+            tokenId={this.state.value}
+            network="rinkeby"
+          ></nft-card>
+          <p>
+            Note: To see another NFT, you may have to refresh page and submit
+            again.
+          </p>
+        </>
+      ),
+    });
+  }
 
   stakeTokens = () => {
     this.setState({ loading: true });
@@ -286,15 +307,6 @@ class StockPage extends Component {
     const numSharesOwned = this.getNumSharesOwned();
     const filename = this.props.data.currStock.stockData.imageUrl;
 
-    
-
-const url = 'https://api.opensea.io/api/v1/assets?order_direction=desc&offset=0&limit=20&collection=kryptokits';
-const options = {method: 'GET'};
-
-fetch(url, options)
-  .then(res => res.json())
-  .then(json => console.log(json))
-  .catch(err => console.error('error:' + err));
     return (
       <Container maxWidth="lg">
         <Grid container spacing={3}>
@@ -311,6 +323,7 @@ fetch(url, options)
                 this.props.data.currStock.stockData.stockName
               )}
             </Typography>
+
             <div align="center">
               {this.props.data.loading ||
               this.props.data.currStock.stockData === null ? (
@@ -360,7 +373,8 @@ fetch(url, options)
                     this.props.data.currStock.stockData === null ||
                     this.state.numToBuy <= 0 ||
                     this.state.numToBuy === null ||
-                    Number(this.state.numToBuy) > Number(this.props.user.daiTokenBalance)
+                    Number(this.state.numToBuy) >
+                      Number(this.props.user.daiTokenBalance)
                   }
                 >
                   Deposit
@@ -463,6 +477,29 @@ fetch(url, options)
               )}
             </div>
           </Grid>
+          <Grid item xs={12} sm={12} align="center">
+            <Typography variant="h4">NFTs</Typography>
+            {this.props.data.loading ||
+            this.props.data.currStock.stockData === null ? (
+              <CircularProgress size={30} />
+            ) : (
+              <div>
+                <label>
+                  Enter Number 1-16:
+                  <input
+                    type="number"
+                    name="value"
+                    value={this.state.value}
+                    onChange={this.handleInputChange}
+                  />
+                </label>
+                <button onClick={this.handleSubmit}>Submit</button>
+                {this.state.nftElement}
+              </div>
+            )}
+            <hr />
+          </Grid>
+
           {/*
           <Grid item xs={12}>
             <hr />
