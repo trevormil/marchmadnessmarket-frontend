@@ -21,7 +21,6 @@ export function isInvalidDate() {
     let check = new Date(c[2], parseInt(c[1]) - 1, c[0]);
 
     if (check >= from && check <= to) {
-      console.log(from + " " + to);
       invalidDate = true;
     }
     i++;

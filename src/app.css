@@ -4,7 +4,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  background-color: lightgrey;
+  background-color: whitesmoke;
   min-height: 100vh;
 }
 .middle-block {
@@ -12,34 +12,32 @@ body {
   min-height: 100vh;
 }
 .grayBG {
-  background-color: rgb(223, 222, 222);
   padding: 10px 0px;
   margin: 15px 0px;
 }
 .whiteBG {
-  background-color: whitesmoke;
   padding: 10px 0px;
   margin: 15px 0px;
 }
 .darkgrayBG {
-  background-color: rgb(187, 185, 185);
   padding: 10px 0px;
   margin: 15px 0px;
 }
 .navbar {
   overflow: hidden;
   position: fixed;
-  height: 52px;
   top: 0;
+  height: 50px;
   width: 100%;
   padding-bottom: 0px;
   z-index: 8;
-  background-color: #20c6b6;
+  background-color: #1976d2;
 }
 .tradingviewchart {
   z-index: 1;
   position: relative;
   padding: 5px;
+  height: "500px";
 }
 .page {
   margin-top: 48px;
@@ -64,20 +62,21 @@ code {
 }
 .card {
   border: 5px solid black;
-  border-radius: 3%;
 }
 .card section {
-  background-color: #20c6b6;
+  background-color: #1976d2;
+  color: white
+  
 }
 
 .portfolio-card {
-  background-color: #20c6b6;
+  background-color: #1976d2;
   border: 5px solid black;
-  border-radius: 3%;
   margin: 10px;
+  color: 'white';
 }
 
 .screenercard {
-  background-color: #20c6b6;
+  background-color: #1976d2;
   border: 5px solid black;
 }

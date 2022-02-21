@@ -1,162 +1,223 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Tab, Tabs } from "@material-ui/core";
-import * as ROUTES from "../../../constants/routes";
-import { logOutUser } from "../../../redux/actions/userActions";
-import store from "../../../redux/stores";
+import * as React from 'react';
+import { styled } from '@mui/system';
+import TabsUnstyled from '@mui/base/TabsUnstyled';
+import TabsListUnstyled from '@mui/base/TabsListUnstyled';
+import TabPanelUnstyled from '@mui/base/TabPanelUnstyled';
+import { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled';
+import TabUnstyled, { tabUnstyledClasses } from '@mui/base/TabUnstyled';
+import { Link } from 'react-router-dom';
+import * as ROUTES from '../../../constants/routes';
+import { logOutUser } from '../../../redux/actions/userActions';
+import store from '../../../redux/stores';
+import { connect } from 'react-redux';
+import { withStyles, Typography, Container } from '@material-ui/core';
+const styles = (theme) => ({
+    ...theme.spreadThis,
+});
 
-const getInitialState = () => {
-  const pathName = window.location.pathname.split("/");
-  if (pathName[pathName.length - 2] === "stocks") {
-    return ROUTES.BROWSE;
-  } else return `/${pathName.pop()}`;
+const blue = {
+    50: '#F0F7FF',
+    100: '#C2E0FF',
+    200: '#80BFFF',
+    300: '#66B2FF',
+    400: '#3399FF',
+    500: '#007FFF',
+    600: '#0072E5',
+    700: '#0059B2',
+    800: '#004C99',
+    900: '#003A75',
 };
+
+const Tab = styled(TabUnstyled)`
+    font-family: IBM Plex Sans, sans-serif;
+    color: white;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: bold;
+    background-color: transparent;
+    width: 100%;
+    padding: 12px 16px;
+    margin: 6px 6px;
+    border: none;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+
+    &:hover {
+        background-color: ${blue[400]};
+    }
+
+    &:focus {
+        color: #fff;
+        border-radius: 3px;
+        outline: 2px solid ${blue[200]};
+        outline-offset: 2px;
+    }
+
+    &.${tabUnstyledClasses.selected} {
+        background-color: ${blue[50]};
+        color: ${blue[600]};
+    }
+
+    &.${buttonUnstyledClasses.disabled} {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+`;
+
+const TabPanel = styled(TabPanelUnstyled)`
+    width: 100%;
+    font-family: IBM Plex Sans, sans-serif;
+    font-size: 0.875rem;
+`;
+
+const TabsList = styled(TabsListUnstyled)`
+    background-color: ${'#1976d2'};
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: space-between;
+`;
+
 class TabBase extends React.Component {
-  state = {
-    value: getInitialState(),
-  };
+    constructor(props) {
+        super(props);
+        this.logOut = this.logOut.bind(this);
+    }
 
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.logOut = this.logOut.bind(this);
-  }
+    authenticatedTabs = [
+        {
+            label: 'Home',
+            linkTo: ROUTES.HOME,
+        },
+        {
+            label: 'Bracket',
+            linkTo: ROUTES.BRACKET,
+        },
+        {
+            label: 'Browse',
+            linkTo: ROUTES.BROWSE,
+        },
+        {
+            label: 'Leaderboard',
+            linkTo: ROUTES.LEADERBOARD,
+        },
+    ];
 
-  handleChange = (event, newValue) => {
-    this.setState({
-      value: newValue,
-    });
-  };
+    nonAuthenticatedTabs = [
+        {
+            label: 'Home',
+            linkTo: ROUTES.HOME,
+        },
+        {
+            label: 'Bracket',
+            linkTo: ROUTES.BRACKET,
+        },
+        {
+            label: 'Browse',
+            linkTo: ROUTES.BROWSE,
+        },
+        {
+            label: 'Leaderboard',
+            linkTo: ROUTES.LEADERBOARD,
+        },
+    ];
 
-  logOut = () => {
-    const currURL = `/${window.location.pathname.split("/").pop()}`;
-    let nonAuthTab = false;
-    store.dispatch(logOutUser());
-    nonAuthenticatedTabs.forEach((tab) => {
-      if (tab.linkTo === currURL) nonAuthTab = true;
-    });
-    if (!nonAuthTab) this.setState({ value: ROUTES.SIGN_IN });
-    else
-      this.setState({ value: `/${window.location.pathname.split("/").pop()}` });
-  };
+    signInTabs = [
+        {
+            label: 'Login',
+            linkTo: ROUTES.SIGN_IN,
+        },
+    ];
 
-  render() {
-    return (
-      <Tabs
-        value={this.state.value}
-        onChange={this.handleChange}
-        indicatorColor="secondary"
-        textColor="inherit"
-        centered
-      >
-        {this.props.authenticated
-          ? authenticatedTabs.map((tab) => {
-              if (tab.buttonOnClick)
-                return (
-                  <Tab
-                    key={tab.label}
-                    label={tab.label}
-                    value={tab.linkTo}
-                    onClick={this.logOut}
-                  />
-                );
-              //hard coded for sign out tab currently
-              else
-                return (
-                  <Tab
-                    key={tab.label}
-                    label={tab.label}
-                    value={tab.linkTo}
-                    component={Link}
-                    to={tab.linkTo}
-                  />
-                );
-            })
-          : nonAuthenticatedTabs.map((tab) => {
-              if (tab.buttonOnClick)
-                return (
-                  <Tab
-                    key={tab.label}
-                    label={tab.linkTo}
-                    value={tab.label}
-                    onClick={this.logOut}
-                  />
-                );
-              else
-                return (
-                  <Tab
-                    key={tab.label}
-                    label={tab.label}
-                    value={tab.linkTo}
-                    component={Link}
-                    to={tab.linkTo}
-                  />
-                );
-            })}
-      </Tabs>
-    );
-  }
+    signOutTabs = [
+        {
+            label: 'Portfolio',
+            linkTo: ROUTES.USERS,
+        },
+        {
+            label: 'Logout',
+            buttonOnClick: true,
+        },
+    ];
+
+    logOut = () => {
+        const currURL = `/${window.location.pathname.split('/').pop()}`;
+        let nonAuthTab = false;
+        store.dispatch(logOutUser());
+        this.nonAuthenticatedTabs.forEach((tab) => {
+            if (tab.linkTo === currURL) nonAuthTab = true;
+        });
+        if (!nonAuthTab) this.setState({ value: ROUTES.SIGN_IN });
+        else
+            this.setState({
+                value: `/${window.location.pathname.split('/').pop()}`,
+            });
+    };
+
+    render() {
+        const tabsToShow = this.props.authenticated
+            ? this.props.loggedInOnly
+                ? this.signOutTabs
+                : this.authenticatedTabs
+            : this.props.loggedInOnly
+            ? this.signInTabs
+            : this.nonAuthenticatedTabs;
+
+        return (
+            <TabsUnstyled
+                value={this.props.value}
+                defaultValue={this.props.value}
+            >
+                <TabsList>
+                    {tabsToShow.map((tab) => {
+                        let link = tab.linkTo;
+                        if (tab.label == 'Portfolio') {
+                            link =
+                                tab.linkTo +
+                                `/${window.localStorage.getItem('username')}`;
+                        }
+
+                        return (
+                            <Tab
+                                component={Link}
+                                to={link}
+                                onClick={(event) => {
+                                    this.props.handleChange(event, link);
+                                    if (tab.buttonOnClick) {
+                                        this.logOut();
+                                    }
+                                }}
+                                value={link}
+                                key={tab.label}
+                            >
+                                <div
+                                    style={{
+                                        textAlign: 'center',
+                                        verticalAlign: 'center',
+                                    }}
+                                >
+                                    {tab.label}
+                                </div>
+                            </Tab>
+                        );
+                    })}
+                </TabsList>
+            </TabsUnstyled>
+        );
+    }
 }
-const authenticatedTabs = [
-  {
-    label: "Home",
-    linkTo: ROUTES.HOME,
-  },
-  {
-    label: "Bracket",
-    linkTo: ROUTES.BRACKET,
-  },
-  {
-    label: "SCHEDULE",
-    linkTo: ROUTES.SCHEDULE,
-  },
-  {
-    label: "Screener",
-    linkTo: ROUTES.BROWSE,
-  },
-  {
-    label: "Market",
-    linkTo: ROUTES.MARKET,
-  },
-  {
-    label: "Portfolio",
-    linkTo: ROUTES.PORTFOLIO,
-  },
-  {
-    label: "Leaderboards",
-    linkTo: ROUTES.LEADERBOARD,
-  },
-  {
-    label: "Rules",
-    linkTo: ROUTES.RULES,
-  },
-  {
-    label: "Sign Out",
-    buttonOnClick: true,
-  },
-];
 
-const nonAuthenticatedTabs = [
-  {
-    label: "Home",
-    linkTo: ROUTES.HOME,
-  },
-  {
-    label: "Bracket",
-    linkTo: ROUTES.BRACKET,
-  },
-  {
-    label: "Schedule",
-    linkTo: ROUTES.SCHEDULE,
-  },
-  {
-    label: "Rules",
-    linkTo: ROUTES.RULES,
-  },
-  {
-    label: "Sign In",
-    linkTo: ROUTES.SIGN_IN,
-  },
-];
+const mapStateToProps = (state) => ({
+    user: state.user,
+    ui: state.ui,
+    data: state.data,
+});
 
-export default TabBase;
+const mapActionsToProps = {};
+
+export default connect(
+    mapStateToProps,
+    mapActionsToProps
+)(withStyles(styles)(TabBase));

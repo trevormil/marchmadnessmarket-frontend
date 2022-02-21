@@ -1,4 +1,3 @@
-
 import { withStyles } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
 
@@ -9,12 +8,11 @@ export const BootstrapInput = withStyles((theme) => ({
         },
     },
     input: {
-        borderRadius: 4,
         position: 'relative',
         backgroundColor: theme.palette.background.paper,
         border: '1px solid #ced4da',
         fontSize: 16,
-        maxWidth: "130px",
+        maxWidth: '130px',
         padding: '10px 10px 10px 12px',
         margin: '5px',
         transition: theme.transitions.create(['border-color', 'box-shadow']),
@@ -32,7 +30,6 @@ export const BootstrapInput = withStyles((theme) => ({
             '"Segoe UI Symbol"',
         ].join(','),
         '&:focus': {
-            borderRadius: 4,
             borderColor: '#80bdff',
             boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
         },

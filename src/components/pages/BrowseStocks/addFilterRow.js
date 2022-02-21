@@ -1,19 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getTextFieldSelect, getCriteriaSelect, getColumnSelect } from './filterSelectMenus'
+import {
+    getTextFieldSelect,
+    getCriteriaSelect,
+    getColumnSelect,
+} from './filterSelectMenus';
 import { Grid, Button, withStyles } from '@material-ui/core';
 
-import { getStocks, setStocks } from '../../../redux/actions/dataActions'
+import { getStocks, setStocks } from '../../../redux/actions/dataActions';
 import { isNumeric } from '../../../helpers/filterFunctions';
 const styles = (theme) => ({
-    ...theme.spreadThis
+    ...theme.spreadThis,
 });
 const initialState = {
-    columnValue: "Select a column",
-    criteria: "None selected",
+    columnValue: 'Select a column',
+    criteria: 'None selected',
     lowerLimit: null,
-    upperLimit: null
-}
+    upperLimit: null,
+};
 
 //creates the row where you can add and remove filters for the screener
 class AddFilterRow extends React.Component {
@@ -27,21 +31,27 @@ class AddFilterRow extends React.Component {
         this.addFilter = this.addFilter.bind(this);
     }
     isValid() {
-        if (this.state.criteria === "None selected" || this.state.columnValue === "Select a column") {
+        if (
+            this.state.criteria === 'None selected' ||
+            this.state.columnValue === 'Select a column'
+        ) {
             return false;
         }
-        const lowerLimitNotNull = this.state.lowerLimit !== null && this.state.lowerLimit !== "";
-        const upperLimitNotNull = this.state.upperLimit !== null && this.state.upperLimit !== "";
+        const lowerLimitNotNull =
+            this.state.lowerLimit !== null && this.state.lowerLimit !== '';
+        const upperLimitNotNull =
+            this.state.upperLimit !== null && this.state.upperLimit !== '';
         switch (this.state.criteria) {
-            case "equals":
-            case "activeOrderEquals":
-            case "greaterThan":
+            case 'equals':
+            case 'activeOrderEquals':
+            case 'greaterThan':
                 return lowerLimitNotNull;
-            case "lessThan":
+            case 'lessThan':
                 return upperLimitNotNull;
-            case "between":
+            case 'between':
                 return upperLimitNotNull && lowerLimitNotNull;
-            default: return false;
+            default:
+                return false;
         }
     }
     handleReset() {
@@ -57,66 +67,93 @@ class AddFilterRow extends React.Component {
     onClick() {
         if (isNumeric(this.state.columnValue)) {
             //sets greater and less than bounds to max and min numbers
-            if (this.state.criteria === "greaterThan") {
-                this.setState({
-                    upperLimit: Number.MAX_SAFE_INTEGER
-                }, this.addFilter)
-            } else if (this.state.criteria === "lessThan") {
-                this.setState({
-                    lowerLimit: Number.MIN_SAFE_INTEGER
-                }, this.addFilter)
+            if (this.state.criteria === 'greaterThan') {
+                this.setState(
+                    {
+                        upperLimit: Number.MAX_SAFE_INTEGER,
+                    },
+                    this.addFilter
+                );
+            } else if (this.state.criteria === 'lessThan') {
+                this.setState(
+                    {
+                        lowerLimit: Number.MIN_SAFE_INTEGER,
+                    },
+                    this.addFilter
+                );
             } else this.addFilter();
         } else this.addFilter();
     }
     handleChange = (event) => {
         this.setState({
-            [event.target.name]: event.target.value
-        })
+            [event.target.name]: event.target.value,
+        });
     };
     render() {
-        const { classes, ui: { loading } } = this.props;
+        const {
+            classes,
+            ui: { loading },
+        } = this.props;
         const errors = this.isValid();
         return (
             <Grid item xs={8}>
                 <Grid container justify="space-around" alignItems="center">
-                    <Grid container spacing={3} justify="space-around" alignItems="center">
-                        {getColumnSelect(classes, this.state, this.handleChange)}
-                        {getCriteriaSelect(this.props, this.state, this.handleChange)}
-                        {getTextFieldSelect(this.props, this.state, this.handleChange)}
+                    <Grid
+                        container
+                        spacing={3}
+                        justify="space-around"
+                        alignItems="center"
+                        style={{ color: 'white' }}
+                    >
+                        {getColumnSelect(
+                            classes,
+                            this.state,
+                            this.handleChange
+                        )}
+                        {getCriteriaSelect(
+                            this.props,
+                            this.state,
+                            this.handleChange
+                        )}
+                        {getTextFieldSelect(
+                            this.props,
+                            this.state,
+                            this.handleChange
+                        )}
                         <Button
                             variant="contained"
                             color="primary"
                             onClick={this.onClick}
                             align="right"
-                            disabled={!errors}>
+                            disabled={!errors}
+                        >
                             Add Filter
-                            </Button>
+                        </Button>
                         <Button
                             variant="contained"
                             color="primary"
                             disabled={loading}
-                            onClick={this.handleReset}>
+                            onClick={this.handleReset}
+                        >
                             Reset
-                                </Button>
+                        </Button>
                     </Grid>
                 </Grid>
-
             </Grid>
-
-        )
+        );
     }
 }
 
 const mapStateToProps = (state) => ({
     user: state.user,
     ui: state.ui,
-    data: state.data
+    data: state.data,
 });
 
 const mapActionsToProps = {
     getStocks,
-    setStocks
-}
+    setStocks,
+};
 
 export default connect(
     mapStateToProps,
