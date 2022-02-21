@@ -35,6 +35,7 @@ class BracketPage extends Component {
                     background: `linear-gradient(#000000, #1976d2) fixed`,
                     color: 'white',
                     minHeight: '1000px',
+                    paddingBottom: 20,
                 }}
             >
                 <Container>
@@ -57,7 +58,7 @@ class BracketPage extends Component {
 
                         <Grid item xs={12}>
                             <img
-                                src="https://tm-market.web.app/nbabracket.jpg"
+                                src="brackettemp.jpeg"
                                 width="100%"
                             />
                         </Grid>

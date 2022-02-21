@@ -58,10 +58,23 @@ class Navigation extends React.Component {
                 >
                     <img
                         height={'50px'}
-                        src="https://tm-market.web.app/nbabracket.jpg"
+                        src="brackettemp.jpeg"
                         style={{ marginRight: '5px' }}
                     ></img>
-                    {/* March Madness Market */}
+                    <Typography
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'row-reverse',
+                            textAlign: 'center',
+                            verticalAlign: 'center',
+                            alignItems: 'center',
+                            color: 'white',
+                            fontSize: 20,
+                            padding: 10,
+                        }}
+                    >
+                        March Madness Market
+                    </Typography>
                 </div>
 
                 <TabBase

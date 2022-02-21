@@ -97,21 +97,21 @@ class BrowseStocksPage extends Component {
                     background: `linear-gradient(#000000, #1976d2) fixed`,
                     color: 'white',
                     minHeight: '1000px',
+                    paddingBottom: 20,
                 }}
             >
-                <div className={classes.root}>
-                    <div className="whiteBG">
+                <Container>
+                    <Grid container spacing={3}>
                         <Grid item xs={12}>
                             <Typography
                                 variant="h2"
-                                className={classes.pageTitle}
                                 align="center"
+                                className={classes.pageTitle}
                             >
                                 Teams
                             </Typography>
                         </Grid>
-                    </div>
-                    {/* 
+                        {/* 
                     <div className="whiteBG">
                         <Grid container spacing={3} justify="space-around">
                             <AddFilterRow
@@ -135,8 +135,8 @@ class BrowseStocksPage extends Component {
                             </Grid>
                         </Grid>
                     </div> */}
-                    <div className="whiteBG">
-                        <Container maxWidth="md">
+                        <Grid item xs={2}></Grid>
+                        <Grid item xs={8}>
                             <div className="screenercard">
                                 <CustomizedTables
                                     rows={stockDisplay}
@@ -147,9 +147,10 @@ class BrowseStocksPage extends Component {
                                     )}
                                 />
                             </div>
-                        </Container>
-                    </div>
-                </div>
+                        </Grid>
+                        <Grid item xs={2}></Grid>
+                    </Grid>
+                </Container>
             </div>
         );
     }

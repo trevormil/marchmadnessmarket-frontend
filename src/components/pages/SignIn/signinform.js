@@ -56,6 +56,7 @@ class SignInForm extends Component {
                     background: `linear-gradient(#000000, #1976d2) fixed`,
                     color: 'white',
                     minHeight: '1000px',
+                    paddingBottom: 20,
                 }}
             >
                 <Container>

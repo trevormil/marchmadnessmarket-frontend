@@ -77,9 +77,8 @@ class HomePage extends Component {
                                         Welcome to March Madness Market!
                                     </Typography>
                                     <Typography variant="h6" align="center">
-                                        Buy stock in teams you think will do
-                                        well, and get rewarded with points when
-                                        they win!
+                                        Buy March Madness teams like stocks, and
+                                        get rewarded with points when they win!
                                     </Typography>
                                 </Grid>
                             </Grid>
@@ -369,6 +368,7 @@ class HomePage extends Component {
                         width: '100%',
                         background: `linear-gradient(#000000, #1976d2) fixed`,
                         color: 'white',
+                        paddingBottom: 20,
                     }}
                 >
                     <Container>
@@ -396,7 +396,13 @@ class HomePage extends Component {
                                         <Typography variant="h4" align="center">
                                             Leaderboard
                                         </Typography>
-                                        <LeaderboardPage />
+                                        <div
+                                            style={{
+                                                backgroundColor: 'whitesmoke',
+                                            }}
+                                        >
+                                            <LeaderboardPage />
+                                        </div>
                                     </section>
                                 </div>
                                 <hr />
@@ -538,45 +544,7 @@ class HomePage extends Component {
                                 </div>
                             </Grid>
                             <Grid item xs={12}>
-                                <img
-                                    src="https://tm-market.web.app/nbabracket.jpg"
-                                    width="100%"
-                                />
-                            </Grid>
-                            <Grid
-                                item
-                                xs={12}
-                                sm={12}
-                                align="center"
-                                style={{
-                                    marginTop: 64,
-                                    color: 'black',
-                                    fontWeight: 'bold',
-                                    textAlign: 'center',
-                                }}
-                            >
-                                <div>
-                                    Please use{' '}
-                                    <a href="https://github.com/trevormil/Fantasy-Sports-Stock-Market/issues">
-                                        this link
-                                    </a>{' '}
-                                    to give any feedback. Or, you can
-                                    <a href="mailto:trevormil@comcast.net">
-                                        {' '}
-                                        reach out via e-mail.
-                                    </a>
-                                </div>
-                                <div>
-                                    Note leaderboards, portfolio charts, and
-                                    stock charts are updated once daily at 12:00
-                                    EST. Point values will be updated weekly.
-                                </div>
-                                <br />
-                                <div>
-                                    Disclaimer: This web app was made for fun.
-                                    It uses no real money, and no profit will be
-                                    made from this web app.
-                                </div>
+                                <img src="brackettemp.jpeg" width="100%" />
                             </Grid>
                         </Grid>
                     </Container>

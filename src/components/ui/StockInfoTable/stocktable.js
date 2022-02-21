@@ -14,7 +14,6 @@ class CustomizedTables extends React.Component {
     render() {
         const { classes, rows, headerRow } = this.props;
         return (
-            // <TableContainer component={Paper}>
             <Table
                 className={classes.table}
                 size="small"
@@ -23,8 +22,6 @@ class CustomizedTables extends React.Component {
                 <TableHead>{headerRow}</TableHead>
                 <TableBody>{rows}</TableBody>
             </Table>
-
-            // </TableContainer>
         );
     }
 }

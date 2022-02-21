@@ -2,7 +2,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 //material ui
-import { Container } from '@material-ui/core';
+import { Container, Grid } from '@material-ui/core';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import './app.css';
 import themeObject from './constants/theme';
@@ -115,6 +115,38 @@ class App extends React.Component {
                                 component={StocksPage}
                             />
                             {/* <Route exact path="/rules" component={RulesPage} /> */}
+                        </div>
+                        <div className="footer">
+                            <Grid
+                                item
+                                xs={12}
+                                sm={12}
+                                align="center"
+                                style={{
+                                    paddingTop: 15,
+                                    fontWeight: 'bold',
+                                    textAlign: 'center',
+                                    color: 'white',
+                                }}
+                            >
+                                <div>
+                                    For feedback or questions, visit our{' '}
+                                    <a href="https://github.com/trevormil/Fantasy-Sports-Stock-Market/issues">
+                                        GitHub Issues
+                                    </a>{' '}
+                                    page or
+                                    <a href="mailto:trevormil@comcast.net">
+                                        {' '}
+                                        send us an e-mail.
+                                    </a>
+                                </div>
+                                <br />
+                                <div>
+                                    Disclaimer: This web app was made for fun.
+                                    It uses no real money, and no profit will be
+                                    made from this web app.
+                                </div>
+                            </Grid>
                         </div>
                     </Router>
                 </Provider>
