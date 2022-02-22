@@ -7,7 +7,7 @@ import {
   Typography,
   ListItemIcon,
   CircularProgress,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import { isInvalidDate } from "../../../helpers/validDates";
 //gets current open trades others have listd

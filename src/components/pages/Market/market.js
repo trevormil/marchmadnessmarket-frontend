@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@mui/styles/withStyles';
 // import { getTradesForCurrStock } from '../../../redux/actions/dataActions';
 import {
     updateUserPortfolioData,
     setOwnedStocks,
 } from '../../../redux/actions/userActions';
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import CustomizedTables from '../../ui/StockInfoTable/stockTable';
-import { Grid, Typography, Container } from '@material-ui/core';
+import { Grid, Typography, Container } from '@mui/material';
 // import { getAllTrades } from "../../../redux/actions/dataActions";
 import { getOpenTradeDisplay, openTradeHeaderRow } from './marketrows';
 

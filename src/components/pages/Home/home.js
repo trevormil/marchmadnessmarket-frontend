@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@mui/styles/withStyles';
 import { getStocks, getScores } from '../../../redux/actions/dataActions';
 import { connect } from 'react-redux';
 import {
@@ -11,7 +11,7 @@ import {
     Card,
     Paper,
     Avatar,
-} from '@material-ui/core';
+} from '@mui/material';
 import { infoHeaderRow, getInfoRows } from './homerows';
 import CustomizedTables from '../../ui/StockInfoTable/stockTable';
 import LeaderboardPage from '../Leaderboard/leaderboardPage';
@@ -21,7 +21,7 @@ import {
     MonetizationOn,
     MonetizationOnRounded,
     ShowChartRounded,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
 const styles = (theme) => ({
     ...theme.spreadThis,

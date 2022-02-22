@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@mui/styles/withStyles';
 
 import { connect } from 'react-redux';
-import { Grid, Typography, Container } from '@material-ui/core';
+import { Grid, Typography, Container } from '@mui/material';
 const styles = (theme) => ({
     ...theme.spreadThis,
 });

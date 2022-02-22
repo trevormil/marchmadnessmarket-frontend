@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@mui/styles/withStyles';
 
 import { connect } from 'react-redux';
 import {
@@ -7,7 +7,7 @@ import {
     Typography,
     Container,
     CircularProgress,
-} from '@material-ui/core';
+} from '@mui/material';
 
 import { getStocks, getScores } from '../../../redux/actions/dataActions';
 import LeaderboardPage from './leaderboardPage';

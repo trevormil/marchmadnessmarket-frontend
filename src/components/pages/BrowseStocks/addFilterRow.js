@@ -5,7 +5,9 @@ import {
     getCriteriaSelect,
     getColumnSelect,
 } from './filterSelectMenus';
-import { Grid, Button, withStyles } from '@material-ui/core';
+import { Grid, Button } from '@mui/material';
+
+import withStyles from '@mui/styles/withStyles';
 
 import { getStocks, setStocks } from '../../../redux/actions/dataActions';
 import { isNumeric } from '../../../helpers/filterFunctions';
@@ -97,11 +99,11 @@ class AddFilterRow extends React.Component {
         const errors = this.isValid();
         return (
             <Grid item xs={8}>
-                <Grid container justify="space-around" alignItems="center">
+                <Grid container justifyContent="space-around" alignItems="center">
                     <Grid
                         container
                         spacing={3}
-                        justify="space-around"
+                        justifyContent="space-around"
                         alignItems="center"
                         style={{ color: 'white' }}
                     >

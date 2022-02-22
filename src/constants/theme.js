@@ -1,14 +1,11 @@
-import { createMuiTheme } from '@material-ui/core/styles';
-const theme = createMuiTheme({
+import { createTheme, adaptV4Theme } from '@mui/material/styles';
+const theme = createTheme(adaptV4Theme({
     palette: {
         primary: {
             main: '#1976d2',
-
             contrastText: '#fff',
         },
     },
-
-    // the object to be spread
     spreadThis: {
         typography: {
             useNextVariants: true,
@@ -42,6 +39,6 @@ const theme = createMuiTheme({
             padding: '20px auto 20px auto',
         },
     },
-});
+}));
 
 export default theme;

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 //Redux
 import { connect } from 'react-redux';
 //UI
-import { withStyles, Typography, Container } from '@material-ui/core';
+import { Typography, Container } from '@mui/material';
+import withStyles from '@mui/styles/withStyles';
 //Table Components
 import CustomizedTables from '../../ui/StockInfoTable/stockTable';
 import { getHeaderRow, getRows } from './leaderboardRows';

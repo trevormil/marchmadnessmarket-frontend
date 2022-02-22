@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import * as ROUTES from '../../../constants/routes';
-import { Typography, withStyles } from '@material-ui/core';
+import { Typography } from '@mui/material';
+import withStyles from '@mui/styles/withStyles';
 import TabBase from './tabs';
-import MonetizationOn from '@material-ui/icons/MonetizationOn';
+import MonetizationOn from '@mui/icons-material/MonetizationOn';
 
 const styles = (theme) => ({
     ...theme.spreadThis,

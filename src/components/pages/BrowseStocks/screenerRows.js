@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import * as ROUTES from '../../../constants/routes';
 //import { getLogoName } from "../../../constants/logos";
 
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import {
     Button,
     Checkbox,
@@ -11,7 +11,7 @@ import {
     Typography,
     TableRow,
     TableSortLabel,
-} from '@material-ui/core';
+} from '@mui/material';
 import {
     StyledTableCell,
     StyledTableRow,

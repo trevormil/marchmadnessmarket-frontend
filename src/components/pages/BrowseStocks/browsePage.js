@@ -9,13 +9,8 @@ import {
 } from '../../../redux/actions/dataActions';
 //UI
 import AddFilterRow from './addFilterRow';
-import {
-    withStyles,
-    Typography,
-    Grid,
-    Container,
-    CircularProgress,
-} from '@material-ui/core';
+import { Typography, Grid, Container, CircularProgress } from '@mui/material';
+import withStyles from '@mui/styles/withStyles';
 //Table Components
 import CustomizedTables from '../../ui/StockInfoTable/stockTable';
 import {

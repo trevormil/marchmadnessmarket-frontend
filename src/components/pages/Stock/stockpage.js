@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@mui/styles/withStyles';
 import axios from 'axios';
 import { getBuyTradeDisplay, getSellTradeDisplay } from './tradeDisplay';
 import CustomizedTables from '../../ui/StockInfoTable/stockTable';
@@ -16,14 +16,14 @@ import {
     Grid,
     Container,
     CircularProgress,
-} from '@material-ui/core';
+} from '@mui/material';
 import { createChart } from 'lightweight-charts';
 import { BootstrapInput } from '../../ui/TextInputs/textInputs';
 import { stockInfoHeaderRow, getInfoRows } from './stockInfoRows';
 
 import { isInvalidDate } from '../../../helpers/validDates';
 
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 const styles = (theme) => ({
     ...theme.spreadThis,
 });

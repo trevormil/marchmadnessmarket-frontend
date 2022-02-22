@@ -1,6 +1,6 @@
 import React from 'react';
 import { BootstrapInput } from '../../ui/TextInputs/textInputs';
-import { Grid, Select, MenuItem } from '@material-ui/core';
+import { Grid, Select, MenuItem } from '@mui/material';
 import { isNumeric } from '../../../helpers/filterFunctions';
 
 //gets the drop down menu for columns

@@ -10,7 +10,8 @@ import * as ROUTES from '../../../constants/routes';
 import { logOutUser } from '../../../redux/actions/userActions';
 import store from '../../../redux/stores';
 import { connect } from 'react-redux';
-import { withStyles, Typography, Container } from '@material-ui/core';
+import { Typography, Container } from '@mui/material';
+import withStyles from '@mui/styles/withStyles';
 const styles = (theme) => ({
     ...theme.spreadThis,
 });

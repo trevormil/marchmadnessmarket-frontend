@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 //Redux
 import { connect } from 'react-redux';
 //UI
-import { withStyles, Typography, Container, Grid } from '@material-ui/core';
+import { Typography, Container, Grid } from '@mui/material';
+
+import withStyles from '@mui/styles/withStyles';
 
 import CustomizedTables from '../../ui/StockInfoTable/stockTable';
 import { getHeaderRow, getRows } from './userrows';
@@ -13,7 +15,7 @@ import {
 import { getOtherUserStocks } from '../../../redux/actions/dataActions';
 
 import Blockies from 'react-blockies';
-import MonetizationOn from '@material-ui/icons/MonetizationOn';
+import MonetizationOn from '@mui/icons-material/MonetizationOn';
 //Table Components
 const styles = (theme) => ({
     ...theme.spreadThis,

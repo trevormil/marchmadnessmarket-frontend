@@ -1,11 +1,11 @@
 import React from 'react';
-import TableRow from '@material-ui/core/TableRow';
+import TableRow from '@mui/material/TableRow';
 import {
     StyledTableCell,
     StyledTableRow,
 } from '../../ui/StockInfoTable/styledTableComponents';
 
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import Blockies from 'react-blockies';
 import * as ROUTES from '../../../constants/routes';
 import { Link } from 'react-router-dom';

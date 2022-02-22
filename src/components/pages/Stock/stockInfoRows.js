@@ -3,9 +3,9 @@ import {
     StyledTableRow,
 } from '../../ui/StockInfoTable/styledTableComponents';
 import React from 'react';
-import { TableRow } from '@material-ui/core';
+import { TableRow } from '@mui/material';
 
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 //all following functions help to create the stock info table on right side of stock page
 
 export const stockInfoHeaderRow = (

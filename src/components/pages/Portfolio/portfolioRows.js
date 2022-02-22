@@ -8,11 +8,11 @@ import {
     TableRow,
     Button,
     CircularProgress,
-} from '@material-ui/core';
+} from '@mui/material';
 import * as ROUTES from '../../../constants/routes';
 import { Link } from 'react-router-dom';
 
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 
 //following four functions get the header rows for their respective tables on portfolio page
 

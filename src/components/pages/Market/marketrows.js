@@ -3,12 +3,12 @@ import {
   StyledTableRow,
 } from "../../ui/StockInfoTable/styledTableComponents";
 import React from "react";
-import { TableRow, Button, CircularProgress } from "@material-ui/core";
+import { TableRow, Button, CircularProgress } from "@mui/material";
 import * as ROUTES from "../../../constants/routes";
 import { Link } from "react-router-dom";
 
 //import { getLogoName } from "../../../constants/logos";
-import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { isInvalidDate } from "../../../helpers/validDates";
 //following four functions get the header rows for their respective tables on portfolio page
 

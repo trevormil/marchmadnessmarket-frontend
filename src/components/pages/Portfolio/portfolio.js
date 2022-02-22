@@ -10,11 +10,11 @@ import {
     updateUserPortfolioData,
     setOwnedStocks,
 } from '../../../redux/actions/userActions';
-import { withStyles } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
+import withStyles from '@mui/styles/withStyles';
+import Typography from '@mui/material/Typography';
 import CustomizedTables from '../../ui/StockInfoTable/stockTable';
-import Grid from '@material-ui/core/Grid';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from '@mui/material/Grid';
+import CircularProgress from '@mui/material/CircularProgress';
 import { createChart } from 'lightweight-charts';
 import {
     getPositionsHeaderRow,
@@ -130,7 +130,7 @@ class PortfolioPage extends Component {
                     </Grid>
                 </div>
                 <hr />
-                <Grid container spacing={3} justify="space-around">
+                <Grid container spacing={3} justifyContent="space-around">
                     <Grid item xs={7}>
                         {/* <div className="portfolio-card">
                             <Typography

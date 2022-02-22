@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Typography, Chip, CircularProgress } from "@material-ui/core";
+import { Grid, Typography, Chip, CircularProgress } from "@mui/material";
 
 //displays the currently active filters
 export const getFilterDisplay = (data) => {
@@ -82,7 +82,7 @@ export const getFilterDisplay = (data) => {
   }
   return (
     <div>
-      <Grid container spacing={3} justify="space-between" alignItems="center">
+      <Grid container spacing={3} justifyContent="space-between" alignItems="center">
         <Grid item>
           <Typography variant="h6" display="inline">
             Active Filters:
