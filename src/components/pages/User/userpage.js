@@ -42,7 +42,7 @@ class UserPage extends Component {
     }
     render() {
         const { classes } = this.props;
-        const userJSON = this.props.user.leaderboard.filter(
+        const userJSON = this.props.data.leaderboard.filter(
             (element) => element.userName == this.state.userId
         );
         let stockDisplay = !this.props.otherUserStocks.loading ? (

@@ -51,7 +51,7 @@ class Navigation extends React.Component {
                         textAlign: 'center',
                         verticalAlign: 'center',
                         alignItems: 'center',
-                        width: '25%',
+                        width: '30%',
                         color: 'white',
                         fontWeight: 'bolder',
                         fontSize: '1.25rem',
@@ -59,9 +59,9 @@ class Navigation extends React.Component {
                 >
                     <img
                         height={'50px'}
-                        src="brackettemp.jpeg"
+                        src="mmm-logo-cropped.jpg"
                         style={{ marginRight: '5px' }}
-                    ></img>
+                    />
                     <Typography
                         style={{
                             display: 'flex',
@@ -72,6 +72,8 @@ class Navigation extends React.Component {
                             color: 'white',
                             fontSize: 20,
                             padding: 10,
+
+                            fontWeight: 'bolder',
                         }}
                     >
                         March Madness Market
@@ -90,7 +92,7 @@ class Navigation extends React.Component {
                         textAlign: 'center',
                         verticalAlign: 'center',
                         alignItems: 'center',
-                        width: '25%',
+                        width: '30%',
                         color: 'white',
                         fontSize: '0.75rem',
                     }}
@@ -123,6 +125,7 @@ class Navigation extends React.Component {
                             <Typography
                                 style={{
                                     display: 'flex',
+                                    width: '20%',
                                     flexDirection: 'row-reverse',
                                     textAlign: 'center',
                                     verticalAlign: 'center',

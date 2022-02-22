@@ -51,38 +51,51 @@ class HomePage extends Component {
                     style={{
                         height: '700px',
                         width: '100%',
-                        backgroundImage: `url("bg-bball.jpg")`,
-                        backgroundSize: '100%',
-                        backgroundRepeat: 'no-repeat',
-                        color: 'white',
-                        backgroundBlendMode: 'multiply',
+                        background: `linear-gradient(#000000, #1976d2) fixed`,
                     }}
                 >
                     <div
                         style={{
-                            display: 'flex',
-                            height: '100%',
-                            alignItems: 'center',
-                            justifyContent: 'center',
+                            height: '700px',
+                            width: '100%',
+                            backgroundImage: `url("mmm-logo.jpg")`,
+                            backgroundSize: '700px',
+                            // backgroundRepeat: 'space repeat',
+                            color: 'white',
+                            backgroundBlendMode: 'multiply',
+                            backgroundPosition: 'center',
                         }}
                     >
-                        <Container>
-                            <Grid container spacing={3}>
-                                <Grid item xs={6}>
-                                    <Typography
-                                        variant="h2"
-                                        className={classes.pageTitle}
-                                        align="center"
-                                    >
-                                        Welcome to March Madness Market!
-                                    </Typography>
-                                    <Typography variant="h6" align="center">
-                                        Buy March Madness teams like stocks, and
-                                        get rewarded with points when they win!
-                                    </Typography>
+                        <div
+                            style={{
+                                display: 'flex',
+                                height: '100%',
+                                // alignItems: 'center',
+                                justifyContent: 'center',
+                            }}
+                        >
+                            <Container>
+                                <Grid container spacing={3}>
+                                    <Grid item xs={12}>
+                                        <Typography
+                                            variant="h2"
+                                            className={classes.pageTitle}
+                                            align="center"
+                                            style={{ paddingTop: 25 }}
+                                        >
+                                            Welcome to March Madness Market!
+                                        </Typography>
+
+                                        {/* <Typography variant="h6" align="center">
+                                            <img
+                                                src="mmm-logo.jpg"
+                                                height="300px"
+                                            />
+                                        </Typography> */}
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                        </Container>
+                            </Container>
+                        </div>
                     </div>
                 </div>
                 <div
@@ -103,7 +116,7 @@ class HomePage extends Component {
                                     }}
                                 >
                                     <Typography variant="h3" align="center">
-                                        Rules
+                                        How It Works
                                     </Typography>
                                 </div>
                             </Grid>
@@ -322,8 +335,8 @@ class HomePage extends Component {
                                                 Points are rewarded whenever a
                                                 team wins, excluding play-in
                                                 games. The amount of points per
-                                                win per share is equivalent to
-                                                their seed number.
+                                                win per share is equal to their
+                                                seed number.
                                             </Typography>
                                         </div>
                                     </div>
@@ -355,7 +368,7 @@ class HomePage extends Component {
                             <Grid item xs={12} style={{ marginTop: 20 }}>
                                 <Typography align="center">
                                     For example, let's say you own 10 shares of
-                                    Team ABC (a #10 seed), and they win two
+                                    Florida (a #10 seed), and they win two
                                     games. You will receive 200 points (10
                                     shares x 10 seed x 2 wins).
                                 </Typography>
