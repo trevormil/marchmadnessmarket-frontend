@@ -61,8 +61,8 @@ class SignInForm extends Component {
             >
                 <Container>
                     <Grid container spacing={3}>
-                        <Grid item xs={3}></Grid>
-                        <Grid item xs={6}>
+                        <Grid item md={3} xs={0}></Grid>
+                        <Grid item xs={12} md={6}>
                             <Typography
                                 variant="h2"
                                 className={classes.pageTitle}
@@ -156,7 +156,7 @@ class SignInForm extends Component {
                                 </div>
                             </Typography>
                         </Grid>
-                        <Grid item xs={3}></Grid>
+                        <Grid item md={3} xs={0}></Grid>
                     </Grid>
                 </Container>
             </div>

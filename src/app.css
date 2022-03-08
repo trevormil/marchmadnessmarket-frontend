@@ -52,11 +52,11 @@ code {
 }
 
 #market-overview {
-  overflow: scroll;
+  overflow: auto;
 }
 
 #livescorefeed {
-  overflow: scroll;
+  overflow: auto;
 }
 .fw-iframe {
   border: 5px solid black;
@@ -64,10 +64,11 @@ code {
 .card {
   border: 5px solid black;
 }
+
+
 .card section {
   background-color: #1976d2;
   color: white
-  
 }
 
 .portfolio-card {
@@ -80,4 +81,5 @@ code {
 .screenercard {
   background-color: #1976d2;
   border: 5px solid black;
+  overflow: auto;
 }

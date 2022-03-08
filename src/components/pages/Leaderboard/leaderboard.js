@@ -2,12 +2,7 @@ import React, { Component } from 'react';
 import withStyles from '@mui/styles/withStyles';
 
 import { connect } from 'react-redux';
-import {
-    Grid,
-    Typography,
-    Container,
-    CircularProgress,
-} from '@mui/material';
+import { Grid, Typography, Container, CircularProgress } from '@mui/material';
 
 import { getStocks, getScores } from '../../../redux/actions/dataActions';
 import LeaderboardPage from './leaderboardPage';
@@ -56,11 +51,11 @@ class Leaderboard extends Component {
                                 </Typography>
                             </div>
                         </Grid>
-                        <Grid item xs={3}></Grid>
-                        <Grid item xs={6}>
+                        <Grid item md={3} xs={0}></Grid>
+                        <Grid item xs={12} md={6}>
                             <LeaderboardPage />
                         </Grid>
-                        <Grid item xs={3}></Grid>
+                        <Grid item md={3} xs={0}></Grid>
                     </Grid>
                 </Container>
             </div>

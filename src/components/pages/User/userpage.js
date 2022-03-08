@@ -45,9 +45,16 @@ class UserPage extends Component {
         const userJSON = this.props.data.leaderboard.filter(
             (element) => element.userName == this.state.userId
         );
+
         let stockDisplay = !this.props.otherUserStocks.loading ? (
             getRows(
-                this.props.otherUserStocks.stocks,
+                this.props.otherUserStocks.stocks.sort((a, b) => {
+                    if (b.currPoints - a.currPoints != 0) {
+                        return b.currPoints - a.currPoints;
+                    } else {
+                        return b.numShares - a.numShares;
+                    }
+                }),
                 window.localStorage.getItem('username') == this.state.userId
             )
         ) : (
@@ -58,6 +65,7 @@ class UserPage extends Component {
                 <StyledTableCell></StyledTableCell>
             </StyledTableRow>
         );
+        console.log(this.props.otherUserStocks.stocks);
         return (
             <div
                 style={{
@@ -93,7 +101,7 @@ class UserPage extends Component {
                                           userJSON[0]
                                               ? userJSON[0]['totalAccountValue']
                                               : '0'
-                                      } Points)`
+                                      })`
                                     : 'Loading....'}
                             </span>
                         </Typography>
@@ -109,10 +117,12 @@ class UserPage extends Component {
                         {}
                     </Typography>
                     <div className="card">
-                        <CustomizedTables
-                            rows={stockDisplay}
-                            headerRow={getHeaderRow()}
-                        />
+                        <div style={{ overflow: 'auto' }}>
+                            <CustomizedTables
+                                rows={stockDisplay}
+                                headerRow={getHeaderRow()}
+                            />
+                        </div>
                     </div>
                 </Container>
             </div>

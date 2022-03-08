@@ -36,7 +36,7 @@ class HomePage extends Component {
     render() {
         const { classes } = this.props;
         const marketOverviewStyle = {
-            overflow: 'scroll',
+            overflow: 'auto',
             height: '500px',
         };
 
@@ -83,7 +83,7 @@ class HomePage extends Component {
                                             align="center"
                                             style={{ paddingTop: 25 }}
                                         >
-                                            Welcome to March Madness Market!
+                                            Welcome!
                                         </Typography>
 
                                         {/* <Typography variant="h6" align="center">
@@ -100,7 +100,6 @@ class HomePage extends Component {
                 </div>
                 <div
                     style={{
-                        height: '600px',
                         width: '100%',
                         background: `linear-gradient(#1976d2, #000000) fixed`,
                         color: 'white',
@@ -120,252 +119,176 @@ class HomePage extends Component {
                                     </Typography>
                                 </div>
                             </Grid>
-                            <Grid item xs={12}>
+                            <Grid item xs={12} md={3}>
                                 <div
                                     style={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
                                         alignItems: 'center',
+                                        textAlign: 'center',
+                                        justifyContent: 'center',
+                                        display: 'flex',
                                     }}
                                 >
-                                    <div
+                                    <Avatar
                                         style={{
-                                            width: '20%',
-                                            marginLeft: 10,
-                                            marginRight: 10,
+                                            height: '200px',
+                                            width: '200px',
+                                            backgroundColor: 'black',
                                         }}
                                     >
-                                        <div
+                                        <MonetizationOnRounded
                                             style={{
-                                                alignItems: 'center',
-                                                textAlign: 'center',
-                                                justifyContent: 'center',
-                                                display: 'flex',
+                                                height: '180px',
+                                                width: '180px',
+                                                backgroundColor: 'black',
                                             }}
-                                        >
-                                            <Avatar
-                                                style={{
-                                                    height: '200px',
-                                                    width: '200px',
-                                                    backgroundColor: 'black',
-                                                }}
-                                            >
-                                                <MonetizationOnRounded
-                                                    style={{
-                                                        height: '180px',
-                                                        width: '180px',
-                                                        backgroundColor:
-                                                            'black',
-                                                    }}
-                                                />
-                                            </Avatar>
-                                        </div>
-                                    </div>
-                                    <div
-                                        style={{
-                                            width: '20%',
-                                            marginLeft: 10,
-                                            marginRight: 10,
-                                        }}
-                                    >
-                                        <div
-                                            style={{
-                                                alignItems: 'center',
-                                                textAlign: 'center',
-                                                justifyContent: 'center',
-                                                display: 'flex',
-                                            }}
-                                        >
-                                            <Avatar
-                                                style={{
-                                                    height: '200px',
-                                                    width: '200px',
-                                                    backgroundColor: 'black',
-                                                }}
-                                            >
-                                                <ShowChartRounded
-                                                    style={{
-                                                        height: '180px',
-                                                        width: '180px',
-                                                        backgroundColor:
-                                                            'black',
-                                                    }}
-                                                />
-                                            </Avatar>
-                                        </div>
-                                    </div>
-                                    <div
-                                        style={{
-                                            width: '20%',
-                                            marginLeft: 10,
-                                            marginRight: 10,
-                                        }}
-                                    >
-                                        <div
-                                            style={{
-                                                alignItems: 'center',
-                                                textAlign: 'center',
-                                                justifyContent: 'center',
-                                                display: 'flex',
-                                            }}
-                                        >
-                                            <Avatar
-                                                style={{
-                                                    height: '200px',
-                                                    width: '200px',
-                                                    backgroundColor: 'black',
-                                                }}
-                                            >
-                                                <SportsBasketballRounded
-                                                    style={{
-                                                        height: '180px',
-                                                        width: '180px',
-                                                        backgroundColor:
-                                                            'black',
-                                                    }}
-                                                />
-                                            </Avatar>
-                                        </div>
-                                    </div>
-                                    <div
-                                        style={{
-                                            width: '20%',
-                                            marginLeft: 10,
-                                            marginRight: 10,
-                                        }}
-                                    >
-                                        <div
-                                            style={{
-                                                alignItems: 'center',
-                                                textAlign: 'center',
-                                                justifyContent: 'center',
-                                                display: 'flex',
-                                            }}
-                                        >
-                                            <Avatar
-                                                style={{
-                                                    height: '200px',
-                                                    width: '200px',
-                                                    backgroundColor: 'black',
-                                                }}
-                                            >
-                                                <EmojiEventsRounded
-                                                    style={{
-                                                        height: '180px',
-                                                        width: '180px',
-                                                        backgroundColor:
-                                                            'black',
-                                                    }}
-                                                />
-                                            </Avatar>
-                                        </div>
-                                    </div>
+                                        />
+                                    </Avatar>
                                 </div>
                                 <div
                                     style={{
-                                        display: 'flex',
+                                        alignItems: 'center',
+                                        textAlign: 'center',
                                         justifyContent: 'center',
+                                        display: 'flex',
+                                        marginTop: 30,
                                     }}
                                 >
-                                    <div
-                                        style={{
-                                            width: '20%',
-                                            marginLeft: 10,
-                                            marginRight: 10,
-                                        }}
-                                    >
-                                        <div
-                                            style={{
-                                                alignItems: 'center',
-                                                textAlign: 'center',
-                                                justifyContent: 'center',
-                                                display: 'flex',
-                                                marginTop: 30,
-                                            }}
-                                        >
-                                            <Typography>
-                                                Everyone is given a $1000 budget
-                                                of in-game money which must be
-                                                spent before March 17th at 12:00
-                                                PM (unspent funds are
-                                                worthless).
-                                            </Typography>
-                                        </div>
-                                    </div>
-                                    <div
-                                        style={{
-                                            width: '20%',
-                                            marginLeft: 10,
-                                            marginRight: 10,
-                                        }}
-                                    >
-                                        <div
-                                            style={{
-                                                textAlign: 'center',
-                                                justifyContent: 'center',
-                                                display: 'flex',
-                                                marginTop: 30,
-                                            }}
-                                        >
-                                            <Typography>
-                                                Prices for all teams' stock is
-                                                fixed at $1 per share. You can
-                                                buy as much or as little stock
-                                                of a team as you wish.
-                                            </Typography>
-                                        </div>{' '}
-                                    </div>
-
-                                    <div
-                                        style={{
-                                            width: '20%',
-                                            marginLeft: 10,
-                                            marginRight: 10,
-                                        }}
-                                    >
-                                        <div
-                                            style={{
-                                                textAlign: 'center',
-                                                justifyContent: 'center',
-                                                display: 'flex',
-                                                marginTop: 30,
-                                            }}
-                                        >
-                                            <Typography>
-                                                Points are rewarded whenever a
-                                                team wins, excluding play-in
-                                                games. The amount of points per
-                                                win per share is equal to their
-                                                seed number.
-                                            </Typography>
-                                        </div>
-                                    </div>
-                                    <div
-                                        style={{
-                                            width: '20%',
-                                            marginLeft: 10,
-                                            marginRight: 10,
-                                        }}
-                                    >
-                                        <div
-                                            style={{
-                                                alignItems: 'center',
-                                                textAlign: 'center',
-                                                justifyContent: 'center',
-                                                display: 'flex',
-                                                marginTop: 30,
-                                            }}
-                                        >
-                                            <Typography>
-                                                The winner will be the one who
-                                                accumulates the most points over
-                                                the duration of the tournament.
-                                            </Typography>
-                                        </div>
-                                    </div>
+                                    <Typography>
+                                        Everyone is given a $1000 budget of
+                                        in-game money which must be spent before
+                                        March 17th at 12:00 PM (unspent funds
+                                        are worthless).
+                                    </Typography>
                                 </div>
                             </Grid>
-                            <Grid item xs={12} style={{ marginTop: 20 }}>
+                            <Grid item xs={12} md={3}>
+                                <div
+                                    style={{
+                                        alignItems: 'center',
+                                        textAlign: 'center',
+                                        justifyContent: 'center',
+                                        display: 'flex',
+                                    }}
+                                >
+                                    <Avatar
+                                        style={{
+                                            height: '200px',
+                                            width: '200px',
+                                            backgroundColor: 'black',
+                                        }}
+                                    >
+                                        <ShowChartRounded
+                                            style={{
+                                                height: '180px',
+                                                width: '180px',
+                                                backgroundColor: 'black',
+                                            }}
+                                        />
+                                    </Avatar>
+                                </div>
+                                <div
+                                    style={{
+                                        textAlign: 'center',
+                                        justifyContent: 'center',
+                                        display: 'flex',
+                                        marginTop: 30,
+                                    }}
+                                >
+                                    <Typography>
+                                        Prices for all teams' stock is fixed at
+                                        $1 per share. You can buy as much or as
+                                        little stock of a team as you wish.
+                                    </Typography>
+                                </div>
+                            </Grid>
+                            <Grid item xs={12} md={3}>
+                                <div
+                                    style={{
+                                        alignItems: 'center',
+                                        textAlign: 'center',
+                                        justifyContent: 'center',
+                                        display: 'flex',
+                                    }}
+                                >
+                                    <Avatar
+                                        style={{
+                                            height: '200px',
+                                            width: '200px',
+                                            backgroundColor: 'black',
+                                        }}
+                                    >
+                                        <SportsBasketballRounded
+                                            style={{
+                                                height: '180px',
+                                                width: '180px',
+                                                backgroundColor: 'black',
+                                            }}
+                                        />
+                                    </Avatar>
+                                </div>
+                                <div
+                                    style={{
+                                        textAlign: 'center',
+                                        justifyContent: 'center',
+                                        display: 'flex',
+                                        marginTop: 30,
+                                    }}
+                                >
+                                    <Typography>
+                                        Points are rewarded whenever a team
+                                        wins, excluding play-in games. The
+                                        amount of points per win per share is
+                                        equal to their seed number.
+                                    </Typography>
+                                </div>
+                            </Grid>
+                            <Grid item xs={12} md={3}>
+                                <div
+                                    style={{
+                                        alignItems: 'center',
+                                        textAlign: 'center',
+                                        justifyContent: 'center',
+                                        display: 'flex',
+                                    }}
+                                >
+                                    <Avatar
+                                        style={{
+                                            height: '200px',
+                                            width: '200px',
+                                            backgroundColor: 'black',
+                                        }}
+                                    >
+                                        <EmojiEventsRounded
+                                            style={{
+                                                height: '180px',
+                                                width: '180px',
+                                                backgroundColor: 'black',
+                                            }}
+                                        />
+                                    </Avatar>
+                                </div>
+                                <div
+                                    style={{
+                                        alignItems: 'center',
+                                        textAlign: 'center',
+                                        justifyContent: 'center',
+                                        display: 'flex',
+                                        marginTop: 30,
+                                    }}
+                                >
+                                    <Typography>
+                                        The winner will be the one who
+                                        accumulates the most points over the
+                                        duration of the tournament.
+                                    </Typography>
+                                </div>
+                            </Grid>
+
+                            <Grid
+                                item
+                                xs={12}
+                                style={{ marginTop: 20, paddingBottom: 30 }}
+                            >
                                 <Typography align="center">
                                     For example, let's say you own 10 shares of
                                     Florida (a #10 seed), and they win two
@@ -398,11 +321,11 @@ class HomePage extends Component {
                                     </Typography>
                                 </div>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={12} md={6}>
                                 <div className="card">
                                     <section
                                         style={{
-                                            overflow: 'scroll',
+                                            overflow: 'auto',
                                             height: '400px',
                                         }}
                                     >
@@ -418,8 +341,8 @@ class HomePage extends Component {
                                         </div>
                                     </section>
                                 </div>
-                                <hr />
-                                <div className="card">
+
+                                <div className="card" style={{ marginTop: 24 }}>
                                     <section>
                                         <Typography variant="h4" align="center">
                                             Scores
@@ -499,11 +422,11 @@ class HomePage extends Component {
                                     </div>
                                 </div>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={12} md={6}>
                                 <div className="card">
                                     <section
                                         style={{
-                                            overflow: 'scroll',
+                                            overflow: 'auto',
                                             height: '400px',
                                         }}
                                     >
@@ -528,9 +451,7 @@ class HomePage extends Component {
                                         </div>
                                     </section>
                                 </div>
-
-                                <hr />
-                                <div className="card">
+                                <div className="card" style={{ marginTop: 24 }}>
                                     <section>
                                         <Typography variant="h4" align="center">
                                             Upcoming Events
@@ -557,7 +478,7 @@ class HomePage extends Component {
                                 </div>
                             </Grid>
                             <Grid item xs={12}>
-                                <img src="brackettemp.jpeg" width="100%" />
+                                <img src="brackettemp.webp" width="100%" />
                             </Grid>
                         </Grid>
                     </Container>

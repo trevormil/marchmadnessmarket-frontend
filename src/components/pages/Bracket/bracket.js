@@ -2,12 +2,7 @@ import React, { Component } from 'react';
 import withStyles from '@mui/styles/withStyles';
 
 import { connect } from 'react-redux';
-import {
-    Grid,
-    Typography,
-    Container,
-    CircularProgress,
-} from '@mui/material';
+import { Grid, Typography, Container, CircularProgress } from '@mui/material';
 
 import { getStocks, getScores } from '../../../redux/actions/dataActions';
 const styles = (theme) => ({
@@ -57,12 +52,9 @@ class BracketPage extends Component {
                         </Grid>
 
                         <Grid item xs={12}>
-                            <img
-                                src="brackettemp.jpeg"
-                                width="100%"
-                            />
+                            <img src="brackettemp.webp" width="100%" />
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={12} md={6}>
                             <div className="card">
                                 <section>
                                     <Typography variant="h4" align="center">
@@ -88,7 +80,7 @@ class BracketPage extends Component {
                                 </div>
                             </div>
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={12} md={6}>
                             <div className="card">
                                 <section>
                                     <Typography variant="h4" align="center">

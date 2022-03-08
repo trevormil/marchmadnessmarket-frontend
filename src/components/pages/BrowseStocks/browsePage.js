@@ -130,8 +130,8 @@ class BrowseStocksPage extends Component {
                             </Grid>
                         </Grid>
                     </div> */}
-                        <Grid item xs={2}></Grid>
-                        <Grid item xs={8}>
+                        <Grid item xs={0} md={2}></Grid>
+                        <Grid item xs={12} md={8}>
                             <div className="screenercard">
                                 <CustomizedTables
                                     rows={stockDisplay}
@@ -143,7 +143,7 @@ class BrowseStocksPage extends Component {
                                 />
                             </div>
                         </Grid>
-                        <Grid item xs={2}></Grid>
+                        <Grid item xs={0} md={2}></Grid>
                     </Grid>
                 </Container>
             </div>

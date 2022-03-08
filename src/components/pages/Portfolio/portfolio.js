@@ -159,7 +159,7 @@ class PortfolioPage extends Component {
                             <div
                                 style={{
                                     maxHeight: '250px',
-                                    overflow: 'scroll',
+                                    overflow: 'auto',
                                 }}
                             >
                                 <CustomizedTables
@@ -194,7 +194,7 @@ class PortfolioPage extends Component {
                             <div
                                 style={{
                                     maxHeight: '555px',
-                                    overflow: 'scroll',
+                                    overflow: 'auto',
                                 }}
                             >
                                 <CustomizedTables
