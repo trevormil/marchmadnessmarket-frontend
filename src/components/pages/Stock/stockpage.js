@@ -45,6 +45,7 @@ class StockPage extends Component {
         numToBuy: '',
         numToIPOSell: '',
         chart: null,
+        buyIsLoading: false,
     };
     constructor(props) {
         super(props);
@@ -105,25 +106,27 @@ class StockPage extends Component {
             );
         });
     };
-    attemptToIPOBuy = () => {
-        axios({
+    attemptToIPOBuy = async () => {
+        this.setState({ buyIsLoading: true });
+        await axios({
             method: 'put',
             url: `/stocks/${this.state.stockId}/buyIpo`,
             data: {
                 numShares: Number(this.state.numToBuy),
             },
-        }).then(() => {
+        }).then(async () => {
             this.setState({
-                numToBuy: null,
+                numToBuy: 0,
             });
-            document.getElementById('numToBuy').value = null;
-            this.props.setOwnedStocks(this.props.user);
-            this.props.getCurrStock(
+            // document.getElementById('numToBuy').value = null;
+            await this.props.setOwnedStocks(this.props.user);
+            await this.props.getCurrStock(
                 this.props.data,
                 this.props.data.filters,
                 this.state.stockId
             );
         });
+        this.setState({ buyIsLoading: false });
     };
     attemptToIPOSell = () => {
         axios({
@@ -249,30 +252,7 @@ class StockPage extends Component {
                                 )}
                             </Typography>
                         </Grid>
-                        <Grid item xs={3}></Grid>
-                        <Grid item xs={6}>
-                            <div className="portfolio-card">
-                                <Typography
-                                    variant="h4"
-                                    className={classes.pageTitle}
-                                    align="center"
-                                >
-                                    Statistics and Info
-                                </Typography>
-                                {this.props.data.loading ? (
-                                    <CircularProgress size={30} />
-                                ) : (
-                                    <CustomizedTables
-                                        headerRow={stockInfoHeaderRow}
-                                        rows={getInfoRows(
-                                            this.props.data.currStock.stockData
-                                        )}
-                                    ></CustomizedTables>
-                                )}
-                            </div>
-                        </Grid>
-                        <Grid item xs={3}></Grid>
-                        {this.props.user && this.props.user.authenticated && (
+                        {this.props.user && this.props.user.authenticated ? (
                             <>
                                 <Grid item xs={3}></Grid>
                                 <Grid item xs={6} align="center">
@@ -282,10 +262,9 @@ class StockPage extends Component {
                                                 variant="h4"
                                                 align="center"
                                             >
-                                                Buy Shares
+                                                Buy Stock
                                             </Typography>
                                         </section>
-
                                         <div
                                             style={{
                                                 backgroundColor: 'whitesmoke',
@@ -293,30 +272,40 @@ class StockPage extends Component {
                                                 alignItems: 'center',
                                             }}
                                         >
-                                            <Typography
-                                                variant="h6"
-                                                align="center"
-                                            >
-                                                Shares Owned: {numSharesOwned}
-                                            </Typography>
-                                            <Typography
-                                                variant="h6"
-                                                align="center"
-                                                style={{
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                }}
-                                            >
-                                                Account Balance:{' '}
-                                                <MonetizationOnIcon />
-                                                {this.props.user.loading ||
-                                                this.props.data.loading
-                                                    ? 'Loading...'
-                                                    : `${this.props.user.accountBalance.toFixed(
-                                                          2
-                                                      )}`}
-                                            </Typography>
+                                            {this.state.buyIsLoading ? (
+                                                <CircularProgress size={30} />
+                                            ) : (
+                                                <>
+                                                    <Typography
+                                                        variant="h6"
+                                                        align="center"
+                                                    >
+                                                        Shares Owned:{' '}
+                                                        {numSharesOwned}
+                                                    </Typography>
+                                                    <Typography
+                                                        variant="h6"
+                                                        align="center"
+                                                        style={{
+                                                            display: 'flex',
+                                                            alignItems:
+                                                                'center',
+                                                            justifyContent:
+                                                                'center',
+                                                        }}
+                                                    >
+                                                        Account Balance:{' '}
+                                                        <MonetizationOnIcon />
+                                                        {this.props.user
+                                                            .loading ||
+                                                        this.props.data.loading
+                                                            ? 'Loading...'
+                                                            : `${this.props.user.accountBalance.toFixed(
+                                                                  2
+                                                              )}`}
+                                                    </Typography>
+                                                </>
+                                            )}
                                             <hr />
                                             <BootstrapInput
                                                 id="numToBuy"
@@ -373,8 +362,8 @@ class StockPage extends Component {
                                                     align="center"
                                                 >
                                                     *Once you click buy, there
-                                                    is no selling. It
-                                                    is permanent.
+                                                    is no selling. It is
+                                                    permanent.
                                                 </Typography>
                                             </div>
                                         </div>
@@ -382,7 +371,45 @@ class StockPage extends Component {
                                 </Grid>
                                 <Grid item xs={3}></Grid>
                             </>
+                        ) : (
+                            <Grid item xs={12}>
+                                {this.props.user &&
+                                !this.props.user.authenticated ? (
+                                    <Typography align="center">
+                                        Note: You must be logged in to buy stock
+                                        in this team.
+                                    </Typography>
+                                ) : (
+                                    <Typography align="center">
+                                        To view more info about a team (and to
+                                        buy), click on their name or logo below.
+                                    </Typography>
+                                )}
+                            </Grid>
                         )}
+                        <Grid item xs={3}></Grid>
+                        <Grid item xs={6}>
+                            <div className="portfolio-card">
+                                <Typography
+                                    variant="h4"
+                                    className={classes.pageTitle}
+                                    align="center"
+                                >
+                                    Statistics and Info
+                                </Typography>
+                                {this.props.data.loading ? (
+                                    <CircularProgress size={30} />
+                                ) : (
+                                    <CustomizedTables
+                                        headerRow={stockInfoHeaderRow}
+                                        rows={getInfoRows(
+                                            this.props.data.currStock.stockData
+                                        )}
+                                    ></CustomizedTables>
+                                )}
+                            </div>
+                        </Grid>
+                        <Grid item xs={3}></Grid>
 
                         {/* 
           <Grid item xs={12}>

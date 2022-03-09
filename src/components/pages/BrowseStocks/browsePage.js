@@ -106,6 +106,19 @@ class BrowseStocksPage extends Component {
                                 Teams
                             </Typography>
                         </Grid>
+                        <Grid item xs={12}>
+                            {this.props.user &&
+                            !this.props.user.authenticated ? (
+                                <Typography align="center">
+                                    Note: You must be logged in to buy teams.
+                                </Typography>
+                            ) : (
+                                <Typography align="center">
+                                    To view more info about a team (and to buy),
+                                    click on their name or logo below.
+                                </Typography>
+                            )}
+                        </Grid>
                         {/* 
                     <div className="whiteBG">
                         <Grid container spacing={3} justify="space-around">
