@@ -43,19 +43,13 @@ class UserPage extends Component {
     render() {
         const { classes } = this.props;
         const userJSON = this.props.data.leaderboard.filter(
-            (element) => element.userName == this.state.userId
+            (element) => element.userName === this.state.userId
         );
-
+        console.log(this.props.otherUserStocks.stocks)
         let stockDisplay = !this.props.otherUserStocks.loading ? (
             getRows(
-                this.props.otherUserStocks.stocks.sort((a, b) => {
-                    if (b.currPoints - a.currPoints != 0) {
-                        return b.currPoints - a.currPoints;
-                    } else {
-                        return b.numShares - a.numShares;
-                    }
-                }),
-                window.localStorage.getItem('username') == this.state.userId
+                this.props.otherUserStocks.stocks,
+                window.localStorage.getItem('username') === this.state.userId
             )
         ) : (
             <StyledTableRow>
@@ -65,7 +59,6 @@ class UserPage extends Component {
                 <StyledTableCell></StyledTableCell>
             </StyledTableRow>
         );
-        console.log(this.props.otherUserStocks.stocks);
         return (
             <div
                 style={{

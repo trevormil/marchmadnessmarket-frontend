@@ -6,6 +6,7 @@ import { Grid, Typography, Container, CircularProgress } from '@mui/material';
 
 import { getStocks, getScores } from '../../../redux/actions/dataActions';
 import LeaderboardPage from './leaderboardPage';
+import { LAST_UPDATED_AT } from '../../../constants/lastupdated';
 const styles = (theme) => ({
     ...theme.spreadThis,
 });
@@ -14,7 +15,7 @@ class Leaderboard extends Component {
     constructor(props) {
         super(props);
         this.props.getStocks([]);
-        this.props.getScores([]);
+        // this.props.getScores([]);
     }
 
     render() {
@@ -48,6 +49,13 @@ class Leaderboard extends Component {
                                     align="center"
                                 >
                                     Leaderboard
+                                </Typography>
+                            </div>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <div>
+                                <Typography align="center">
+                                    Last Updated: {LAST_UPDATED_AT}
                                 </Typography>
                             </div>
                         </Grid>

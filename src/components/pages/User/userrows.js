@@ -22,8 +22,11 @@ export function getRows(stocks, isOwnPortfolio) {
             </StyledTableRow>
         );
     }
+
+    // console.log('STOCKS', stocks);
     return stocks ? (
         stocks.map((row) => {
+            // console.log('STOCKS', stocks);
             row.currPoints = row.currPoints ? row.currPoints : 0;
             return (
                 <StyledTableRow>

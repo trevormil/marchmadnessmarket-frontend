@@ -13,17 +13,15 @@ import { sort, filterStocks } from '../../helpers/filterFunctions';
 export const getStocks = (filterArr) => async (dispatch) => {
     dispatch({ type: LOADING_STOCKS });
     let payloadData = {};
-    await axios.get('/leaderboard').then((res) => {
-        let data = [];
-        if (res) {
-            res.data.forEach((stock) => data.push(stock));
-        }
-        payloadData.leaderboard = data;
-    });
-
-    await axios
-        .get('/stocks')
-        .then((res) => {
+    await Promise.all([
+        axios.get('/leaderboard').then((res) => {
+            let data = [];
+            if (res) {
+                res.data.forEach((stock) => data.push(stock));
+            }
+            payloadData.leaderboard = data;
+        }),
+        axios.get('/stocks').then((res) => {
             payloadData.stocks = sort(
                 filterStocks(res.data, filterArr),
                 'seed',
@@ -38,6 +36,9 @@ export const getStocks = (filterArr) => async (dispatch) => {
                 },
             };
             payloadData.trades = [];
+        }),
+    ])
+        .then(() => {
             dispatch({
                 type: SET_STOCKS,
                 payload: payloadData,
@@ -59,7 +60,6 @@ export const getScores = (filterArr) => async (dispatch) => {
     await axios
         .get('/scores')
         .then((res) => {
-
             payloadData.scores = res.data;
 
             dispatch({
@@ -78,14 +78,37 @@ export const getScores = (filterArr) => async (dispatch) => {
 };
 
 //gets all stocks and updates  data
-export const getOtherUserStocks = (userId) => (dispatch) => {
+export const getOtherUserStocks = (userId) => async (dispatch) => {
     dispatch({ type: LOADING_OTHER_USER_STOCKS });
     let payloadData = {};
 
-    axios
+    await axios
         .get(`/userStocks/${userId}`)
         .then((res) => {
-            payloadData.stocks = res.data;
+            payloadData.stocks = res.data.sort((a, b) => {
+                console.log(a, b);
+                console.log(b.currPoints * b.numShares);
+                console.log(a.currPoints * a.numShares);
+                if (!a.currPoints) {
+                    a.currPoints = 0;
+                }
+                if (!b.currPoints) {
+                    b.currPoints = 0;
+                }
+
+                if (
+                    b.currPoints * b.numShares - a.currPoints * a.numShares !==
+                    0
+                ) {
+                    return (
+                        b.currPoints * b.numShares - a.currPoints * a.numShares
+                    );
+                } else {
+                    return b.numShares - a.numShares;
+                }
+            });
+            console.log(payloadData);
+            console.log(res.data);
             dispatch({
                 type: SET_OTHER_USER_STOCKS,
                 payload: payloadData,
