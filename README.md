@@ -2,7 +2,7 @@ Fantasy sports, stock markets, and the NCAA March Madness tournament are all ver
 
 URL: https://www.marchmadnessmarket.com
 
-Backend API Code: https://github.com/trevormil/Fantasy-Stock-Market-API
+Backend API Code: https://github.com/trevormil/marchmadnessmarket-backend
 
 ![image](./public/mmm-logo.jpg)
 
