@@ -106,7 +106,7 @@ class BrowseStocksPage extends Component {
                                 Teams
                             </Typography>
                         </Grid>
-                        <Grid item xs={12}>
+                        {/* <Grid item xs={12}>
                             {this.props.user &&
                             !this.props.user.authenticated ? (
                                 <Typography align="center">
@@ -118,7 +118,7 @@ class BrowseStocksPage extends Component {
                                     click on their name or logo below.
                                 </Typography>
                             )}
-                        </Grid>
+                        </Grid> */}
                         {/* 
                     <div className="whiteBG">
                         <Grid container spacing={3} justify="space-around">

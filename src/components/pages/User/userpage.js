@@ -12,7 +12,10 @@ import {
     StyledTableCell,
     StyledTableRow,
 } from '../../ui/StockInfoTable/styledTableComponents';
-import { getOtherUserStocks } from '../../../redux/actions/dataActions';
+import {
+    getOtherUserStocks,
+    getStocks,
+} from '../../../redux/actions/dataActions';
 
 import Blockies from 'react-blockies';
 import MonetizationOn from '@mui/icons-material/MonetizationOn';
@@ -29,6 +32,8 @@ const waitForURLUpdate = () => {
     }
     let str = window.location.pathname.split('/').pop();
     str = str.replace('%20', ' ');
+    
+    console.log('URL PARSED');
     return str;
 };
 
@@ -38,27 +43,35 @@ class UserPage extends Component {
     };
     constructor(props) {
         super(props);
+        console.log(this.state.userId);
         this.props.getOtherUserStocks(this.state.userId);
+        if (!this.props.data.stocks || !this.props.data.stocks.length) {
+            this.props.getStocks([]);
+        }
     }
     render() {
         const { classes } = this.props;
+        console.log(this.props.data.leaderboard);
         const userJSON = this.props.data.leaderboard.filter(
             (element) => element.userName === this.state.userId
         );
-        console.log(this.props.otherUserStocks.stocks)
-        let stockDisplay = !this.props.otherUserStocks.loading ? (
-            getRows(
-                this.props.otherUserStocks.stocks,
-                window.localStorage.getItem('username') === this.state.userId
-            )
-        ) : (
-            <StyledTableRow>
-                <StyledTableCell>Loading...</StyledTableCell>
-                <StyledTableCell></StyledTableCell>
-                <StyledTableCell></StyledTableCell>
-                <StyledTableCell></StyledTableCell>
-            </StyledTableRow>
-        );
+        console.log(this.props.otherUserStocks.stocks);
+        let stockDisplay =
+            !this.props.otherUserStocks.loading && !this.props.data.loading ? (
+                getRows(
+                    this.props.otherUserStocks.stocks,
+                    this.props.data.stocks,
+                    window.localStorage.getItem('username') ===
+                        this.state.userId
+                )
+            ) : (
+                <StyledTableRow>
+                    <StyledTableCell>Loading...</StyledTableCell>
+                    <StyledTableCell></StyledTableCell>
+                    <StyledTableCell></StyledTableCell>
+                    <StyledTableCell></StyledTableCell>
+                </StyledTableRow>
+            );
         return (
             <div
                 style={{
@@ -89,7 +102,10 @@ class UserPage extends Component {
                             />
                             <span style={{ padding: 10 }}>
                                 {this.state.userId
-                                    ? this.state.userId +
+                                    ? this.state.userId.replace(
+                                          '%E2%80%99',
+                                          "'"
+                                      ) +
                                       ` (${
                                           userJSON[0]
                                               ? userJSON[0]['totalAccountValue']
@@ -131,6 +147,7 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
     getOtherUserStocks,
+    getStocks,
 };
 
 export default connect(

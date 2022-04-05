@@ -81,7 +81,7 @@ export const getScores = (filterArr) => async (dispatch) => {
 export const getOtherUserStocks = (userId) => async (dispatch) => {
     dispatch({ type: LOADING_OTHER_USER_STOCKS });
     let payloadData = {};
-
+    userId = userId.replace("'", '’');
     await axios
         .get(`/userStocks/${userId}`)
         .then((res) => {

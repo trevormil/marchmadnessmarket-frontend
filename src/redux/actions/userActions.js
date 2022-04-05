@@ -28,139 +28,79 @@ export const loginUser = (userData) => (dispatch) => {
 export const getUserData = () => async (dispatch) => {
     let payloadData = {};
 
-    await Promise.all([
-        axios
-            .get('/user')
-            .then((res) => {
-                window.localStorage.setItem('username', res.data.userName);
-                payloadData = res.data;
-            })
-            .catch((err) => console.log(err)),
-        // await axios.get('/userTrades').then((res) => {
-        //     payloadData.openTrades = res.data;
-        // });
+    await axios
+        .get('/user')
+        .then((res) => {
+            window.localStorage.setItem('username', res.data.userName);
+            payloadData = res.data;
+        })
+        .catch((err) => console.log(err));
 
-        axios.get('/userStocks').then((res) => {
-            let data = [];
-            if (res) {
-                res.data.forEach((stock) => {
-                    data.push(stock);
-                });
-            }
-            payloadData.ownedStocks = data;
-        }),
-        // axios.get('/leaderboard').then((res) => {
-        //     let data = [];
-        //     if (res) {
-        //         res.data.forEach((stock) => data.push(stock));
-        //     }
-        //     payloadData.leaderboard = data;
-        // }),
-        // await axios.get('/watchlist').then((res) => {
-        //     let data = [];
-        //     if (res) {
-        //         res.data.forEach((stock) => data.push(stock));
-        //     }
-        //     payloadData.watchlist = data;
-        // });
-        // await axios.get('/transactions').then((res) => {
-        //     let data = [];
-        //     let count = 0;
-        //     if (res) {
-        //         res.data.forEach((transaction) => {
-        //             if (count < 20) {
-        //                 data.push(transaction);
-        //                 count++;
-        //             }
-        //         });
-        //     }
-        //     payloadData.transactions = data;
-        // });
-        //gets account history
-        // await axios.get('/accountHistory').then((res) => {
-        //     let accountHistory = res.data;
-        //     accountHistory.sort((a, b) => {
-        //         const dateArrA = a.time.split('/');
-        //         const dateArrB = b.time.split('/');
-        //         if (Number(dateArrA[2]) < Number(dateArrB[2])) return -1;
-        //         else if (Number(dateArrA[2]) > Number(dateArrB[2])) return 1;
-        //         else {
-        //             if (Number(dateArrA[0]) < Number(dateArrB[0])) return -1;
-        //             else if (Number(dateArrA[0]) > Number(dateArrB[0])) return 1;
-        //             else {
-        //                 if (Number(dateArrA[1]) < Number(dateArrB[1])) return -1;
-        //                 else if (Number(dateArrA[1]) > Number(dateArrB[1]))
-        //                     return 1;
-        //             }
-        //         }
-        //         return 0;
-        //     });
-        //     payloadData.accountHistory = accountHistory;
-        // });
+    // await axios.get('/userTrades').then((res) => {
+    //     payloadData.openTrades = res.data;
+    // });
 
-        axios
-            .get('/stocks')
-            .then((res) => {
-                payloadData.ownedStocks.forEach((ownedStock) => {
-                    const stock = res.data.find(
-                        (stock) => stock.stockId === ownedStock.stockId
-                    );
-                    ownedStock.currPrice = stock.price;
-                    ownedStock.currPoints = stock.currPoints;
-                    ownedStock.ipoPrice = stock.ipoPrice;
-                    ownedStock.totalValue =
-                        ownedStock.numShares * ownedStock.currPrice;
-                });
-            })
-
-            .catch((err) => {
-                console.log(err);
-                dispatch({
-                    type: SET_ERRORS,
-                    payload: err.response,
-                });
-            }),
-    ]).then(() => {
-        dispatch({
-            type: SET_USER,
-            payload: payloadData,
-        });
-        dispatch({ type: CLEAR_ERRORS });
+    await axios.get('/userStocks').then((res) => {
+        let data = [];
+        if (res) {
+            res.data.forEach((stock) => {
+                data.push(stock);
+            });
+        }
+        payloadData.ownedStocks = data;
     });
-};
+    await axios.get('/leaderboard').then((res) => {
+        let data = [];
+        if (res) {
+            res.data.forEach((stock) => data.push(stock));
+        }
+        payloadData.leaderboard = data;
+    });
+    // await axios.get('/watchlist').then((res) => {
+    //     let data = [];
+    //     if (res) {
+    //         res.data.forEach((stock) => data.push(stock));
+    //     }
+    //     payloadData.watchlist = data;
+    // });
+    // await axios.get('/transactions').then((res) => {
+    //     let data = [];
+    //     let count = 0;
+    //     if (res) {
+    //         res.data.forEach((transaction) => {
+    //             if (count < 20) {
+    //                 data.push(transaction);
+    //                 count++;
+    //             }
+    //         });
+    //     }
+    //     payloadData.transactions = data;
+    // });
+    //gets account history
+    // await axios.get('/accountHistory').then((res) => {
+    //     let accountHistory = res.data;
+    //     accountHistory.sort((a, b) => {
+    //         const dateArrA = a.time.split('/');
+    //         const dateArrB = b.time.split('/');
+    //         if (Number(dateArrA[2]) < Number(dateArrB[2])) return -1;
+    //         else if (Number(dateArrA[2]) > Number(dateArrB[2])) return 1;
+    //         else {
+    //             if (Number(dateArrA[0]) < Number(dateArrB[0])) return -1;
+    //             else if (Number(dateArrA[0]) > Number(dateArrB[0])) return 1;
+    //             else {
+    //                 if (Number(dateArrA[1]) < Number(dateArrB[1])) return -1;
+    //                 else if (Number(dateArrA[1]) > Number(dateArrB[1]))
+    //                     return 1;
+    //             }
+    //         }
+    //         return 0;
+    //     });
+    //     payloadData.accountHistory = accountHistory;
+    // });
 
-//updates user portfolio data
-export const updateUserPortfolioData = (currProps) => async (dispatch) => {
-    dispatch({ type: LOADING_USER });
-    let payloadData = currProps;
-
-    await Promise.all([
-        axios.get('/userStocks').then((res) => {
-            let data = [];
-            if (res) {
-                res.data.forEach((stock) => {
-                    data.push(stock);
-                });
-            }
-            payloadData.ownedStocks = data;
-        }),
-        // await axios.get('/transactions').then((res) => {
-        //     let data = [];
-        //     let count = 0;
-        //     if (res) {
-        //         res.data.forEach((transaction) => {
-        //             if (count < 20) {
-        //                 data.push(transaction);
-        //                 count++;
-        //             }
-        //         });
-        //     }
-        //     payloadData.transactions = data;
-        // });
-        // await axios.get('/userTrades').then((res) => {
-        //     payloadData.openTrades = res.data;
-        // });
-        axios.get('/stocks').then((res) => {
+    await axios
+        .get('/stocks')
+        .then((res) => {
             payloadData.ownedStocks.forEach((ownedStock) => {
                 const stock = res.data.find(
                     (stock) => stock.stockId === ownedStock.stockId
@@ -171,8 +111,66 @@ export const updateUserPortfolioData = (currProps) => async (dispatch) => {
                 ownedStock.totalValue =
                     ownedStock.numShares * ownedStock.currPrice;
             });
-        }),
-    ])
+        })
+        .then(() => {
+            dispatch({
+                type: SET_USER,
+                payload: payloadData,
+            });
+            dispatch({ type: CLEAR_ERRORS });
+        })
+        .catch((err) => {
+            console.log(err);
+            dispatch({
+                type: SET_ERRORS,
+                payload: err.response,
+            });
+        });
+};
+
+//updates user portfolio data
+export const updateUserPortfolioData = (currProps) => async (dispatch) => {
+    dispatch({ type: LOADING_USER });
+    let payloadData = currProps;
+    await axios.get('/userStocks').then((res) => {
+        let data = [];
+        if (res) {
+            res.data.forEach((stock) => {
+                data.push(stock);
+            });
+        }
+        payloadData.ownedStocks = data;
+    });
+    // await axios.get('/transactions').then((res) => {
+    //     let data = [];
+    //     let count = 0;
+    //     if (res) {
+    //         res.data.forEach((transaction) => {
+    //             if (count < 20) {
+    //                 data.push(transaction);
+    //                 count++;
+    //             }
+    //         });
+    //     }
+    //     payloadData.transactions = data;
+    // });
+    // await axios.get('/userTrades').then((res) => {
+    //     payloadData.openTrades = res.data;
+    // });
+    await axios
+        .get('/stocks')
+        .then((res) => {
+            payloadData.ownedStocks.forEach((ownedStock) => {
+                const stock = res.data.find(
+                    (stock) => stock.stockId === ownedStock.stockId
+                );
+                ownedStock.currPrice = stock.price;
+                ownedStock.currPoints = stock.currPoints;
+                ownedStock.ipoPrice = stock.ipoPrice;
+                ownedStock.totalValue =
+                    ownedStock.numShares * ownedStock.currPrice;
+            });
+        })
         .then(() => {
             dispatch({
                 type: SET_USER,
@@ -284,7 +282,6 @@ export const signUpUser = (newUserData, history) => (dispatch) => {
             });
         });
 };
-
 //logs out a user
 export const logOutUser = () => (dispatch) => {
     localStorage.removeItem('FBIdToken');

@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import * as ROUTES from '../../../constants/routes';
 
 //gets all rows for all users and account values
-export function getRows(stocks, isOwnPortfolio) {
+export function getRows(stocks, stockData, isOwnPortfolio) {
     if (stocks && stocks.length === 0) {
         return (
             <StyledTableRow>
@@ -22,12 +22,32 @@ export function getRows(stocks, isOwnPortfolio) {
             </StyledTableRow>
         );
     }
+    for (const row of stocks) {
+        row.currPoints = stockData.find(
+            (elem) => elem.stockId === row.stockId
+        ).currPoints;
+    }
+
+    stocks.sort((a, b) => {
+        if (!a.currPoints) {
+            a.currPoints = 0;
+        }
+        if (!b.currPoints) {
+            b.currPoints = 0;
+        }
+
+        if (b.currPoints * b.numShares - a.currPoints * a.numShares !== 0) {
+            return b.currPoints * b.numShares - a.currPoints * a.numShares;
+        } else {
+            return b.numShares - a.numShares;
+        }
+    });
 
     // console.log('STOCKS', stocks);
     return stocks ? (
         stocks.map((row) => {
             // console.log('STOCKS', stocks);
-            row.currPoints = row.currPoints ? row.currPoints : 0;
+
             return (
                 <StyledTableRow>
                     <StyledTableCell align="right">

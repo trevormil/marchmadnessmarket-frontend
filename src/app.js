@@ -33,6 +33,7 @@ import { logOutUser, getUserData } from './redux/actions/userActions';
 //axios
 import axios from 'axios';
 import leaderboard from './components/pages/Leaderboard/leaderboard';
+import emailList from './components/pages/EmailList/emailList';
 axios.defaults.baseURL = 'https://us-central1-tm-market.cloudfunctions.net/api';
 
 const token = localStorage.FBIdToken;
@@ -112,6 +113,11 @@ class App extends React.Component {
                                 />
                                 <Route
                                     exact
+                                    path={ROUTES.EMAILLIST}
+                                    component={emailList}
+                                />
+                                <Route
+                                    exact
                                     path="/stocks/:stockId"
                                     component={StocksPage}
                                 />
@@ -132,17 +138,17 @@ class App extends React.Component {
                                             }}
                                         >
                                             <div>
-                                                For feedback or questions, visit
-                                                our{' '}
+                                                For feedback or questions,
+                                                please use{' '}
                                                 <a
-                                                    href="https://github.com/trevormil/Fantasy-Sports-Stock-Market/issues"
+                                                    href="https://us14.list-manage.com/survey?u=69ac8d65ddbf7f3d487964f5f&id=30be53df48&e=*|UNIQID|*"
                                                     style={{
                                                         color: 'darkblue',
                                                     }}
                                                 >
-                                                    GitHub Issues
+                                                    this form
                                                 </a>{' '}
-                                                page or
+                                                or
                                                 <a
                                                     style={{
                                                         color: 'darkblue',

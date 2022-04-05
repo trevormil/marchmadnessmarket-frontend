@@ -1,1 +1,1 @@
-export const LAST_UPDATED_AT = 'Mon, March 14th @ 6:00PM';
+export const LAST_UPDATED_AT = 'Tue, April 5th @ 8:00AM';

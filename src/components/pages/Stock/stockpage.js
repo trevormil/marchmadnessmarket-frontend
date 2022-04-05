@@ -47,6 +47,7 @@ class StockPage extends Component {
         chart: null,
         buyIsLoading: false,
     };
+
     constructor(props) {
         super(props);
         this.props.getCurrStock(
@@ -60,6 +61,7 @@ class StockPage extends Component {
         this.attemptToSell = this.attemptToSell.bind(this);
         this.attemptToIPOBuy = this.attemptToIPOBuy.bind(this);
     }
+
     getChartDisplay() {
         // const tradingViewChartElement =
         //     document.getElementById('tradingviewchart');
@@ -82,9 +84,10 @@ class StockPage extends Component {
         //     });
         // }
     }
+
     getNumSharesOwned() {
         if (this.props.data.loading || this.props.user.loading)
-            return 'Loading...';
+            return 'Loading ...';
         else {
             const foundStock = this.props.user.ownedStocks.find(
                 (stock) =>
@@ -95,6 +98,7 @@ class StockPage extends Component {
             else return 0;
         }
     }
+
     attemptToBuy = (event) => {
         const tradeId = event.currentTarget.getAttribute('name');
         axios.put(`/trades/${tradeId}`).then(() => {
@@ -192,20 +196,10 @@ class StockPage extends Component {
     }
     render() {
         const { classes } = this.props;
-        let buyTradeDisplay = getBuyTradeDisplay(
-            this.props.data.currStock.trades,
-            this.props.user.userId,
-            this.attemptToBuy,
-            this.props.data.loading || this.props.user.loading
-        );
 
-        let sellTradeDisplay = getSellTradeDisplay(
-            this.props.data.currStock.trades,
-            this.props.user.userId,
-            this.attemptToRemove,
-            this.props.data.loading || this.props.user.loading
-        );
-        const numSharesOwned = this.getNumSharesOwned();
+        const numSharesOwned = this.props.user.ownedStocks
+            ? this.getNumSharesOwned()
+            : 0;
         const filename = this.props.data.currStock.stockData.imageUrl;
         return (
             <div
@@ -252,7 +246,7 @@ class StockPage extends Component {
                                 )}
                             </Typography>
                         </Grid>
-                        {this.props.user && this.props.user.authenticated ? (
+                        {/* {this.props.user && this.props.user.authenticated ? (
                             <>
                                 <Grid item xs={3}></Grid>
                                 <Grid item xs={6} align="center">
@@ -386,7 +380,7 @@ class StockPage extends Component {
                                     </Typography>
                                 )}
                             </Grid>
-                        )}
+                        )} */}
                         <Grid item xs={3}></Grid>
                         <Grid item xs={6}>
                             <div className="portfolio-card">
