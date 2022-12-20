@@ -38,6 +38,7 @@ class PortfolioPage extends Component {
         orderBy: 'name',
         direction: 'asc',
         chart: null,
+        mobile: !window.matchMedia('(min-width: 600px)').matches,
     };
     constructor(props) {
         super(props);

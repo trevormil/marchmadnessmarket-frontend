@@ -8,36 +8,45 @@ import { TableRow, Button } from '@mui/material';
 
 //all following functions help to create the stock info table on right side of stock page
 
-export const infoHeaderRow = (
-    <TableRow>
-        <StyledTableCell align="center">Logo</StyledTableCell>
-        <StyledTableCell align="center">Name</StyledTableCell>
+export const getInfoHeaderRow = (mobile) => {
+    return (
+        <TableRow>
+            {!mobile && <StyledTableCell align="center">Logo</StyledTableCell>}
+            <StyledTableCell align="center">Name</StyledTableCell>
 
-        <StyledTableCell align="center">Seed</StyledTableCell>
-        <StyledTableCell align="center">Points</StyledTableCell>
-    </TableRow>
-);
+            {!mobile && <StyledTableCell align="center">Seed</StyledTableCell>}
+            <StyledTableCell align="center">Points</StyledTableCell>
+        </TableRow>
+    );
+};
 
-export const getInfoRows = (stocks) => {
-    return stocks === undefined || stocks === null ? (
-        <StyledTableRow>
-            <StyledTableCell></StyledTableCell>
-        </StyledTableRow>
-    ) : (
-        stocks.map((stock) => {
+export const getInfoRows = (stocks, mobile) => {
+    if (stocks === undefined || stocks === null) {
+        return (
+            <StyledTableRow>
+                <StyledTableCell></StyledTableCell>
+            </StyledTableRow>
+        );
+    } else {
+        stocks.sort((a, b) => {
+            return b.currPoints - a.currPoints;
+        });
+        return stocks.map((stock) => {
             let file = stock.imageUrl;
             return (
                 <StyledTableRow key={stock.stockName}>
-                    <StyledTableCell align="center">
-                        <a href={`./stocks/${stock.stockId}`}>
-                            <img
-                                height="50px"
-                                width="50px"
-                                alt="Team Logo"
-                                src={file}
-                            />
-                        </a>
-                    </StyledTableCell>
+                    {!mobile && (
+                        <StyledTableCell align="center">
+                            <a href={`./stocks/${stock.stockId}`}>
+                                <img
+                                    height="50px"
+                                    width="50px"
+                                    alt="Team Logo"
+                                    src={file}
+                                />
+                            </a>
+                        </StyledTableCell>
+                    )}
                     <StyledTableCell align="center">
                         <Button
                             variant="contained"
@@ -49,14 +58,16 @@ export const getInfoRows = (stocks) => {
                             {stock.stockName}
                         </Button>
                     </StyledTableCell>
-                    <StyledTableCell align="center">
-                        {stock.seed}
-                    </StyledTableCell>
+                    {!mobile && (
+                        <StyledTableCell align="center">
+                            {stock.seed}
+                        </StyledTableCell>
+                    )}
                     <StyledTableCell align="center">
                         {stock.currPoints}
                     </StyledTableCell>
                 </StyledTableRow>
             );
-        })
-    );
+        });
+    }
 };

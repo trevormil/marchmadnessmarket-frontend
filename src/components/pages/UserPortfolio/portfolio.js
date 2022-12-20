@@ -30,6 +30,7 @@ class PortfolioPage extends Component {
         userId: window.localStorage.getItem('username'),
         orderBy: TOURNAMENT_NOT_STARTED ? 'numShares' : 'points',
         direction: 'asc',
+        mobile: !window.matchMedia('(min-width: 600px)').matches,
     };
     constructor(props) {
         super(props);
@@ -74,7 +75,8 @@ class PortfolioPage extends Component {
                     window.localStorage.getItem('username') ===
                         this.state.userId,
                     this.state.direction,
-                    this.state.orderBy
+                    this.state.orderBy,
+                    this.state.mobile
                 )
             ) : (
                 <StyledTableRow>
@@ -180,7 +182,8 @@ class PortfolioPage extends Component {
                                 headerRow={getHeaderRow(
                                     this.state.orderBy,
                                     this.state.direction,
-                                    this.handleClickOnSortLabel
+                                    this.handleClickOnSortLabel,
+                                    this.state.mobile
                                 )}
                             />
                         </div>

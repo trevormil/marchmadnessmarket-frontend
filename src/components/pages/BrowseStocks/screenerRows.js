@@ -20,7 +20,7 @@ import { inWatchlist } from '../../../helpers/filterFunctions';
 import { TOURNAMENT_NOT_STARTED } from '../../../constants/constants';
 
 //gets all rows for table for all stocks that match current filters
-export function getRows(stocks, watchlist, handleClick, classes) {
+export function getRows(stocks, watchlist, handleClick, mobile) {
     if (stocks === null || stocks === 'undefined') {
         return (
             <StyledTableRow>
@@ -78,16 +78,18 @@ export function getRows(stocks, watchlist, handleClick, classes) {
                         {row.stockName}
                     </Button>
                 </StyledTableCell>
-                <StyledTableCell component="th" scope="row" align="left">
-                    <a href={`${ROUTES.STOCKS}/${row.stockId}`}>
-                        <img
-                            width="50px"
-                            height="50px"
-                            src={row.imageUrl}
-                            alt={`${row.stockName} Team Logo`}
-                        />
-                    </a>
-                </StyledTableCell>
+                {!mobile && (
+                    <StyledTableCell component="th" scope="row" align="left">
+                        <a href={`${ROUTES.STOCKS}/${row.stockId}`}>
+                            <img
+                                width="50px"
+                                height="50px"
+                                src={row.imageUrl}
+                                alt={`${row.stockName} Team Logo`}
+                            />
+                        </a>
+                    </StyledTableCell>
+                )}
                 {/* <StyledTableCell align="left" padding="checkbox" size="small">
                     <Checkbox
                         id={row.stockId}
@@ -99,15 +101,29 @@ export function getRows(stocks, watchlist, handleClick, classes) {
                     />
                 </StyledTableCell> */}
 
-                <StyledTableCell align="right">{row.seed}</StyledTableCell>
-                <StyledTableCell align="right">{row.bio}</StyledTableCell>
-                <StyledTableCell align="right">{'$1.00'}</StyledTableCell>
+                {!mobile && (
+                    <>
+                        <StyledTableCell align="right">
+                            {row.seed}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                            {row.bio}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                            {'$1.00'}
+                        </StyledTableCell>{' '}
+                    </>
+                )}
                 <StyledTableCell align="right">
                     {row.currPoints}
                 </StyledTableCell>
-                <StyledTableCell align="right">
-                    {TOURNAMENT_NOT_STARTED ? `Hidden` : row.float.toFixed(1)}
-                </StyledTableCell>
+                {!mobile && (
+                    <StyledTableCell align="right">
+                        {TOURNAMENT_NOT_STARTED
+                            ? `Hidden`
+                            : row.float.toFixed(1)}
+                    </StyledTableCell>
+                )}
             </StyledTableRow>
         ))
     ) : (
@@ -127,7 +143,7 @@ export function getRows(stocks, watchlist, handleClick, classes) {
 }
 
 //gets the header row
-export function getScreenerHeaderRow(orderBy, direction, handleClick) {
+export function getScreenerHeaderRow(orderBy, direction, handleClick, mobile) {
     return (
         <TableRow>
             <StyledTableCell align="center">
@@ -140,17 +156,19 @@ export function getScreenerHeaderRow(orderBy, direction, handleClick) {
                     Name
                 </TableSortLabel>
             </StyledTableCell>
-            <StyledTableCell align="left">
-                <TableSortLabel
-                    name="stockName"
-                    direction={direction}
-                    active={orderBy === 'stockName'}
-                    onClick={handleClick}
-                >
-                    Logo
-                </TableSortLabel>
-            </StyledTableCell>
-            {/* <StyledTableCell align="left">
+            {!mobile && (
+                <>
+                    <StyledTableCell align="left">
+                        <TableSortLabel
+                            name="stockName"
+                            direction={direction}
+                            active={orderBy === 'stockName'}
+                            onClick={handleClick}
+                        >
+                            Logo
+                        </TableSortLabel>
+                    </StyledTableCell>
+                    {/* <StyledTableCell align="left">
                 {' '}
                 <TableSortLabel
                     name="watchlist"
@@ -162,39 +180,41 @@ export function getScreenerHeaderRow(orderBy, direction, handleClick) {
                 </TableSortLabel>
             </StyledTableCell> */}
 
-            <StyledTableCell align="right">
-                {' '}
-                <TableSortLabel
-                    name="seed"
-                    direction={direction}
-                    active={orderBy === 'seed'}
-                    onClick={handleClick}
-                >
-                    Seed
-                </TableSortLabel>
-            </StyledTableCell>
-            <StyledTableCell align="right">
-                {' '}
-                <TableSortLabel
-                    name="bio"
-                    direction={direction}
-                    active={orderBy === 'bio'}
-                    onClick={handleClick}
-                >
-                    Record
-                </TableSortLabel>
-            </StyledTableCell>
-            <StyledTableCell align="right">
-                {' '}
-                <TableSortLabel
-                    name="ipoPrice"
-                    direction={direction}
-                    active={orderBy === 'ipoPrice'}
-                    onClick={handleClick}
-                >
-                    Price
-                </TableSortLabel>
-            </StyledTableCell>
+                    <StyledTableCell align="right">
+                        {' '}
+                        <TableSortLabel
+                            name="seed"
+                            direction={direction}
+                            active={orderBy === 'seed'}
+                            onClick={handleClick}
+                        >
+                            Seed
+                        </TableSortLabel>
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                        {' '}
+                        <TableSortLabel
+                            name="bio"
+                            direction={direction}
+                            active={orderBy === 'bio'}
+                            onClick={handleClick}
+                        >
+                            Record
+                        </TableSortLabel>
+                    </StyledTableCell>
+                    <StyledTableCell align="right">
+                        {' '}
+                        <TableSortLabel
+                            name="ipoPrice"
+                            direction={direction}
+                            active={orderBy === 'ipoPrice'}
+                            onClick={handleClick}
+                        >
+                            Price
+                        </TableSortLabel>
+                    </StyledTableCell>
+                </>
+            )}
             <StyledTableCell align="right">
                 {' '}
                 <TableSortLabel
@@ -206,6 +226,7 @@ export function getScreenerHeaderRow(orderBy, direction, handleClick) {
                     Total Points
                 </TableSortLabel>
             </StyledTableCell>
+
             {/* <StyledTableCell align="right">
                 <TableSortLabel
                     name="ipoPrice"
@@ -229,17 +250,21 @@ export function getScreenerHeaderRow(orderBy, direction, handleClick) {
                 </TableSortLabel>
             </StyledTableCell> */}
 
-            <StyledTableCell align="right">
-                {' '}
-                <TableSortLabel
-                    name="float"
-                    direction={direction}
-                    active={orderBy === 'float'}
-                    onClick={TOURNAMENT_NOT_STARTED ? undefined : handleClick}
-                >
-                    Float
-                </TableSortLabel>
-            </StyledTableCell>
+            {!mobile && (
+                <StyledTableCell align="right">
+                    {' '}
+                    <TableSortLabel
+                        name="float"
+                        direction={direction}
+                        active={orderBy === 'float'}
+                        onClick={
+                            TOURNAMENT_NOT_STARTED ? undefined : handleClick
+                        }
+                    >
+                        Float
+                    </TableSortLabel>
+                </StyledTableCell>
+            )}
             {/* <StyledTableCell align="right">
                 {' '}
                 <TableSortLabel

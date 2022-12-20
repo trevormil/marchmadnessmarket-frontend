@@ -12,7 +12,7 @@ import {
     Paper,
     Avatar,
 } from '@mui/material';
-import { infoHeaderRow, getInfoRows } from './homerows';
+import { getInfoRows, getInfoHeaderRow } from './homerows';
 import CustomizedTables from '../../ui/StockInfoTable/stockTable';
 import LeaderboardPage from '../Leaderboard/leaderboardPage';
 import {
@@ -33,6 +33,10 @@ const styles = (theme) => ({
 });
 
 class HomePage extends Component {
+    state = {
+        mobile: !window.matchMedia('(min-width: 1000px)').matches,
+    };
+
     constructor(props) {
         super(props);
         this.props.getStocks([]);
@@ -359,7 +363,9 @@ class HomePage extends Component {
                                                 backgroundColor: 'whitesmoke',
                                             }}
                                         >
-                                            <LeaderboardPage />
+                                            <LeaderboardPage
+                                                mobile={this.state.mobile}
+                                            />
                                         </div>
                                     </section>
                                 </div>
@@ -468,7 +474,9 @@ class HomePage extends Component {
                                         <div id="market-overview">
                                             {this.props.data.loading ? (
                                                 <CustomizedTables
-                                                    headerRow={infoHeaderRow}
+                                                    headerRow={getInfoHeaderRow(
+                                                        this.state.mobile
+                                                    )}
                                                     rows={
                                                         <StyledTableRow>
                                                             <StyledTableCell>
@@ -482,9 +490,12 @@ class HomePage extends Component {
                                                 ></CustomizedTables>
                                             ) : (
                                                 <CustomizedTables
-                                                    headerRow={infoHeaderRow}
+                                                    headerRow={getInfoHeaderRow(
+                                                        this.state.mobile
+                                                    )}
                                                     rows={getInfoRows(
-                                                        this.props.data.stocks
+                                                        this.props.data.stocks,
+                                                        this.state.mobile
                                                     )}
                                                 ></CustomizedTables>
                                             )}
@@ -503,7 +514,10 @@ class HomePage extends Component {
                                         </Typography>
                                     </section>
                                     <div style={upcomingEventsStyle}>
-                                        <Typography align="center">
+                                        <Typography
+                                            align="center"
+                                            style={{ padding: 5 }}
+                                        >
                                             <b>Final Four - April 2 </b> <br />
                                             No. 1 Kansas vs. No. 2 Villanova
                                             6:09 p.m. TBS

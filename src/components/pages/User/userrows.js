@@ -16,7 +16,7 @@ export function getRows(
     isOwnPortfolio,
     direction,
     orderBy,
-    hasMoneyLeft
+    mobile
 ) {
     if (isOwnPortfolio && TOURNAMENT_NOT_STARTED) {
         stockData.map((stock) => {
@@ -40,9 +40,13 @@ export function getRows(
                 </StyledTableCell>
                 <StyledTableCell></StyledTableCell>
                 <StyledTableCell></StyledTableCell>
-                <StyledTableCell></StyledTableCell>
-                <StyledTableCell></StyledTableCell>
-                {TOURNAMENT_NOT_STARTED && (
+                {!mobile && (
+                    <>
+                        <StyledTableCell></StyledTableCell>
+                        <StyledTableCell></StyledTableCell>
+                    </>
+                )}
+                {!mobile && TOURNAMENT_NOT_STARTED && (
                     <>
                         <StyledTableCell></StyledTableCell>
                         <StyledTableCell></StyledTableCell>
@@ -121,16 +125,18 @@ export function getRows(
                             {row.stockName}
                         </Button>
                     </StyledTableCell>
-                    <StyledTableCell align="center">
-                        <a href={`${ROUTES.STOCKS}/${row.stockId}`}>
-                            <img
-                                width="50px"
-                                height="50px"
-                                src={row.imageUrl}
-                                alt={`${row.stockName} Team Logo`}
-                            />
-                        </a>
-                    </StyledTableCell>
+                    {!mobile && (
+                        <StyledTableCell align="center">
+                            <a href={`${ROUTES.STOCKS}/${row.stockId}`}>
+                                <img
+                                    width="50px"
+                                    height="50px"
+                                    src={row.imageUrl}
+                                    alt={`${row.stockName} Team Logo`}
+                                />
+                            </a>
+                        </StyledTableCell>
+                    )}
 
                     <StyledTableCell align="center">
                         {row.numShares}
@@ -138,13 +144,15 @@ export function getRows(
                     {/* <StyledTableCell align="center">
             {row.avgBuyPrice.toFixed(2)}
           </StyledTableCell> */}
-                    <StyledTableCell align="center">
-                        {row.currPoints}
-                    </StyledTableCell>
+                    {!mobile && (
+                        <StyledTableCell align="center">
+                            {row.currPoints}
+                        </StyledTableCell>
+                    )}
                     <StyledTableCell align="center">
                         {row.numShares * row.currPoints}
                     </StyledTableCell>
-                    {TOURNAMENT_NOT_STARTED && (
+                    {!mobile && TOURNAMENT_NOT_STARTED && (
                         <>
                             <StyledTableCell align="center">
                                 <Button
@@ -195,7 +203,7 @@ export function getRows(
 }
 
 //gets the leaderboard header row
-export function getHeaderRow(orderBy, direction, handleClick) {
+export function getHeaderRow(orderBy, direction, handleClick, mobile) {
     return (
         <TableRow>
             <StyledTableCell align="center">
@@ -208,16 +216,18 @@ export function getHeaderRow(orderBy, direction, handleClick) {
                     Name
                 </TableSortLabel>
             </StyledTableCell>
-            <StyledTableCell align="center">
-                <TableSortLabel
-                    direction={direction}
-                    active={orderBy === 'stockName'}
-                    onClick={handleClick}
-                    name="stockName"
-                >
-                    Logo
-                </TableSortLabel>
-            </StyledTableCell>
+            {!mobile && (
+                <StyledTableCell align="center">
+                    <TableSortLabel
+                        direction={direction}
+                        active={orderBy === 'stockName'}
+                        onClick={handleClick}
+                        name="stockName"
+                    >
+                        Logo
+                    </TableSortLabel>
+                </StyledTableCell>
+            )}
             <StyledTableCell align="center">
                 <TableSortLabel
                     direction={direction}
@@ -230,16 +240,18 @@ export function getHeaderRow(orderBy, direction, handleClick) {
                 </TableSortLabel>
             </StyledTableCell>
             {/* <StyledTableCell align="left">Avg. Buy Price</StyledTableCell> */}
-            <StyledTableCell align="center">
-                <TableSortLabel
-                    direction={direction}
-                    active={orderBy === 'currPoints'}
-                    onClick={handleClick}
-                    name="currPoints"
-                >
-                    Points Per Share
-                </TableSortLabel>
-            </StyledTableCell>
+            {!mobile && (
+                <StyledTableCell align="center">
+                    <TableSortLabel
+                        direction={direction}
+                        active={orderBy === 'currPoints'}
+                        onClick={handleClick}
+                        name="currPoints"
+                    >
+                        Points Per Share
+                    </TableSortLabel>
+                </StyledTableCell>
+            )}
             <StyledTableCell align="center">
                 <TableSortLabel
                     direction={direction}
@@ -250,7 +262,7 @@ export function getHeaderRow(orderBy, direction, handleClick) {
                     Points
                 </TableSortLabel>
             </StyledTableCell>
-            {TOURNAMENT_NOT_STARTED && (
+            {!mobile && TOURNAMENT_NOT_STARTED && (
                 <>
                     <StyledTableCell align="center">Buy</StyledTableCell>
                     <StyledTableCell align="center">Sell</StyledTableCell>

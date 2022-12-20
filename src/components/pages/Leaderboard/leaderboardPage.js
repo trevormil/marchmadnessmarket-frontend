@@ -18,9 +18,10 @@ const styles = (theme) => ({
 
 class LeaderboardPage extends Component {
     render() {
+        // console.log(this.props.mobile, 'AFAHFGHJKASDGHJ');
         const { classes } = this.props;
         let stockDisplay = !this.props.data.loading ? (
-            getRows(this.props.data.leaderboard, classes)
+            getRows(this.props.data.leaderboard, this.props.mobile)
         ) : (
             <StyledTableRow>
                 <StyledTableCell component="th" scope="row" align="left">
@@ -45,7 +46,10 @@ class LeaderboardPage extends Component {
         );
         return (
             // <div style={{ overflow: 'auto' }}>
-            <CustomizedTables rows={stockDisplay} headerRow={getHeaderRow()} />
+            <CustomizedTables
+                rows={stockDisplay}
+                headerRow={getHeaderRow(this.props.mobile)}
+            />
             // </div>
         );
     }

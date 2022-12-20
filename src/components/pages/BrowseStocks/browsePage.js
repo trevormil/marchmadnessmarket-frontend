@@ -24,13 +24,12 @@ const styles = (theme) => ({
     ...theme.spreadThis,
 });
 
-const initialState = {
-    orderBy: 'stockName',
-    direction: 'asc',
-};
-
 class BrowseStocksPage extends Component {
-    state = initialState;
+    state = {
+        orderBy: 'stockName',
+        direction: 'asc',
+        mobile: !window.matchMedia('(min-width: 1000px)').matches,
+    };
     constructor(props) {
         super(props);
         this.props.getStocks(this.props.data.filters);
@@ -54,13 +53,13 @@ class BrowseStocksPage extends Component {
     }
 
     handleClickOnWatchlist(event) {
-        const currValue = event.currentTarget.getAttribute('value');
-        const stockId = event.currentTarget.getAttribute('id');
-        this.props.setUserWatchlist(
-            this.props.user,
-            stockId,
-            Number(currValue) === -1
-        );
+        // const currValue = event.currentTarget.getAttribute('value');
+        // const stockId = event.currentTarget.getAttribute('id');
+        // this.props.setUserWatchlist(
+        //     this.props.user,
+        //     stockId,
+        //     Number(currValue) === -1
+        // );
     }
 
     render() {
@@ -70,7 +69,7 @@ class BrowseStocksPage extends Component {
                 this.props.data.stocks,
                 this.props.user.watchlist,
                 this.handleClickOnWatchlist,
-                classes
+                this.state.mobile
             )
         ) : (
             <StyledTableRow>
@@ -153,7 +152,8 @@ class BrowseStocksPage extends Component {
                                     headerRow={getScreenerHeaderRow(
                                         this.state.orderBy,
                                         this.state.direction,
-                                        this.handleClickOnSortLabel
+                                        this.handleClickOnSortLabel,
+                                        this.state.mobile
                                     )}
                                 />
                             </div>

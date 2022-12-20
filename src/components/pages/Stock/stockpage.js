@@ -252,8 +252,8 @@ class StockPage extends Component {
                         </Grid>
                         {this.props.user && this.props.user.authenticated ? (
                             <>
-                                <Grid item xs={3}></Grid>
-                                <Grid item xs={6} align="center">
+                                <Grid item sm={3} xs={1}></Grid>
+                                <Grid item sm={6} xs={10} align="center">
                                     <div className="portfolio-card">
                                         <section>
                                             <Typography
@@ -395,7 +395,7 @@ class StockPage extends Component {
                                         </div>
                                     </div>
                                 </Grid>
-                                <Grid item xs={3}></Grid>
+                                <Grid item sm={3} xs={1}></Grid>
                             </>
                         ) : (
                             <Grid item xs={12}>
@@ -413,8 +413,8 @@ class StockPage extends Component {
                                 )}
                             </Grid>
                         )}
-                        <Grid item xs={3}></Grid>
-                        <Grid item xs={6}>
+                        <Grid item sm={3} xs={1}></Grid>
+                        <Grid item sm={6} xs={10}>
                             <div className="portfolio-card">
                                 <Typography
                                     variant="h4"
@@ -435,7 +435,7 @@ class StockPage extends Component {
                                 )}
                             </div>
                         </Grid>
-                        <Grid item xs={3}></Grid>
+                        <Grid item sm={3} xs={1}></Grid>
 
                         {/* 
           <Grid item xs={12}>

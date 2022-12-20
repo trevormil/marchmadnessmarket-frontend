@@ -43,6 +43,7 @@ class UserPage extends Component {
         userId: waitForURLUpdate(),
         orderBy: 'points',
         direction: 'asc',
+        mobile: !window.matchMedia('(min-width: 600px)').matches,
     };
     constructor(props) {
         super(props);
@@ -87,7 +88,8 @@ class UserPage extends Component {
                     window.localStorage.getItem('username') ===
                         this.state.userId,
                     this.state.direction,
-                    this.state.orderBy
+                    this.state.orderBy,
+                    this.state.mobile
                 )
             ) : (
                 <StyledTableRow>
@@ -115,9 +117,13 @@ class UserPage extends Component {
                     <StyledTableCell>Picks Hidden</StyledTableCell>
                     <StyledTableCell></StyledTableCell>
                     <StyledTableCell></StyledTableCell>
-                    <StyledTableCell></StyledTableCell>
-                    <StyledTableCell></StyledTableCell>
-                    {TOURNAMENT_NOT_STARTED && (
+                    {!this.state.mobile && (
+                        <>
+                            <StyledTableCell></StyledTableCell>
+                            <StyledTableCell></StyledTableCell>
+                        </>
+                    )}
+                    {!this.state.mobile && TOURNAMENT_NOT_STARTED && (
                         <>
                             <StyledTableCell></StyledTableCell>
                             <StyledTableCell></StyledTableCell>
@@ -193,7 +199,8 @@ class UserPage extends Component {
                                 headerRow={getHeaderRow(
                                     this.state.orderBy,
                                     this.state.direction,
-                                    this.handleClickOnSortLabel
+                                    this.handleClickOnSortLabel,
+                                    this.state.mobile
                                 )}
                             />
                         </div>

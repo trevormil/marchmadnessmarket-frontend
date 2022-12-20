@@ -151,7 +151,7 @@ class BracketPage extends Component {
                                     </Typography>
                                 </section>
                                 <div style={liveFeedStyle}>
-                                    <Typography align="center">
+                                    <Typography align="center" style={{padding: 5}}>
                                         <b>Final Four - April 2 </b> <br />
                                         No. 1 Kansas vs. No. 2 Villanova 6:09
                                         p.m TBS
