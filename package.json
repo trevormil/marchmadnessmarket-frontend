@@ -1,55 +1,54 @@
 {
-  "name": "fantasystockmarket",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@emotion/react": "^11.8.1",
-    "@emotion/styled": "^11.8.1",
-    "@mui/icons-material": "^5.4.2",
-    "@mui/material": "^5.4.3",
-    "@mui/styles": "^5.4.2",
-    "@testing-library/jest-dom": "^5.16.2",
-    "@testing-library/react": "^12.1.3",
-    "@testing-library/user-event": "^7.1.2",
-    "audit": "0.0.6",
-    "axios": "^0.21.4",
-    "firebase": "^9.6.7",
-    "firebase-admin": "^10.0.2",
-    "firebase-functions": "^3.13.2",
-    "fix": "0.0.6",
-    "jwt-decode": "^2.2.0",
-    "lightweight-charts": "^3.1.3",
-    "react": "^16.14.0",
-    "react-blockies": "^1.4.1",
-    "react-dom": "^16.14.0",
-    "react-redux": "^7.2.2",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "^5.0.0",
-    "react-tabs": "^3.2.1",
-    "recompose": "^0.30.0",
-    "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "proxy": "https://us-central1-tm-market.cloudfunctions.net/api"
+    "name": "fantasystockmarket",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@emotion/react": "^11.10.5",
+        "@emotion/styled": "^11.10.5",
+        "@mui/icons-material": "^5.4.2",
+        "@mui/material": "^5.11.1",
+        "@mui/styles": "^5.4.2",
+        "@testing-library/jest-dom": "^5.16.2",
+        "@testing-library/react": "^12.1.3",
+        "@testing-library/user-event": "^7.1.2",
+        "audit": "0.0.6",
+        "axios": "^0.21.4",
+        "firebase": "^9.6.7",
+        "firebase-admin": "^10.0.2",
+        "firebase-functions": "^3.13.2",
+        "fix": "0.0.6",
+        "jwt-decode": "^2.2.0",
+        "lightweight-charts": "^3.1.3",
+        "react": "^17.0.0",
+        "react-blockies": "^1.4.1",
+        "react-dom": "^17.0.0",
+        "react-redux": "^7.2.2",
+        "react-router-dom": "^5.2.0",
+        "react-scripts": "^5.0.0",
+        "react-tabs": "^3.2.1",
+        "redux": "^4.0.5",
+        "redux-thunk": "^2.3.0"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "proxy": "https://us-central1-tm-market.cloudfunctions.net/api"
 }
