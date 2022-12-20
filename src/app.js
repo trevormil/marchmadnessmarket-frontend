@@ -34,6 +34,7 @@ import { logOutUser, getUserData } from './redux/actions/userActions';
 import axios from 'axios';
 import leaderboard from './components/pages/Leaderboard/leaderboard';
 import emailList from './components/pages/EmailList/emailList';
+import portfolio from './components/pages/UserPortfolio/portfolio';
 axios.defaults.baseURL = 'https://us-central1-tm-market.cloudfunctions.net/api';
 
 const token = localStorage.FBIdToken;
@@ -81,11 +82,11 @@ class App extends React.Component {
                                     path={ROUTES.SIGN_IN}
                                     component={SignInForm}
                                 />
-                                {/* <UserRoute
+                                <Route
                                     exact
                                     path={ROUTES.PORTFOLIO}
-                                    component={PortfolioPage}
-                                /> */}
+                                    component={portfolio}
+                                />
                                 {/* <Route
                                     exact
                                     path={ROUTES.SCHEDULE}

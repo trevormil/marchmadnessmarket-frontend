@@ -7,7 +7,7 @@ import { Typography, Container, Grid } from '@mui/material';
 import withStyles from '@mui/styles/withStyles';
 
 import CustomizedTables from '../../ui/StockInfoTable/stockTable';
-import { getHeaderRow, getRows } from './userrows';
+import { getHeaderRow, getRows } from '../User/userrows';
 import {
     StyledTableCell,
     StyledTableRow,
@@ -25,23 +25,10 @@ const styles = (theme) => ({
     ...theme.spreadThis,
 });
 
-const waitForURLUpdate = () => {
-    let splitPathName = window.location.pathname.split('/');
-
-    while (splitPathName[splitPathName.length - 2] !== 'users') {
-        splitPathName = window.location.pathname.split('/');
-    }
-    let str = window.location.pathname.split('/').pop();
-    str = str.replace('%20', ' ');
-
-    console.log('URL PARSED');
-    return str;
-};
-
-class UserPage extends Component {
+class PortfolioPage extends Component {
     state = {
-        userId: waitForURLUpdate(),
-        orderBy: 'points',
+        userId: window.localStorage.getItem('username'),
+        orderBy: TOURNAMENT_NOT_STARTED ? 'numShares' : 'points',
         direction: 'asc',
     };
     constructor(props) {
@@ -172,7 +159,7 @@ class UserPage extends Component {
                     </div>
 
                     {TOURNAMENT_NOT_STARTED &&
-                        this.props.user?.accountBalance &&
+                        this.props.user?.accountBalance >= 0 &&
                         this.props.user.userName === this.state.userId && (
                             <Container maxWidth="lg">
                                 <Typography
@@ -218,4 +205,4 @@ const mapActionsToProps = {
 export default connect(
     mapStateToProps,
     mapActionsToProps
-)(withStyles(styles)(UserPage));
+)(withStyles(styles)(PortfolioPage));

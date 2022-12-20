@@ -6,7 +6,7 @@ import { Grid, Typography, Container, CircularProgress } from '@mui/material';
 
 import { getStocks, getScores } from '../../../redux/actions/dataActions';
 import LeaderboardPage from './leaderboardPage';
-import { LAST_UPDATED_AT } from '../../../constants/lastupdated';
+import { LAST_UPDATED_AT } from '../../../constants/constants';
 const styles = (theme) => ({
     ...theme.spreadThis,
 });
@@ -61,7 +61,9 @@ class Leaderboard extends Component {
                         </Grid>
                         <Grid item md={3} xs={0}></Grid>
                         <Grid item xs={12} md={6}>
-                            <LeaderboardPage />
+                            <div className="screenercard">
+                                <LeaderboardPage />
+                            </div>
                         </Grid>
                         <Grid item md={3} xs={0}></Grid>
                     </Grid>

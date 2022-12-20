@@ -135,7 +135,7 @@ class TabBase extends React.Component {
     signOutTabs = [
         {
             label: 'Portfolio',
-            linkTo: ROUTES.USERS,
+            linkTo: ROUTES.PORTFOLIO,
         },
         {
             label: 'Logout',
@@ -174,11 +174,6 @@ class TabBase extends React.Component {
                 <TabsList>
                     {tabsToShow.map((tab) => {
                         let link = tab.linkTo;
-                        if (tab.label == 'Portfolio') {
-                            link =
-                                tab.linkTo +
-                                `/${window.localStorage.getItem('username')}`;
-                        }
 
                         return (
                             <Tab

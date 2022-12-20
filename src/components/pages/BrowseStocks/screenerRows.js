@@ -17,6 +17,7 @@ import {
     StyledTableRow,
 } from '../../ui/StockInfoTable/styledTableComponents';
 import { inWatchlist } from '../../../helpers/filterFunctions';
+import { TOURNAMENT_NOT_STARTED } from '../../../constants/constants';
 
 //gets all rows for table for all stocks that match current filters
 export function getRows(stocks, watchlist, handleClick, classes) {
@@ -36,6 +37,7 @@ export function getRows(stocks, watchlist, handleClick, classes) {
                 <StyledTableCell />
                 <StyledTableCell />
                 <StyledTableCell />
+                <StyledTableCell />
             </StyledTableRow>
         );
     }
@@ -47,6 +49,7 @@ export function getRows(stocks, watchlist, handleClick, classes) {
                         No matches
                     </Typography>
                 </StyledTableCell>
+                <StyledTableCell />
                 <StyledTableCell />
                 <StyledTableCell />
                 <StyledTableCell />
@@ -97,12 +100,13 @@ export function getRows(stocks, watchlist, handleClick, classes) {
                 </StyledTableCell> */}
 
                 <StyledTableCell align="right">{row.seed}</StyledTableCell>
+                <StyledTableCell align="right">{row.bio}</StyledTableCell>
                 <StyledTableCell align="right">{'$1.00'}</StyledTableCell>
                 <StyledTableCell align="right">
                     {row.currPoints}
                 </StyledTableCell>
                 <StyledTableCell align="right">
-                    {row.float.toFixed(1)}
+                    {TOURNAMENT_NOT_STARTED ? `Hidden` : row.float.toFixed(1)}
                 </StyledTableCell>
             </StyledTableRow>
         ))
@@ -116,6 +120,8 @@ export function getRows(stocks, watchlist, handleClick, classes) {
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
             <StyledTableCell></StyledTableCell>
+            <StyledTableCell></StyledTableCell>
+            <StyledTableCell></StyledTableCell>
         </StyledTableRow>
     );
 }
@@ -124,7 +130,7 @@ export function getRows(stocks, watchlist, handleClick, classes) {
 export function getScreenerHeaderRow(orderBy, direction, handleClick) {
     return (
         <TableRow>
-            <StyledTableCell>
+            <StyledTableCell align="center">
                 <TableSortLabel
                     name="stockName"
                     direction={direction}
@@ -165,6 +171,17 @@ export function getScreenerHeaderRow(orderBy, direction, handleClick) {
                     onClick={handleClick}
                 >
                     Seed
+                </TableSortLabel>
+            </StyledTableCell>
+            <StyledTableCell align="right">
+                {' '}
+                <TableSortLabel
+                    name="bio"
+                    direction={direction}
+                    active={orderBy === 'bio'}
+                    onClick={handleClick}
+                >
+                    Record
                 </TableSortLabel>
             </StyledTableCell>
             <StyledTableCell align="right">
@@ -218,7 +235,7 @@ export function getScreenerHeaderRow(orderBy, direction, handleClick) {
                     name="float"
                     direction={direction}
                     active={orderBy === 'float'}
-                    onClick={handleClick}
+                    onClick={TOURNAMENT_NOT_STARTED ? undefined : handleClick}
                 >
                     Float
                 </TableSortLabel>

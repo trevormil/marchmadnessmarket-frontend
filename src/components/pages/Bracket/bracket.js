@@ -3,7 +3,12 @@ import withStyles from '@mui/styles/withStyles';
 
 import { connect } from 'react-redux';
 import { Grid, Typography, Container, CircularProgress } from '@mui/material';
-
+import CustomizedTables from '../../ui/StockInfoTable/stockTable';
+import LeaderboardPage from '../Leaderboard/leaderboardPage';
+import {
+    StyledTableCell,
+    StyledTableRow,
+} from '../../ui/StockInfoTable/styledTableComponents';
 import { getStocks, getScores } from '../../../redux/actions/dataActions';
 const styles = (theme) => ({
     ...theme.spreadThis,
@@ -65,10 +70,19 @@ class BracketPage extends Component {
                                 </section>
                                 <div id="livescorefeed" style={liveFeedStyle}>
                                     {this.props.scoreData.loading ? (
-                                        <CircularProgress
-                                            size={30}
-                                            align="center"
-                                        />
+                                        <CustomizedTables
+                                            headerRow={undefined}
+                                            rows={
+                                                <StyledTableRow>
+                                                    <StyledTableCell>
+                                                        Loading...
+                                                    </StyledTableCell>
+                                                    <StyledTableCell></StyledTableCell>
+                                                    <StyledTableCell></StyledTableCell>
+                                                    <StyledTableCell></StyledTableCell>
+                                                </StyledTableRow>
+                                            }
+                                        ></CustomizedTables>
                                     ) : this.props.scoreData.scores ===
                                           'undefined' ||
                                       !this.props.scoreData.scores[0] ? (
@@ -140,10 +154,10 @@ class BracketPage extends Component {
                                     <Typography align="center">
                                         <b>Final Four - April 2 </b> <br />
                                         No. 1 Kansas vs. No. 2 Villanova 6:09
-                                        p.m. TBS
+                                        p.m TBS
                                         <br />
                                         No. 2 Duke vs. No. 8 North Carolina 8:49
-                                        p.m. TBS
+                                        p.m TBS
                                         <br />
                                         <br />
                                         <b>

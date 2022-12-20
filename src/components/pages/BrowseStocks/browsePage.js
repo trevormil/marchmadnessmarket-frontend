@@ -75,8 +75,9 @@ class BrowseStocksPage extends Component {
         ) : (
             <StyledTableRow>
                 <StyledTableCell component="th" scope="row" align="left">
-                    <CircularProgress size={30}></CircularProgress>
+                    <StyledTableCell>Loading...</StyledTableCell>
                 </StyledTableCell>
+                <StyledTableCell></StyledTableCell>
                 <StyledTableCell></StyledTableCell>
                 <StyledTableCell></StyledTableCell>
                 <StyledTableCell></StyledTableCell>
@@ -106,6 +107,7 @@ class BrowseStocksPage extends Component {
                                 Teams
                             </Typography>
                         </Grid>
+
                         {/* <Grid item xs={12}>
                             {this.props.user &&
                             !this.props.user.authenticated ? (
@@ -143,8 +145,8 @@ class BrowseStocksPage extends Component {
                             </Grid>
                         </Grid>
                     </div> */}
-                        <Grid item xs={0} md={2}></Grid>
-                        <Grid item xs={12} md={8}>
+                        <Grid item xs={0} md={1}></Grid>
+                        <Grid item xs={12} md={10}>
                             <div className="screenercard">
                                 <CustomizedTables
                                     rows={stockDisplay}
@@ -156,7 +158,7 @@ class BrowseStocksPage extends Component {
                                 />
                             </div>
                         </Grid>
-                        <Grid item xs={0} md={2}></Grid>
+                        <Grid item xs={0} md={1}></Grid>
                     </Grid>
                 </Container>
             </div>

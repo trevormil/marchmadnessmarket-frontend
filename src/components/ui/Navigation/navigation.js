@@ -67,7 +67,7 @@ class Navigation extends React.Component {
                             src="mmm-logo-cropped.jpg"
                             style={{ marginRight: '5px' }}
                         />
-                    
+
                         <Typography
                             style={{
                                 display: 'flex',

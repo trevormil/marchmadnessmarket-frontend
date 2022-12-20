@@ -16,13 +16,17 @@ import { infoHeaderRow, getInfoRows } from './homerows';
 import CustomizedTables from '../../ui/StockInfoTable/stockTable';
 import LeaderboardPage from '../Leaderboard/leaderboardPage';
 import {
+    StyledTableCell,
+    StyledTableRow,
+} from '../../ui/StockInfoTable/styledTableComponents';
+import {
     SportsBasketballRounded,
     EmojiEventsRounded,
     MonetizationOn,
     MonetizationOnRounded,
     ShowChartRounded,
 } from '@mui/icons-material';
-import { LAST_UPDATED_AT } from '../../../constants/lastupdated';
+import { LAST_UPDATED_AT } from '../../../constants/constants';
 
 const styles = (theme) => ({
     ...theme.spreadThis,
@@ -42,6 +46,15 @@ class HomePage extends Component {
         };
 
         const liveFeedStyle = {
+            height: '300px',
+            backgroundColor: this.props.scoreData.loading
+                ? undefined
+                : 'whitesmoke',
+            color: 'black',
+            overflow: 'scroll',
+        };
+
+        const upcomingEventsStyle = {
             height: '300px',
             backgroundColor: 'whitesmoke',
             color: 'black',
@@ -362,10 +375,19 @@ class HomePage extends Component {
                                         style={liveFeedStyle}
                                     >
                                         {this.props.scoreData.loading ? (
-                                            <CircularProgress
-                                                size={30}
-                                                align="center"
-                                            />
+                                            <CustomizedTables
+                                                headerRow={undefined}
+                                                rows={
+                                                    <StyledTableRow>
+                                                        <StyledTableCell>
+                                                            Loading...
+                                                        </StyledTableCell>
+                                                        <StyledTableCell></StyledTableCell>
+                                                        <StyledTableCell></StyledTableCell>
+                                                        <StyledTableCell></StyledTableCell>
+                                                    </StyledTableRow>
+                                                }
+                                            ></CustomizedTables>
                                         ) : this.props.scoreData.scores ===
                                               'undefined' ||
                                           !this.props.scoreData.scores[0] ? (
@@ -445,10 +467,19 @@ class HomePage extends Component {
 
                                         <div id="market-overview">
                                             {this.props.data.loading ? (
-                                                <CircularProgress
-                                                    size={30}
-                                                    align="center"
-                                                />
+                                                <CustomizedTables
+                                                    headerRow={infoHeaderRow}
+                                                    rows={
+                                                        <StyledTableRow>
+                                                            <StyledTableCell>
+                                                                Loading...
+                                                            </StyledTableCell>
+                                                            <StyledTableCell></StyledTableCell>
+                                                            <StyledTableCell></StyledTableCell>
+                                                            <StyledTableCell></StyledTableCell>
+                                                        </StyledTableRow>
+                                                    }
+                                                ></CustomizedTables>
                                             ) : (
                                                 <CustomizedTables
                                                     headerRow={infoHeaderRow}
@@ -471,7 +502,7 @@ class HomePage extends Component {
                                             Upcoming Events
                                         </Typography>
                                     </section>
-                                    <div style={liveFeedStyle}>
+                                    <div style={upcomingEventsStyle}>
                                         <Typography align="center">
                                             <b>Final Four - April 2 </b> <br />
                                             No. 1 Kansas vs. No. 2 Villanova

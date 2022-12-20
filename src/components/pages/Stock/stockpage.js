@@ -100,16 +100,17 @@ class StockPage extends Component {
     }
 
     attemptToBuy = (event) => {
-        const tradeId = event.currentTarget.getAttribute('name');
-        axios.put(`/trades/${tradeId}`).then(() => {
-            this.props.setOwnedStocks(this.props.user);
-            this.props.getCurrStock(
-                this.props.data,
-                this.props.data.filters,
-                this.state.stockId
-            );
-        });
+        // const tradeId = event.currentTarget.getAttribute('name');
+        // axios.put(`/trades/${tradeId}`).then(() => {
+        //     this.props.setOwnedStocks(this.props.user);
+        //     this.props.getCurrStock(
+        //         this.props.data,
+        //         this.props.data.filters,
+        //         this.state.stockId
+        //     );
+        // });
     };
+
     attemptToIPOBuy = async () => {
         this.setState({ buyIsLoading: true });
         await axios({
@@ -132,24 +133,27 @@ class StockPage extends Component {
         });
         this.setState({ buyIsLoading: false });
     };
+
     attemptToIPOSell = () => {
+        this.setState({ buyIsLoading: true });
         axios({
             method: 'put',
             url: `/stocks/${this.state.stockId}/sellIpo`,
             data: {
-                numShares: Number(this.state.numToIPOSell),
+                numShares: Number(this.state.numToSell),
             },
         }).then(() => {
             this.setState({
-                numToIPOSell: null,
+                numToSell: 0,
             });
-            document.getElementById('numToIPOSell').value = null;
+            // document.getElementById('numToIPOSell').value = null;
             this.props.setOwnedStocks(this.props.user);
             this.props.getCurrStock(
                 this.props.data,
                 this.props.data.filters,
                 this.state.stockId
             );
+            this.setState({ buyIsLoading: false });
         });
     };
     handleInputChange = (event) => {
@@ -246,7 +250,7 @@ class StockPage extends Component {
                                 )}
                             </Typography>
                         </Grid>
-                        {/* {this.props.user && this.props.user.authenticated ? (
+                        {this.props.user && this.props.user.authenticated ? (
                             <>
                                 <Grid item xs={3}></Grid>
                                 <Grid item xs={6} align="center">
@@ -256,7 +260,7 @@ class StockPage extends Component {
                                                 variant="h4"
                                                 align="center"
                                             >
-                                                Buy Stock
+                                                Buy / Sell
                                             </Typography>
                                         </section>
                                         <div
@@ -274,7 +278,7 @@ class StockPage extends Component {
                                                         variant="h6"
                                                         align="center"
                                                     >
-                                                        Shares Owned:{' '}
+                                                        Current Shares Owned:{' '}
                                                         {numSharesOwned}
                                                     </Typography>
                                                     <Typography
@@ -308,7 +312,7 @@ class StockPage extends Component {
                                                 onChange={
                                                     this.handleInputChange
                                                 }
-                                                placeholder="# Shares to Buy"
+                                                placeholder="# Shares To Buy"
                                                 type="number"
                                             ></BootstrapInput>
                                             <Button
@@ -346,20 +350,48 @@ class StockPage extends Component {
                                                     : '...'}{' '}
                                                 per share
                                             </Button>
-                                            <div
-                                                style={{
-                                                    paddingBottom: 10,
-                                                }}
+                                            <hr />
+                                            <BootstrapInput
+                                                id="numToSell"
+                                                name="numToSell"
+                                                value={this.state.numToSell}
+                                                onChange={
+                                                    this.handleInputChange
+                                                }
+                                                placeholder="# Shares To Sell"
+                                                type="number"
+                                            ></BootstrapInput>
+                                            <Button
+                                                style={{ marginLeft: 10 }}
+                                                color="primary"
+                                                variant="contained"
+                                                onClick={this.attemptToIPOSell}
+                                                disabled={
+                                                    isInvalidDate() ||
+                                                    this.props.data.currStock
+                                                        .stockData === null ||
+                                                    this.state.numToSell <= 0 ||
+                                                    this.state.numToSell ===
+                                                        null ||
+                                                    this.state.numToSell >
+                                                        numSharesOwned
+                                                }
                                             >
-                                                <Typography
-                                                    variant="p"
-                                                    align="center"
-                                                >
-                                                    *Once you click buy, there
-                                                    is no selling. It is
-                                                    permanent.
-                                                </Typography>
-                                            </div>
+                                                Sell{' '}
+                                                {this.state.numToSell
+                                                    ? this.state.numToSell
+                                                    : 0}{' '}
+                                                at $
+                                                {this.props.data.currStock
+                                                    .stockData &&
+                                                this.props.data.currStock
+                                                    .stockData.ipoPrice
+                                                    ? this.props.data.currStock.stockData.ipoPrice.toFixed(
+                                                          2
+                                                      )
+                                                    : '...'}{' '}
+                                                per share
+                                            </Button>
                                         </div>
                                     </div>
                                 </Grid>
@@ -380,7 +412,7 @@ class StockPage extends Component {
                                     </Typography>
                                 )}
                             </Grid>
-                        )} */}
+                        )}
                         <Grid item xs={3}></Grid>
                         <Grid item xs={6}>
                             <div className="portfolio-card">
@@ -389,7 +421,7 @@ class StockPage extends Component {
                                     className={classes.pageTitle}
                                     align="center"
                                 >
-                                    Statistics and Info
+                                    Team Info
                                 </Typography>
                                 {this.props.data.loading ? (
                                     <CircularProgress size={30} />

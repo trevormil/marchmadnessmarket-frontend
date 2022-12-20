@@ -44,12 +44,9 @@ class LeaderboardPage extends Component {
             </StyledTableRow>
         );
         return (
-            <div style={{ overflow: 'auto' }}>
-                <CustomizedTables
-                    rows={stockDisplay}
-                    headerRow={getHeaderRow()}
-                />
-            </div>
+            // <div style={{ overflow: 'auto' }}>
+            <CustomizedTables rows={stockDisplay} headerRow={getHeaderRow()} />
+            // </div>
         );
     }
 }

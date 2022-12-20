@@ -58,6 +58,7 @@ class SignUpForm extends Component {
         } = this.props;
         const { errors } = this.state;
         const currLoading = loading || this.props.user.loading;
+        console.log(errors);
         return (
             <div
                 style={{
