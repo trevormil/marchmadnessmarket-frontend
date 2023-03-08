@@ -17,8 +17,8 @@ const styles = (theme) => ({
 class BracketPage extends Component {
     constructor(props) {
         super(props);
-        this.props.getStocks([]);
-        this.props.getScores([]);
+        this.props.getScores(this.props.data, []);
+        this.props.getStocks(this.props.data, []);
     }
 
     render() {
@@ -58,7 +58,7 @@ class BracketPage extends Component {
                         </Grid>
 
                         <Grid item xs={12}>
-                            <img src="bracket2022final.jpg" width="100%" />
+                            <img src="/bracket2022final.jpg" width="100%" />
                         </Grid>
 
                         <Grid item xs={12} md={6}>
@@ -151,7 +151,10 @@ class BracketPage extends Component {
                                     </Typography>
                                 </section>
                                 <div style={liveFeedStyle}>
-                                    <Typography align="center" style={{padding: 5}}>
+                                    <Typography
+                                        align="center"
+                                        style={{ padding: 5 }}
+                                    >
                                         <b>Final Four - April 2 </b> <br />
                                         No. 1 Kansas vs. No. 2 Villanova 6:09
                                         p.m TBS

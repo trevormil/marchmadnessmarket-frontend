@@ -1,4 +1,4 @@
-import { SET_STOCKS, LOADING_STOCKS } from '../types';
+import { SET_STOCKS, LOADING_STOCKS, LOADING_CURR_STOCK, SET_CURR_STOCK } from '../types';
 
 const initialState = {
     loading: false,
@@ -27,7 +27,16 @@ export default function (state = initialState, action) {
                 ...state,
                 loading: true,
             };
-
+        case LOADING_CURR_STOCK:
+            return {
+                ...state,
+                currStockLoading: true,
+            };
+        case SET_CURR_STOCK:
+            return {
+                ...state,
+                currStockLoading: false,
+            };
         default:
             return state;
     }

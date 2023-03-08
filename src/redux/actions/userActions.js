@@ -27,91 +27,31 @@ export const loginUser = (userData) => (dispatch) => {
 //gets all user data for Redux
 export const getUserData = () => async (dispatch) => {
     let payloadData = {};
-
-    await axios
-        .get('/user')
-        .then((res) => {
-            window.localStorage.setItem('username', res.data.userName);
-            payloadData = res.data;
-        })
-        .catch((err) => console.log(err));
-
-    // await axios.get('/userTrades').then((res) => {
-    //     payloadData.openTrades = res.data;
-    // });
-
-    await axios.get('/userStocks').then((res) => {
-        let data = [];
-        if (res) {
-            res.data.forEach((stock) => {
-                data.push(stock);
-            });
-        }
-        payloadData.ownedStocks = data;
-    });
-    await axios.get('/leaderboard').then((res) => {
-        let data = [];
-        if (res) {
-            res.data.forEach((stock) => data.push(stock));
-        }
-        payloadData.leaderboard = data;
-    });
-    // await axios.get('/watchlist').then((res) => {
-    //     let data = [];
-    //     if (res) {
-    //         res.data.forEach((stock) => data.push(stock));
-    //     }
-    //     payloadData.watchlist = data;
-    // });
-    // await axios.get('/transactions').then((res) => {
-    //     let data = [];
-    //     let count = 0;
-    //     if (res) {
-    //         res.data.forEach((transaction) => {
-    //             if (count < 20) {
-    //                 data.push(transaction);
-    //                 count++;
-    //             }
-    //         });
-    //     }
-    //     payloadData.transactions = data;
-    // });
-    //gets account history
-    // await axios.get('/accountHistory').then((res) => {
-    //     let accountHistory = res.data;
-    //     accountHistory.sort((a, b) => {
-    //         const dateArrA = a.time.split('/');
-    //         const dateArrB = b.time.split('/');
-    //         if (Number(dateArrA[2]) < Number(dateArrB[2])) return -1;
-    //         else if (Number(dateArrA[2]) > Number(dateArrB[2])) return 1;
-    //         else {
-    //             if (Number(dateArrA[0]) < Number(dateArrB[0])) return -1;
-    //             else if (Number(dateArrA[0]) > Number(dateArrB[0])) return 1;
-    //             else {
-    //                 if (Number(dateArrA[1]) < Number(dateArrB[1])) return -1;
-    //                 else if (Number(dateArrA[1]) > Number(dateArrB[1]))
-    //                     return 1;
-    //             }
-    //         }
-    //         return 0;
-    //     });
-    //     payloadData.accountHistory = accountHistory;
-    // });
-
-    await axios
-        .get('/stocks')
-        .then((res) => {
-            payloadData.ownedStocks.forEach((ownedStock) => {
-                const stock = res.data.find(
-                    (stock) => stock.stockId === ownedStock.stockId
-                );
-                ownedStock.currPrice = stock.price;
-                ownedStock.currPoints = stock.currPoints;
-                ownedStock.ipoPrice = stock.ipoPrice;
-                ownedStock.totalValue =
-                    ownedStock.numShares * ownedStock.currPrice;
-            });
-        })
+    console.time('getUserData');
+    await Promise.all([
+        axios
+            .get('/user')
+            .then((res) => {
+                window.localStorage.setItem('username', res.data.userName);
+                payloadData = {
+                    ...payloadData,
+                    ...res.data,
+                };
+            })
+            .catch((err) => console.log(err)),
+        axios.get('/userStocks').then(async (res) => {
+            let data = [];
+            if (res) {
+                res.data.forEach((stock) => {
+                    data.push(stock);
+                });
+            }
+            payloadData = {
+                ...payloadData,
+                ownedStocks: data,
+            };
+        }),
+    ])
         .then(() => {
             dispatch({
                 type: SET_USER,
@@ -126,6 +66,7 @@ export const getUserData = () => async (dispatch) => {
                 payload: err.response,
             });
         });
+    console.timeEnd('getUserData');
 };
 
 //updates user portfolio data
@@ -141,22 +82,6 @@ export const updateUserPortfolioData = (currProps) => async (dispatch) => {
         }
         payloadData.ownedStocks = data;
     });
-    // await axios.get('/transactions').then((res) => {
-    //     let data = [];
-    //     let count = 0;
-    //     if (res) {
-    //         res.data.forEach((transaction) => {
-    //             if (count < 20) {
-    //                 data.push(transaction);
-    //                 count++;
-    //             }
-    //         });
-    //     }
-    //     payloadData.transactions = data;
-    // });
-    // await axios.get('/userTrades').then((res) => {
-    //     payloadData.openTrades = res.data;
-    // });
     await axios
         .get('/stocks')
         .then((res) => {
@@ -186,72 +111,25 @@ export const updateUserPortfolioData = (currProps) => async (dispatch) => {
         });
 };
 
-//updates the user's watchlist
-// export const setUserWatchlist =
-//     (currentProps, stockId, addTo) => async (dispatch) => {
-//         dispatch({ type: LOADING_USER });
-//         let payloadData = currentProps;
-
-//         const promise = addTo
-//             ? axios.post(`/watchlist/${stockId}`)
-//             : axios.delete(`/watchlist/${stockId}`);
-//         await promise;
-//         axios
-//             .get('/watchlist')
-//             .then((res) => {
-//                 let data = [];
-//                 if (res) {
-//                     res.data.forEach((stock) => data.push(stock));
-//                 }
-//                 payloadData.watchlist = data;
-//             })
-//             .then(() => {
-//                 dispatch({
-//                     type: SET_USER,
-//                     payload: payloadData,
-//                 });
-//             })
-//             .catch((err) => {
-//                 console.log(err);
-//                 dispatch({
-//                     type: SET_ERRORS,
-//                     payload: err.response,
-//                 });
-//             });
-//     };
-
 //updates the owned stocks
 export const setOwnedStocks = (currentProps) => async (dispatch) => {
     dispatch({ type: LOADING_USER });
     let payloadData = currentProps;
-
-    await axios.get('/user').then((res) => {
-        payloadData.accountBalance = res.data.accountBalance;
-    });
-    await axios.get('/userStocks').then((res) => {
-        let data = [];
-        if (res) {
-            res.data.forEach((stock) => data.push(stock));
-        }
-        payloadData.ownedStocks = data;
-    });
-    // await axios.get('/userTrades').then((res) => {
-    //     payloadData.openTrades = res.data;
-    // });
-    await axios
-        .get('/stocks')
-        .then((res) => {
-            payloadData.ownedStocks.forEach((ownedStock) => {
-                const stock = res.data.find(
-                    (stock) => stock.stockId === ownedStock.stockId
-                );
-                ownedStock.currPrice = stock.price;
-                ownedStock.currPoints = stock.currPoints;
-                ownedStock.ipoPrice = stock.ipoPrice;
-                ownedStock.totalValue =
-                    ownedStock.numShares * ownedStock.currPrice;
-            });
-        })
+    await Promise.all([
+        await axios.get('/user').then((res) => {
+            payloadData = {
+                ...payloadData,
+                accountBalance: res.data.accountBalance,
+            };
+        }),
+        await axios.get('/userStocks').then(async (res) => {
+            let data = [];
+            if (res) {
+                res.data.forEach((stock) => data.push(stock));
+            }
+            payloadData.ownedStocks = data;
+        }),
+    ])
         .then(() => {
             dispatch({
                 type: SET_USER,
@@ -287,6 +165,7 @@ export const logOutUser = () => (dispatch) => {
     localStorage.removeItem('FBIdToken');
     delete axios.defaults.headers.common['Authorization'];
     dispatch({ type: SET_UNAUTHENTICATED });
+    window.localStorage.removeItem('username');
 };
 
 //sets the authorization header for axios as current token

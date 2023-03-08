@@ -20,26 +20,59 @@ import {
 import Blockies from 'react-blockies';
 import MonetizationOn from '@mui/icons-material/MonetizationOn';
 import { TOURNAMENT_NOT_STARTED } from '../../../constants/constants';
+import Modal from '@mui/material/Modal';
+import Stockpage from '../Stock/stockpage';
+import Box from '@mui/material/Box';
+import { CloseOutlined } from '@mui/icons-material';
+import Fade from '@mui/material/Fade';
+
 //Table Components
 const styles = (theme) => ({
     ...theme.spreadThis,
 });
 
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    width: '90%',
+    maxHeight: '90%',
+    transform: 'translate(-50%, -50%)',
+    background: 'linear-gradient(#000000, #1976d2) fixed',
+    overflow: 'auto',
+    border: '3px solid black',
+};
+
+// const style = {
+//     position: 'absolute' as 'absolute',
+//     top: '50%',
+//     left: '50%',
+//     transform: 'translate(-50%, -50%)',
+// background: 'linear-gradient(#000000, #1976d2) fixed',
+//     width: 400,
+//     bgcolor: 'background.paper',
+
+//     boxShadow: 24,
+//     p: 4,
+//   };
 class PortfolioPage extends Component {
     state = {
         userId: window.localStorage.getItem('username'),
         orderBy: TOURNAMENT_NOT_STARTED ? 'numShares' : 'points',
         direction: 'asc',
         mobile: !window.matchMedia('(min-width: 600px)').matches,
+        openModalStockId: '',
     };
     constructor(props) {
         super(props);
         console.log(this.state.userId);
         this.props.getOtherUserStocks(this.state.userId);
         if (!this.props.data.stocks || !this.props.data.stocks.length) {
-            this.props.getStocks([]);
+            this.props.getStocks(this.props.data, []);
         }
         this.handleClickOnSortLabel = this.handleClickOnSortLabel.bind(this);
+        this.handleClickOnBuySellButton =
+            this.handleClickOnBuySellButton.bind(this);
     }
 
     handleClickOnSortLabel(event) {
@@ -56,6 +89,13 @@ class PortfolioPage extends Component {
         //     this.props.user.watchlist
         // );
     }
+
+    handleClickOnBuySellButton(stockId) {
+        this.setState({ openModalStockId: stockId });
+        if (stockId === '' && TOURNAMENT_NOT_STARTED)
+            this.props.getOtherUserStocks(this.state.userId); //Closing modal
+    }
+
     render() {
         const { classes } = this.props;
         console.log(this.props.data.leaderboard);
@@ -76,7 +116,8 @@ class PortfolioPage extends Component {
                         this.state.userId,
                     this.state.direction,
                     this.state.orderBy,
-                    this.state.mobile
+                    this.state.mobile,
+                    this.handleClickOnBuySellButton
                 )
             ) : (
                 <StyledTableRow>
@@ -85,12 +126,6 @@ class PortfolioPage extends Component {
                     <StyledTableCell></StyledTableCell>
                     <StyledTableCell></StyledTableCell>
                     <StyledTableCell></StyledTableCell>
-                    {TOURNAMENT_NOT_STARTED && (
-                        <>
-                            <StyledTableCell></StyledTableCell>
-                            <StyledTableCell></StyledTableCell>
-                        </>
-                    )}
                 </StyledTableRow>
             );
 
@@ -117,79 +152,134 @@ class PortfolioPage extends Component {
         }
 
         return (
-            <div
-                style={{
-                    width: '100%',
-                    background: `linear-gradient(#000000, #1976d2) fixed`,
-                    color: 'white',
-                    minHeight: '1000px',
-                    paddingBottom: 20,
-                }}
-            >
-                <Container maxWidth="md">
-                    <div className={classes.root}>
-                        <Typography
-                            variant="h2"
-                            className={classes.pageTitle}
-                            align="center"
-                            style={{
-                                alignItems: 'center',
-                                display: 'flex',
-                                justifyContent: 'center',
-                            }}
-                        >
-                            <Blockies
-                                seed={this.state.userId}
-                                size={20}
-                                scale={3}
-                                className="identicon"
-                            />
-                            <span style={{ padding: 10 }}>
-                                {this.state.userId
-                                    ? this.state.userId.replace(
-                                          '%E2%80%99',
-                                          "'"
-                                      ) +
-                                      ` (${
-                                          userJSON[0]
-                                              ? userJSON[0]['totalAccountValue']
-                                              : '0'
-                                      })`
-                                    : 'Loading....'}
-                            </span>
-                        </Typography>
-                    </div>
-
-                    {TOURNAMENT_NOT_STARTED &&
-                        this.props.user?.accountBalance >= 0 &&
-                        this.props.user.userName === this.state.userId && (
-                            <Container maxWidth="lg">
-                                <Typography
-                                    variant="h6"
-                                    className={classes.pageTitle}
-                                    align="center"
-                                >
-                                    You have ${this.props.user.accountBalance}{' '}
-                                    left to spend!
-                                </Typography>
-                            </Container>
-                        )}
-
-                    <div className="card">
-                        <div style={{ overflow: 'auto' }}>
-                            <CustomizedTables
-                                rows={stockDisplay}
-                                headerRow={getHeaderRow(
-                                    this.state.orderBy,
-                                    this.state.direction,
-                                    this.handleClickOnSortLabel,
-                                    this.state.mobile
-                                )}
-                            />
+            <>
+                <Modal
+                    open={this.state.openModalStockId !== ''}
+                    onClose={() => {
+                        this.handleClickOnBuySellButton('');
+                    }}
+                    closeAfterTransition
+                    // slots={{ backdrop }}
+                    slotProps={{
+                        backdrop: {
+                            timeout: 500,
+                        },
+                    }}
+                >
+                    {this.state.openModalStockId ? (
+                        <Fade in={this.state.openModalStockId !== ''}>
+                            <Box sx={style}>
+                                <div style={{ margin: 20, float: 'right' }}>
+                                    <CloseOutlined
+                                        style={{
+                                            color: 'white',
+                                            cursor: 'pointer',
+                                        }}
+                                        onClick={() => {
+                                            this.handleClickOnBuySellButton('');
+                                        }}
+                                    />
+                                </div>
+                                <Stockpage
+                                    stockId={this.state.openModalStockId}
+                                    aria-labelledby="modal-modal-title"
+                                    aria-describedby="modal-modal-description"
+                                />
+                            </Box>
+                        </Fade>
+                    ) : (
+                        <div></div>
+                    )}
+                </Modal>
+                <div
+                    style={{
+                        width: '100%',
+                        background: `linear-gradient(#000000, #1976d2) fixed`,
+                        color: 'white',
+                        minHeight: '1000px',
+                        paddingBottom: 20,
+                    }}
+                >
+                    <Container maxWidth="md">
+                        <div className={classes.root}>
+                            <Typography
+                                variant="h2"
+                                className={classes.pageTitle}
+                                align="center"
+                                style={{
+                                    alignItems: 'center',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <Blockies
+                                    seed={this.state.userId}
+                                    size={20}
+                                    scale={3}
+                                    className="identicon"
+                                />
+                                <span style={{ padding: 10 }}>
+                                    {this.state.userId
+                                        ? this.state.userId.replace(
+                                              '%E2%80%99',
+                                              "'"
+                                          ) +
+                                          ` (${
+                                              userJSON[0]
+                                                  ? userJSON[0][
+                                                        'totalAccountValue'
+                                                    ]
+                                                  : '0'
+                                          })`
+                                        : 'Loading....'}
+                                </span>
+                            </Typography>
                         </div>
-                    </div>
-                </Container>
-            </div>
+
+                        {TOURNAMENT_NOT_STARTED &&
+                            this.props.user?.accountBalance >= 0 &&
+                            this.props.user.userName === this.state.userId && (
+                                <Container maxWidth="lg">
+                                    <Typography
+                                        variant="h6"
+                                        className={classes.pageTitle}
+                                        align="center"
+                                        style={{
+                                            alignItems: 'center',
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                        }}
+                                    >
+                                        You have{' '}
+                                        <MonetizationOn
+                                            style={{
+                                                alignSelf: 'center',
+                                                marginLeft: 5,
+                                                marginRight: 5,
+                                            }}
+                                        />
+                                        {this.props.user.accountBalance} left to
+                                        spend!
+                                    </Typography>
+                                </Container>
+                            )}
+
+                        <div className="card">
+                            <div style={{ overflow: 'auto' }}>
+                                <CustomizedTables
+                                    rows={stockDisplay}
+                                    headerRow={getHeaderRow(
+                                        this.state.orderBy,
+                                        this.state.direction,
+                                        this.handleClickOnSortLabel,
+                                        this.state.mobile
+                                    )}
+                                />
+                            </div>
+                        </div>
+                    </Container>
+                </div>
+            </>
         );
     }
 }

@@ -8,6 +8,7 @@ import { Button, TableSortLabel } from '@mui/material';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../../constants/routes';
 import { TOURNAMENT_NOT_STARTED } from '../../../constants/constants';
+import { Shop, ShoppingCart } from '@mui/icons-material';
 
 //gets all rows for all users and account values
 export function getRows(
@@ -16,20 +17,33 @@ export function getRows(
     isOwnPortfolio,
     direction,
     orderBy,
-    mobile
+    mobile,
+    handleClickOnBuySellButton
 ) {
+    if (!stocks) return <> </>;
+
+    const newStocks = [];
+    stockData.map((stock) => {
+        const foundStock = stocks.find(
+            (elem) => elem.stockId === stock.stockId
+        );
+        if (TOURNAMENT_NOT_STARTED || foundStock) {
+            newStocks.push({
+                stockId: stock.stockId,
+                stockName: stock.stockName,
+                numShares: stocks.find((elem) => elem.stockId === stock.stockId)
+                    ? stocks.find((elem) => elem.stockId === stock.stockId)
+                          .numShares
+                    : 0,
+                currPoints: stock.currPoints,
+                imageUrl: stock.imageUrl,
+                seed: stock.seed,
+            });
+        }
+    });
+
+    stocks = newStocks;
     if (isOwnPortfolio && TOURNAMENT_NOT_STARTED) {
-        stockData.map((stock) => {
-            if (!stocks.find((elem) => elem.stockId === stock.stockId)) {
-                stocks.push({
-                    stockId: stock.stockId,
-                    stockName: stock.stockName,
-                    numShares: 0,
-                    currPoints: stock.currPoints,
-                    imageUrl: stock.imageUrl,
-                });
-            }
-        });
     }
 
     if (stocks && stocks.length === 0) {
@@ -106,99 +120,130 @@ export function getRows(
 
     console.log(orderBy, direction);
     console.log('STOCKS', stocks);
-    return stocks ? (
-        stocks.map((row) => {
-            console.log('ROW', row);
+    return (
+        <>
+            {stocks ? (
+                stocks.map((row) => {
+                    console.log('ROW', row);
 
-            return (
-                <StyledTableRow>
-                    <StyledTableCell align="center">
-                        <Button
-                            fullWidth
-                            component={Link}
-                            to={`${ROUTES.STOCKS}/${row.stockId}`}
-                            align="center"
-                            variant="contained"
-                            color="primary"
-                            size="medium"
-                        >
-                            {row.stockName}
-                        </Button>
-                    </StyledTableCell>
-                    {!mobile && (
-                        <StyledTableCell align="center">
-                            <a href={`${ROUTES.STOCKS}/${row.stockId}`}>
-                                <img
-                                    width="50px"
-                                    height="50px"
-                                    src={row.imageUrl}
-                                    alt={`${row.stockName} Team Logo`}
-                                />
-                            </a>
-                        </StyledTableCell>
-                    )}
+                    return (
+                        <>
+                            <StyledTableRow>
+                                <StyledTableCell align="center">
+                                    <Button
+                                        fullWidth
+                                        // component={Link}
+                                        // onClick={() => {}}
+                                        // to={`${ROUTES.STOCKS}/${row.stockId}`}
+                                        onClick={() => {
+                                            handleClickOnBuySellButton(
+                                                row.stockId
+                                            );
+                                        }}
+                                        align="center"
+                                        variant="contained"
+                                        color="primary"
+                                        size="medium"
+                                    >
+                                        {row.stockName}
+                                    </Button>
+                                </StyledTableCell>
+                                {!mobile && (
+                                    <StyledTableCell align="center">
+                                        <img
+                                            width="50px"
+                                            height="50px"
+                                            src={row.imageUrl}
+                                            style={{ cursor: 'pointer' }}
+                                            alt={`${row.stockName} Team Logo`}
+                                            onClick={() => {
+                                                handleClickOnBuySellButton(
+                                                    row.stockId
+                                                );
+                                            }}
+                                        />
+                                    </StyledTableCell>
+                                )}
 
-                    <StyledTableCell align="center">
-                        {row.numShares}
-                    </StyledTableCell>
-                    {/* <StyledTableCell align="center">
+                                <StyledTableCell align="center">
+                                    {row.numShares}
+                                </StyledTableCell>
+                                {/* <StyledTableCell align="center">
             {row.avgBuyPrice.toFixed(2)}
           </StyledTableCell> */}
-                    {!mobile && (
-                        <StyledTableCell align="center">
-                            {row.currPoints}
-                        </StyledTableCell>
-                    )}
-                    <StyledTableCell align="center">
-                        {row.numShares * row.currPoints}
-                    </StyledTableCell>
-                    {!mobile && TOURNAMENT_NOT_STARTED && (
+                                {!TOURNAMENT_NOT_STARTED && (
+                                    <>
+                                        {' '}
+                                        {!mobile && (
+                                            <StyledTableCell align="center">
+                                                {row.currPoints}
+
+                                                <div
+                                                    style={{
+                                                        fontSize: 13,
+                                                        marginTop: 10,
+                                                    }}
+                                                >
+                                                    {row.seed} Seed *{' '}
+                                                    {row.currPoints / row.seed}{' '}
+                                                    Win
+                                                    {row.currPoints /
+                                                        row.seed !==
+                                                    1
+                                                        ? 's'
+                                                        : ''}
+                                                </div>
+                                            </StyledTableCell>
+                                        )}
+                                        <StyledTableCell align="center">
+                                            {row.numShares * row.currPoints}
+                                        </StyledTableCell>
+                                    </>
+                                )}
+                                {!mobile && TOURNAMENT_NOT_STARTED && (
+                                    <>
+                                        <StyledTableCell align="center">
+                                            {row.seed}
+                                        </StyledTableCell>
+                                        <StyledTableCell align="center">
+                                            <Button
+                                                fullWidth
+                                                component={Link}
+                                                // to={`${ROUTES.STOCKS}/${row.stockId}`}
+                                                onClick={() => {
+                                                    handleClickOnBuySellButton(
+                                                        row.stockId
+                                                    );
+                                                }}
+                                                align="center"
+                                                variant="contained"
+                                                color="primary"
+                                                style={{ minWidth: 160 }}
+                                            >
+                                                <ShoppingCart /> Buy / Sell
+                                            </Button>
+                                        </StyledTableCell>
+                                    </>
+                                )}
+                            </StyledTableRow>
+                        </>
+                    );
+                })
+            ) : (
+                <StyledTableRow>
+                    <StyledTableCell>No owned stocks.</StyledTableCell>
+                    <StyledTableCell></StyledTableCell>
+                    <StyledTableCell></StyledTableCell>
+                    <StyledTableCell></StyledTableCell>
+                    <StyledTableCell></StyledTableCell>
+                    {TOURNAMENT_NOT_STARTED && (
                         <>
-                            <StyledTableCell align="center">
-                                <Button
-                                    fullWidth
-                                    component={Link}
-                                    to={`${ROUTES.STOCKS}/${row.stockId}`}
-                                    align="center"
-                                    variant="contained"
-                                    color="primary"
-                                    size="medium"
-                                >
-                                    Buy
-                                </Button>
-                            </StyledTableCell>
-                            <StyledTableCell align="center">
-                                <Button
-                                    fullWidth
-                                    component={Link}
-                                    to={`${ROUTES.STOCKS}/${row.stockId}`}
-                                    align="center"
-                                    variant="contained"
-                                    color="primary"
-                                    size="medium"
-                                >
-                                    Sell
-                                </Button>
-                            </StyledTableCell>
+                            <StyledTableCell></StyledTableCell>
                         </>
                     )}
                 </StyledTableRow>
-            );
-        })
-    ) : (
-        <StyledTableRow>
-            <StyledTableCell>No owned stocks.</StyledTableCell>
-            <StyledTableCell></StyledTableCell>
-            <StyledTableCell></StyledTableCell>
-            <StyledTableCell></StyledTableCell>
-            <StyledTableCell></StyledTableCell>
-            {TOURNAMENT_NOT_STARTED && (
-                <>
-                    <StyledTableCell></StyledTableCell>
-                    <StyledTableCell></StyledTableCell>
-                </>
             )}
-        </StyledTableRow>
+        </>
     );
 }
 
@@ -208,6 +253,7 @@ export function getHeaderRow(orderBy, direction, handleClick, mobile) {
         <TableRow>
             <StyledTableCell align="center">
                 <TableSortLabel
+                    style={{ left: 10 }}
                     direction={direction}
                     active={orderBy === 'stockName'}
                     onClick={handleClick}
@@ -219,6 +265,7 @@ export function getHeaderRow(orderBy, direction, handleClick, mobile) {
             {!mobile && (
                 <StyledTableCell align="center">
                     <TableSortLabel
+                        style={{ left: 10 }}
                         direction={direction}
                         active={orderBy === 'stockName'}
                         onClick={handleClick}
@@ -230,6 +277,7 @@ export function getHeaderRow(orderBy, direction, handleClick, mobile) {
             )}
             <StyledTableCell align="center">
                 <TableSortLabel
+                    style={{ left: 10 }}
                     direction={direction}
                     active={orderBy === 'numShares'}
                     onClick={handleClick}
@@ -240,32 +288,55 @@ export function getHeaderRow(orderBy, direction, handleClick, mobile) {
                 </TableSortLabel>
             </StyledTableCell>
             {/* <StyledTableCell align="left">Avg. Buy Price</StyledTableCell> */}
-            {!mobile && (
-                <StyledTableCell align="center">
-                    <TableSortLabel
-                        direction={direction}
-                        active={orderBy === 'currPoints'}
-                        onClick={handleClick}
-                        name="currPoints"
-                    >
-                        Points Per Share
-                    </TableSortLabel>
-                </StyledTableCell>
+            {TOURNAMENT_NOT_STARTED ? (
+                <>
+                    {!mobile && (
+                        <StyledTableCell align="center">
+                            <TableSortLabel
+                                style={{ left: 10 }}
+                                direction={direction}
+                                active={orderBy === 'seed'}
+                                onClick={handleClick}
+                                name="seed"
+                            >
+                                Seed
+                            </TableSortLabel>
+                        </StyledTableCell>
+                    )}
+                </>
+            ) : (
+                <>
+                    {!mobile && (
+                        <StyledTableCell align="center">
+                            <TableSortLabel
+                                style={{ left: 10 }}
+                                direction={direction}
+                                active={orderBy === 'currPoints'}
+                                onClick={handleClick}
+                                name="currPoints"
+                            >
+                                Points Per Share
+                            </TableSortLabel>
+                        </StyledTableCell>
+                    )}
+                    <StyledTableCell align="center">
+                        <TableSortLabel
+                            style={{ left: 10 }}
+                            direction={direction}
+                            active={orderBy === 'points'}
+                            onClick={handleClick}
+                            name="points"
+                        >
+                            Points
+                        </TableSortLabel>
+                    </StyledTableCell>
+                </>
             )}
-            <StyledTableCell align="center">
-                <TableSortLabel
-                    direction={direction}
-                    active={orderBy === 'points'}
-                    onClick={handleClick}
-                    name="points"
-                >
-                    Points
-                </TableSortLabel>
-            </StyledTableCell>
+
             {!mobile && TOURNAMENT_NOT_STARTED && (
                 <>
-                    <StyledTableCell align="center">Buy</StyledTableCell>
-                    <StyledTableCell align="center">Sell</StyledTableCell>
+                    <StyledTableCell align="center">Buy / Sell</StyledTableCell>
+                    {/* <StyledTableCell align="center">Sell</StyledTableCell> */}
                 </>
             )}
         </TableRow>

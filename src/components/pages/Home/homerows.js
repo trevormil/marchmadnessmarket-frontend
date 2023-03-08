@@ -20,7 +20,7 @@ export const getInfoHeaderRow = (mobile) => {
     );
 };
 
-export const getInfoRows = (stocks, mobile) => {
+export const getInfoRows = (stocks, mobile, handleClickOnBuySellButton) => {
     if (stocks === undefined || stocks === null) {
         return (
             <StyledTableRow>
@@ -37,23 +37,27 @@ export const getInfoRows = (stocks, mobile) => {
                 <StyledTableRow key={stock.stockName}>
                     {!mobile && (
                         <StyledTableCell align="center">
-                            <a href={`./stocks/${stock.stockId}`}>
-                                <img
-                                    height="50px"
-                                    width="50px"
-                                    alt="Team Logo"
-                                    src={file}
-                                />
-                            </a>
+                            <img
+                                height="50px"
+                                width="50px"
+                                alt="Team Logo"
+                                src={file}
+                                style={{ cursor: 'pointer' }}
+                                onClick={() => {
+                                    handleClickOnBuySellButton(stock.stockId);
+                                }}
+                            />
                         </StyledTableCell>
                     )}
                     <StyledTableCell align="center">
                         <Button
                             variant="contained"
                             color="primary"
-                            href={`./stocks/${stock.stockId}`}
                             align="center"
                             fullWidth
+                            onClick={() => {
+                                handleClickOnBuySellButton(stock.stockId);
+                            }}
                         >
                             {stock.stockName}
                         </Button>

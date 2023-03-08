@@ -27,20 +27,46 @@ import {
     ShowChartRounded,
 } from '@mui/icons-material';
 import { LAST_UPDATED_AT } from '../../../constants/constants';
+import Modal from '@mui/material/Modal';
+import Stockpage from '../Stock/stockpage';
+import Box from '@mui/material/Box';
+import { CloseOutlined } from '@mui/icons-material';
+import Fade from '@mui/material/Fade';
 
 const styles = (theme) => ({
     ...theme.spreadThis,
 });
 
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    width: '90%',
+    maxHeight: '90%',
+    transform: 'translate(-50%, -50%)',
+    // background: 'linear-gradient(#000000, #1976d2) fixed',
+    background: 'linear-gradient(#000000, #1976d2) fixed',
+    overflow: 'auto',
+    border: '3px solid black',
+};
+
 class HomePage extends Component {
     state = {
         mobile: !window.matchMedia('(min-width: 1000px)').matches,
+        openModalStockId: '',
     };
 
     constructor(props) {
         super(props);
-        this.props.getStocks([]);
-        this.props.getScores([]);
+        this.props.getScores(this.props.data, []);
+        this.props.getStocks(this.props.data, []);
+        this.handleClickOnBuySellButton =
+            this.handleClickOnBuySellButton.bind(this);
+    }
+
+    handleClickOnBuySellButton(stockId) {
+        this.setState({ openModalStockId: stockId });
+        // this.props.getOtherUserStocks(this.state.userId);
     }
     render() {
         const { classes } = this.props;
@@ -66,6 +92,47 @@ class HomePage extends Component {
         };
         return (
             <>
+                <Modal
+                    open={this.state.openModalStockId !== ''}
+                    onClose={() => {
+                        this.handleClickOnBuySellButton('');
+                    }}
+                    closeAfterTransition
+                    // slots={{ backdrop }}
+                    slotProps={{
+                        backdrop: {
+                            timeout: 500,
+                        },
+                    }}
+                >
+                    {this.state.openModalStockId ? (
+                        <Fade
+                            in={this.state.openModalStockId !== ''}
+                            // timeout={1000}
+                        >
+                            <Box sx={style}>
+                                <div style={{ margin: 20, float: 'right' }}>
+                                    <CloseOutlined
+                                        style={{
+                                            color: 'white',
+                                            cursor: 'pointer',
+                                        }}
+                                        onClick={() => {
+                                            this.handleClickOnBuySellButton('');
+                                        }}
+                                    />
+                                </div>
+                                <Stockpage
+                                    stockId={this.state.openModalStockId}
+                                    aria-labelledby="modal-modal-title"
+                                    aria-describedby="modal-modal-description"
+                                />
+                            </Box>
+                        </Fade>
+                    ) : (
+                        <div></div>
+                    )}
+                </Modal>
                 <div
                     style={{
                         height: '700px',
@@ -175,7 +242,7 @@ class HomePage extends Component {
                                     <Typography>
                                         Everyone is given a $1000 budget of
                                         in-game money which must be spent before
-                                        March 17th at 12:00 PM (unspent funds
+                                        March 16th at 12:00 PM (unspent funds
                                         are worthless).
                                     </Typography>
                                 </div>
@@ -215,8 +282,8 @@ class HomePage extends Component {
                                 >
                                     <Typography>
                                         Prices for all teams' stock is fixed at
-                                        $1 per share. You can buy as much or as
-                                        little stock of a team as you wish.
+                                        $1 per share. Allocate your $1000
+                                        however you would like.
                                     </Typography>
                                 </div>
                             </Grid>
@@ -254,10 +321,11 @@ class HomePage extends Component {
                                     }}
                                 >
                                     <Typography>
-                                        Points are rewarded whenever a team
-                                        wins, excluding play-in games. The
-                                        amount of points per win per share is
-                                        equal to their seed number.
+                                        You earn points whenever a team that you
+                                        own wins. The amount of points awarded
+                                        per win is equal to the team's seed
+                                        multiplied by the number of shares that
+                                        you own.
                                     </Typography>
                                 </div>
                             </Grid>
@@ -296,9 +364,9 @@ class HomePage extends Component {
                                     }}
                                 >
                                     <Typography>
-                                        The winner will be the one who
-                                        accumulates the most points over the
-                                        duration of the tournament.
+                                        The winner is whoever earns the most
+                                        points over the duration of the
+                                        tournament!
                                     </Typography>
                                 </div>
                             </Grid>
@@ -309,10 +377,9 @@ class HomePage extends Component {
                                 style={{ marginTop: 20, paddingBottom: 30 }}
                             >
                                 <Typography align="center">
-                                    For example, let's say you own 10 shares of
-                                    Florida (a #10 seed), and they win two
-                                    games. You will receive 200 points (10
-                                    shares x 10 seed x 2 wins).
+                                    For example, if you own 5 shares of a #10
+                                    seed who wins 2 games, you will receive 100
+                                    points (5 shares x 10 seed x 2 wins).
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -495,7 +562,9 @@ class HomePage extends Component {
                                                     )}
                                                     rows={getInfoRows(
                                                         this.props.data.stocks,
-                                                        this.state.mobile
+                                                        this.state.mobile,
+                                                        this
+                                                            .handleClickOnBuySellButton
                                                     )}
                                                 ></CustomizedTables>
                                             )}
@@ -537,7 +606,7 @@ class HomePage extends Component {
                                 </div>
                             </Grid>
                             <Grid item xs={12}>
-                                <img src="bracket2022final.jpg" width="100%" />
+                                <img src="/bracket2022final.jpg" width="100%" />
                             </Grid>
                         </Grid>
                     </Container>

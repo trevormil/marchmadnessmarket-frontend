@@ -17,8 +17,8 @@ class Leaderboard extends Component {
     };
     constructor(props) {
         super(props);
-        this.props.getStocks([]);
-        // this.props.getScores([]);
+        this.props.getStocks(this.props.data, []);
+        // this.props.getStocks(this.props.data, []);
     }
 
     render() {

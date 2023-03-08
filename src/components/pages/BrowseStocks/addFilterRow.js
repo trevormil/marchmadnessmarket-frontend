@@ -57,7 +57,7 @@ class AddFilterRow extends React.Component {
         }
     }
     handleReset() {
-        this.props.getStocks([]);
+        this.props.getStocks(this.props.data, []);
         this.setState(initialState);
     }
     addFilter() {
@@ -99,7 +99,11 @@ class AddFilterRow extends React.Component {
         const errors = this.isValid();
         return (
             <Grid item xs={8}>
-                <Grid container justifyContent="space-around" alignItems="center">
+                <Grid
+                    container
+                    justifyContent="space-around"
+                    alignItems="center"
+                >
                     <Grid
                         container
                         spacing={3}

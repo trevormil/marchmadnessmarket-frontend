@@ -10,9 +10,24 @@ import axios from 'axios';
 import { sort, filterStocks } from '../../helpers/filterFunctions';
 
 //gets all stocks and updates  data
-export const getStocks = (filterArr) => async (dispatch) => {
+export const getStocks = (currProps, filterArr) => async (dispatch) => {
+    let payloadData = currProps;
+    if (currProps.leaderboard && currProps.leaderboard.length !== 0) {
+        payloadData.stocks = sort(
+            filterStocks(payloadData.stocks, filterArr),
+            'seed',
+            'asc'
+        );
+        payloadData.filters = filterArr;
+        dispatch({
+            type: SET_STOCKS,
+            payload: payloadData,
+        });
+        return;
+    }
+    console.time('getting stocks');
+
     dispatch({ type: LOADING_STOCKS });
-    let payloadData = {};
     await Promise.all([
         axios.get('/leaderboard').then((res) => {
             let data = [];
@@ -39,10 +54,13 @@ export const getStocks = (filterArr) => async (dispatch) => {
         }),
     ])
         .then(() => {
+            console.timeEnd('getting stocks');
+            console.time('dispatch');
             dispatch({
                 type: SET_STOCKS,
                 payload: payloadData,
             });
+            console.timeEnd('dispatch');
         })
         .catch((err) => {
             dispatch({
@@ -53,7 +71,11 @@ export const getStocks = (filterArr) => async (dispatch) => {
 };
 
 //gets all stocks and updates  data
-export const getScores = (filterArr) => async (dispatch) => {
+export const getScores = (currProps, filterArr) => async (dispatch) => {
+    if (currProps.scores && currProps.scores.length !== 0) {
+        return;
+    }
+
     dispatch({ type: LOADING_SCORES });
     let payloadData = {};
 
@@ -127,12 +149,24 @@ export const getOtherUserStocks = (userId) => async (dispatch) => {
 //gets single stock info and stores it in currStock
 export const getCurrStock =
     (currProps, filterArr, stockId) => async (dispatch) => {
-        dispatch({ type: LOADING_STOCKS });
         let payloadData = currProps;
+        console.log('PAYLOAD STOCKS', payloadData);
 
-        await axios.get(`/stocks/${stockId}`).then((res) => {
-            payloadData.currStock.stockData = res.data;
-        });
+        let fetchedStock = undefined;
+        if (payloadData.stocks) {
+            fetchedStock = payloadData.stocks.find((stock) => {
+                return stock.stockId === stockId;
+            });
+        }
+
+        if (fetchedStock) {
+            payloadData.currStock.stockData = fetchedStock;
+        } else {
+            dispatch({ type: LOADING_STOCKS });
+            await axios.get(`/stocks/${stockId}`).then((res) => {
+                payloadData.currStock.stockData = res.data;
+            });
+        }
 
         // await axios.get(`/trades/all/${stockId}`).then((res) => {
         //     let allTrades = [];

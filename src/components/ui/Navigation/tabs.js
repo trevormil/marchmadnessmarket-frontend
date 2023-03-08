@@ -29,7 +29,7 @@ const blue = {
     900: '#003A75',
 };
 
-const Tab = styled(TabUnstyled)`
+export const Tab = styled(TabUnstyled)`
     font-family: IBM Plex Sans, sans-serif;
     color: white;
     cursor: pointer;
@@ -72,7 +72,7 @@ const TabPanel = styled(TabPanelUnstyled)`
     font-size: 0.875rem;
 `;
 
-const TabsList = styled(TabsListUnstyled)`
+export const TabsList = styled(TabsListUnstyled)`
     background-color: ${'#1976d2'};
     border-radius: 8px;
     display: flex;

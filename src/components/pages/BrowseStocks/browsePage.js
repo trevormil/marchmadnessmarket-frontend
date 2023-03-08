@@ -19,22 +19,49 @@ import {
 } from '../../ui/StockInfoTable/styledTableComponents';
 import { getRows, getScreenerHeaderRow } from './screenerRows';
 import { getFilterDisplay } from './filterDisplay';
+import Modal from '@mui/material/Modal';
+import Stockpage from '../Stock/stockpage';
+import Box from '@mui/material/Box';
+import { CloseOutlined } from '@mui/icons-material';
+import Fade from '@mui/material/Fade';
+import { TOURNAMENT_NOT_STARTED } from '../../../constants/constants';
 
 const styles = (theme) => ({
     ...theme.spreadThis,
 });
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    width: '90%',
+    maxHeight: '90%',
+    transform: 'translate(-50%, -50%)',
+    background: 'linear-gradient(#000000, #1976d2) fixed',
+    overflow: 'auto',
+    border: '3px solid black',
+};
 
 class BrowseStocksPage extends Component {
     state = {
         orderBy: 'stockName',
         direction: 'asc',
         mobile: !window.matchMedia('(min-width: 1000px)').matches,
+        openModalStockId: '',
+        loadedOnce: false,
     };
     constructor(props) {
         super(props);
-        this.props.getStocks(this.props.data.filters);
+        this.props.getStocks(this.props.data, this.props.data.filters);
         this.handleClickOnSortLabel = this.handleClickOnSortLabel.bind(this);
         this.handleClickOnWatchlist = this.handleClickOnWatchlist.bind(this);
+        this.handleClickOnBuySellButton =
+            this.handleClickOnBuySellButton.bind(this);
+    }
+
+    handleClickOnBuySellButton(stockId) {
+        this.setState({ openModalStockId: stockId });
+        // this.props.getOtherUserStocks(this.state.userId);
     }
 
     handleClickOnSortLabel(event) {
@@ -69,7 +96,8 @@ class BrowseStocksPage extends Component {
                 this.props.data.stocks,
                 this.props.user.watchlist,
                 this.handleClickOnWatchlist,
-                this.state.mobile
+                this.state.mobile,
+                this.handleClickOnBuySellButton
             )
         ) : (
             <StyledTableRow>
@@ -86,28 +114,71 @@ class BrowseStocksPage extends Component {
         );
         let filterDisplay = getFilterDisplay(this.props.data);
         return (
-            <div
-                style={{
-                    width: '100%',
-                    background: `linear-gradient(#000000, #1976d2) fixed`,
-                    color: 'white',
-                    minHeight: '1000px',
-                    paddingBottom: 20,
-                }}
-            >
-                <Container>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                            <Typography
-                                variant="h2"
-                                align="center"
-                                className={classes.pageTitle}
-                            >
-                                Teams
-                            </Typography>
-                        </Grid>
+            <>
+                <Modal
+                    open={this.state.openModalStockId !== ''}
+                    onClose={() => {
+                        this.handleClickOnBuySellButton('');
+                    }}
+                    closeAfterTransition
+                    // slots={{ backdrop }}
+                    slotProps={{
+                        backdrop: {
+                            timeout: 500,
+                        },
+                    }}
+                >
+                    {this.state.openModalStockId ? (
+                        <Fade
+                            in={this.state.openModalStockId !== ''}
+                            // timeout={1000}
+                        >
+                            <Box sx={style}>
+                                <div style={{ margin: 20, float: 'right' }}>
+                                    <CloseOutlined
+                                        style={{
+                                            color: 'white',
+                                            cursor: 'pointer',
+                                        }}
+                                        onClick={() => {
+                                            this.handleClickOnBuySellButton('');
+                                        }}
+                                    />
+                                </div>
+                                <Stockpage
+                                    stockId={this.state.openModalStockId}
+                                    aria-labelledby="modal-modal-title"
+                                    aria-describedby="modal-modal-description"
+                                />
+                            </Box>
+                        </Fade>
+                    ) : (
+                        <div></div>
+                    )}
+                </Modal>
 
-                        {/* <Grid item xs={12}>
+                <div
+                    style={{
+                        width: '100%',
+                        background: `linear-gradient(#000000, #1976d2) fixed`,
+                        color: 'white',
+                        minHeight: '1000px',
+                        paddingBottom: 20,
+                    }}
+                >
+                    <Container>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12}>
+                                <Typography
+                                    variant="h2"
+                                    align="center"
+                                    className={classes.pageTitle}
+                                >
+                                    Teams
+                                </Typography>
+                            </Grid>
+
+                            {/* <Grid item xs={12}>
                             {this.props.user &&
                             !this.props.user.authenticated ? (
                                 <Typography align="center">
@@ -120,7 +191,7 @@ class BrowseStocksPage extends Component {
                                 </Typography>
                             )}
                         </Grid> */}
-                        {/* 
+                            {/* 
                     <div className="whiteBG">
                         <Grid container spacing={3} justify="space-around">
                             <AddFilterRow
@@ -144,24 +215,25 @@ class BrowseStocksPage extends Component {
                             </Grid>
                         </Grid>
                     </div> */}
-                        <Grid item xs={0} md={1}></Grid>
-                        <Grid item xs={12} md={10}>
-                            <div className="screenercard">
-                                <CustomizedTables
-                                    rows={stockDisplay}
-                                    headerRow={getScreenerHeaderRow(
-                                        this.state.orderBy,
-                                        this.state.direction,
-                                        this.handleClickOnSortLabel,
-                                        this.state.mobile
-                                    )}
-                                />
-                            </div>
+                            <Grid item xs={0} md={1}></Grid>
+                            <Grid item xs={12} md={10}>
+                                <div className="screenercard">
+                                    <CustomizedTables
+                                        rows={stockDisplay}
+                                        headerRow={getScreenerHeaderRow(
+                                            this.state.orderBy,
+                                            this.state.direction,
+                                            this.handleClickOnSortLabel,
+                                            this.state.mobile
+                                        )}
+                                    />
+                                </div>
+                            </Grid>
+                            <Grid item xs={0} md={1}></Grid>
                         </Grid>
-                        <Grid item xs={0} md={1}></Grid>
-                    </Grid>
-                </Container>
-            </div>
+                    </Container>
+                </div>
+            </>
         );
     }
 }
