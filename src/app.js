@@ -42,7 +42,6 @@ if (token) {
     const decodedToken = jwtDecode(token);
     if (decodedToken.exp * 1000 < Date.now()) {
         // window.location.href = ROUTES.SIGN_IN;
-        alert('Your session has expired (1 hour). Please log in again.');
         store.dispatch(logOutUser());
     } else {
         store.dispatch({ type: SET_AUTHENTICATED });

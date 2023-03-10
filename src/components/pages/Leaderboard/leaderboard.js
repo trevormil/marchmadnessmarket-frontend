@@ -55,13 +55,7 @@ class Leaderboard extends Component {
                                 </Typography>
                             </div>
                         </Grid>
-                        <Grid item xs={12}>
-                            <div>
-                                <Typography align="center">
-                                    Last Updated: {LAST_UPDATED_AT}
-                                </Typography>
-                            </div>
-                        </Grid>
+
                         <Grid item md={3} xs={0}></Grid>
                         <Grid item xs={12} md={6}>
                             <div className="screenercard">

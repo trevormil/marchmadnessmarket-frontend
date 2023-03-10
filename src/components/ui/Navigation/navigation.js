@@ -38,7 +38,6 @@ class Navigation extends React.Component {
     };
 
     render() {
-        console.log(this.state.matches);
         if (this.state.matches) {
             return (
                 <div
@@ -97,6 +96,7 @@ class Navigation extends React.Component {
                         }}
                     >
                         <TabBase
+                            
                             value={this.state.value}
                             authenticated={this.props.authenticated}
                             handleChange={this.handleChange}

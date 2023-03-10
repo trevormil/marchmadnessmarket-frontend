@@ -11,6 +11,8 @@ import { sort, filterStocks } from '../../helpers/filterFunctions';
 
 //gets all stocks and updates  data
 export const getStocks = (currProps, filterArr) => async (dispatch) => {
+    if (currProps.loading) return;
+
     let payloadData = currProps;
     if (currProps.leaderboard && currProps.leaderboard.length !== 0) {
         payloadData.stocks = sort(
@@ -25,7 +27,10 @@ export const getStocks = (currProps, filterArr) => async (dispatch) => {
         });
         return;
     }
+
     console.time('getting stocks');
+
+    console.log('Fetching stocks');
 
     dispatch({ type: LOADING_STOCKS });
     await Promise.all([
@@ -72,17 +77,22 @@ export const getStocks = (currProps, filterArr) => async (dispatch) => {
 
 //gets all stocks and updates  data
 export const getScores = (currProps, filterArr) => async (dispatch) => {
+    if (currProps.loading) return;
+
+    let payloadData = currProps;
     if (currProps.scores && currProps.scores.length !== 0) {
         return;
     }
 
     dispatch({ type: LOADING_SCORES });
-    let payloadData = {};
+
+    console.log('Fetching scores');
 
     await axios
         .get('/scores')
         .then((res) => {
             payloadData.scores = res.data;
+            console.log("SCORES FORMAT", res.data);
 
             dispatch({
                 type: SET_SCORES,
@@ -94,6 +104,7 @@ export const getScores = (currProps, filterArr) => async (dispatch) => {
                 type: SET_SCORES,
                 payload: {
                     scores: [],
+                    loading: false,
                 },
             });
         });
@@ -104,13 +115,11 @@ export const getOtherUserStocks = (userId) => async (dispatch) => {
     dispatch({ type: LOADING_OTHER_USER_STOCKS });
     let payloadData = {};
     userId = userId.replace("'", '’');
+    console.log('Fetching other user stocks');
     await axios
         .get(`/userStocks/${userId}`)
         .then((res) => {
             payloadData.stocks = res.data.sort((a, b) => {
-                console.log(a, b);
-                console.log(b.currPoints * b.numShares);
-                console.log(a.currPoints * a.numShares);
                 if (!a.currPoints) {
                     a.currPoints = 0;
                 }
@@ -129,8 +138,6 @@ export const getOtherUserStocks = (userId) => async (dispatch) => {
                     return b.numShares - a.numShares;
                 }
             });
-            console.log(payloadData);
-            console.log(res.data);
             dispatch({
                 type: SET_OTHER_USER_STOCKS,
                 payload: payloadData,
@@ -149,8 +156,9 @@ export const getOtherUserStocks = (userId) => async (dispatch) => {
 //gets single stock info and stores it in currStock
 export const getCurrStock =
     (currProps, filterArr, stockId) => async (dispatch) => {
+        if (currProps.loading) return;
+
         let payloadData = currProps;
-        console.log('PAYLOAD STOCKS', payloadData);
 
         let fetchedStock = undefined;
         if (payloadData.stocks) {
@@ -163,6 +171,7 @@ export const getCurrStock =
             payloadData.currStock.stockData = fetchedStock;
         } else {
             dispatch({ type: LOADING_STOCKS });
+            console.log('Fetching curr stock data');
             await axios.get(`/stocks/${stockId}`).then((res) => {
                 payloadData.currStock.stockData = res.data;
             });
@@ -250,6 +259,8 @@ export const getCurrStock =
 
 //sets stocks with updated filters
 export const setStocks = (currProps, filterArr) => (dispatch) => {
+    if (currProps.loading) return;
+
     dispatch({ type: LOADING_STOCKS });
     let payloadData = currProps;
     payloadData.stocks = filterStocks(currProps.stocks, filterArr);
@@ -263,6 +274,8 @@ export const setStocks = (currProps, filterArr) => (dispatch) => {
 //sorts and updates all stocks
 export const sortCurrStocks =
     (currProps, orderBy, dir, watchlist) => (dispatch) => {
+        if (currProps.loading) return;
+
         dispatch({ type: LOADING_STOCKS });
         let payloadData = currProps;
         payloadData.stocks = sort(currProps.stocks, orderBy, dir, watchlist);

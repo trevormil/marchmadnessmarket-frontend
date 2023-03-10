@@ -74,7 +74,7 @@ export function getRows(
                 <StyledTableCell component="th" scope="row" align="center">
                     <Button
                         fullWidth
-                        component={Link}
+                        // component={Link}
                         // to={`${ROUTES.STOCKS}/${row.stockId}`}
                         onClick={() => {
                             handleClickOnBuySellButton(row.stockId);

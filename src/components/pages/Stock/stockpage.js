@@ -90,8 +90,6 @@ class StockPage extends Component {
 
     constructor(props) {
         super(props);
-        console.log('StockPage constructor');
-        console.log(this.props.stockId);
 
         this.props.getCurrStock(
             this.props.data,

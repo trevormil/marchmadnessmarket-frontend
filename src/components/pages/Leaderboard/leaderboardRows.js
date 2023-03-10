@@ -71,7 +71,7 @@ export function getRows(leaderboard, mobile, page, username) {
                 }
 
                 return (
-                    <StyledTableRow>
+                    <StyledTableRow key={i}>
                         {!mobile && (
                             <StyledTableCell
                                 component="th"

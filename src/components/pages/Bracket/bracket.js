@@ -17,7 +17,7 @@ const styles = (theme) => ({
 class BracketPage extends Component {
     constructor(props) {
         super(props);
-        this.props.getScores(this.props.data, []);
+        this.props.getScores(this.props.scoreData, []);
         this.props.getStocks(this.props.data, []);
     }
 
@@ -83,8 +83,7 @@ class BracketPage extends Component {
                                                 </StyledTableRow>
                                             }
                                         ></CustomizedTables>
-                                    ) : this.props.scoreData.scores ===
-                                          'undefined' ||
+                                    ) : !this.props.scoreData.scores ||
                                       !this.props.scoreData.scores[0] ? (
                                         <Typography variant="h5" align="center">
                                             No Current Games
@@ -147,7 +146,7 @@ class BracketPage extends Component {
                             <div className="card">
                                 <section>
                                     <Typography variant="h4" align="center">
-                                        Upcoming Events
+                                        Upcoming
                                     </Typography>
                                 </section>
                                 <div style={liveFeedStyle}>

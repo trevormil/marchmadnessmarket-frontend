@@ -80,8 +80,6 @@ export function getRows(
             .imageUrl.toString();
     }
 
-    console.log(stocks);
-
     stocks = stocks.sort((a, b) => {
         if (!a.currPoints) {
             a.currPoints = 0;
@@ -106,10 +104,6 @@ export function getRows(
             }
             return 0;
         } else {
-            console.log('a', a[orderBy]);
-            console.log('b', b[orderBy]);
-            console.log('a-b', b[orderBy] - a[orderBy]);
-
             return b[orderBy] - a[orderBy];
         }
     });
@@ -118,14 +112,10 @@ export function getRows(
         stocks = stocks.reverse();
     }
 
-    console.log(orderBy, direction);
-    console.log('STOCKS', stocks);
     return (
         <>
             {stocks ? (
                 stocks.map((row) => {
-                    console.log('ROW', row);
-
                     return (
                         <>
                             <StyledTableRow>
@@ -208,7 +198,7 @@ export function getRows(
                                         <StyledTableCell align="center">
                                             <Button
                                                 fullWidth
-                                                component={Link}
+                                                // component={Link}
                                                 // to={`${ROUTES.STOCKS}/${row.stockId}`}
                                                 onClick={() => {
                                                     handleClickOnBuySellButton(

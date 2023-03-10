@@ -58,7 +58,7 @@ class HomePage extends Component {
 
     constructor(props) {
         super(props);
-        this.props.getScores(this.props.data, []);
+        this.props.getScores(this.props.scoreData, []);
         this.props.getStocks(this.props.data, []);
         this.handleClickOnBuySellButton =
             this.handleClickOnBuySellButton.bind(this);
@@ -407,13 +407,13 @@ class HomePage extends Component {
                                     </Typography>
                                 </div>
                             </Grid>
-                            <Grid item xs={12}>
+                            {/* <Grid item xs={12}>
                                 <div>
                                     <Typography align="center">
                                         Last Updated: {LAST_UPDATED_AT}
                                     </Typography>
                                 </div>
-                            </Grid>
+                            </Grid> */}
                             <Grid item xs={12} md={6}>
                                 <div className="card">
                                     <section
@@ -579,7 +579,7 @@ class HomePage extends Component {
                                 >
                                     <section>
                                         <Typography variant="h4" align="center">
-                                            Upcoming Events
+                                            Upcoming
                                         </Typography>
                                     </section>
                                     <div style={upcomingEventsStyle}>

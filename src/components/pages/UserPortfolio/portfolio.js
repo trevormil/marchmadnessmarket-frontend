@@ -65,7 +65,6 @@ class PortfolioPage extends Component {
     };
     constructor(props) {
         super(props);
-        console.log(this.state.userId);
         this.props.getOtherUserStocks(this.state.userId);
         if (!this.props.data.stocks || !this.props.data.stocks.length) {
             this.props.getStocks(this.props.data, []);
@@ -98,15 +97,11 @@ class PortfolioPage extends Component {
 
     render() {
         const { classes } = this.props;
-        console.log(this.props.data.leaderboard);
         const userJSON = this.props.data.leaderboard
             ? this.props.data.leaderboard.filter(
                   (element) => element.userName === this.state.userId
               )
             : [];
-        console.log(this.props.otherUserStocks.stocks);
-
-        console.log(this.props.user);
         let stockDisplay =
             !this.props.otherUserStocks.loading && !this.props.data.loading ? (
                 getRows(
@@ -133,7 +128,6 @@ class PortfolioPage extends Component {
             TOURNAMENT_NOT_STARTED &&
             this.props.user.userName !== this.state.userId
         ) {
-            console.log('AFJKSDFHJSDHKGFSDJ');
             stockDisplay = (
                 <StyledTableRow>
                     <StyledTableCell>Picks Hidden</StyledTableCell>
