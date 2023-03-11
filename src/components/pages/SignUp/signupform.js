@@ -134,7 +134,7 @@ class SignUpForm extends Component {
                                         helperText={
                                             errors.userName
                                                 ? errors.userName
-                                                : '*Your username will be used as your name on the leaderboards.'
+                                                : '*Your username will be what is displayed on the leaderboards.'
                                         }
                                         error={errors.userName ? true : false}
                                         value={this.state.userName}
@@ -177,7 +177,7 @@ class SignUpForm extends Component {
                                     </Button>
                                     <br />
                                     <small>
-                                        Already have an account ? Login{' '}
+                                        Already have an account? Login{' '}
                                         <Link to={ROUTES.SIGN_IN}>here</Link>
                                     </small>
                                 </form>

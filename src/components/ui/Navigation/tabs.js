@@ -139,7 +139,6 @@ class TabBase extends React.Component {
         },
         {
             label: 'Logout',
-            linkTo: ROUTES.HOME,
             buttonOnClick: true,
         },
     ];

@@ -24,10 +24,11 @@ export function getRows(
 
     const newStocks = [];
     stockData.map((stock) => {
-        const foundStock = stocks.find(
-            (elem) => elem.stockId === stock.stockId
+        const ownedStock = stocks.find(
+            (elem) => elem.stockId === stock.stockId && elem.numShares > 0
         );
-        if (TOURNAMENT_NOT_STARTED || foundStock) {
+        
+        if (TOURNAMENT_NOT_STARTED || ownedStock) {
             newStocks.push({
                 stockId: stock.stockId,
                 stockName: stock.stockName,

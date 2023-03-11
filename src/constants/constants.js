@@ -1,5 +1,9 @@
 export const LAST_UPDATED_AT = 'Fri, March 10th @ 8:00AM';
-export const TOURNAMENT_NOT_STARTED = false;
+
+//current date is before march 16th at 12:00PM
+export const TOURNAMENT_NOT_STARTED =
+    Date.now() > Date.parse('March 12, 2023 5:00:00 EST') &&
+    Date.now() < Date.parse('March 16, 2023 12:00:00 EST');
 
 // export function getRoundedTime() {
 //     var timeToReturn = new Date();

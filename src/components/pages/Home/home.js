@@ -579,28 +579,26 @@ class HomePage extends Component {
                                 >
                                     <section>
                                         <Typography variant="h4" align="center">
-                                            Upcoming
+                                            Rounds
                                         </Typography>
                                     </section>
-                                    <div style={upcomingEventsStyle}>
+                                    <div style={liveFeedStyle}>
                                         <Typography
                                             align="center"
                                             style={{ padding: 5 }}
                                         >
-                                            <b>Final Four - April 2 </b> <br />
-                                            No. 1 Kansas vs. No. 2 Villanova
-                                            6:09 p.m. TBS
+                                            <b>Round of 64 - March 16 - 17 </b>
                                             <br />
-                                            No. 2 Duke vs. No. 8 North Carolina
-                                            8:49 p.m. TBS
+                                            <b>Round of 32 - March 17 - 18 </b>
                                             <br />
+                                            <b>Sweet 16 - March 23 - 24 </b>
                                             <br />
-                                            <b>
-                                                National Championship - April 4
-                                            </b>{' '}
+                                            <b>Elite 8 - March 25 - 26 </b>
                                             <br />
-                                            No. 1 Kansas vs. No. 8 North
-                                            Carolina 9:20pm TBS
+                                            <b>Final Four - April 1 </b>
+                                            <br />
+                                            <b>Championship - April 3 </b>
+                                            <br />
                                         </Typography>
                                     </div>
                                 </div>

@@ -63,7 +63,7 @@ class Navigation extends React.Component {
                     >
                         <img
                             height={'50px'}
-                            src="mmm-logo-cropped.jpg"
+                            src="/mmm-logo-cropped.jpg"
                             style={{ marginRight: '5px' }}
                         />
 

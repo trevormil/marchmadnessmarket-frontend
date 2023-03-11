@@ -4,11 +4,11 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  background-color: whitesmoke;
+  /* background-color: whitesmoke; */
   min-height: 100vh;
 }
 .middle-block {
-  background-color: whitesmoke;
+  /* background-color: whitesmoke; */
   min-height: 100vh;
 }
 .grayBG {
