@@ -92,7 +92,7 @@ export const getScores = (currProps, filterArr) => async (dispatch) => {
         .get('/scores')
         .then((res) => {
             payloadData.scores = res.data;
-            console.log("SCORES FORMAT", res.data);
+            console.log('SCORES FORMAT', res.data);
 
             dispatch({
                 type: SET_SCORES,
@@ -177,85 +177,11 @@ export const getCurrStock =
             });
         }
 
-        // await axios.get(`/trades/all/${stockId}`).then((res) => {
-        //     let allTrades = [];
-        //     res.data.forEach((trade) => {
-        //         if (trade.completed === false) {
-        //             allTrades.push(trade);
-        //         }
-        //     });
-        //     payloadData.currStock.trades = allTrades;
-        // });
-
-        // await axios.get(`/stocks/${stockId}/stockHistory`).then((res) => {
-        //     payloadData.currStock.stockHistory = res.data;
-        // });
-
         dispatch({
             type: SET_STOCKS,
             payload: payloadData,
         });
     };
-//gets all open trades for current stock
-// export const getAllTrades = (currProps) => async (dispatch) => {
-//     dispatch({ type: LOADING_STOCKS });
-//     let payloadData = currProps;
-
-//     await axios
-//         .get(`/trades`)
-//         .then((res) => {
-//             let allTrades = [];
-//             res.data.forEach((trade) => {
-//                 if (trade.completed === false) {
-//                     allTrades.push(trade);
-//                 }
-//             });
-//             payloadData.trades = allTrades;
-//         })
-//         .then(() => {
-//             dispatch({
-//                 type: SET_STOCKS,
-//                 payload: payloadData,
-//             });
-//         })
-//         .catch((err) => {
-//             dispatch({
-//                 type: SET_STOCKS,
-//                 payload: payloadData,
-//             });
-//         });
-// };
-
-// //gets all open trades for current stock
-// export const getTradesForCurrStock =
-//     (currProps, stockId) => async (dispatch) => {
-//         dispatch({ type: LOADING_STOCKS });
-//         let payloadData = currProps;
-
-//         await axios
-//             .get(`/trades/all/${stockId}`)
-//             .then((res) => {
-//                 let allTrades = [];
-//                 res.data.forEach((trade) => {
-//                     if (trade.completed === false) {
-//                         allTrades.push(trade);
-//                     }
-//                 });
-//                 payloadData.currStock.trades = allTrades;
-//             })
-//             .then(() => {
-//                 dispatch({
-//                     type: SET_STOCKS,
-//                     payload: payloadData,
-//                 });
-//             })
-//             .catch((err) => {
-//                 dispatch({
-//                     type: SET_STOCKS,
-//                     payload: [],
-//                 });
-//             });
-//     };
 
 //sets stocks with updated filters
 export const setStocks = (currProps, filterArr) => (dispatch) => {

@@ -1,4 +1,9 @@
-import { SET_STOCKS, LOADING_STOCKS, LOADING_CURR_STOCK, SET_CURR_STOCK } from '../types';
+import {
+    LOADING_CURR_STOCK,
+    LOADING_STOCKS,
+    SET_CURR_STOCK,
+    SET_STOCKS,
+} from '../types';
 
 const initialState = {
     loading: false,

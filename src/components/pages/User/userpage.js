@@ -1,49 +1,47 @@
+import { Container, Typography } from '@mui/material';
 import React, { Component } from 'react';
-//Redux
 import { connect } from 'react-redux';
-//UI
-import { Typography, Container, Grid } from '@mui/material';
 
 import withStyles from '@mui/styles/withStyles';
 
-import CustomizedTables from '../../ui/StockInfoTable/stockTable';
-import { getHeaderRow, getRows } from './userrows';
-import {
-    StyledTableCell,
-    StyledTableRow,
-} from '../../ui/StockInfoTable/styledTableComponents';
+import Blockies from 'react-blockies';
+import { TOURNAMENT_NOT_STARTED } from '../../../constants/constants';
 import {
     getOtherUserStocks,
     getStocks,
 } from '../../../redux/actions/dataActions';
-import Blockies from 'react-blockies';
-import MonetizationOn from '@mui/icons-material/MonetizationOn';
-import { TOURNAMENT_NOT_STARTED } from '../../../constants/constants';
-import Modal from '@mui/material/Modal';
-import Stockpage from '../Stock/stockpage';
-import Box from '@mui/material/Box';
-import { CloseOutlined } from '@mui/icons-material';
-import Fade from '@mui/material/Fade';
+import CustomizedTables from '../../ui/StockInfoTable/stockTable';
+import {
+    StyledTableCell,
+    StyledTableRow,
+} from '../../ui/StockInfoTable/styledTableComponents';
+import StockModal from '../Stock/stockModal';
+import { UserStockRowSchema, getHeaderRow, getRows } from './userrows';
+import { getBlankRowFromSchema } from '../../ui/StockInfoTable/stockTableUtils';
 
 //Table Components
 const styles = (theme) => ({
     ...theme.spreadThis,
 });
 
-const waitForURLUpdate = () => {
+const getUserIdFromPathname = () => {
     let splitPathName = window.location.pathname.split('/');
 
-    while (splitPathName[splitPathName.length - 2] !== 'users') {
-        splitPathName = window.location.pathname.split('/');
+    if (splitPathName[splitPathName.length - 1] === 'portfolio') {
+        return window.localStorage.getItem('username');
+    } else {
+        while (splitPathName[splitPathName.length - 2] !== 'users') {
+            splitPathName = window.location.pathname.split('/');
+        }
+        let str = window.location.pathname.split('/').pop();
+        str = str.replace('%20', ' ');
+        return str;
     }
-    let str = window.location.pathname.split('/').pop();
-    str = str.replace('%20', ' ');
-    return str;
 };
 
 class UserPage extends Component {
     state = {
-        userId: waitForURLUpdate(),
+        userId: getUserIdFromPathname(),
         orderBy: 'points',
         direction: 'asc',
         mobile: !window.matchMedia('(min-width: 600px)').matches,
@@ -65,12 +63,6 @@ class UserPage extends Component {
             orderBy: orderByName,
             direction: dir,
         });
-        // this.props.sortCurrStocks(
-        //     this.props.data,
-        //     orderByName,
-        //     dir,
-        //     this.props.user.watchlist
-        // );
     }
 
     handleClickOnBuySellButton(stockId) {
@@ -79,6 +71,7 @@ class UserPage extends Component {
             this.props.getOtherUserStocks(this.state.userId); //Closing modal
         }
     }
+
     render() {
         const { classes } = this.props;
         const userJSON = this.props.data.leaderboard
@@ -87,105 +80,43 @@ class UserPage extends Component {
               )
             : [];
         let stockDisplay =
-            !this.props.otherUserStocks.loading && !this.props.data.loading ? (
-                getRows(
-                    this.props.otherUserStocks.stocks,
-                    this.props.data.stocks,
-                    window.localStorage.getItem('username') ===
-                        this.state.userId,
-                    this.state.direction,
-                    this.state.orderBy,
-                    this.state.mobile,
-                    this.handleClickOnBuySellButton
-                )
-            ) : (
-                <StyledTableRow>
-                    <StyledTableCell>Loading...</StyledTableCell>
-                    <StyledTableCell></StyledTableCell>
-                    <StyledTableCell></StyledTableCell>
-                    <StyledTableCell></StyledTableCell>
-                    <StyledTableCell></StyledTableCell>
-                </StyledTableRow>
-            );
+            !this.props.otherUserStocks.loading && !this.props.data.loading
+                ? getRows(
+                      this.props.otherUserStocks.stocks,
+                      this.props.data.stocks,
+                      window.localStorage.getItem('username') ===
+                          this.state.userId,
+                      this.state.direction,
+                      this.state.orderBy,
+                      this.state.mobile,
+                      this.handleClickOnBuySellButton
+                  )
+                : getBlankRowFromSchema(
+                      UserStockRowSchema,
+                      this.state.mobile,
+                      'Loading...'
+                  );
 
         if (
             TOURNAMENT_NOT_STARTED &&
             this.props.user.userName !== this.state.userId
         ) {
-            stockDisplay = (
-                <StyledTableRow>
-                    <StyledTableCell>Picks Hidden</StyledTableCell>
-                    <StyledTableCell></StyledTableCell>
-                    <StyledTableCell></StyledTableCell>
-                    {!this.state.mobile && !TOURNAMENT_NOT_STARTED && (
-                        <>
-                            <StyledTableCell></StyledTableCell>
-                            <StyledTableCell></StyledTableCell>
-                        </>
-                    )}
-                    {!this.state.mobile && TOURNAMENT_NOT_STARTED && (
-                        <>
-                            <StyledTableCell></StyledTableCell>
-                            <StyledTableCell></StyledTableCell>
-                        </>
-                    )}
-                </StyledTableRow>
+            stockDisplay = getBlankRowFromSchema(
+                UserStockRowSchema,
+                this.state.mobile,
+                'Picks Hidden'
             );
         }
-        const style = {
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            width: '90%',
-            maxHeight: '90%',
-            transform: 'translate(-50%, -50%)',
-            background: 'linear-gradient(#000000, #1976d2) fixed',
-            overflow: 'auto',
-        };
 
         return (
             <>
-                <Modal
-                    open={
-                        this.state.openModalStockId !== '' &&
-                        !this.props.data.currStockLoading
-                    }
+                <StockModal
+                    stockId={this.state.openModalStockId}
                     onClose={() => {
                         this.handleClickOnBuySellButton('');
                     }}
-                    closeAfterTransition
-                    // slots={{ backdrop }}
-                    slotProps={{
-                        backdrop: {
-                            timeout: 500,
-                        },
-                    }}
-                >
-                    {this.state.openModalStockId ? (
-                        <Fade in={this.state.openModalStockId !== ''}>
-                            <Box sx={style}>
-                                <div style={{ margin: 20, float: 'right' }}>
-                                    <CloseOutlined
-                                        style={{
-                                            color: 'white',
-                                            cursor: 'pointer',
-                                        }}
-                                        onClick={() => {
-                                            this.handleClickOnBuySellButton('');
-                                        }}
-                                    />
-                                </div>
-                                <Stockpage
-                                    stockId={this.state.openModalStockId}
-                                    aria-labelledby="modal-modal-title"
-                                    aria-describedby="modal-modal-description"
-                                />
-                            </Box>
-                        </Fade>
-                    ) : (
-                        <div></div>
-                    )}
-                </Modal>
+                />
+
                 <div
                     style={{
                         width: '100%',
@@ -195,7 +126,7 @@ class UserPage extends Component {
                         paddingBottom: 20,
                     }}
                 >
-                    <Container maxWidth="md">
+                    <Container maxWidth="lg">
                         <div className={classes.root}>
                             <Typography
                                 variant="h2"

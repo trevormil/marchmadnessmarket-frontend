@@ -4,14 +4,11 @@ const initialState = {
     loading: false,
     authenticated: false,
     email: "",
-    watchlist: [],
     ownedStocks: [],
-    transactions: [],
     accountHistory: [],
     openTrades: [],
     leaderboard: [],
-    accountBalance: null,
-    startPlusDeposits: null
+    accountBalance: 0,
 }
 
 export default function (state = initialState, action) {

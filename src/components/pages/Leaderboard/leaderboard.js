@@ -56,13 +56,13 @@ class Leaderboard extends Component {
                             </div>
                         </Grid>
 
-                        <Grid item md={3} xs={0}></Grid>
-                        <Grid item xs={12} md={6}>
+                        <Grid item md={2} xs={0}></Grid>
+                        <Grid item xs={12} md={8}>
                             <div className="screenercard">
                                 <LeaderboardPage mobile={this.state.mobile} />
                             </div>
                         </Grid>
-                        <Grid item md={3} xs={0}></Grid>
+                        <Grid item md={2} xs={0}></Grid>
                     </Grid>
                 </Container>
             </div>

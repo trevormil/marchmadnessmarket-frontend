@@ -1,53 +1,30 @@
-import React, { Component } from 'react';
+import { Container, Grid, Typography } from '@mui/material';
 import withStyles from '@mui/styles/withStyles';
-import { getStocks, getScores } from '../../../redux/actions/dataActions';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-    Grid,
-    Typography,
-    Container,
-    CircularProgress,
-    Button,
-    Card,
-    Paper,
-    Avatar,
-} from '@mui/material';
-import { getInfoRows, getInfoHeaderRow } from './homerows';
+import { getScores, getStocks } from '../../../redux/actions/dataActions';
 import CustomizedTables from '../../ui/StockInfoTable/stockTable';
-import LeaderboardPage from '../Leaderboard/leaderboardPage';
 import {
     StyledTableCell,
     StyledTableRow,
 } from '../../ui/StockInfoTable/styledTableComponents';
-import {
-    SportsBasketballRounded,
-    EmojiEventsRounded,
-    MonetizationOn,
-    MonetizationOnRounded,
-    ShowChartRounded,
-} from '@mui/icons-material';
-import { LAST_UPDATED_AT } from '../../../constants/constants';
-import Modal from '@mui/material/Modal';
-import Stockpage from '../Stock/stockpage';
-import Box from '@mui/material/Box';
-import { CloseOutlined } from '@mui/icons-material';
-import Fade from '@mui/material/Fade';
+import LeaderboardPage from '../Leaderboard/leaderboardPage';
+import Rules from '../Rules/rules';
+import { getInfoHeaderRow, getInfoRows } from './homerows';
+import StockModal from '../Stock/stockModal';
+import Scores from '../Scores/scores';
+import Schedule from '../Schedule/schedule';
+import { BRACKET_IMG_PATH } from '../../../constants/constants';
 
 const styles = (theme) => ({
     ...theme.spreadThis,
 });
 
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    width: '90%',
-    maxHeight: '90%',
-    transform: 'translate(-50%, -50%)',
-    // background: 'linear-gradient(#000000, #1976d2) fixed',
-    background: 'linear-gradient(#000000, #1976d2) fixed',
-    overflow: 'auto',
-    border: '3px solid black',
+export const overviewBoxStyles = {
+    height: '300px',
+    backgroundColor: 'whitesmoke',
+    color: 'black',
+    overflow: 'scroll',
 };
 
 class HomePage extends Component {
@@ -58,81 +35,25 @@ class HomePage extends Component {
 
     constructor(props) {
         super(props);
-        this.props.getScores(this.props.scoreData, []);
         this.props.getStocks(this.props.data, []);
-        this.handleClickOnBuySellButton =
-            this.handleClickOnBuySellButton.bind(this);
+        this.setStockIdForModal = this.setStockIdForModal.bind(this);
     }
 
-    handleClickOnBuySellButton(stockId) {
+    setStockIdForModal(stockId) {
         this.setState({ openModalStockId: stockId });
-        // this.props.getOtherUserStocks(this.state.userId);
     }
+
     render() {
         const { classes } = this.props;
-        const marketOverviewStyle = {
-            overflow: 'auto',
-            height: '500px',
-        };
 
-        const liveFeedStyle = {
-            height: '300px',
-            backgroundColor: this.props.scoreData.loading
-                ? undefined
-                : 'whitesmoke',
-            color: 'black',
-            overflow: 'scroll',
-        };
-
-        const upcomingEventsStyle = {
-            height: '300px',
-            backgroundColor: 'whitesmoke',
-            color: 'black',
-            overflow: 'scroll',
-        };
         return (
             <>
-                <Modal
-                    open={this.state.openModalStockId !== ''}
+                <StockModal
+                    stockId={this.state.openModalStockId}
                     onClose={() => {
-                        this.handleClickOnBuySellButton('');
+                        this.setStockIdForModal('');
                     }}
-                    closeAfterTransition
-                    // slots={{ backdrop }}
-                    slotProps={{
-                        backdrop: {
-                            timeout: 500,
-                        },
-                    }}
-                >
-                    {this.state.openModalStockId ? (
-                        <Fade
-                            in={this.state.openModalStockId !== ''}
-                            // timeout={1000}
-                        >
-                            <Box sx={style}>
-                                <div style={{ margin: 20, float: 'right' }}>
-                                    <CloseOutlined
-                                        style={{
-                                            color: 'white',
-                                            cursor: 'pointer',
-                                        }}
-                                        onClick={() => {
-                                            this.handleClickOnBuySellButton('');
-                                        }}
-                                    />
-                                </div>
-                                <Stockpage
-                                    stockId={this.state.openModalStockId}
-                                    aria-labelledby="modal-modal-title"
-                                    aria-describedby="modal-modal-description"
-                                />
-                            </Box>
-                        </Fade>
-                    ) : (
-                        <div></div>
-                    )}
-                </Modal>
+                />
                 <div
                     style={{
                         height: '700px',
@@ -171,220 +92,15 @@ class HomePage extends Component {
                                         >
                                             Welcome!
                                         </Typography>
-
-                                        {/* <Typography variant="h6" align="center">
-                                            <img
-                                                src="mmm-logo.jpg"
-                                                height="300px"
-                                            />
-                                        </Typography> */}
                                     </Grid>
                                 </Grid>
                             </Container>
                         </div>
                     </div>
                 </div>
-                <div
-                    style={{
-                        width: '100%',
-                        background: `linear-gradient(#1976d2, #000000) fixed`,
-                        color: 'white',
-                    }}
-                >
-                    <Container>
-                        <Grid container spacing={3}>
-                            <Grid item xs={12}>
-                                <div
-                                    style={{
-                                        fontWeight: 'bold',
-                                        paddingTop: '32px',
-                                    }}
-                                >
-                                    <Typography variant="h3" align="center">
-                                        How It Works
-                                    </Typography>
-                                </div>
-                            </Grid>
-                            <Grid item xs={12} md={3}>
-                                <div
-                                    style={{
-                                        alignItems: 'center',
-                                        textAlign: 'center',
-                                        justifyContent: 'center',
-                                        display: 'flex',
-                                    }}
-                                >
-                                    <Avatar
-                                        style={{
-                                            height: '200px',
-                                            width: '200px',
-                                            backgroundColor: 'black',
-                                        }}
-                                    >
-                                        <MonetizationOnRounded
-                                            style={{
-                                                height: '180px',
-                                                width: '180px',
-                                                backgroundColor: 'black',
-                                            }}
-                                        />
-                                    </Avatar>
-                                </div>
-                                <div
-                                    style={{
-                                        alignItems: 'center',
-                                        textAlign: 'center',
-                                        justifyContent: 'center',
-                                        display: 'flex',
-                                        marginTop: 30,
-                                    }}
-                                >
-                                    <Typography>
-                                        Everyone is given a $1000 budget of
-                                        in-game money which must be spent before
-                                        March 16th at 12:00 PM (unspent funds
-                                        are worthless).
-                                    </Typography>
-                                </div>
-                            </Grid>
-                            <Grid item xs={12} md={3}>
-                                <div
-                                    style={{
-                                        alignItems: 'center',
-                                        textAlign: 'center',
-                                        justifyContent: 'center',
-                                        display: 'flex',
-                                    }}
-                                >
-                                    <Avatar
-                                        style={{
-                                            height: '200px',
-                                            width: '200px',
-                                            backgroundColor: 'black',
-                                        }}
-                                    >
-                                        <ShowChartRounded
-                                            style={{
-                                                height: '180px',
-                                                width: '180px',
-                                                backgroundColor: 'black',
-                                            }}
-                                        />
-                                    </Avatar>
-                                </div>
-                                <div
-                                    style={{
-                                        textAlign: 'center',
-                                        justifyContent: 'center',
-                                        display: 'flex',
-                                        marginTop: 30,
-                                    }}
-                                >
-                                    <Typography>
-                                        Prices for all teams' stock is fixed at
-                                        $1 per share. Allocate your $1000
-                                        however you would like.
-                                    </Typography>
-                                </div>
-                            </Grid>
-                            <Grid item xs={12} md={3}>
-                                <div
-                                    style={{
-                                        alignItems: 'center',
-                                        textAlign: 'center',
-                                        justifyContent: 'center',
-                                        display: 'flex',
-                                    }}
-                                >
-                                    <Avatar
-                                        style={{
-                                            height: '200px',
-                                            width: '200px',
-                                            backgroundColor: 'black',
-                                        }}
-                                    >
-                                        <SportsBasketballRounded
-                                            style={{
-                                                height: '180px',
-                                                width: '180px',
-                                                backgroundColor: 'black',
-                                            }}
-                                        />
-                                    </Avatar>
-                                </div>
-                                <div
-                                    style={{
-                                        textAlign: 'center',
-                                        justifyContent: 'center',
-                                        display: 'flex',
-                                        marginTop: 30,
-                                    }}
-                                >
-                                    <Typography>
-                                        You earn points whenever a team that you
-                                        own wins. The amount of points awarded
-                                        per win is equal to the team's seed
-                                        multiplied by the number of shares that
-                                        you own.
-                                    </Typography>
-                                </div>
-                            </Grid>
-                            <Grid item xs={12} md={3}>
-                                <div
-                                    style={{
-                                        alignItems: 'center',
-                                        textAlign: 'center',
-                                        justifyContent: 'center',
-                                        display: 'flex',
-                                    }}
-                                >
-                                    <Avatar
-                                        style={{
-                                            height: '200px',
-                                            width: '200px',
-                                            backgroundColor: 'black',
-                                        }}
-                                    >
-                                        <EmojiEventsRounded
-                                            style={{
-                                                height: '180px',
-                                                width: '180px',
-                                                backgroundColor: 'black',
-                                            }}
-                                        />
-                                    </Avatar>
-                                </div>
-                                <div
-                                    style={{
-                                        alignItems: 'center',
-                                        textAlign: 'center',
-                                        justifyContent: 'center',
-                                        display: 'flex',
-                                        marginTop: 30,
-                                    }}
-                                >
-                                    <Typography>
-                                        The winner is whoever earns the most
-                                        points over the duration of the
-                                        tournament!
-                                    </Typography>
-                                </div>
-                            </Grid>
 
-                            <Grid
-                                item
-                                xs={12}
-                                style={{ marginTop: 20, paddingBottom: 30 }}
-                            >
-                                <Typography align="center">
-                                    For example, if you own 5 shares of a #10
-                                    seed who wins 2 games, you will receive 100
-                                    points (5 shares x 10 seed x 2 wins).
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                    </Container>
-                </div>
+                <Rules />
+
                 <div
                     style={{
                         width: '100%',
@@ -407,13 +123,6 @@ class HomePage extends Component {
                                     </Typography>
                                 </div>
                             </Grid>
-                            {/* <Grid item xs={12}>
-                                <div>
-                                    <Typography align="center">
-                                        Last Updated: {LAST_UPDATED_AT}
-                                    </Typography>
-                                </div>
-                            </Grid> */}
                             <Grid item xs={12} md={6}>
                                 <div className="card">
                                     <section
@@ -432,99 +141,12 @@ class HomePage extends Component {
                                         >
                                             <LeaderboardPage
                                                 mobile={this.state.mobile}
+                                                homePage={true}
                                             />
                                         </div>
                                     </section>
                                 </div>
-
-                                <div className="card" style={{ marginTop: 24 }}>
-                                    <section>
-                                        <Typography variant="h4" align="center">
-                                            Scores
-                                        </Typography>
-                                    </section>
-                                    <div
-                                        id="livescorefeed"
-                                        style={liveFeedStyle}
-                                    >
-                                        {this.props.scoreData.loading ? (
-                                            <CustomizedTables
-                                                headerRow={undefined}
-                                                rows={
-                                                    <StyledTableRow>
-                                                        <StyledTableCell>
-                                                            Loading...
-                                                        </StyledTableCell>
-                                                        <StyledTableCell></StyledTableCell>
-                                                        <StyledTableCell></StyledTableCell>
-                                                        <StyledTableCell></StyledTableCell>
-                                                    </StyledTableRow>
-                                                }
-                                            ></CustomizedTables>
-                                        ) : this.props.scoreData.scores ===
-                                              'undefined' ||
-                                          !this.props.scoreData.scores[0] ? (
-                                            <Typography
-                                                variant="h5"
-                                                align="center"
-                                            >
-                                                No Current Games
-                                            </Typography>
-                                        ) : (
-                                            this.props.scoreData.scores.map(
-                                                (game) => {
-                                                    return (
-                                                        <div
-                                                            display="flexbox"
-                                                            key={game.name}
-                                                        >
-                                                            <h3 align="center">
-                                                                {game.name}
-                                                            </h3>
-
-                                                            <h1 align="center">
-                                                                <img
-                                                                    height="50px"
-                                                                    width="50px"
-                                                                    margin="30px"
-                                                                    src={
-                                                                        game
-                                                                            .score[1]
-                                                                            .logo
-                                                                    }
-                                                                    alt="Team Logo"
-                                                                />
-                                                                {
-                                                                    game
-                                                                        .score[1]
-                                                                        .score
-                                                                }{' '}
-                                                                -{' '}
-                                                                {
-                                                                    game
-                                                                        .score[0]
-                                                                        .score
-                                                                }
-                                                                <img
-                                                                    height="50px"
-                                                                    width="50px"
-                                                                    src={
-                                                                        game
-                                                                            .score[0]
-                                                                            .logo
-                                                                    }
-                                                                    alt="Team Logo"
-                                                                />
-                                                            </h1>
-
-                                                            <hr />
-                                                        </div>
-                                                    );
-                                                }
-                                            )
-                                        )}
-                                    </div>
-                                </div>
+                                <Scores />
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <div className="card">
@@ -563,48 +185,22 @@ class HomePage extends Component {
                                                     rows={getInfoRows(
                                                         this.props.data.stocks,
                                                         this.state.mobile,
-                                                        this
-                                                            .handleClickOnBuySellButton
+                                                        this.setStockIdForModal
                                                     )}
                                                 ></CustomizedTables>
                                             )}
                                         </div>
                                     </section>
                                 </div>
-                                <div
-                                    className="card"
-                                    style={{
-                                        marginTop: 24,
-                                    }}
-                                >
-                                    <section>
-                                        <Typography variant="h4" align="center">
-                                            Rounds
-                                        </Typography>
-                                    </section>
-                                    <div style={liveFeedStyle}>
-                                        <Typography
-                                            align="center"
-                                            style={{ padding: 5 }}
-                                        >
-                                            <b>Round of 64 - March 16 - 17 </b>
-                                            <br />
-                                            <b>Round of 32 - March 17 - 18 </b>
-                                            <br />
-                                            <b>Sweet 16 - March 23 - 24 </b>
-                                            <br />
-                                            <b>Elite 8 - March 25 - 26 </b>
-                                            <br />
-                                            <b>Final Four - April 1 </b>
-                                            <br />
-                                            <b>Championship - April 3 </b>
-                                            <br />
-                                        </Typography>
-                                    </div>
-                                </div>
+
+                                <Schedule />
                             </Grid>
                             <Grid item xs={12}>
-                                <img src="/bracket2022final.jpg" width="100%" />
+                                <img
+                                    src={BRACKET_IMG_PATH}
+                                    width="100%"
+                                    alt="Bracket"
+                                />
                             </Grid>
                         </Grid>
                     </Container>

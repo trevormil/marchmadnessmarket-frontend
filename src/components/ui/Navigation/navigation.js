@@ -1,13 +1,12 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 
-import * as ROUTES from '../../../constants/routes';
+import MonetizationOn from '@mui/icons-material/MonetizationOn';
 import { Typography } from '@mui/material';
 import withStyles from '@mui/styles/withStyles';
+import * as ROUTES from '../../../constants/routes';
 import TabBase from './tabs';
-import MonetizationOn from '@mui/icons-material/MonetizationOn';
-import useMediaQuery from '@mui/material/useMediaQuery';
 
 const styles = (theme) => ({
     ...theme.spreadThis,
@@ -59,12 +58,17 @@ class Navigation extends React.Component {
                             color: 'white',
                             fontWeight: 'bolder',
                             fontSize: '1.25rem',
+                            cursor: 'pointer',
+                        }}
+                        onClick={() => {
+                            window.location.href = '/';
                         }}
                     >
                         <img
                             height={'50px'}
                             src="/mmm-logo-cropped.jpg"
                             style={{ marginRight: '5px' }}
+                            alt="MMM Logo"
                         />
 
                         <Typography
@@ -96,7 +100,6 @@ class Navigation extends React.Component {
                         }}
                     >
                         <TabBase
-                            
                             value={this.state.value}
                             authenticated={this.props.authenticated}
                             handleChange={this.handleChange}

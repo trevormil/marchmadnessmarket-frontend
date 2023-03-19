@@ -97,7 +97,7 @@ class TabBase extends React.Component {
             linkTo: ROUTES.BRACKET,
         },
         {
-            label: 'Browse',
+            label: 'Teams',
             linkTo: ROUTES.BROWSE,
         },
         {
@@ -116,7 +116,7 @@ class TabBase extends React.Component {
             linkTo: ROUTES.BRACKET,
         },
         {
-            label: 'Browse',
+            label: 'Teams',
             linkTo: ROUTES.BROWSE,
         },
         {

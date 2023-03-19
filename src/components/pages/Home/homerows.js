@@ -1,32 +1,61 @@
-import {
-    StyledTableCell,
-    StyledTableRow,
-} from '../../ui/StockInfoTable/styledTableComponents';
+import { Button } from '@mui/material';
 import React from 'react';
-import { TableRow, Button } from '@mui/material';
+import {
+    getCellToDisplay,
+    getHeaderRowFromSchema,
+} from '../../ui/StockInfoTable/stockTableUtils';
+import {
+    StyledTableRow
+} from '../../ui/StockInfoTable/styledTableComponents';
 //import { getLogoName } from "../../../constants/logos";
 
 //all following functions help to create the stock info table on right side of stock page
 
-export const getInfoHeaderRow = (mobile) => {
-    return (
-        <TableRow>
-            {!mobile && <StyledTableCell align="center">Logo</StyledTableCell>}
-            <StyledTableCell align="center">Name</StyledTableCell>
+const TeamCardSchema = [
+    {
+        name: 'stockName',
+        label: 'Name',
+        showMobile: true,
+        showIfTournamentHasStarted: true,
+        showIfTournamentHasNotStarted: true,
+    },
+    {
+        name: 'stockName',
+        label: 'Logo',
+        showMobile: false,
+        showIfTournamentHasStarted: true,
+        showIfTournamentHasNotStarted: true,
+    },
+    {
+        name: 'seed',
+        label: 'Seed',
+        showMobile: false,
+        showIfTournamentHasStarted: true,
+        showIfTournamentHasNotStarted: true,
+    },
+    {
+        name: 'currPoints',
+        label: 'Points',
+        showMobile: true,
+        showIfTournamentHasStarted: true,
+        showIfTournamentHasNotStarted: true,
+        minWidth: 110,
+    },
+];
 
-            {!mobile && <StyledTableCell align="center">Seed</StyledTableCell>}
-            <StyledTableCell align="center">Points</StyledTableCell>
-        </TableRow>
+export const getInfoHeaderRow = (mobile) => {
+    return getHeaderRowFromSchema(
+        TeamCardSchema,
+        undefined,
+        undefined,
+        undefined,
+        mobile
     );
 };
 
 export const getInfoRows = (stocks, mobile, handleClickOnBuySellButton) => {
     if (stocks === undefined || stocks === null) {
-        return (
-            <StyledTableRow>
-                <StyledTableCell></StyledTableCell>
-            </StyledTableRow>
-        );
+        return <></>;
     } else {
         stocks.sort((a, b) => {
             return b.currPoints - a.currPoints;
@@ -34,9 +63,11 @@ export const getInfoRows = (stocks, mobile, handleClickOnBuySellButton) => {
         return stocks.map((stock) => {
             let file = stock.imageUrl;
             return (
-                <StyledTableRow key={stock.stockName}>
-                    {!mobile && (
-                        <StyledTableCell align="center">
+                <>
+                    <StyledTableRow key={stock.stockName}>
+                        {getCellToDisplay(
+                            mobile,
+                            TeamCardSchema.find((x) => x.label === 'Logo'),
                             <img
                                 height="50px"
                                 width="50px"
@@ -47,30 +78,34 @@ export const getInfoRows = (stocks, mobile, handleClickOnBuySellButton) => {
                                     handleClickOnBuySellButton(stock.stockId);
                                 }}
                             />
-                        </StyledTableCell>
-                    )}
-                    <StyledTableCell align="center">
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            align="center"
-                            fullWidth
-                            onClick={() => {
-                                handleClickOnBuySellButton(stock.stockId);
-                            }}
-                        >
-                            {stock.stockName}
-                        </Button>
-                    </StyledTableCell>
-                    {!mobile && (
-                        <StyledTableCell align="center">
-                            {stock.seed}
-                        </StyledTableCell>
-                    )}
-                    <StyledTableCell align="center">
-                        {stock.currPoints}
-                    </StyledTableCell>
-                </StyledTableRow>
+                        )}
+                        {getCellToDisplay(
+                            mobile,
+                            TeamCardSchema.find((x) => x.label === 'Name'),
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                align="center"
+                                fullWidth
+                                onClick={() => {
+                                    handleClickOnBuySellButton(stock.stockId);
+                                }}
+                            >
+                                {stock.stockName}
+                            </Button>
+                        )}
+                        {getCellToDisplay(
+                            mobile,
+                            TeamCardSchema.find((x) => x.label === 'Seed'),
+                            stock.seed
+                        )}
+                        {getCellToDisplay(
+                            mobile,
+                            TeamCardSchema.find((x) => x.label === 'Points'),
+                            stock.currPoints
+                        )}
+                    </StyledTableRow>
+                </>
             );
         });
     }

@@ -51,6 +51,7 @@ class SignUpForm extends Component {
             [event.target.name]: event.target.value,
         });
     };
+
     render() {
         const {
             classes,

@@ -7,11 +7,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loginUser } from '../../../redux/actions/userActions';
 
-
 const styles = (theme) => ({
-    ...theme.spreadThis
+    ...theme.spreadThis,
 });
-
 
 class SignUpPage extends React.Component {
     render() {
@@ -27,15 +25,15 @@ SignUpPage.propTypes = {
     loginUser: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
     ui: PropTypes.object.isRequired,
-}
+};
 const mapStateToProps = (state) => ({
     user: state.user,
-    ui: state.ui
+    ui: state.ui,
 });
 
 const mapActionsToProps = {
-    loginUser
-}
+    loginUser,
+};
 
 export default connect(
     mapStateToProps,

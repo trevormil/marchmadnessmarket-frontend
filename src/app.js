@@ -1,24 +1,22 @@
 //react
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 //material ui
 import { Container, Grid } from '@mui/material';
-import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
 import './app.css';
 import themeObject from './constants/theme';
 //imports
 // import PortfolioPage from './components/pages/Portfolio/portfolio';
-import Navigation from './components/ui/Navigation/navigation';
-import SignUpPage from './components/pages/SignUp/signuppage';
-import SignInForm from './components/pages/SignIn/signinform';
 import BrowseStocksPage from './components/pages/BrowseStocks/browsePage';
 import HomePage from './components/pages/Home/home';
-import StocksPage from './components/pages/Stock/stockpage';
-import RulesPage from './components/pages/Rules/rulesPage';
-import ScoresPage from './components/pages/Schedule/schedule';
+import SignInForm from './components/pages/SignIn/signinform';
+import SignUpPage from './components/pages/SignUp/signuppage';
+import StocksPage from './components/pages/Stock/stockModal';
+import Navigation from './components/ui/Navigation/navigation';
 
-import UserPage from './components/pages/User/userpage';
 import BracketPage from './components/pages/Bracket/bracket';
+import UserPage from './components/pages/User/userpage';
 // import MarketPage from './components/pages/Market/market';
 // import LeaderboardPage from './components/pages/Leaderboard/leaderboardPage';
 import jwtDecode from 'jwt-decode';
@@ -27,14 +25,15 @@ import AuthRoute from './constants/authroute.js';
 import * as ROUTES from './constants/routes';
 //redux
 import { Provider } from 'react-redux';
+import { getUserData, logOutUser } from './redux/actions/userActions';
 import store from './redux/stores';
 import { SET_AUTHENTICATED } from './redux/types';
-import { logOutUser, getUserData } from './redux/actions/userActions';
 //axios
 import axios from 'axios';
-import leaderboard from './components/pages/Leaderboard/leaderboard';
 import emailList from './components/pages/EmailList/emailList';
-import portfolio from './components/pages/UserPortfolio/portfolio';
+import leaderboard from './components/pages/Leaderboard/leaderboard';
+import portfolio from './components/pages/User/portfolio';
+
 axios.defaults.baseURL = 'https://us-central1-tm-market.cloudfunctions.net/api';
 
 const token = localStorage.FBIdToken;
