@@ -1,11 +1,3 @@
-import TabsUnstyled from '@mui/base/TabsUnstyled';
-import withStyles from '@mui/styles/withStyles';
-import axios from 'axios';
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { setOwnedStocks } from '../../../redux/actions/userActions';
-import { Tab, TabsList } from '../../ui/Navigation/tabs';
 import {
     Box,
     Button,
@@ -16,8 +8,12 @@ import {
     Modal,
     Typography,
 } from '@mui/material';
+import axios from 'axios';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { getCurrStock } from '../../../redux/actions/dataActions';
-import { BootstrapInput } from '../../ui/TextInputs/textInputs';
+import { setOwnedStocks } from '../../../redux/actions/userActions';
 
 import { isInvalidDate } from '../../../helpers/validDates';
 
@@ -29,15 +25,9 @@ import {
 } from '@mui/icons-material';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import {
-    BRACKET_IMG_PATH,
     TOURNAMENT_NOT_STARTED,
-    getQuadrant,
     getRoundName,
-    getSide,
 } from '../../../constants/constants';
-const styles = (theme) => ({
-    ...theme.spreadThis,
-});
 
 const style = {
     position: 'absolute',
@@ -46,7 +36,6 @@ const style = {
     width: '80%',
     maxHeight: '90%',
     transform: 'translate(-50%, -50%)',
-    background: 'linear-gradient(#000000, #1976d2) fixed',
     overflow: 'auto',
 };
 
@@ -144,10 +133,11 @@ class StockModal extends Component {
             this.setState({ buyIsLoading: false });
         });
     };
-    handleInputChange = (event) => {
-        this.setState({ [event.target.name]: event.target.value });
+    handleInputChange = (name, value) => {
+        this.setState({
+            [name]: value,
+        });
     };
-
     tabsToShow = [
         {
             value: 'quadrant',
@@ -164,8 +154,6 @@ class StockModal extends Component {
     ];
 
     render() {
-        const { classes } = this.props;
-
         const numSharesOwned = this.props.user.ownedStocks
             ? this.getNumSharesOwned()
             : 0;
@@ -188,7 +176,10 @@ class StockModal extends Component {
             >
                 {this.props.stockId ? (
                     <Fade in={this.props.stockId !== ''}>
-                        <Box sx={style}>
+                        <Box
+                            sx={style}
+                            className="bg-gray-900 text-white rounded-lg"
+                        >
                             <div
                                 style={{
                                     margin: 20,
@@ -219,7 +210,6 @@ class StockModal extends Component {
                                         <Grid item xs={12}>
                                             <Typography
                                                 variant="h2"
-                                                className={classes.pageTitle}
                                                 align="center"
                                             >
                                                 {this.props.data.loading ||
@@ -232,26 +222,27 @@ class StockModal extends Component {
                                                     this.props.data.currStock
                                                         .stockData.stockName
                                                 )}
-
-                                                {this.props.data.loading ||
-                                                this.props.data.currStock
-                                                    .stockData === null ? (
-                                                    <></>
-                                                ) : (
-                                                    <img
-                                                        align="center"
-                                                        width="70px"
-                                                        height="70px"
-                                                        src={filename}
-                                                        alt="Team Logo"
-                                                        style={{
-                                                            marginLeft: 10,
-                                                            backgroundColor:
-                                                                'whitesmoke',
-                                                            border: '5px solid black',
-                                                        }}
-                                                    />
-                                                )}
+                                                <div className="flex justify-center">
+                                                    {this.props.data.loading ||
+                                                    this.props.data.currStock
+                                                        .stockData === null ? (
+                                                        <></>
+                                                    ) : (
+                                                        <img
+                                                            align="center"
+                                                            width="70px"
+                                                            height="70px"
+                                                            src={filename}
+                                                            alt="Team Logo"
+                                                            style={{
+                                                                marginLeft: 10,
+                                                                backgroundColor:
+                                                                    'whitesmoke',
+                                                                border: '5px solid black',
+                                                            }}
+                                                        />
+                                                    )}
+                                                </div>
                                             </Typography>
 
                                             <Typography
@@ -393,7 +384,7 @@ class StockModal extends Component {
                                                     align="center"
                                                 >
                                                     <div
-                                                        className="portfolio-card"
+                                                        className="card"
                                                         style={{ margin: 4 }}
                                                     >
                                                         <section>
@@ -406,9 +397,6 @@ class StockModal extends Component {
                                                         </section>
                                                         <div
                                                             style={{
-                                                                backgroundColor:
-                                                                    'whitesmoke',
-                                                                color: 'black',
                                                                 alignItems:
                                                                     'center',
                                                             }}
@@ -514,26 +502,32 @@ class StockModal extends Component {
                                                                         <SellOutlined />{' '}
                                                                         Sell
                                                                     </div>
-                                                                    <BootstrapInput
-                                                                        id="numToSell"
-                                                                        name="numToSell"
+                                                                    <input
+                                                                        min={0}
+                                                                        max={
+                                                                            1000
+                                                                        }
+                                                                        className="mb-4 w-20 bg-gray-700 text-white p-2 rounded-lg"
+                                                                        type="number"
                                                                         value={
                                                                             this
                                                                                 .state
                                                                                 .numToSell
                                                                         }
-                                                                        onChange={
-                                                                            this
-                                                                                .handleInputChange
+                                                                        onChange={(
+                                                                            e
+                                                                        ) =>
+                                                                            this.handleInputChange(
+                                                                                'numToSell',
+                                                                                e
+                                                                                    .target
+                                                                                    .value
+                                                                            )
                                                                         }
-                                                                        placeholder="Amount to Sell"
-                                                                        type="number"
-                                                                        style={{
-                                                                            textAlign:
-                                                                                'center',
-                                                                        }}
-                                                                    ></BootstrapInput>
+                                                                    />
+
                                                                     <Button
+                                                                        className="mt-2"
                                                                         style={{
                                                                             minWidth: 160,
                                                                         }}
@@ -600,22 +594,31 @@ class StockModal extends Component {
                                                                         Buy
                                                                     </div>
 
-                                                                    <BootstrapInput
-                                                                        id="numToBuy"
-                                                                        name="numToBuy"
+                                                                    <input
+                                                                        min={0}
+                                                                        max={
+                                                                            1000
+                                                                        }
+                                                                        className="mb-4 w-20 bg-gray-700 text-white p-2 rounded-lg"
+                                                                        type="number"
                                                                         value={
                                                                             this
                                                                                 .state
                                                                                 .numToBuy
                                                                         }
-                                                                        onChange={
-                                                                            this
-                                                                                .handleInputChange
+                                                                        onChange={(
+                                                                            e
+                                                                        ) =>
+                                                                            this.handleInputChange(
+                                                                                'numToBuy',
+                                                                                e
+                                                                                    .target
+                                                                                    .value
+                                                                            )
                                                                         }
-                                                                        placeholder="Amount to Buy"
-                                                                        type="number"
-                                                                    ></BootstrapInput>
+                                                                    />
                                                                     <Button
+                                                                        className="mt-2"
                                                                         style={{
                                                                             minWidth: 160,
                                                                         }}
@@ -958,159 +961,6 @@ class StockModal extends Component {
                                                 )}
                                             </Grid>
                                         )}
-
-                                        <div
-                                            style={{
-                                                marginTop: 40,
-                                                display: 'flex',
-                                                textAlign: 'center',
-                                                verticalAlign: 'center',
-                                                alignItems: 'center',
-                                                color: 'white',
-                                                fontWeight: 'bolder',
-                                                fontSize: '1.25rem',
-                                                justifyContent: 'center',
-                                                width: '100%',
-                                            }}
-                                        >
-                                            <TabsUnstyled
-                                                value={this.state.currTab}
-                                                defaultValue={
-                                                    this.state.currTab
-                                                }
-                                            >
-                                                <div
-                                                    style={{
-                                                        justifyContent:
-                                                            'center',
-                                                        display: 'flex',
-                                                    }}
-                                                >
-                                                    <TabsList>
-                                                        <div
-                                                            style={{
-                                                                justifyContent:
-                                                                    'center',
-                                                                display: 'flex',
-                                                            }}
-                                                        >
-                                                            {this.tabsToShow.map(
-                                                                (tab) => {
-                                                                    return (
-                                                                        <Tab
-                                                                            onClick={(
-                                                                                event
-                                                                            ) => {
-                                                                                this.setState(
-                                                                                    {
-                                                                                        currTab:
-                                                                                            tab.value,
-                                                                                    }
-                                                                                );
-                                                                            }}
-                                                                            value={
-                                                                                tab.value
-                                                                            }
-                                                                            key={
-                                                                                tab.label
-                                                                            }
-                                                                        >
-                                                                            <div
-                                                                                style={{
-                                                                                    textAlign:
-                                                                                        'center',
-                                                                                    verticalAlign:
-                                                                                        'center',
-                                                                                }}
-                                                                            >
-                                                                                {
-                                                                                    tab.label
-                                                                                }
-                                                                            </div>
-                                                                        </Tab>
-                                                                    );
-                                                                }
-                                                            )}
-                                                        </div>
-                                                    </TabsList>
-                                                </div>
-                                            </TabsUnstyled>
-                                        </div>
-
-                                        <Grid
-                                            item
-                                            xs={
-                                                this.state.currTab !== 'full'
-                                                    ? 2
-                                                    : 0
-                                            }
-                                        />
-                                        <Grid
-                                            item
-                                            xs={
-                                                this.state.currTab !== 'full'
-                                                    ? 8
-                                                    : 12
-                                            }
-                                        >
-                                            <img
-                                                src={
-                                                    this.state.currTab ===
-                                                    'quadrant'
-                                                        ? getQuadrant(
-                                                              this.props.data
-                                                                  .currStock
-                                                                  .stockData
-                                                                  .stockName
-                                                          )
-                                                        : this.state.currTab ===
-                                                          'side'
-                                                        ? getSide(
-                                                              this.props.data
-                                                                  .currStock
-                                                                  .stockData
-                                                                  .stockName
-                                                          )
-                                                        : BRACKET_IMG_PATH
-                                                }
-                                                width="100%"
-                                                alt="bracket"
-                                            />
-                                        </Grid>
-                                        <Grid
-                                            item
-                                            xs={
-                                                this.state.currTab !== 'full'
-                                                    ? 2
-                                                    : 0
-                                            }
-                                        />
-
-                                        {/* 
-          <Grid item xs={12}>
-            <hr />
-          </Grid>
-          <Grid item xs={6}>
-            <div className="card">
-              <section>
-                <Typography variant="h4" align="center">
-                  Current Sellers
-                </Typography>
-              </section>
-
-              {buyTradeDisplay}
-            </div>
-          </Grid>
-          <Grid item xs={6}>
-            <div className="card">
-              <section>
-                <Typography variant="h4" align="center">
-                  Your Sell Orders
-                </Typography>
-              </section>
-              {sellTradeDisplay}
-            </div>
-</Grid> */}
                                     </Grid>
                                 </Container>
                             </div>
@@ -1141,7 +991,4 @@ const mapActionsToProps = {
     // getTradesForCurrStock,
 };
 
-export default connect(
-    mapStateToProps,
-    mapActionsToProps
-)(withStyles(styles)(StockModal));
+export default connect(mapStateToProps, mapActionsToProps)(StockModal);

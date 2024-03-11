@@ -1,4 +1,4 @@
-import { TableRow, TableSortLabel } from '@mui/material';
+import { TableSortLabel } from '@mui/material';
 import {
     TOURNAMENT_NOT_STARTED,
     TOURNAMENT_STARTED,
@@ -85,7 +85,7 @@ export function getHeaderRowFromSchema(
     homePage
 ) {
     return (
-        <TableRow>
+        <tr>
             {schema.map((row) => {
                 if (mobile && !row.showMobile) {
                     return <></>;
@@ -104,28 +104,29 @@ export function getHeaderRowFromSchema(
                     return <></>;
                 }
                 return (
-                    <StyledTableCell
+                    <th
                         align="center"
                         key={row.name}
                         style={{ minWidth: row.minWidth }}
                     >
                         {handleClick ? (
                             <TableSortLabel
-                                style={{ left: 10 }}
+                                style={{ left: 10, color: 'white' }}
                                 key={row.name}
                                 direction={direction}
                                 active={orderBy === row.name}
                                 onClick={handleClick}
                                 name={row.name}
+                                className="text-white hover:text-black"
                             >
                                 {row.label}
                             </TableSortLabel>
                         ) : (
                             row.label
                         )}
-                    </StyledTableCell>
+                    </th>
                 );
             })}
-        </TableRow>
+        </tr>
     );
 }

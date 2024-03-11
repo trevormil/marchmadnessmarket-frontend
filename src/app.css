@@ -1,15 +1,21 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
 html,
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  /* background-color: whitesmoke; */
-  min-height: 100vh;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+        'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+        'Helvetica Neue', sans-serif;
+    /* background-color: whitesmoke; */
+    min-height: 100vh;
 }
 .middle-block {
-  /* background-color: whitesmoke; */
-  min-height: 100vh;
+    /* background-color: whitesmoke; */
+    min-height: 100vh;
 }
 .grayBG {
 }
@@ -18,70 +24,78 @@ body {
 .darkgrayBG {
 }
 .navbar {
-  overflow: hidden;
-  position: fixed;
-  top: 0;
-  height: 50px;
-  width: 100%;
-  padding-bottom: 0px;
-  z-index: 8;
-  background-color: #1976d2;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    height: 50px;
+    width: 100%;
+    padding-bottom: 0px;
+    z-index: 8;
+    background-color: #1976d2;
 }
 .footer {
     width: 100%;
     padding-bottom: 20px;
-    border-top: 1px solid black;
-    background-color: #1976d2;
-    color: black;
-  }
+    @apply bg-gray-800 text-white;
+}
 .tradingviewchart {
-  z-index: 1;
-  position: relative;
-  padding: 5px;
-  height: "500px";
+    z-index: 1;
+    position: relative;
+    padding: 5px;
+    height: '500px';
 }
 .page {
-  margin-top: 48px;
+    margin-top: 48px;
 }
 a {
-  text-decoration: none;
+    text-decoration: none;
 }
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
 }
 
 #market-overview {
-  overflow: auto;
+    overflow: auto;
 }
 
 #livescorefeed {
-  overflow: auto;
+    overflow: auto;
 }
 .fw-iframe {
-  border: 5px solid black;
+    border: 5px solid black;
 }
 .card {
-  border: 5px solid black;
+    @apply bg-gray-800 border-2 border-black rounded-xl;
+    overflow: auto;
+    color: white;
 }
 
-
 .card section {
-  background-color: #1976d2;
-  color: white
+    background-color: #1976d2;
+    color: white;
 }
 
 .portfolio-card {
-  background-color: #1976d2;
-  border: 5px solid black;
-  margin: 10px;
-  color: 'white';
+    background-color: #1976d2;
+    border: 5px solid black;
+    margin: 10px;
+    color: 'white';
 }
 
 .screenercard {
-  background-color: #1976d2;
-  border: 5px solid black;
-  overflow: auto;
+    background-color: #1976d2;
+    border: 5px solid black;
+    overflow: auto;
 }
 
-#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif;  width:600px;}
+#mc_embed_signup {
+    background: #fff;
+    clear: left;
+    font: 14px Helvetica, Arial, sans-serif;
+    width: 600px;
+}
+
+.MuiTableSortLabel-icon {
+    color: #fff !important;
+}

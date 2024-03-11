@@ -1,21 +1,15 @@
-import React, { Component } from 'react';
-import withStyles from '@mui/styles/withStyles';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../../constants/routes';
 // MUI Stuff
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 // Redux stuff
 import { connect } from 'react-redux';
 import { signUpUser } from '../../../redux/actions/userActions';
-
-const styles = (theme) => ({
-    ...theme.spreadThis,
-});
 
 class SignUpForm extends Component {
     constructor() {
@@ -54,7 +48,6 @@ class SignUpForm extends Component {
 
     render() {
         const {
-            classes,
             ui: { loading },
         } = this.props;
         const { errors } = this.state;
@@ -62,124 +55,127 @@ class SignUpForm extends Component {
         console.log(errors);
         return (
             <div
+                className="bg-gray-900"
                 style={{
                     width: '100%',
-                    background: `linear-gradient(#000000, #1976d2) fixed`,
                     color: 'white',
                     minHeight: '1000px',
                     paddingBottom: 20,
                 }}
             >
-                <Grid container className={classes.form}>
+                <Grid container>
                     <Grid item sm />
                     <Grid item sm>
-                        <Typography variant="h2" className={classes.pageTitle}>
-                            Sign Up
-                        </Typography>
                         <Typography align="center">
                             <div
+                                className="mt-12 bg-gray-800 text-white card"
                                 style={{
-                                    background: `whitesmoke`,
-                                    color: 'black',
                                     padding: 20,
-                                    border: '5px solid black',
                                 }}
                             >
-                                <form noValidate onSubmit={this.handleSubmit}>
-                                    <TextField
+                                <form
+                                    noValidate
+                                    onSubmit={this.handleSubmit}
+                                    className="flex flex-col"
+                                >
+                                    <input
                                         id="email"
                                         name="email"
                                         type="email"
-                                        label="Email"
-                                        className={classes.textField}
-                                        helperText={errors.email}
-                                        error={errors.email ? true : false}
+                                        placeholder="Email"
+                                        className={`p-2 mb-4 bg-gray-700 rounded-lg border border-gray-300 ${
+                                            errors.email
+                                                ? 'border-red-500'
+                                                : 'focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50'
+                                        }`}
                                         value={this.state.email}
                                         onChange={this.handleChange}
-                                        fullWidth
+                                        required
                                     />
-                                    <TextField
+                                    {errors.email && (
+                                        <p className="text-red-500 text-sm mb-2">
+                                            {errors.email}
+                                        </p>
+                                    )}
+                                    <input
                                         id="password"
                                         name="password"
                                         type="password"
-                                        label="Password"
-                                        className={classes.textField}
-                                        helperText={errors.password}
-                                        error={errors.password ? true : false}
+                                        placeholder="Password"
+                                        className={`p-2 mb-4 bg-gray-700 rounded-lg border border-gray-300 ${
+                                            errors.password
+                                                ? 'border-red-500'
+                                                : 'focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50'
+                                        }`}
                                         value={this.state.password}
                                         onChange={this.handleChange}
-                                        fullWidth
+                                        required
                                     />
-                                    <TextField
+                                    {errors.password && (
+                                        <p className="text-red-500 text-sm mb-2">
+                                            {errors.password}
+                                        </p>
+                                    )}
+                                    <input
                                         id="confirmPassword"
                                         name="confirmPassword"
                                         type="password"
-                                        label="Confirm Password"
-                                        className={classes.textField}
-                                        helperText={errors.confirmPassword}
-                                        error={
+                                        placeholder="Confirm Password"
+                                        className={`p-2 mb-4 bg-gray-700 rounded-lg border border-gray-300 ${
                                             errors.confirmPassword
-                                                ? true
-                                                : false
-                                        }
+                                                ? 'border-red-500'
+                                                : 'focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50'
+                                        }`}
                                         value={this.state.confirmPassword}
                                         onChange={this.handleChange}
-                                        fullWidth
+                                        required
                                     />
-                                    <TextField
+                                    {errors.confirmPassword && (
+                                        <p className="text-red-500 text-sm mb-2">
+                                            {errors.confirmPassword}
+                                        </p>
+                                    )}
+
+                                    <input
                                         id="userName"
                                         name="userName"
                                         type="text"
-                                        label="Username"
-                                        className={classes.textField}
-                                        helperText={
+                                        placeholder="Username"
+                                        className={`p-2 mb-4 bg-gray-700 rounded-lg border border-gray-300 ${
                                             errors.userName
-                                                ? errors.userName
-                                                : '*Your username will be what is displayed on the leaderboards.'
-                                        }
-                                        error={errors.userName ? true : false}
+                                                ? 'border-red-500'
+                                                : 'focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50'
+                                        }`}
                                         value={this.state.userName}
                                         onChange={this.handleChange}
-                                        fullWidth
+                                        required
                                     />
-                                    {errors.error && (
-                                        <Typography
-                                            variant="body2"
-                                            className={classes.customError}
-                                        >
-                                            {errors.error.substring(
-                                                errors.error.indexOf('auth/') +
-                                                    5
-                                            )}
-                                        </Typography>
+                                    {errors.userName && (
+                                        <p className="text-red-500 text-sm mb-2">
+                                            {errors.userName}
+                                        </p>
                                     )}
-                                    {errors.general && (
-                                        <Typography
-                                            variant="body2"
-                                            className={classes.customError}
-                                        >
-                                            {errors.general}
-                                        </Typography>
-                                    )}
+
                                     <Button
                                         type="submit"
                                         variant="contained"
                                         color="primary"
-                                        className={classes.button}
                                         disabled={currLoading}
                                     >
                                         Sign Up
                                         {currLoading && (
-                                            <CircularProgress
-                                                size={30}
-                                                className={classes.progress}
-                                            />
+                                            <CircularProgress size={30} />
                                         )}
                                     </Button>
                                     <br />
                                     <small>
                                         Already have an account? Login{' '}
-                                        <Link to={ROUTES.SIGN_IN}>here</Link>
+                                        <Link
+                                            to={ROUTES.SIGN_IN}
+                                            style={{ color: '#4d6cfa' }}
+                                        >
+                                            here
+                                        </Link>
                                     </small>
                                 </form>
                             </div>
@@ -204,6 +200,4 @@ const mapStateToProps = (state) => ({
     ui: state.ui,
 });
 
-export default connect(mapStateToProps, { signUpUser })(
-    withStyles(styles)(SignUpForm)
-);
+export default connect(mapStateToProps, { signUpUser })(SignUpForm);

@@ -1,9 +1,6 @@
 import { Container, Typography } from '@mui/material';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-import withStyles from '@mui/styles/withStyles';
-
 import Blockies from 'react-blockies';
 import { TOURNAMENT_NOT_STARTED } from '../../../constants/constants';
 import {
@@ -11,18 +8,9 @@ import {
     getStocks,
 } from '../../../redux/actions/dataActions';
 import CustomizedTables from '../../ui/StockInfoTable/stockTable';
-import {
-    StyledTableCell,
-    StyledTableRow,
-} from '../../ui/StockInfoTable/styledTableComponents';
+import { getBlankRowFromSchema } from '../../ui/StockInfoTable/stockTableUtils';
 import StockModal from '../Stock/stockModal';
 import { UserStockRowSchema, getHeaderRow, getRows } from './userrows';
-import { getBlankRowFromSchema } from '../../ui/StockInfoTable/stockTableUtils';
-
-//Table Components
-const styles = (theme) => ({
-    ...theme.spreadThis,
-});
 
 const getUserIdFromPathname = () => {
     let splitPathName = window.location.pathname.split('/');
@@ -73,7 +61,6 @@ class UserPage extends Component {
     }
 
     render() {
-        const { classes } = this.props;
         const userJSON = this.props.data.leaderboard
             ? this.props.data.leaderboard.filter(
                   (element) => element.userName === this.state.userId
@@ -120,17 +107,16 @@ class UserPage extends Component {
                 <div
                     style={{
                         width: '100%',
-                        background: `linear-gradient(#000000, #1976d2) fixed`,
+                        background: `linear-gradient(#000000 40%, #333333)`,
                         color: 'white',
                         minHeight: '1000px',
                         paddingBottom: 20,
                     }}
                 >
                     <Container maxWidth="lg">
-                        <div className={classes.root}>
+                        <div>
                             <Typography
                                 variant="h2"
-                                className={classes.pageTitle}
                                 align="center"
                                 style={{
                                     alignItems: 'center',
@@ -166,11 +152,7 @@ class UserPage extends Component {
                             this.props.user?.accountBalance > 0 &&
                             this.props.user.userName === this.state.userId && (
                                 <Container maxWidth="lg">
-                                    <Typography
-                                        variant="h6"
-                                        className={classes.pageTitle}
-                                        align="center"
-                                    >
+                                    <Typography variant="h6" align="center">
                                         You have $
                                         {this.props.user.accountBalance} left to
                                         spend!
@@ -209,7 +191,4 @@ const mapActionsToProps = {
     getStocks,
 };
 
-export default connect(
-    mapStateToProps,
-    mapActionsToProps
-)(withStyles(styles)(UserPage));
+export default connect(mapStateToProps, mapActionsToProps)(UserPage);

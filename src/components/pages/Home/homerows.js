@@ -1,28 +1,24 @@
-import { Button } from '@mui/material';
 import React from 'react';
 import {
     getCellToDisplay,
     getHeaderRowFromSchema,
 } from '../../ui/StockInfoTable/stockTableUtils';
-import {
-    StyledTableRow
-} from '../../ui/StockInfoTable/styledTableComponents';
-//import { getLogoName } from "../../../constants/logos";
+import { StyledTableRow } from '../../ui/StockInfoTable/styledTableComponents';
 
 //all following functions help to create the stock info table on right side of stock page
 
 const TeamCardSchema = [
     {
         name: 'stockName',
-        label: 'Name',
+        label: 'Logo',
         showMobile: true,
         showIfTournamentHasStarted: true,
         showIfTournamentHasNotStarted: true,
     },
     {
         name: 'stockName',
-        label: 'Logo',
-        showMobile: false,
+        label: 'Name',
+        showMobile: true,
         showIfTournamentHasStarted: true,
         showIfTournamentHasNotStarted: true,
     },
@@ -64,7 +60,10 @@ export const getInfoRows = (stocks, mobile, handleClickOnBuySellButton) => {
             let file = stock.imageUrl;
             return (
                 <>
-                    <StyledTableRow key={stock.stockName}>
+                    <StyledTableRow
+                        key={stock.stockName}
+                        className="bg-primary  text-white rounded-lg py-2 px-4 text-sm"
+                    >
                         {getCellToDisplay(
                             mobile,
                             TeamCardSchema.find((x) => x.label === 'Logo'),
@@ -74,25 +73,12 @@ export const getInfoRows = (stocks, mobile, handleClickOnBuySellButton) => {
                                 alt="Team Logo"
                                 src={file}
                                 style={{ cursor: 'pointer' }}
-                                onClick={() => {
-                                    handleClickOnBuySellButton(stock.stockId);
-                                }}
                             />
                         )}
                         {getCellToDisplay(
                             mobile,
                             TeamCardSchema.find((x) => x.label === 'Name'),
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                align="center"
-                                fullWidth
-                                onClick={() => {
-                                    handleClickOnBuySellButton(stock.stockId);
-                                }}
-                            >
-                                {stock.stockName}
-                            </Button>
+                            <b>{stock.stockName}</b>
                         )}
                         {getCellToDisplay(
                             mobile,

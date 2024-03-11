@@ -167,27 +167,13 @@ export function getRows(
             {stocks.map((row) => {
                 return (
                     <>
-                        <StyledTableRow>
+                        <StyledTableRow className="bg-primary text-white rounded-lg py-2 px-4 text-sm">
                             {getCellToDisplay(
                                 mobile,
                                 UserStockRowSchema.find(
                                     (x) => x.label === 'Name'
                                 ),
-                                <Button
-                                    fullWidth
-                                    // component={Link}
-                                    // onClick={() => {}}
-                                    // to={`${ROUTES.STOCKS}/${row.stockId}`}
-                                    onClick={() => {
-                                        handleClickOnBuySellButton(row.stockId);
-                                    }}
-                                    align="center"
-                                    variant="contained"
-                                    color="primary"
-                                    size="medium"
-                                >
-                                    {row.stockName}
-                                </Button>
+                                <b style={{ fontSize: 18 }}>{row.stockName}</b>
                             )}
                             {getCellToDisplay(
                                 mobile,
@@ -200,9 +186,6 @@ export function getRows(
                                     src={row.imageUrl}
                                     style={{ cursor: 'pointer' }}
                                     alt={`${row.stockName} Team Logo`}
-                                    onClick={() => {
-                                        handleClickOnBuySellButton(row.stockId);
-                                    }}
                                 />
                             )}
                             {getCellToDisplay(

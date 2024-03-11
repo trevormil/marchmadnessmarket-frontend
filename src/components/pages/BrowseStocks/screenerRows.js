@@ -2,28 +2,26 @@ import React from 'react';
 //import { getLogoName } from "../../../constants/logos";
 
 import { CheckOutlined, CloseTwoTone } from '@mui/icons-material';
-import { Button, CircularProgress, Typography } from '@mui/material';
+import { CircularProgress, Typography } from '@mui/material';
 import {
-    getBlankRowFromSchema,
-    getCellToDisplay,
-    getHeaderRowFromSchema,
+  getBlankRowFromSchema,
+  getCellToDisplay,
+  getHeaderRowFromSchema,
 } from '../../ui/StockInfoTable/stockTableUtils';
-import {
-    StyledTableRow
-} from '../../ui/StockInfoTable/styledTableComponents';
+import { StyledTableRow } from '../../ui/StockInfoTable/styledTableComponents';
 
 export const ScreenerRowSchema = [
     {
         name: 'stockName',
-        label: 'Name',
+        label: 'Logo',
         showMobile: true,
         showIfTournamentHasStarted: true,
         showIfTournamentHasNotStarted: true,
     },
     {
         name: 'stockName',
-        label: 'Logo',
-        showMobile: false,
+        label: 'Name',
+        showMobile: true,
         showIfTournamentHasStarted: true,
         showIfTournamentHasNotStarted: true,
     },
@@ -50,7 +48,7 @@ export const ScreenerRowSchema = [
     },
     {
         name: 'currPoints',
-        label: 'Points',
+        label: 'Points per $1',
         showMobile: true,
         showIfTournamentHasStarted: true,
         showIfTournamentHasNotStarted: true,
@@ -87,22 +85,14 @@ export function getRows(stocks, mobile, handleClick) {
     }
 
     return stocks.map((row) => (
-        <StyledTableRow key={row.stockId}>
+        <StyledTableRow
+            key={row.stockId}
+            className="bg-primary text-white rounded-lg py-2 px-4 text-sm my-4"
+        >
             {getCellToDisplay(
                 mobile,
                 ScreenerRowSchema.find((item) => item.label === 'Name'),
-                <Button
-                    fullWidth
-                    onClick={() => {
-                        handleClick(row.stockId);
-                    }}
-                    align="center"
-                    variant="contained"
-                    color="primary"
-                    size="medium"
-                >
-                    {row.stockName}
-                </Button>
+                <b style={{ fontSize: 18 }}>{row.stockName}</b>
             )}
             {getCellToDisplay(
                 mobile,
@@ -145,20 +135,10 @@ export function getRows(stocks, mobile, handleClick) {
             )}
             {getCellToDisplay(
                 mobile,
-                ScreenerRowSchema.find((item) => item.label === 'Points'),
-                <>
-                    {row.currPoints}
-
-                    <div
-                        style={{
-                            fontSize: 13,
-                            marginTop: 10,
-                        }}
-                    >
-                        {row.seed} Seed * {row.currPoints / row.seed} Win
-                        {row.currPoints / row.seed !== 1 ? 's' : ''}
-                    </div>
-                </>
+                ScreenerRowSchema.find(
+                    (item) => item.label === 'Points per $1'
+                ),
+                <>{row.currPoints}</>
             )}
             {getCellToDisplay(
                 mobile,

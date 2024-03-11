@@ -3,24 +3,22 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { setUserWatchlist } from '../../../redux/actions/userActions';
 import {
-    getStocks,
-    setStocks,
-    sortCurrStocks,
+  getStocks,
+  setStocks,
+  sortCurrStocks,
 } from '../../../redux/actions/dataActions';
 //UI
-import { Container, Grid, Typography } from '@mui/material';
+import { Container, Grid } from '@mui/material';
 import withStyles from '@mui/styles/withStyles';
 //Table Components
 import CustomizedTables from '../../ui/StockInfoTable/stockTable';
 import { getBlankRowFromSchema } from '../../ui/StockInfoTable/stockTableUtils';
-import {
-    StyledTableCell
-} from '../../ui/StockInfoTable/styledTableComponents';
+import { StyledTableCell } from '../../ui/StockInfoTable/styledTableComponents';
 import StockModal from '../Stock/stockModal';
 import {
-    ScreenerRowSchema,
-    getRows,
-    getScreenerHeaderRow,
+  ScreenerRowSchema,
+  getRows,
+  getScreenerHeaderRow,
 } from './screenerRows';
 
 const styles = (theme) => ({
@@ -63,7 +61,6 @@ class BrowseStocksPage extends Component {
     }
 
     render() {
-        const { classes } = this.props;
         let stockDisplay = !this.props.data.loading
             ? getRows(
                   this.props.data.stocks,
@@ -86,9 +83,9 @@ class BrowseStocksPage extends Component {
                 />
 
                 <div
+                    className="bg-gray-900"
                     style={{
                         width: '100%',
-                        background: `linear-gradient(#000000, #1976d2) fixed`,
                         color: 'white',
                         minHeight: '1000px',
                         paddingBottom: 20,
@@ -96,18 +93,9 @@ class BrowseStocksPage extends Component {
                 >
                     <Container>
                         <Grid container spacing={3}>
-                            <Grid item xs={12}>
-                                <Typography
-                                    variant="h2"
-                                    align="center"
-                                    className={classes.pageTitle}
-                                >
-                                    Teams
-                                </Typography>
-                            </Grid>
                             <Grid item xs={0} md={1}></Grid>
                             <Grid item xs={12} md={10}>
-                                <div className="screenercard">
+                                <div className="rounded-lg card mt-12">
                                     <CustomizedTables
                                         rows={stockDisplay}
                                         headerRow={getScreenerHeaderRow(

@@ -1,7 +1,7 @@
 import { Container, Grid, Typography } from '@mui/material';
-import withStyles from '@mui/styles/withStyles';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { BRACKET_IMG_PATH } from '../../../constants/constants';
 import { getScores, getStocks } from '../../../redux/actions/dataActions';
 import CustomizedTables from '../../ui/StockInfoTable/stockTable';
 import {
@@ -9,28 +9,25 @@ import {
     StyledTableRow,
 } from '../../ui/StockInfoTable/styledTableComponents';
 import LeaderboardPage from '../Leaderboard/leaderboardPage';
-import Rules from '../Rules/rules';
-import { getInfoHeaderRow, getInfoRows } from './homerows';
-import StockModal from '../Stock/stockModal';
 import Scores from '../Scores/scores';
-import Schedule from '../Schedule/schedule';
-import { BRACKET_IMG_PATH } from '../../../constants/constants';
-
-const styles = (theme) => ({
-    ...theme.spreadThis,
-});
+import StockModal from '../Stock/stockModal';
+import { getInfoHeaderRow, getInfoRows } from './homerows';
 
 export const overviewBoxStyles = {
     height: '300px',
-    backgroundColor: 'whitesmoke',
-    color: 'black',
-    overflow: 'scroll',
+    // backgroundColor: 'whitesmoke',
+    // color: 'black',
+    overflowY: 'scroll',
 };
 
 class HomePage extends Component {
     state = {
         mobile: !window.matchMedia('(min-width: 1000px)').matches,
         openModalStockId: '',
+        seed: 1,
+        wins: 1,
+        spent: 1,
+        points: 1,
     };
 
     constructor(props) {
@@ -43,9 +40,22 @@ class HomePage extends Component {
         this.setState({ openModalStockId: stockId });
     }
 
-    render() {
-        const { classes } = this.props;
+    // Function to calculate points based on input values
+    calculatePoints() {
+        const { seed, wins, spent } = this.state;
+        const calculatedPoints = seed * wins * spent;
+        this.setState({ points: calculatedPoints });
+    }
 
+    // Function to handle input changes and update corresponding state
+    handleInputChange(e, field) {
+        const value = parseInt(e.target.value);
+        this.setState({ [field]: value }, () => {
+            this.calculatePoints(); // Recalculate points after state update
+        });
+    }
+
+    render() {
         return (
             <>
                 <StockModal
@@ -54,75 +64,110 @@ class HomePage extends Component {
                         this.setStockIdForModal('');
                     }}
                 />
-                <div
-                    style={{
-                        height: '700px',
-                        width: '100%',
-                        background: `linear-gradient(#000000, #1976d2) fixed`,
-                    }}
-                >
+                <div class="flex" style={{ flexWrap: 'wrap' }}>
+                    <div class="bg-gray-800 h-900 flex justify-center items-center md:w-1/2">
+                        <img src="mmm-logo.jpg" alt="Main Logo" />
+                    </div>
                     <div
+                        class="bg-gray-800 h-900 flex flex-col justify-center items-center md:w-1/2"
                         style={{
-                            height: '700px',
-                            width: '100%',
-                            backgroundImage: `url("mmm-logo.jpg")`,
-                            backgroundSize: '700px',
-                            // backgroundRepeat: 'space repeat',
-                            color: 'white',
-                            backgroundBlendMode: 'multiply',
-                            backgroundPosition: 'center',
+                            background:
+                                'linear-gradient(#000000 20%, #1976d2) fixed',
                         }}
                     >
-                        <div
-                            style={{
-                                display: 'flex',
-                                height: '100%',
-                                // alignItems: 'center',
-                                justifyContent: 'center',
-                            }}
-                        >
-                            <Container>
-                                <Grid container spacing={3}>
-                                    <Grid item xs={12}>
-                                        <Typography
-                                            variant="h2"
-                                            className={classes.pageTitle}
-                                            align="center"
-                                            style={{ paddingTop: 25 }}
-                                        >
-                                            Welcome!
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-                            </Container>
+                        <div class="text-white text-center mb-12">
+                            <h1 class="text-4xl font-bold mb-4">
+                                Welcome to March Madness Market!
+                            </h1>
+                            <p class="text-lg text-gray-500 px-6">
+                                Allocate your budget of $1000 to build a
+                                portfolio of March Madness teams. The better
+                                your teams perform in the tournament, the more
+                                points you get!
+                            </p>
                         </div>
+
+                        <div class="text-white text-center mt-12">
+                            (Seed Number) x (Number of Wins) x ($ Allocation) =
+                            Points Earned
+                        </div>
+                        <div className="flex mt-8">
+                            <div className="text-center px-2">
+                                <b class="text-white">$ Spent</b>
+                                <br />
+                                <input
+                                    min={0}
+                                    max={1000}
+                                    className="w-20 bg-gray-800 text-white p-2 rounded-lg"
+                                    type="number"
+                                    value={this.state.spent}
+                                    onChange={(e) =>
+                                        this.handleInputChange(e, 'spent')
+                                    }
+                                />
+                            </div>
+                            <div className="text-center px-2">
+                                <b class="text-white">Seed</b>
+                                <br />
+                                <input
+                                    className="w-20 bg-gray-800 text-white p-2 rounded-lg"
+                                    type="number"
+                                    max={16}
+                                    min={1}
+                                    value={this.state.seed}
+                                    onChange={(e) =>
+                                        this.handleInputChange(e, 'seed')
+                                    }
+                                />
+                            </div>
+                            <div className="text-center px-2">
+                                <b class="text-white px-5">Wins</b>
+                                <br />
+                                <input
+                                    min={1}
+                                    max={6}
+                                    className="w-20 bg-gray-800 text-white p-2 rounded-lg"
+                                    type="number"
+                                    value={this.state.wins}
+                                    onChange={(e) =>
+                                        this.handleInputChange(e, 'wins')
+                                    }
+                                />
+                            </div>
+                        </div>
+                        <div className="text-white text-center mt-5">
+                            <b>Points Earned: {this.state.points}</b>
+                        </div>
+
+                        <div className="text-gray-500 text-center mt-1 text-sm">
+                            Allocating ${this.state.spent} to a #
+                            {this.state.seed} seed team that{' '}
+                            {this.state.wins === 1
+                                ? ' makes it to the Round of 32'
+                                : this.state.wins === 2
+                                ? ' makes it to the Sweet 16'
+                                : this.state.wins === 3
+                                ? ' makes it to the Elite 8'
+                                : this.state.wins === 4
+                                ? ' makes it to the Final Four'
+                                : this.state.wins === 5
+                                ? ' makes it to the championship'
+                                : ' wins the championship'}{' '}
+                            will earn you {this.state.points} points!
+                        </div>
+                        <div className="mt-12 text-gray-400 text-center"></div>
                     </div>
                 </div>
-
-                <Rules />
-
                 <div
+                    className="pt-20 bg-gray-900"
                     style={{
                         width: '100%',
-                        background: `linear-gradient(#000000, #1976d2) fixed`,
                         color: 'white',
                         paddingBottom: 20,
                     }}
                 >
                     <Container>
                         <Grid container spacing={3}>
-                            <Grid item xs={12}>
-                                <div
-                                    style={{
-                                        fontWeight: 'bold',
-                                        paddingTop: '32px',
-                                    }}
-                                >
-                                    <Typography variant="h3" align="center">
-                                        Overview
-                                    </Typography>
-                                </div>
-                            </Grid>
                             <Grid item xs={12} md={6}>
                                 <div className="card">
                                     <section
@@ -134,11 +179,7 @@ class HomePage extends Component {
                                         <Typography variant="h4" align="center">
                                             Leaderboard
                                         </Typography>
-                                        <div
-                                            style={{
-                                                backgroundColor: 'whitesmoke',
-                                            }}
-                                        >
+                                        <div className="bg-gray-800 text-white">
                                             <LeaderboardPage
                                                 mobile={this.state.mobile}
                                                 homePage={true}
@@ -146,7 +187,6 @@ class HomePage extends Component {
                                         </div>
                                     </section>
                                 </div>
-                                <Scores />
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <div className="card">
@@ -192,8 +232,9 @@ class HomePage extends Component {
                                         </div>
                                     </section>
                                 </div>
-
-                                <Schedule />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Scores />
                             </Grid>
                             <Grid item xs={12}>
                                 <img
@@ -220,7 +261,4 @@ const mapActionsToProps = {
     getStocks,
     getScores,
 };
-export default connect(
-    mapStateToProps,
-    mapActionsToProps
-)(withStyles(styles)(HomePage));
+export default connect(mapStateToProps, mapActionsToProps)(HomePage);

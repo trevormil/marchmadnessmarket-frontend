@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 //Redux
 import { connect } from 'react-redux';
 //UI
-import { Pagination } from '@mui/material';
 import withStyles from '@mui/styles/withStyles';
 //Table Components
 import CustomizedTables from '../../ui/StockInfoTable/stockTable';
@@ -47,44 +46,6 @@ class LeaderboardPage extends Component {
                         )}
                     />
                 </div>
-
-                {(this.props.data.leaderboard
-                    ? this.props.data.leaderboard.length / 100
-                    : 1) <= 1 ? (
-                    <></>
-                ) : (
-                    <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            backgroundColor: 'whitesmoke',
-                            color: 'white',
-                            padding: 15,
-                        }}
-                    >
-                        <Pagination
-                            page={this.state.page}
-                            style={{ color: 'white' }}
-                            count={
-                                this.props.data.leaderboard
-                                    ? this.props.data.leaderboard.length / 100
-                                    : 1
-                            }
-                            color="standard"
-                            variant="outlined"
-                            hidden={
-                                (this.props.data.leaderboard
-                                    ? this.props.data.leaderboard.length / 100
-                                    : 1) <= 1
-                            }
-                            onChange={(event, value) => {
-                                this.setState({
-                                    page: value,
-                                });
-                            }}
-                        />
-                    </div>
-                )}
             </div>
         );
     }

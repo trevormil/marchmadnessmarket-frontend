@@ -3,8 +3,6 @@ import {
     StyledTableCell,
     StyledTableRow,
 } from '../../ui/StockInfoTable/styledTableComponents';
-
-import { Button } from '@mui/material';
 import Blockies from 'react-blockies';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../../constants/routes';
@@ -25,7 +23,7 @@ export const LeaderboardSchema = [
     {
         name: 'icon',
         label: 'Icon',
-        showMobile: false,
+        showMobile: true,
         showIfTournamentHasStarted: true,
         showIfTournamentHasNotStarted: true,
         showIfHomePage: true,
@@ -58,9 +56,13 @@ export const LeaderboardSchema = [
 
 export function getUserRow(userInfo, rank, mobile, homePage, isFixedUser) {
     return (
-        <StyledTableRow
+        <tr
             style={{
                 borderBottom: isFixedUser ? '3px solid black' : undefined,
+            }}
+            className="bg-primary cursor-pointer text-white rounded-lg py-2 px-4 text-sm hover:bg-gray-300 hover:border-primary hover:text-black hover:border-primary"
+            onClick={() => {
+                window.location.href = `${ROUTES.USERS}/${userInfo.userName}`;
             }}
         >
             {getCellToDisplay(
@@ -81,17 +83,13 @@ export function getUserRow(userInfo, rank, mobile, homePage, isFixedUser) {
             {getCellToDisplay(
                 mobile,
                 LeaderboardSchema.find((x) => x.label === 'Username'),
-                <Button
-                    fullWidth
-                    component={Link}
+
+                <Link
                     to={`${ROUTES.USERS}/${userInfo.userName}`}
-                    align="center"
-                    variant="contained"
-                    color="primary"
-                    size="medium"
+                    style={{ fontSize: 16, textAlign: 'start' }}
                 >
-                    {userInfo.userName}
-                </Button>
+                    <b>{userInfo.userName}</b>
+                </Link>
             )}
             {getCellToDisplay(
                 mobile,
@@ -106,7 +104,7 @@ export function getUserRow(userInfo, rank, mobile, homePage, isFixedUser) {
                     : 0,
                 homePage
             )}
-        </StyledTableRow>
+        </tr>
     );
 }
 

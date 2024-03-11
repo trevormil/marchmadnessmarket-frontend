@@ -1,15 +1,9 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import SignUpForm from './signupform';
-import withStyles from '@mui/styles/withStyles';
-
-import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import { loginUser } from '../../../redux/actions/userActions';
-
-const styles = (theme) => ({
-    ...theme.spreadThis,
-});
 
 class SignUpPage extends React.Component {
     render() {
@@ -38,4 +32,4 @@ const mapActionsToProps = {
 export default connect(
     mapStateToProps,
     mapActionsToProps
-)(withStyles(styles)(SignUpPage));
+)(SignUpPage);

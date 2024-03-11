@@ -1,16 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-
 import MonetizationOn from '@mui/icons-material/MonetizationOn';
 import { Typography } from '@mui/material';
-import withStyles from '@mui/styles/withStyles';
 import * as ROUTES from '../../../constants/routes';
 import TabBase from './tabs';
-
-const styles = (theme) => ({
-    ...theme.spreadThis,
-});
 
 const getInitialState = () => {
     const pathName = window.location.pathname.split('/');
@@ -65,10 +59,10 @@ class Navigation extends React.Component {
                         }}
                     >
                         <img
-                            height={'50px'}
                             src="/mmm-logo-cropped.jpg"
                             style={{ marginRight: '5px' }}
                             alt="MMM Logo"
+                            width="60"
                         />
 
                         <Typography
@@ -226,4 +220,4 @@ const mapStateToProps = (state) => ({
 Navigation.propTypes = {
     user: PropTypes.object.isRequired,
 };
-export default connect(mapStateToProps)(withStyles(styles)(Navigation));
+export default connect(mapStateToProps)(Navigation);

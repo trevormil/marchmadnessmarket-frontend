@@ -1,85 +1,15 @@
-import * as React from 'react';
-import { styled } from '@mui/system';
-import TabsUnstyled from '@mui/base/TabsUnstyled';
+import TabUnstyled from '@mui/base/TabUnstyled';
 import TabsListUnstyled from '@mui/base/TabsListUnstyled';
-import TabPanelUnstyled from '@mui/base/TabPanelUnstyled';
-import { buttonUnstyledClasses } from '@mui/base/ButtonUnstyled';
-import TabUnstyled, { tabUnstyledClasses } from '@mui/base/TabUnstyled';
+import TabsUnstyled from '@mui/base/TabsUnstyled';
+import * as React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../../constants/routes';
 import { logOutUser } from '../../../redux/actions/userActions';
 import store from '../../../redux/stores';
-import { connect } from 'react-redux';
-import { Typography, Container } from '@mui/material';
-import withStyles from '@mui/styles/withStyles';
-const styles = (theme) => ({
-    ...theme.spreadThis,
-});
 
-const blue = {
-    50: '#F0F7FF',
-    100: '#C2E0FF',
-    200: '#80BFFF',
-    300: '#66B2FF',
-    400: '#3399FF',
-    500: '#007FFF',
-    600: '#0072E5',
-    700: '#0059B2',
-    800: '#004C99',
-    900: '#003A75',
-};
-
-export const Tab = styled(TabUnstyled)`
-    font-family: IBM Plex Sans, sans-serif;
-    color: white;
-    cursor: pointer;
-    font-size: 0.875rem;
-    font-weight: bold;
-    background-color: transparent;
-    width: 100%;
-    padding: 12px 16px;
-    margin: 6px 6px;
-    border: none;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-
-    &:hover {
-        background-color: ${blue[400]};
-    }
-
-    &:focus {
-        color: #fff;
-        border-radius: 3px;
-        outline: 2px solid ${blue[200]};
-        outline-offset: 2px;
-    }
-
-    &.${tabUnstyledClasses.selected} {
-        background-color: ${blue[50]};
-        color: ${blue[600]};
-    }
-
-    &.${buttonUnstyledClasses.disabled} {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-`;
-
-const TabPanel = styled(TabPanelUnstyled)`
-    width: 100%;
-    font-family: IBM Plex Sans, sans-serif;
-    font-size: 0.875rem;
-`;
-
-export const TabsList = styled(TabsListUnstyled)`
-    background-color: ${'#1976d2'};
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-content: space-between;
-`;
+export const Tab = TabUnstyled;
+export const TabsList = TabsListUnstyled;
 
 class TabBase extends React.Component {
     constructor(props) {
@@ -91,10 +21,6 @@ class TabBase extends React.Component {
         {
             label: 'Home',
             linkTo: ROUTES.HOME,
-        },
-        {
-            label: 'Bracket',
-            linkTo: ROUTES.BRACKET,
         },
         {
             label: 'Teams',
@@ -110,10 +36,6 @@ class TabBase extends React.Component {
         {
             label: 'Home',
             linkTo: ROUTES.HOME,
-        },
-        {
-            label: 'Bracket',
-            linkTo: ROUTES.BRACKET,
         },
         {
             label: 'Teams',
@@ -171,12 +93,20 @@ class TabBase extends React.Component {
                 value={this.props.value}
                 defaultValue={this.props.value}
             >
-                <TabsList>
+                <TabsList className="flex">
                     {tabsToShow.map((tab) => {
                         let link = tab.linkTo;
 
+                        const selected = this.props.value === link;
+
                         return (
                             <Tab
+                                className={`p-2 mx-1 rounded-lg cursor-pointer text-gray-100 ${
+                                    selected
+                                        ? 'bg-blue-500 shadow-md'
+                                        : 'hover:bg-blue-500 hover:shadow-md'
+                                }`}
+                                style={{ fontSize: '1.25rem' }}
                                 component={Link}
                                 to={link}
                                 onClick={(event) => {
@@ -194,7 +124,7 @@ class TabBase extends React.Component {
                                         verticalAlign: 'center',
                                     }}
                                 >
-                                    {tab.label}
+                                    <b> {tab.label}</b>
                                 </div>
                             </Tab>
                         );
@@ -213,7 +143,4 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {};
 
-export default connect(
-    mapStateToProps,
-    mapActionsToProps
-)(withStyles(styles)(TabBase));
+export default connect(mapStateToProps, mapActionsToProps)(TabBase);

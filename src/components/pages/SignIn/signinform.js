@@ -1,20 +1,15 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import * as ROUTES from './../../../constants/routes';
-import { connect } from 'react-redux';
-import { loginUser } from '../../../redux/actions/userActions';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
+import { Container } from '@mui/material';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
-import withStyles from '@mui/styles/withStyles';
-import { Container } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { loginUser } from '../../../redux/actions/userActions';
+import * as ROUTES from './../../../constants/routes';
 
-const styles = (theme) => ({
-    ...theme.spreadThis,
-});
 class SignInForm extends Component {
     constructor() {
         super();
@@ -44,16 +39,15 @@ class SignInForm extends Component {
 
     render() {
         const {
-            classes,
             ui: { loading },
         } = this.props;
         const currLoading = loading || this.props.user.loading;
         const { errors } = this.state;
         return (
             <div
+                className="bg-gray-900"
                 style={{
                     width: '100%',
-                    background: `linear-gradient(#000000, #1976d2) fixed`,
                     color: 'white',
                     minHeight: '1000px',
                     paddingBottom: 20,
@@ -63,94 +57,88 @@ class SignInForm extends Component {
                     <Grid container spacing={3}>
                         <Grid item md={3} xs={0}></Grid>
                         <Grid item xs={12} md={6}>
-                            <Typography
-                                variant="h2"
-                                className={classes.pageTitle}
-                                align="center"
-                            >
-                                Login
-                            </Typography>
                             <Typography align="center">
                                 <div
+                                    className="mt-12 card bg-gray-800 text-white"
                                     style={{
-                                        background: `whitesmoke`,
-                                        color: 'black',
                                         padding: 20,
-                                        border: '5px solid black',
                                     }}
                                 >
-                                    <form noValidate onSubmit={this.onSubmit}>
-                                        <TextField
+                                    <form
+                                        onSubmit={this.onSubmit}
+                                        className="flex flex-col"
+                                    >
+                                        <input
                                             id="email"
                                             name="email"
                                             type="email"
-                                            label="Email"
-                                            className={classes.textField}
-                                            helperText={
+                                            placeholder="Email"
+                                            className={`p-2 mb-4 bg-gray-700 rounded-lg border border-gray-300 ${
                                                 errors.email
-                                                    ? errors.email
-                                                    : '*Please enter the email you used to sign up, not your username.'
-                                            }
-                                            error={errors.email ? true : false}
+                                                    ? 'border-red-500'
+                                                    : 'focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50'
+                                            }`}
                                             value={this.state.email}
                                             onChange={this.onChange}
-                                            fullWidth
+                                            required
                                         />
-                                        <TextField
+                                        {errors.email && (
+                                            <p className="text-red-500 text-sm mb-2">
+                                                {errors.email}
+                                            </p>
+                                        )}
+                                        <input
                                             id="password"
                                             name="password"
                                             type="password"
-                                            label="Password"
-                                            className={classes.textField}
-                                            helperText={errors.password}
-                                            error={
-                                                errors.password ? true : false
-                                            }
+                                            placeholder="Password"
+                                            className={`p-2 mb-4 bg-gray-700 rounded-lg border border-gray-300 ${
+                                                errors.password
+                                                    ? 'border-red-500'
+                                                    : 'focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50'
+                                            }`}
                                             value={this.state.password}
                                             onChange={this.onChange}
-                                            fullWidth
+                                            required
                                         />
                                         {errors.error && (
-                                            <Typography
-                                                variant="body2"
-                                                className={classes.customError}
-                                            >
+                                            <p className="text-red-500 text-sm mb-2">
                                                 {errors.error.substring(
                                                     errors.error.indexOf(
                                                         'auth/'
                                                     ) + 5
                                                 )}
-                                            </Typography>
+                                            </p>
                                         )}
                                         {errors.general && (
-                                            <Typography
-                                                variant="body2"
-                                                className={classes.customError}
-                                            >
+                                            <p className="text-red-500 text-sm mb-2">
                                                 {errors.general}
-                                            </Typography>
+                                            </p>
                                         )}
+
                                         <Button
                                             type="submit"
                                             variant="contained"
                                             color="primary"
-                                            className={classes.button}
                                             disabled={currLoading}
+                                            style={{ marginTop: 10 }}
                                         >
                                             Login
                                             {currLoading && (
-                                                <CircularProgress
-                                                    size={30}
-                                                    className={classes.progress}
-                                                />
+                                                <CircularProgress size={30} />
                                             )}
                                         </Button>
                                         <br />
                                         <small>
                                             Dont have an account? Sign up{' '}
-                                            <Link to={ROUTES.SIGN_UP}>
+                                            <Link
+                                                to={ROUTES.SIGN_UP}
+                                                style={{ color: '#4d6cfa' }}
+                                            >
                                                 here!
-                                            </Link>
+                                            </Link>{' '}
+                                            Accounts from prior years have been
+                                            reset.
                                         </small>
                                     </form>
                                 </div>
@@ -178,7 +166,4 @@ const mapActionsToProps = {
     loginUser,
 };
 
-export default connect(
-    mapStateToProps,
-    mapActionsToProps
-)(withStyles(styles)(SignInForm));
+export default connect(mapStateToProps, mapActionsToProps)(SignInForm);
