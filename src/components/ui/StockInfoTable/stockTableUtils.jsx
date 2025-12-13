@@ -1,4 +1,3 @@
-import { TableSortLabel } from '@mui/material';
 import {
     TOURNAMENT_NOT_STARTED,
     TOURNAMENT_STARTED,
@@ -37,7 +36,6 @@ export function getBlankRowFromSchema(
 
                 return (
                     <StyledTableCell
-                        align="center"
                         key={row.name}
                         style={{ minWidth: row.minWidth }}
                     >
@@ -66,7 +64,6 @@ export function getCellToDisplay(mobile, schemaItem, content, homePage) {
 
     return (
         <StyledTableCell
-            align="center"
             key={schemaItem.name}
             style={{ minWidth: schemaItem.minWidth }}
         >
@@ -105,25 +102,46 @@ export function getHeaderRowFromSchema(
                 }
                 return (
                     <th
-                        align="center"
                         key={row.name}
-                        style={{ minWidth: row.minWidth }}
+                        style={{ minWidth: row.minWidth, textAlign: 'center' }}
+                        className="px-4 py-2.5 text-center text-xs font-semibold text-slate-400 uppercase tracking-wider"
                     >
-                        {handleClick ? (
-                            <TableSortLabel
-                                style={{ left: 10, color: 'white' }}
-                                key={row.name}
-                                direction={direction}
-                                active={orderBy === row.name}
-                                onClick={handleClick}
-                                name={row.name}
-                                className="text-white hover:text-black"
-                            >
-                                {row.label}
-                            </TableSortLabel>
-                        ) : (
-                            row.label
-                        )}
+                        <div className="flex justify-center items-center">
+                            {handleClick ? (
+                                <button
+                                    onClick={handleClick}
+                                    name={row.name}
+                                    className={`inline-flex items-center justify-center space-x-1 text-slate-300 hover:text-blue-400 transition-colors ${
+                                        orderBy === row.name
+                                            ? 'text-blue-400'
+                                            : ''
+                                    }`}
+                                >
+                                    <span>{row.label}</span>
+                                    {orderBy === row.name && (
+                                        <svg
+                                            className={`w-4 h-4 transition-transform ${
+                                                direction === 'asc'
+                                                    ? ''
+                                                    : 'rotate-180'
+                                            }`}
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="M5 15l7-7 7 7"
+                                            />
+                                        </svg>
+                                    )}
+                                </button>
+                            ) : (
+                                <span className="text-center">{row.label}</span>
+                            )}
+                        </div>
                     </th>
                 );
             })}

@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
 //Redux
 import { connect } from 'react-redux';
-//UI
-import withStyles from '@mui/styles/withStyles';
 //Table Components
 import CustomizedTables from '../../ui/StockInfoTable/stockTable';
 import { getBlankRowFromSchema } from '../../ui/StockInfoTable/stockTableUtils';
 import { LeaderboardSchema, getHeaderRow, getRows } from './leaderboardRows';
-
-const styles = (theme) => ({
-    ...theme.spreadThis,
-});
 
 class LeaderboardPage extends Component {
     constructor(props) {
@@ -58,7 +52,4 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {};
 
-export default connect(
-    mapStateToProps,
-    mapActionsToProps
-)(withStyles(styles)(LeaderboardPage));
+export default connect(mapStateToProps, mapActionsToProps)(LeaderboardPage);

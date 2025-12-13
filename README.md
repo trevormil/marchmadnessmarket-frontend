@@ -1,15 +1,69 @@
-Fantasy sports, stock markets, and the NCAA March Madness tournament are all very popular in the United States, so in this app, we combined them! This hybrid of fantasy sports with a stock market allows users to buy their favorite teams like stocks. Everyone starts off with $1000 of in game currency when they create account, and with that, they can purchase their favorite teams. At the end of the season, points are tallied up based on how well the team performs throughout the tournament, and the user with the best portfolio wins!
+# March Madness Market
 
-URL: https://www.marchmadnessmarket.com
+A modern fantasy sports market platform for the NCAA March Madness tournament.
 
-Backend API Code: https://github.com/trevormil/marchmadnessmarket-backend
+## Tech Stack
 
-![image](./public/mmm-logo.jpg)
+-   **Runtime**: Bun
+-   **Framework**: React 18 + TypeScript
+-   **Build Tool**: Vite
+-   **Styling**: Tailwind CSS (Slate Design System)
+-   **State Management**: Redux Toolkit
+-   **Routing**: React Router v6
+-   **Backend**: Firebase
 
-Disclaimer: This app was made for fun. It uses no real money, and no profit will be made from this app.
+## Getting Started
 
-Experimental crypto/NFT branch located at the 'crypto' branch.
+### Prerequisites
 
+-   [Bun](https://bun.sh) installed
 
+### Installation
 
-Feedback and tips would be greatly appreciated!
+```bash
+# Install dependencies
+bun install
+
+# Start development server
+bun run dev
+
+# Build for production
+bun run build
+
+# Preview production build
+bun run preview
+```
+
+## Project Structure
+
+```
+src/
+├── components/        # React components
+│   ├── pages/        # Page components
+│   └── ui/           # UI components
+├── constants/         # Constants and routes
+├── redux/            # Redux store, actions, reducers
+├── helpers/          # Utility functions
+└── main.tsx          # Entry point
+```
+
+## Design System
+
+This project uses a minimal, slate-inspired design system. See [DESIGN_SPEC.md](./DESIGN_SPEC.md) for details.
+
+## Migration
+
+See [MIGRATION_GUIDE.md](./MIGRATION_GUIDE.md) for information about the recent stack upgrade.
+
+## Development
+
+The project uses:
+
+-   TypeScript for type safety
+-   ESLint for code quality
+-   Vite for fast development
+-   Bun for package management
+
+## License
+
+Private project

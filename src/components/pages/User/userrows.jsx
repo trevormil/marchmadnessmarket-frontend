@@ -1,6 +1,7 @@
-import { CheckOutlined, CloseTwoTone, ShoppingCart } from '@mui/icons-material';
-import { Button } from '@mui/material';
+import { CheckOutlined, CloseTwoTone } from '@mui/icons-material';
+import { ShoppingCart } from 'lucide-react';
 import React from 'react';
+import { Button } from '../../ui/button';
 import { TOURNAMENT_NOT_STARTED } from '../../../constants/constants';
 import {
     getBlankRowFromSchema,
@@ -43,7 +44,7 @@ export const UserStockRowSchema = [
         label: 'Wins',
         showMobile: false,
         showIfTournamentHasStarted: true,
-        showIfTournamentHasNotStarted: true,
+        showIfTournamentHasNotStarted: false,
     },
     {
         name: 'numShares',
@@ -167,7 +168,7 @@ export function getRows(
             {stocks.map((row) => {
                 return (
                     <>
-                        <StyledTableRow className="bg-primary text-white rounded-lg py-2 px-4 text-sm">
+                        <StyledTableRow className="text-white border-b border-slate-800/50 hover:bg-slate-900/50 transition-colors">
                             {getCellToDisplay(
                                 mobile,
                                 UserStockRowSchema.find(
@@ -180,13 +181,15 @@ export function getRows(
                                 UserStockRowSchema.find(
                                     (x) => x.label === 'Logo'
                                 ),
-                                <img
-                                    width="50px"
-                                    height="50px"
-                                    src={row.imageUrl}
-                                    style={{ cursor: 'pointer' }}
-                                    alt={`${row.stockName} Team Logo`}
-                                />
+                                <div className="flex justify-center items-center">
+                                    <img
+                                        width="50px"
+                                        height="50px"
+                                        src={row.imageUrl}
+                                        style={{ cursor: 'pointer' }}
+                                        alt={`${row.stockName} Team Logo`}
+                                    />
+                                </div>
                             )}
                             {getCellToDisplay(
                                 mobile,
@@ -244,16 +247,15 @@ export function getRows(
                                     (x) => x.label === 'Buy/Sell'
                                 ),
                                 <Button
-                                    fullWidth
                                     onClick={() => {
                                         handleClickOnBuySellButton(row.stockId);
                                     }}
-                                    align="center"
-                                    variant="contained"
-                                    color="primary"
-                                    style={{ minWidth: 160 }}
+                                    variant="default"
+                                    size="default"
+                                    className="w-full min-w-[160px] bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white border-0 shadow-lg shadow-blue-900/20 font-semibold"
                                 >
-                                    <ShoppingCart /> Buy / Sell
+                                    <ShoppingCart className="w-4 h-4" />
+                                    Buy / Sell
                                 </Button>
                             )}
                         </StyledTableRow>

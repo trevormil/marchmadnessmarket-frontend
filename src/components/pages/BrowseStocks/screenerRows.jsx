@@ -4,23 +4,23 @@ import React from 'react';
 import { CheckOutlined, CloseTwoTone } from '@mui/icons-material';
 import { CircularProgress, Typography } from '@mui/material';
 import {
-  getBlankRowFromSchema,
-  getCellToDisplay,
-  getHeaderRowFromSchema,
+    getBlankRowFromSchema,
+    getCellToDisplay,
+    getHeaderRowFromSchema,
 } from '../../ui/StockInfoTable/stockTableUtils';
 import { StyledTableRow } from '../../ui/StockInfoTable/styledTableComponents';
 
 export const ScreenerRowSchema = [
     {
         name: 'stockName',
-        label: 'Logo',
+        label: 'Name',
         showMobile: true,
         showIfTournamentHasStarted: true,
         showIfTournamentHasNotStarted: true,
     },
     {
         name: 'stockName',
-        label: 'Name',
+        label: 'Logo',
         showMobile: true,
         showIfTournamentHasStarted: true,
         showIfTournamentHasNotStarted: true,
@@ -48,7 +48,7 @@ export const ScreenerRowSchema = [
     },
     {
         name: 'currPoints',
-        label: 'Points per $1',
+        label: 'Points',
         showMobile: true,
         showIfTournamentHasStarted: true,
         showIfTournamentHasNotStarted: true,
@@ -87,7 +87,7 @@ export function getRows(stocks, mobile, handleClick) {
     return stocks.map((row) => (
         <StyledTableRow
             key={row.stockId}
-            className="bg-primary text-white rounded-lg py-2 px-4 text-sm my-4"
+            className="text-white border-b border-slate-800/50 hover:bg-slate-900/50 transition-colors "
         >
             {getCellToDisplay(
                 mobile,
@@ -97,12 +97,14 @@ export function getRows(stocks, mobile, handleClick) {
             {getCellToDisplay(
                 mobile,
                 ScreenerRowSchema.find((item) => item.label === 'Logo'),
-                <img
-                    width="50px"
-                    height="50px"
-                    src={row.imageUrl}
-                    alt={`${row.stockName} Team Logo`}
-                />
+                <div className="flex justify-center items-center">
+                    <img
+                        width="50px"
+                        height="50px"
+                        src={row.imageUrl}
+                        alt={`${row.stockName} Team Logo`}
+                    />
+                </div>
             )}
             {getCellToDisplay(
                 mobile,
@@ -135,9 +137,7 @@ export function getRows(stocks, mobile, handleClick) {
             )}
             {getCellToDisplay(
                 mobile,
-                ScreenerRowSchema.find(
-                    (item) => item.label === 'Points per $1'
-                ),
+                ScreenerRowSchema.find((item) => item.label === 'Points'),
                 <>{row.currPoints}</>
             )}
             {getCellToDisplay(

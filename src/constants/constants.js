@@ -1,9 +1,9 @@
 //current date is before march 16th at 12:00PM
-export const TOURNAMENT_NOT_STARTED =
-    Date.now() < Date.parse('March 21, 2024 12:00:00 EST');
+export const TOURNAMENT_NOT_STARTED = true;
+// Date.now() < Date.parse('March 21, 2024 12:00:00 EST');
 
 export const TOURNAMENT_STARTED = !TOURNAMENT_NOT_STARTED;
-export const BRACKET_IMG_PATH = '/bracket2023.png';
+export const BRACKET_IMG_PATH = '/bracket2024.png';
 
 export function getRoundName(roundNum) {
     switch (roundNum) {

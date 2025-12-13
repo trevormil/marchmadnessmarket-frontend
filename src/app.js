@@ -1,9 +1,6 @@
 //react
 import React from 'react';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
-
-//material ui
-import { Container, Grid } from '@mui/material';
 import './app.css';
 
 //imports
@@ -49,9 +46,7 @@ class App extends React.Component {
         return (
             <Provider store={store}>
                 <Router>
-                    <div className="navbar">
-                        <Navigation />
-                    </div>
+                    <Navigation />
 
                     <div className="page">
                         <Route exact path={ROUTES.HOME} component={HomePage} />
@@ -70,21 +65,11 @@ class App extends React.Component {
                             path={ROUTES.PORTFOLIO}
                             component={portfolio}
                         />
-                        {/* <Route
-                                    exact
-                                    path={ROUTES.SCHEDULE}
-                                    component={ScoresPage}
-                                /> */}
                         <Route
                             exact
                             path={ROUTES.BROWSE}
                             component={BrowseStocksPage}
                         />
-                        {/* <UserRoute
-                                    exact
-                                    path={ROUTES.MARKET}
-                                    component={MarketPage}
-                                /> */}
                         <Route
                             exact
                             path={ROUTES.LEADERBOARD}
@@ -100,7 +85,6 @@ class App extends React.Component {
                             path="/stocks/:stockId"
                             component={StocksPage}
                         />
-                        {/* <Route exact path="/rules" component={RulesPage} /> */}
                     </div>
                 </Router>
             </Provider>

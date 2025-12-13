@@ -62,18 +62,19 @@ export const getInfoRows = (stocks, mobile, handleClickOnBuySellButton) => {
                 <>
                     <StyledTableRow
                         key={stock.stockName}
-                        className="bg-primary  text-white rounded-lg py-2 px-4 text-sm"
+                        className="text-white border-b border-slate-800/50"
                     >
                         {getCellToDisplay(
                             mobile,
                             TeamCardSchema.find((x) => x.label === 'Logo'),
-                            <img
-                                height="50px"
-                                width="50px"
-                                alt="Team Logo"
-                                src={file}
-                                style={{ cursor: 'pointer' }}
-                            />
+                            <div className="flex justify-center items-center">
+                                <img
+                                    height="50px"
+                                    width="50px"
+                                    alt="Team Logo"
+                                    src={file}
+                                />
+                            </div>
                         )}
                         {getCellToDisplay(
                             mobile,

@@ -1,0 +1,6 @@
+[install]
+# Use Bun's native package manager
+auto = true
+
+[install.scopes]
+# Scope configuration if needed

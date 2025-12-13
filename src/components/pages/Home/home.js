@@ -1,4 +1,3 @@
-import { Container, Grid, Typography } from '@mui/material';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { BRACKET_IMG_PATH } from '../../../constants/constants';
@@ -12,13 +11,7 @@ import LeaderboardPage from '../Leaderboard/leaderboardPage';
 import Scores from '../Scores/scores';
 import StockModal from '../Stock/stockModal';
 import { getInfoHeaderRow, getInfoRows } from './homerows';
-
-export const overviewBoxStyles = {
-    height: '300px',
-    // backgroundColor: 'whitesmoke',
-    // color: 'black',
-    overflowY: 'scroll',
-};
+import { Hero } from './Hero';
 
 class HomePage extends Component {
     state = {
@@ -56,6 +49,8 @@ class HomePage extends Component {
     }
 
     render() {
+        const { authenticated } = this.props.user;
+
         return (
             <>
                 <StockModal
@@ -64,187 +59,88 @@ class HomePage extends Component {
                         this.setStockIdForModal('');
                     }}
                 />
-                <div class="flex" style={{ flexWrap: 'wrap' }}>
-                    <div class="bg-gray-800 h-900 flex justify-center items-center md:w-1/2">
-                        <img src="mmm-logo.jpg" alt="Main Logo" />
-                    </div>
-                    <div
-                        class="bg-gray-800 h-900 flex flex-col justify-center items-center md:w-1/2"
-                        style={{
-                            background:
-                                'linear-gradient(#000000 20%, #1976d2) fixed',
-                        }}
-                    >
-                        <div class="text-white text-center mb-12">
-                            <h1 class="text-4xl font-bold mb-4">
-                                Welcome to March Madness Market!
-                            </h1>
-                            <p class="text-lg text-gray-500 px-6">
-                                Allocate your budget of $1000 to build a
-                                portfolio of March Madness teams. The better
-                                your teams perform in the tournament, the more
-                                points you get!
-                            </p>
-                        </div>
 
-                        <div class="text-white text-center mt-12">
-                            (Seed Number) x (Number of Wins) x ($ Allocation) =
-                            Points Earned
-                        </div>
-                        <div className="flex mt-8">
-                            <div className="text-center px-2">
-                                <b class="text-white">$ Spent</b>
-                                <br />
-                                <input
-                                    min={0}
-                                    max={1000}
-                                    className="w-20 bg-gray-800 text-white p-2 rounded-lg"
-                                    type="number"
-                                    value={this.state.spent}
-                                    onChange={(e) =>
-                                        this.handleInputChange(e, 'spent')
-                                    }
-                                />
-                            </div>
-                            <div className="text-center px-2">
-                                <b class="text-white">Seed</b>
-                                <br />
-                                <input
-                                    className="w-20 bg-gray-800 text-white p-2 rounded-lg"
-                                    type="number"
-                                    max={16}
-                                    min={1}
-                                    value={this.state.seed}
-                                    onChange={(e) =>
-                                        this.handleInputChange(e, 'seed')
-                                    }
-                                />
-                            </div>
-                            <div className="text-center px-2">
-                                <b class="text-white px-5">Wins</b>
-                                <br />
-                                <input
-                                    min={1}
-                                    max={6}
-                                    className="w-20 bg-gray-800 text-white p-2 rounded-lg"
-                                    type="number"
-                                    value={this.state.wins}
-                                    onChange={(e) =>
-                                        this.handleInputChange(e, 'wins')
-                                    }
-                                />
-                            </div>
-                        </div>
-                        <div className="text-white text-center mt-5">
-                            <b>Points Earned: {this.state.points}</b>
-                        </div>
+                {/* Hero Section from Figma Design */}
+                <Hero authenticated={authenticated} />
 
-                        <div className="text-gray-500 text-center mt-1 text-sm">
-                            Allocating ${this.state.spent} to a #
-                            {this.state.seed} seed team that{' '}
-                            {this.state.wins === 1
-                                ? ' makes it to the Round of 32'
-                                : this.state.wins === 2
-                                ? ' makes it to the Sweet 16'
-                                : this.state.wins === 3
-                                ? ' makes it to the Elite 8'
-                                : this.state.wins === 4
-                                ? ' makes it to the Final Four'
-                                : this.state.wins === 5
-                                ? ' makes it to the championship'
-                                : ' wins the championship'}{' '}
-                            will earn you {this.state.points} points!
-                        </div>
-                        <div className="mt-12 text-gray-400 text-center"></div>
-                    </div>
-                </div>
-                <div
-                    className="pt-20 bg-gray-900"
-                    style={{
-                        width: '100%',
-                        color: 'white',
-                        paddingBottom: 20,
-                    }}
-                >
-                    <Container>
-                        <Grid container spacing={3}>
-                            <Grid item xs={12} md={6}>
-                                <div className="card">
-                                    <section
-                                        style={{
-                                            overflow: 'auto',
-                                            height: '400px',
-                                        }}
-                                    >
-                                        <Typography variant="h4" align="center">
-                                            Leaderboard
-                                        </Typography>
-                                        <div className="bg-gray-800 text-white">
-                                            <LeaderboardPage
-                                                mobile={this.state.mobile}
-                                                homePage={true}
+                {/* Main Content Section */}
+                <div className="bg-slate-950 min-h-[calc(100vh-4rem)]">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+                            {/* Leaderboard Card */}
+                            <div className="bg-slate-900/80 backdrop-blur-xl rounded-2xl border border-slate-800 shadow-2xl overflow-hidden">
+                                <div className="bg-gradient-to-r from-blue-600 to-blue-500 p-4">
+                                    <h2 className="text-2xl font-bold text-white text-center">
+                                        Leaderboard
+                                    </h2>
+                                </div>
+                                <div className="p-6 max-h-[500px] overflow-y-auto">
+                                    <LeaderboardPage
+                                        mobile={this.state.mobile}
+                                        homePage={true}
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Teams Card */}
+                            <div className="bg-slate-900/80 backdrop-blur-xl rounded-2xl border border-slate-800 shadow-2xl overflow-hidden">
+                                <div className="bg-gradient-to-r from-blue-600 to-blue-500 p-4">
+                                    <h2 className="text-2xl font-bold text-white text-center">
+                                        Top Teams
+                                    </h2>
+                                </div>
+                                <div className="p-6 max-h-[500px] overflow-y-auto">
+                                    <div id="market-overview">
+                                        {this.props.data.loading ? (
+                                            <CustomizedTables
+                                                headerRow={getInfoHeaderRow(
+                                                    this.state.mobile
+                                                )}
+                                                rows={
+                                                    <StyledTableRow>
+                                                        <StyledTableCell>
+                                                            Loading...
+                                                        </StyledTableCell>
+                                                        <StyledTableCell></StyledTableCell>
+                                                        <StyledTableCell></StyledTableCell>
+                                                        <StyledTableCell></StyledTableCell>
+                                                    </StyledTableRow>
+                                                }
                                             />
-                                        </div>
-                                    </section>
+                                        ) : (
+                                            <CustomizedTables
+                                                headerRow={getInfoHeaderRow(
+                                                    this.state.mobile
+                                                )}
+                                                rows={getInfoRows(
+                                                    this.props.data.stocks,
+                                                    this.state.mobile,
+                                                    this.setStockIdForModal
+                                                )}
+                                            />
+                                        )}
+                                    </div>
                                 </div>
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <div className="card">
-                                    <section
-                                        style={{
-                                            overflow: 'auto',
-                                            height: '400px',
-                                        }}
-                                    >
-                                        <Typography variant="h4" align="center">
-                                            Teams
-                                        </Typography>
+                            </div>
+                        </div>
 
-                                        <div id="market-overview">
-                                            {this.props.data.loading ? (
-                                                <CustomizedTables
-                                                    headerRow={getInfoHeaderRow(
-                                                        this.state.mobile
-                                                    )}
-                                                    rows={
-                                                        <StyledTableRow>
-                                                            <StyledTableCell>
-                                                                Loading...
-                                                            </StyledTableCell>
-                                                            <StyledTableCell></StyledTableCell>
-                                                            <StyledTableCell></StyledTableCell>
-                                                            <StyledTableCell></StyledTableCell>
-                                                        </StyledTableRow>
-                                                    }
-                                                ></CustomizedTables>
-                                            ) : (
-                                                <CustomizedTables
-                                                    headerRow={getInfoHeaderRow(
-                                                        this.state.mobile
-                                                    )}
-                                                    rows={getInfoRows(
-                                                        this.props.data.stocks,
-                                                        this.state.mobile,
-                                                        this.setStockIdForModal
-                                                    )}
-                                                ></CustomizedTables>
-                                            )}
-                                        </div>
-                                    </section>
-                                </div>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Scores />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <img
-                                    src={BRACKET_IMG_PATH}
-                                    width="100%"
-                                    alt="Bracket"
-                                />
-                            </Grid>
-                        </Grid>
-                    </Container>
+                        {/* Scores Section */}
+                        <div className="mb-16">
+                            <Scores />
+                        </div>
+
+                        {/* Bracket Image */}
+                        <div className="bg-slate-900/80 backdrop-blur-xl rounded-2xl border border-slate-800 shadow-2xl overflow-hidden p-6">
+                            <h2 className="text-2xl font-bold text-white text-center mb-6">
+                                Tournament Bracket
+                            </h2>
+                            <img
+                                src={BRACKET_IMG_PATH}
+                                alt="Tournament Bracket"
+                                className="w-full rounded-lg"
+                            />
+                        </div>
+                    </div>
                 </div>
             </>
         );

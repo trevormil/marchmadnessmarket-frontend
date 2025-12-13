@@ -13,14 +13,16 @@ import { sort, filterStocks } from '../../helpers/filterFunctions';
 export const getStocks = (currProps, filterArr) => async (dispatch) => {
     if (currProps.loading) return;
 
-    let payloadData = currProps;
     if (currProps.leaderboard && currProps.leaderboard.length !== 0) {
-        payloadData.stocks = sort(
-            filterStocks(payloadData.stocks, filterArr),
-            'seed',
-            'asc'
-        );
-        payloadData.filters = filterArr;
+        const payloadData = {
+            ...currProps,
+            stocks: sort(
+                filterStocks(currProps.stocks, filterArr),
+                'seed',
+                'asc'
+            ),
+            filters: filterArr,
+        };
         dispatch({
             type: SET_STOCKS,
             payload: payloadData,
@@ -33,34 +35,37 @@ export const getStocks = (currProps, filterArr) => async (dispatch) => {
     console.log('Fetching stocks');
 
     dispatch({ type: LOADING_STOCKS });
+
+    let leaderboardData = [];
+    let stocksData = [];
+
     await Promise.all([
         axios.get('/leaderboard').then((res) => {
-            let data = [];
             if (res) {
-                res.data.forEach((stock) => data.push(stock));
+                leaderboardData = res.data.map((stock) => ({ ...stock }));
             }
-            payloadData.leaderboard = data;
         }),
         axios.get('/stocks').then((res) => {
-            payloadData.stocks = sort(
-                filterStocks(res.data, filterArr),
-                'seed',
-                'asc'
-            );
-            payloadData.filters = filterArr;
-            payloadData.currStock = {
-                trades: [],
-                stockHistory: [],
-                stockData: {
-                    price: null,
-                },
-            };
-            payloadData.trades = [];
+            stocksData = sort(filterStocks(res.data, filterArr), 'seed', 'asc');
         }),
     ])
         .then(() => {
             console.timeEnd('getting stocks');
             console.time('dispatch');
+            const payloadData = {
+                ...currProps,
+                leaderboard: leaderboardData,
+                stocks: stocksData,
+                filters: filterArr,
+                currStock: {
+                    trades: [],
+                    stockHistory: [],
+                    stockData: {
+                        price: null,
+                    },
+                },
+                trades: [],
+            };
             dispatch({
                 type: SET_STOCKS,
                 payload: payloadData,
@@ -79,7 +84,6 @@ export const getStocks = (currProps, filterArr) => async (dispatch) => {
 export const getScores = (currProps, filterArr) => async (dispatch) => {
     if (currProps.loading) return;
 
-    let payloadData = currProps;
     if (currProps.scores && currProps.scores.length !== 0) {
         return;
     }
@@ -91,7 +95,10 @@ export const getScores = (currProps, filterArr) => async (dispatch) => {
     await axios
         .get('/scores')
         .then((res) => {
-            payloadData.scores = res.data;
+            const payloadData = {
+                ...currProps,
+                scores: res.data,
+            };
             console.log('SCORES FORMAT', res.data);
 
             dispatch({
@@ -158,24 +165,31 @@ export const getCurrStock =
     (currProps, filterArr, stockId) => async (dispatch) => {
         if (currProps.loading) return;
 
-        let payloadData = currProps;
-
         let fetchedStock = undefined;
-        if (payloadData.stocks) {
-            fetchedStock = payloadData.stocks.find((stock) => {
+        if (currProps.stocks) {
+            fetchedStock = currProps.stocks.find((stock) => {
                 return stock.stockId === stockId;
             });
         }
 
+        let stockData = null;
         if (fetchedStock) {
-            payloadData.currStock.stockData = fetchedStock;
+            stockData = fetchedStock;
         } else {
             dispatch({ type: LOADING_STOCKS });
             console.log('Fetching curr stock data');
             await axios.get(`/stocks/${stockId}`).then((res) => {
-                payloadData.currStock.stockData = res.data;
+                stockData = res.data;
             });
         }
+
+        const payloadData = {
+            ...currProps,
+            currStock: {
+                ...currProps.currStock,
+                stockData: stockData,
+            },
+        };
 
         dispatch({
             type: SET_STOCKS,
@@ -188,9 +202,11 @@ export const setStocks = (currProps, filterArr) => (dispatch) => {
     if (currProps.loading) return;
 
     dispatch({ type: LOADING_STOCKS });
-    let payloadData = currProps;
-    payloadData.stocks = filterStocks(currProps.stocks, filterArr);
-    payloadData.filters = filterArr;
+    const payloadData = {
+        ...currProps,
+        stocks: filterStocks(currProps.stocks, filterArr),
+        filters: filterArr,
+    };
     dispatch({
         type: SET_STOCKS,
         payload: payloadData,
@@ -203,8 +219,10 @@ export const sortCurrStocks =
         if (currProps.loading) return;
 
         dispatch({ type: LOADING_STOCKS });
-        let payloadData = currProps;
-        payloadData.stocks = sort(currProps.stocks, orderBy, dir, watchlist);
+        const payloadData = {
+            ...currProps,
+            stocks: sort(currProps.stocks, orderBy, dir, watchlist),
+        };
         dispatch({
             type: SET_STOCKS,
             payload: payloadData,

@@ -15,7 +15,6 @@ class SignUpPage extends React.Component {
     }
 }
 SignUpPage.propTypes = {
-    classes: PropTypes.object.isRequired,
     loginUser: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
     ui: PropTypes.object.isRequired,
@@ -29,7 +28,4 @@ const mapActionsToProps = {
     loginUser,
 };
 
-export default connect(
-    mapStateToProps,
-    mapActionsToProps
-)(SignUpPage);
+export default connect(mapStateToProps, mapActionsToProps)(SignUpPage);

@@ -60,7 +60,7 @@ export function getUserRow(userInfo, rank, mobile, homePage, isFixedUser) {
             style={{
                 borderBottom: isFixedUser ? '3px solid black' : undefined,
             }}
-            className="bg-primary cursor-pointer text-white rounded-lg py-2 px-4 text-sm hover:bg-gray-300 hover:border-primary hover:text-black hover:border-primary"
+            className="cursor-pointer text-white border-b border-slate-800/50 hover:bg-slate-900/50 transition-colors"
             onClick={() => {
                 window.location.href = `${ROUTES.USERS}/${userInfo.userName}`;
             }}
@@ -73,12 +73,14 @@ export function getUserRow(userInfo, rank, mobile, homePage, isFixedUser) {
             {getCellToDisplay(
                 mobile,
                 LeaderboardSchema.find((x) => x.label === 'Icon'),
-                <Blockies
-                    seed={userInfo.userName}
-                    size={18}
-                    scale={3}
-                    className="identicon"
-                />
+                <div className="flex justify-center items-center">
+                    <Blockies
+                        seed={userInfo.userName}
+                        size={18}
+                        scale={3}
+                        className="identicon"
+                    />
+                </div>
             )}
             {getCellToDisplay(
                 mobile,
@@ -112,16 +114,24 @@ export function getUserRow(userInfo, rank, mobile, homePage, isFixedUser) {
 export function getRows(leaderboard, mobile, page, username, homePage) {
     let PAGE_SIZE = 25;
 
+    if (!leaderboard || !Array.isArray(leaderboard)) {
+        return (
+            <StyledTableRow>
+                <StyledTableCell colSpan={4}>No data available</StyledTableCell>
+            </StyledTableRow>
+        );
+    }
+
     let index = 0;
     const userInfo = leaderboard.find((user, i) => {
-        if (user.userName === username) {
+        if (user && user.userName === username) {
             index = i;
             return true;
         }
         return false;
     });
 
-    return leaderboard ? (
+    return (
         <>
             {userInfo && (
                 <>{getUserRow(userInfo, index + 1, mobile, homePage, true)}</>
@@ -132,13 +142,11 @@ export function getRows(leaderboard, mobile, page, username, homePage) {
                     return <></>;
                 }
 
+                if (!row) return <></>;
+
                 return <>{getUserRow(row, i + 1, mobile, homePage)}</>;
             })}
         </>
-    ) : (
-        <StyledTableRow>
-            <StyledTableCell>No users found.</StyledTableCell>
-        </StyledTableRow>
     );
 }
 

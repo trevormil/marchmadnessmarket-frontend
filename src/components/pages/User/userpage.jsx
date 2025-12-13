@@ -1,4 +1,3 @@
-import { Container, Typography } from '@mui/material';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Blockies from 'react-blockies';
@@ -104,64 +103,50 @@ class UserPage extends Component {
                     }}
                 />
 
-                <div
-                    style={{
-                        width: '100%',
-                        background: `linear-gradient(#000000 40%, #333333)`,
-                        color: 'white',
-                        minHeight: '1000px',
-                        paddingBottom: 20,
-                    }}
-                >
-                    <Container maxWidth="lg">
-                        <div>
-                            <Typography
-                                variant="h2"
-                                align="center"
-                                style={{
-                                    alignItems: 'center',
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                }}
-                            >
+                <div className="min-h-[calc(100vh-4rem)] bg-slate-950 py-8">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="mb-8">
+                            <div className="flex items-center justify-center space-x-4 mb-4">
                                 <Blockies
                                     seed={this.state.userId}
                                     size={20}
                                     scale={3}
-                                    className="identicon"
+                                    className="rounded-lg"
                                 />
-                                <span style={{ padding: 10 }}>
+                                <h1 className="text-4xl font-bold text-white">
                                     {this.state.userId
                                         ? this.state.userId.replace(
                                               '%E2%80%99',
                                               "'"
-                                          ) +
-                                          ` (${
-                                              userJSON[0]
-                                                  ? userJSON[0][
-                                                        'totalAccountValue'
-                                                    ]
-                                                  : '0'
-                                          })`
+                                          )
                                         : 'Loading....'}
+                                </h1>
+                            </div>
+                            <div className="text-center">
+                                <span className="text-2xl font-semibold text-blue-400">
+                                    {userJSON[0]
+                                        ? `${userJSON[0]['totalAccountValue']} Points`
+                                        : '0 Points'}
                                 </span>
-                            </Typography>
+                            </div>
                         </div>
 
                         {TOURNAMENT_NOT_STARTED &&
                             this.props.user?.accountBalance > 0 &&
                             this.props.user.userName === this.state.userId && (
-                                <Container maxWidth="lg">
-                                    <Typography variant="h6" align="center">
-                                        You have $
-                                        {this.props.user.accountBalance} left to
-                                        spend!
-                                    </Typography>
-                                </Container>
+                                <div className="mb-6 text-center">
+                                    <div className="inline-block bg-amber-500/20 border border-amber-500/30 rounded-lg px-6 py-3">
+                                        <p className="text-lg font-semibold text-amber-400">
+                                            You have $
+                                            {this.props.user.accountBalance}{' '}
+                                            left to spend!
+                                        </p>
+                                    </div>
+                                </div>
                             )}
 
-                        <div className="card">
-                            <div style={{ overflow: 'auto' }}>
+                        <div className="bg-slate-900/80 backdrop-blur-xl border border-slate-800 rounded-2xl shadow-2xl overflow-hidden">
+                            <div className="p-6">
                                 <CustomizedTables
                                     rows={stockDisplay}
                                     headerRow={getHeaderRow(
@@ -173,7 +158,7 @@ class UserPage extends Component {
                                 />
                             </div>
                         </div>
-                    </Container>
+                    </div>
                 </div>
             </>
         );
