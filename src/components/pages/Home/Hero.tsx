@@ -96,30 +96,6 @@ export const Hero: React.FC<HeroProps> = ({ authenticated = false }) => {
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-blue-500/20 rounded-full blur-[100px]" />
 
                         <Card className="relative bg-slate-900/80 border-slate-800 backdrop-blur-xl shadow-2xl overflow-hidden rounded-3xl">
-                            {/* Header of the Card */}
-                            <div className="bg-slate-950/50 p-4 md:p-6 border-b border-white/5 flex items-center gap-3 md:gap-4">
-                                <div className="relative w-16 h-16 shrink-0 bg-slate-900 rounded-xl border border-slate-800 flex items-center justify-center p-2 shadow-inner">
-                                    <img
-                                        src="/mmm-logo-cropped.jpg"
-                                        alt="MMM Logo"
-                                        className="w-full h-full object-contain"
-                                        style={{
-                                            imageRendering: 'crisp-edges',
-                                            WebkitBackfaceVisibility: 'hidden',
-                                            backfaceVisibility: 'hidden',
-                                            transform: 'translateZ(0)',
-                                        }}
-                                        loading="eager"
-                                        decoding="sync"
-                                    />
-                                </div>
-                                <div>
-                                    <h3 className="text-sm md:text-base font-semibold text-white">
-                                        Seed Multiplier Protocol
-                                    </h3>
-                                </div>
-                            </div>
-
                             <CardContent className="p-4 md:p-6 lg:p-8 space-y-6 md:space-y-8">
                                 {/* Visualizer */}
                                 <div className="flex items-center justify-between">
